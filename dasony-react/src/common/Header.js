@@ -20,7 +20,7 @@ const Header = () => {
                     <div id="main-container">
                         <ul>
                             <li></li>
-                            <li className="logo-li"><img src='/resources/dasony-logo6.png'/></li>
+                            <li className="logo-li"><img src='/resources/common-img/dasony-logo2.png'/></li>
                             <li></li>
                             <li className="board-li">
                                 <Link to='/'>

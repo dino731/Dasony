@@ -1,12 +1,12 @@
 
 import './App.css';
-import Header from './Header';
+import Header from './common/Header';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
-import Home from './Home';
-import Footer from './Footer';
-import Chat from './Chat';
+import Home from './main/Home';
+import Footer from './common/Footer';
+import Chat from './chat/Chat';
 import {useEffect, useState} from 'react';
-import Loading from './Loading';
+import Loading from './common/Loading';
 
 
 
