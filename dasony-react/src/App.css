@@ -1,13 +1,26 @@
+*{
+  padding:0;
+  margin:0;
+  box-sizing: border-box;
+}
+
 #window{
   display: flex;
 }
 #middle-window{
   width: 60%;
   border: 1px solid red;
-  padding-left: 30%;
+  padding: 10vh 0 0 0;
+  margin-left: 30%;
+}
+.for-main{
   display: flex;
 }
 #main-window{
   width: 60%;
+  border:  1px solid blue;
+}
+#right-window{
+  width:40%;
   border:  1px solid blue;
 }
