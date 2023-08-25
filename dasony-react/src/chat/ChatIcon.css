@@ -1,0 +1,9 @@
+#chatimg{
+    margin-top: 210px;
+    margin-left: 90%;
+    color : #344E41;
+}
+
+#chatimg:hover{
+    cursor: pointer;
+}

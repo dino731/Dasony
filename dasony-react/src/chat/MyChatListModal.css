@@ -1,0 +1,65 @@
+#toggle_head{
+    overflow: hidden;
+    border-collapse: collapse;
+    position: absolute;
+    position: relative;
+}
+
+
+#togglechat{
+    position: absolute;
+    bottom: 16%;
+    height: 480px;
+    border: 1px solid black;
+    top: 0%;
+}
+
+#togglechat>table{
+    height: 5vh;
+    border-bottom: 1px solid black;
+    background-color: #DAD7CD;
+    color: #344E41;
+}
+
+#toggle_body tr{
+    height: 5vh; 
+}
+
+#toggle_body td{
+    border-bottom: 1px solid black;
+}
+
+#toggle_body tbody>tr:hover{
+    background-color: ghostwhite; 
+    cursor: pointer;
+}
+
+#ttable, #tchattable{
+    border-spacing: 0px;
+
+}
+
+#toggle_body{
+    max-height: 395px;
+    overflow: auto; 
+    word-wrap: break-word;
+    /* height: 500px; */
+}
+
+#bi-star{
+    font-size: 15px;
+}
+
+#closeBtn {
+    position: absolute;
+    top: 93%;
+    right: 15px;
+    border: none;
+    color: rgba(0, 0, 0, 0.7);
+    background-color: transparent;
+    font-size: 20px;
+  }
+
+  #closeBtn:hover{
+    cursor: pointer;
+  }

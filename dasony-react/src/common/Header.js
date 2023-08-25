@@ -103,7 +103,7 @@ const Header = () => {
                                 <i className="bi bi-clipboard"></i> 게시판
                             </li>
 
-                            <Link to='/chat' style={{textDecoration:'none'}}> 
+                            <Link to='/chatlist' style={{textDecoration:'none'}}> 
                                 <li className="board-li"  
                                     onClick={(event)=>{HandleOpacity(event.target.id);}}
                                 >

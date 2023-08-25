@@ -11,8 +11,7 @@ import {useEffect, useState} from 'react';
 import {motion} from 'framer-motion';
 import PlzLogin from './main/PlzLogin';
 import React, {Component, Fragment} from 'react';
-
-
+import ChatList from './chat/ChatList';
 
 
 function App() {
@@ -75,7 +74,7 @@ function App() {
                   
 
                   {/*메인페이지 외 부분*/ }
-                  <Route path="/chat" element={<div className=".for-main">
+                  <Route path="/chats/:chatname" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
@@ -83,6 +82,16 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <Chat/>
                                                                         </motion.div></div></div>}/>
+
+                  <Route path="/chatlist" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                      initial = {{opacity:0, y:30}}
+                                                                      animate = {{opacity:1, y:0}}
+                                                                      end = {{opacity:1, y:0}}
+                                                                      transition={{duration : 1}}>
+                                                                        <ChatList/>
+                                                                      </motion.div></div></div>}/>
+
                   <Route path="/event" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
