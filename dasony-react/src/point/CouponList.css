@@ -1,0 +1,47 @@
+@font-face {
+    font-family: 'HakgyoansimWoojuR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+.coupon-title{
+    font-family: 'HakgyoansimWoojuR';
+    font-weight: 900;
+    font-size: 2vw;
+    letter-spacing: 0.2vw;
+    color: #344E41;
+    padding: 5vh 0 2vh 0;
+}
+
+.coupon-item{
+    display: flex;
+    height: 20vh;
+    border-top: 1px solid #344E41;
+    justify-content: space-around;
+    font-family: 'HakgyoansimWoojuR';
+    font-weight: 900;
+    font-size: 1.5vw;
+    letter-spacing: 0.2vw;
+    color: #344E41;
+    text-align: center;
+}
+.coupon-img, .coupon-info, .coupon-date{
+    margin: auto;
+}
+.coupon-img{
+    border: 1.5px solid #344E41;
+    border-radius: 0.5vw;
+    width: 8vw;
+    height: 8vw;
+    overflow: hidden;
+    position: relative;
+}
+
+.coupon-img>img{
+    width: 8vw;
+}
+.coupon-container a{
+    display: block;
+    width: 100%;
+    border: 1px solid red;
+}

@@ -1,0 +1,9 @@
+.shop-origin-container a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.shop-origin-container{
+    padding-bottom: 10vh;
+}

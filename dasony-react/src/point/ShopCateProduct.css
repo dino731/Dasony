@@ -1,0 +1,9 @@
+.title-for-product{
+    height: 8vh;
+    line-height: 8vh;
+    font-weight: 900;
+    text-align: center;
+    background-color: #DAD7CD;
+    border-radius: 0.5vw;
+    margin: 2vh 0 5vh 0 ;
+}
