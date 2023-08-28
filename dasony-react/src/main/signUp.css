@@ -1,0 +1,89 @@
+
+@font-face {
+    font-family: 'HakgyoansimWoojuR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ImcreSoojin';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.3/ImcreSoojin.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.sign-up-container{
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    border: 1px solid blue;
+    box-sizing: border-box;
+}
+
+
+table, tr, th, td{
+    /* border: 1px solid green; */
+}
+
+.sign-up-container table{
+    padding-top: 10px;
+    text-align: center;
+    width: 45%;
+    margin: auto;
+    font-size: 1.5vw;
+    font-family: 'HakgyoansimWoojuR';
+    color: #344E41;
+}
+.sign-up-container table tbody{
+    text-align: center;
+}
+
+.sign-up-container tr{
+    height: 8vh;
+}
+
+.sign-up-container thead th{
+    text-align: left;
+    font-size: 2vw;
+    padding-top: 1.5vh;
+}
+
+.sign-up-container th{
+    text-align: right;
+    width: 20%;
+}
+
+.sign-up-container input{
+    width: 80%;
+    border: 1px solid #344E41;
+    border-radius: 0.5vw;
+}
+
+.sign-up-container button{
+    width: 70%;
+    height: 5.5vh;
+    border: none;
+    border-radius: 0.5vw;
+    font-size: 1vw;
+    letter-spacing: 0.1vw;
+    background-color: #588157;
+    color:white;
+}
+
+.sign-up-container tfoot button{
+    width:80%;
+    height: 8vh;
+    font-size: 1.5vw;
+}
+
+.sign-up-container button:hover{
+    background-color: #344E41;
+    color: #DAD7CD;
+    transition-duration: 0.5s;
+}
+
+.sign-up-container table select{
+    width: 70%;
+    height: 5.5vh;
+    font-size: 1vw;
+}
