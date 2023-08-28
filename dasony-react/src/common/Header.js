@@ -23,9 +23,9 @@ const Header = () => {
                                             <li></li>
                                             <li></li>
                                             <li></li>
-                                            <li>사담</li>
-                                            <li>정보공유</li>
-                                            <li>나눔</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>사담</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>정보공유</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>나눔</li>
                                             <li></li>
                                             <li></li>
                                             <li></li>
@@ -39,8 +39,8 @@ const Header = () => {
                                             <li></li>
                                             <li></li>
                                             <li></li>
-                                            <li>상점</li>
-                                            <li>기부</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/shop/main'>상점</Link></li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>기부</li>
                                             <li></li>
                                             <li></li>
                                         </ul>
@@ -50,12 +50,12 @@ const Header = () => {
                                             <li></li>
                                             <li></li>
                                             <li></li>
-                                            <li>회원정보 수정</li>
-                                            <li>내 활동</li>
-                                            <li>고객센터</li>
-                                            <li>내 상점</li>
-                                            <li>내 기부</li>
-                                            <li>알림 내역</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>회원정보 수정</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 활동</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>고객센터</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 상점</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 기부</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>알림 내역</li>
                                             <li></li>
                                         </ul>
                                     ); break;
@@ -83,7 +83,7 @@ const Header = () => {
     return(
         
             /* 사이드바 - 메인 사이드 바 */
-                <div id="container">
+                <div id="head-container">
                     <div id="main-container">
                         <ul>
                             <li></li>

@@ -1,0 +1,92 @@
+@font-face {
+    font-family: 'HakgyoansimWoojuR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.shopProductDetail-container{
+    display: flex;
+    font-family: 'HakgyoansimWoojuR';
+    padding-top: 10vh;
+    color: #344E41;
+    font-weight: 900;
+    letter-spacing: 0.1vw;
+}
+
+/*왼쪽 영역*/
+.shopProductDetail-container>div:first-child{
+    width: 30%;
+    text-align: center;
+}
+/*오른쪽 영역*/
+.shopProductDetail-container>div:last-child{
+    width: 70%;
+}
+
+.product-info-img{
+    width: 80%;
+    border: 1px solid #344E41;
+    border-radius: 0.5vw;
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+}
+.product-info-img>img{
+    width: 100%;
+}
+/*왼쪽 영역-상단부분(상점이름, 하트)*/
+.product-info-head{
+    display: flex;
+    margin: auto;
+}
+.product-info-head>div:first-child{
+    width: 90%;
+    font-size: 1.5vw;
+    margin: auto;
+}
+.product-info-head>div:last-child{
+    width: 20%;
+    text-align: center;
+    margin: auto;
+}
+/*왼쪽 영역-중간부분*/
+.product-info-middle{
+    display: flex;
+    justify-content: space-between;
+}
+.product-info-middle>div:first-child{
+    width: 70%;
+}
+.product-info-middle-left>div:first-child{
+    font-size: 2vw;
+}
+.product-info-middle-left>div:last-child{
+    font-size: 1.7vw;
+}
+.product-info-middle>div:last-child{
+    width: 30%;
+    margin: auto;
+}
+.product-info-middle button{
+    border: none;
+    border-radius: 0.5vw;
+    background-color: #588157;
+    color : #DAD7CD;
+    width: 8vh;
+    height: 7.5vh;
+    font-size: 1.5vw;
+    font-weight: 900;
+    letter-spacing: 0.1vw;
+}
+.product-info-middle button:hover{
+    background-color: #344E41;
+    transition-duration: 0.5s;
+}
+
+.buy-info{
+    padding: 0 2% 0 2%;
+}
+.buy-info>div>div{
+    font-size: 1.5vw;
+}

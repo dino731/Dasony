@@ -21,7 +21,7 @@
     box-sizing: border-box;
 }
 
-#container{
+#head-container{
     padding : 0;
     width:25%;
     height: 100vh;
@@ -146,12 +146,7 @@
 }
 
 
-/*링크 밑줄 없애기*/
-Link{
-    text-decoration: none;
-    color : #344E41;
-  }
-Link:hover{
-    color : #588157;
+/*사이드바 링크 조절*/
+#side-container-board a{
+    font-size: 2.5vh;
 }
-
