@@ -1,0 +1,638 @@
+html, body{margin: 0; padding: 0;}
+*{box-sizing: border-box;}
+
+.event-container{
+    width: 80%; 
+    padding: 5% 5% 0 5%;
+    text-align: center;
+    overflow-y: scroll;
+    height: 100vh;
+
+    border: 1px solid black;
+}
+
+::-webkit-scrollbar { /* 스크롤바 투명 */
+    display: none;
+}
+
+/* 본문 드래그 금지 */
+.dragging{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-use-select: none;
+    user-select: none;
+
+    cursor: default;
+}
+
+/* 이벤트 리스트 게시판 Start */
+.event-container>div>.event-status-list{
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 3%;
+    margin-bottom: 5%;
+
+    >li{
+        display: inline-block;
+        padding: 1% 2%;
+        border: 1px solid #344e41;
+        border-radius: 40px;
+        cursor: pointer;
+    }
+}
+
+/* 현재 선택한 이벤트 유형 */
+.selected-event-status{
+    background-color: #344e41;
+    color: #DAD7CD;
+
+}
+
+.event-content-part>.event-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vh 2vw;
+
+    >.event-list-item{
+        display: inline-block;
+        width: 30%;
+        height: 40vh;
+        position: relative;
+    
+        .event-load-page{
+            background: url("https://dn-img-page.kakao.com/download/resource?kid=bpAeKz/hAd4wW3xd8/k9x3hD2NoVju7YY2QpONE1&filename=th3") no-repeat;
+            background-size: cover;
+            height: 100%;
+            border-radius: 10px;   
+
+            .event-item-title-part{
+                width: 100%;
+                height: 26%;
+
+                padding: 0% 3% 5% 3%;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.4) 40%, transparent);
+                color: white;
+                font-weight: 600;
+                font-size: 1.5em;
+                line-height: 110%;
+                border-radius: 10px;   
+                word-break: keep-all;
+
+                position: absolute;
+                bottom: 0%;
+                display: flex;
+                align-items: center;
+            }
+
+            .event-item-deadline{
+                display: inline-block;
+                border: 0.8px sold transparent;
+                border-radius: 20px;
+                padding: 1% 6% 1.5% 6%;
+                color: white;
+                background-color: rgb(246, 85, 85);
+
+                position: absolute;
+                top: 3%;
+                left: 5%;
+            }
+        }
+
+        .event-item-effect{
+            width: 100%;
+            height: 100%;
+            border-radius: 10px; 
+            background-color: rgba(0, 0, 0, 0.705);
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            >.event-close{
+                display: inline-block;
+                border: 3px solid white;
+                border-radius: 50px;
+
+                padding: 3%;
+                font-size: 1.3em;
+                color: white;
+            }
+        }
+    } 
+}
+
+/* 이벤트 리스트 게시판 Fin */
+
+/* 이벤트 페이지 Start */
+.event-container{
+    >.back-to-event-list{
+        font-size: 2em;
+        text-align: left;
+        color: #344e41;
+    }
+
+    >.dasony-promotion{
+
+        >.promo-header{
+            font-size: 2em;
+            color: #abdbf2;
+            text-align: center;
+            position: relative;
+
+            >.login-check-promo-count{
+                width: 100%;
+                
+
+                >.login-check-promo-count-content{
+                    width: 80%;
+                    height: 30vh;
+                    border: 2px solid #abdbf2;
+                    border-radius: 50px;
+                    padding: 3%;
+
+                    position: absolute;
+                    bottom: 10%;
+                    left: 10%;
+
+                    >em{color: white;}
+                }
+            }
+        }
+
+        >.promo-body{
+            padding: 0 4.9%;
+
+            >.login-check-btn-part{
+                background-color: #363ca7;
+                color: white;
+                text-align: center;
+                padding: 10% ;
+                
+                position: relative;
+                
+                >.login-check-btn{
+                    width: 30%;
+                    border: 2px solid white;
+                    border-radius: 50px;
+                    padding: 3% 10%;
+
+                    position: absolute;
+                    top: 5%;
+                    left: 35%;
+                }
+            }
+        }
+        
+        >.promo-footer{
+            padding: 0 4.9%;
+            margin-bottom: 10%;
+        }
+    }
+}
+
+.promo-notice{
+    background-color: black;
+    color: white;
+    text-align: left;
+
+    padding: 5% ; 
+
+    >ul{
+        list-style:none;
+        padding-left: 0;
+
+        >li{margin-bottom: 2%; word-break: keep-all;}
+        >li:last-child{
+            margin-top: 5%;
+            >ul{
+                list-style: none; 
+                padding-left: 0;
+
+                >li{margin-bottom: 2%;}
+            }
+        }
+    }
+}
+
+/* 이벤트 상세페이지 공통 폼 Start */
+.dasony-promotion{
+    .promo-form-header{
+        /* background-image: url("https://dn-img-page.kakao.com/download/resource?kid=cSNECS/hAdNPJnq9x/KnUZKR8MJnkhFOOzAlcTZK&filename=th3"); */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 20% 30%;
+        width: 100%;
+        height: 120vh;
+        position: relative;
+
+        >.promo-form-info{
+            color: white;
+            text-align: left;
+            width: 100%;
+            height: 35%;
+            position: absolute;
+            bottom: 0;
+            
+            padding: 5%;
+            
+            border: none;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 20%, transparent);
+
+            >h3{font-size: 3em; font-weight: 900;}
+            >span{font-size: 1.5em; font-weight: 600;}
+
+            >textarea{
+                display: block;
+                width: 100%;
+                resize: none;
+                outline: none;
+                border: none;
+                border-bottom: 3px solid white;
+                background: transparent;
+
+                margin-top: 5%;
+                cursor: default;
+                color: white;
+                font-size: 1.5em;
+            }
+        }
+    }
+
+    .promo-form-body{
+        width: 100%;
+        /* height: 40vh; */
+
+        background-color: black;
+        color: white;
+
+        .promo-media-part{
+            width: 100%;
+            padding: 0 5%;
+        }
+
+        .promo-reward-info{
+            width: 100%;
+            
+            .promo-reward-item{
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 20%;
+
+                font-size: 1.3em;
+                padding: 0 5%;
+                text-align: left;
+
+                position: relative;
+
+                .promo-reward-name{
+                    >span{font-size: 1.8em; font-weight: 600;}
+                }
+
+                >i{
+                    color: white;
+                    font-size: 11em;
+                    line-height: 15px;
+                }
+
+                .promo-icon-content{
+                    color: black; 
+                    text-align: center;
+                    font-weight: 800;
+                }
+            }
+        }
+
+    }
+
+    .promo-form-footer{
+        width: 100%;
+        background-color: black;
+        color: white;
+        text-align: left;
+        padding: 5%;
+        margin-bottom: 10%;
+
+        .promo-form-notice{
+            >h3{font-weight: 600;}
+            >p{
+                margin-bottom: 6%;
+                font-size: 1.3em;
+            }
+        }
+
+        .promo-more-detail{
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 800;
+            margin-top: 13%;
+            
+            >p>i{
+                display: inline-block;
+                transform: rotate( 180deg );
+            }
+
+            >button{
+                padding: 2% 5%;
+                background-color: #f5e6b3;
+                border-color: transparent;
+                border-radius: 25px;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+
+/* 이벤트 상세페이지 공통 폼 Fin */
+/* 이벤트 페이지 Fin */
+
+/* 이벤트 등록폼 Start */
+.event-form{
+    width: 100%;
+    font-size: 1.1em;
+    margin-bottom: 10%;
+    border: 3px solid #588157;
+    padding: 2%;
+
+    .event-info{
+        display: flex;
+    }
+
+    .event-title-content{
+        width: 60%;
+        padding-left: 1%;
+    }
+
+    .event-form-part{
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 30% 0;
+        padding: 0 2%;
+
+        >label{
+            font-weight: 600;
+        }
+
+        >input, textarea{
+            border-radius: 5px;
+            min-height: 7vh;
+        }
+
+        >textarea{
+            resize: none;
+            min-height: 10vh;
+        }
+    }
+
+    >button{
+        margin-top: 7%;
+        border: 1px solid #344e41;
+        color: #344e41;
+        font-weight: 600;
+        font-size: 1.2rem;
+
+        &:hover{
+            color: #DAD7CD;
+            background-color: #344e41;
+        }
+
+        &:last-child{
+            border: 1px solid rgb(255, 83, 83);
+            color: black;
+            margin-left: 5%;
+        }
+    }
+}
+
+.event-category-selectBoxList{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    grid-column-gap: 2%;
+    padding-left: 2%;
+    margin-bottom: 3%;
+
+    >.event-selectBox{
+        display: flex; 
+        flex-wrap: wrap;
+        align-items: center;
+        grid-column-gap: 5%; 
+        width: 30%;
+        word-break: keep-all;
+
+        &:nth-child(2){
+            margin-right: 5%;
+        }
+        >span{
+            display: inline-block;
+            width: 30%;
+            font-weight: 600;
+            padding-top: 1%;
+        }
+
+        >.manager-select-btn {
+            position: relative;
+            z-index: 1;
+            width: 40%;
+            border-radius: 10px;
+            border: 0.6px solid #588157;
+            cursor: pointer;
+
+            .active{
+                z-index: 10;
+    
+                +.manager-select-optionList{max-height: 300px;}
+            }
+            
+            >div{
+                display: flex; 
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-around;
+
+                >.manager-select-label{
+                    height: inherit;
+                    border: 0 none;
+                    outline: 0 none;
+                    background: transparent;
+                    cursor: pointer;
+                }
+
+                >i{
+                    color: #588157;
+                    font-size: 1.3em;
+                }
+            }
+            
+            >.manager-select-optionList{
+                position: absolute; 
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #588157;
+                color: #fff;
+                list-style-type: none;
+                padding: 0;
+                border-radius: 6px;
+                overflow: hidden;
+                max-height: 0;
+
+                >.manager-select-optionItem{
+                    text-align: center;
+                    border-bottom: 1px dashed white;
+                    padding: 5% 0;
+                    transition: .1s;
+                    font-size: 1em;
+
+                    &:hover{background-color: #344e41;}
+                    &:last-child{border-bottom: 0 none;}
+                }
+            }
+        }
+
+        
+
+    }
+}
+
+.event-thumbnail-container{
+    display: flex;
+    width: 40%;
+    height: 33vh;
+    flex-direction: column;
+    padding: 3%;
+
+    >.event-image-show {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80%;
+        padding: 1%;
+        border: 1px solid #588157;
+
+        >.event-img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    >.event-image-upload {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* border: 1px solid red; */
+
+        >.button {
+            display: flex;
+            justify-content: center;
+            background-color: #588157;
+            color: #fff;
+            width: 60%;
+            border-radius: 25px;
+            text-align: center;
+
+            >label {
+                cursor: pointer;
+                font-size: 1em;
+            }
+        }
+
+        >#eventThumbnailFile {
+            /* visibility: hidden; */
+            display: none;
+        }
+    }
+}
+
+.event-form .event-date-wrapper{
+
+    >div{
+        display: flex;
+        flex-direction: row;
+        gap: 3%;
+        align-items: center;
+        justify-content: left;
+    } 
+    .event-date {
+        width: 15vw;
+        min-height: 5vh;
+    }
+}
+
+.event-accordion{
+    outline: none;
+    >.accordion-item{
+        border: none;
+        padding: 0;
+
+        >.accordion-header>.btn{
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+    }
+}
+
+#eventAccordion1{
+    .accordion-body{
+        >.event-form-part{
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        >.event-reward-detail{
+            display: flex;
+            flex-wrap: wrap;
+
+            >div{
+                &:first-child{width: 30%;}
+                &:nth-child(2){width: 45%;}
+                &:last-child{width: 20%;}
+            }
+        }
+    }
+}
+/* 이벤트 등록폼 Fin */
+
+/* 이벤트 관리 게시판 Start */
+.event-manager-board{
+    width: 100%;
+    font-size: 1.1em;
+    margin-bottom: 10%;
+    /* border: 3px solid #588157; */
+    padding: 2%;
+
+    >table{
+        >thead{
+            border-bottom: 1px solid #588157;
+
+            >tr>th{padding-bottom: 3%;}
+        }
+
+        >tbody>tr>th, >tbody>tr>td{padding: 4% 0;}
+    }
+
+    .event-selectBox{
+        width: 30%;
+
+        &:first-child{
+            .manager-select-btn{width: 50%;}
+        }
+
+        &:last-child{
+            .manager-select-btn{width: 40%;}
+        }
+    }
+}
+
+/* 이벤트 관리 게시판 Fin */
