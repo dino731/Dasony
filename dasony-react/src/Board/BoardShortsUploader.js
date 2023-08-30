@@ -3,7 +3,7 @@ import './Board.css';
 import BoardHeader from './BoardHeader';
 import BoardWTitle from './BoardWTitle';
 import styled from 'styled-components';
-import Heart from '../point/heart';
+import Heart from '../heart';
 import Reply from './Reply';
 
 const BoardShorts = () => {
