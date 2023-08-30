@@ -12,8 +12,11 @@ import {motion} from 'framer-motion';
 import PlzLogin from './main/PlzLogin';
 import React, {Component, Fragment} from 'react';
 
-
-
+/** 내파트 */
+import ManagerEventBoard from './event/ManagerEventBoard';
+import EventForm from './event/EventForm';
+import EventDetailControl from './event/EventDetailControl';
+import EventBoard from './event/EventBoard';
 
 function App() {
   
@@ -90,7 +93,43 @@ function App() {
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
                                                                           <Event/>
-                                                                        </motion.div></div></div>}/>
+                                                                        </motion.div></div></div>}>
+                      <Route path="list" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <EventBoard/>
+                                                    </motion.div>}/>      
+                      <Route path="detail/:no" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <EventDetailControl editStatus="등록"/>
+                                                    </motion.div>}/>                                                    
+                      <Route path="addNewEvent" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <EventForm editStatus="등록"/>
+                                                    </motion.div>}/>
+                      <Route path="modifyEvent" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <EventForm editStatus="수정"/>
+                                                    </motion.div>}/>
+                      <Route path="managerEvent" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <ManagerEventBoard/>
+                                                    </motion.div>}/>                                            
+                  </Route>
            
         </Routes>
       </AnimatePresence>
