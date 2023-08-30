@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="./src/css/event.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+    <!-- 
+        이벤트 상세조회 게시판
+        -이벤트 내용 확인하는 페이지
+        (정적 페이지 / 데이터 호출해 렌더링하는 페이지로 나뉨)
+     -->
+    <div class="event-container container">
+        <div class="back-to-event-list">
+            <i class="bi bi-arrow-left-circle"></i>
+        </div>
+
+        <!-- 제목, 날짜 추가할 것 -->
+        <div class="dasony-promotion dragging">
+            <div class="promo-header">
+                <img src="https://dn-img-page.kakao.com/download/resource?kid=cGCFKe/hAdNZrCgeq/KPpW8UWut9az5ZwCRqbDpk" alt="출석 이벤트" />
+                <div class="login-check-promo-count">
+                    <div class="login-check-promo-count-content">
+                        <p>
+                            <strong>사용자님</strong> 반갑습니다<br>
+                            오늘도 출석체크하고 선물 받아볼까요?
+                        </p>
+                        <h4>현재까지 누적 출석일</h4>
+                        <em><strong>0</strong>/<strong>00</strong></em>
+                    </div>
+                </div>
+            </div>
+            <!-- 출석하기 버튼 만들것 -->
+            <div class="promo-body">
+                <div class="login-check-btn-part">
+                    <div class="login-check-btn">
+                        <strong>출석하기</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="promo-footer">
+                <div class="promo-notice">
+                    <h3>알려드려요</h3>
+                    <ul>
+                        <li>- 이벤트 기간 : 8/1(화) ~ 8/31(목)</li>
+                        <li>- 본 이벤트는 로그인한 유저만 참여 가능합니다.</li>
+                        <li>- 본 이벤트는 마케팅 수신 동의자에 한해 참여 가능합니다.</li>
+                        <li>- 출석 버튼을 눌러야 출석이 인정됩니다.</li>
+                        <li>- 본 이벤트는 당사 사정에 따라 사전 예고 없이 변경되거나 취소될 수 있습니다.</li>
+                        <li>- 출석은 하루에 최대 1번만 인정됩니다.</li>
+
+                        <li>[출석 선물 안내]
+                            <ul>
+                                <li>
+                                    - 이벤트 기간 내 15일 이상 출석하면 추첨을 통해 15 명에게 ‘화이트스텐 텀블러’를 드립니다. (9/1~5일 중 당첨자 별도 안내)
+                                </li>
+                                <li>
+                                    - 이벤트 기간 내 누적 출석일이 31일인 경우 추첨을 통해 50명에게 1만 다손을 드립니다.
+                                      (1인 1회, 9/1 푸시로 지급)
+                                </li>
+                                <li>
+                                    - 실제 경품은 상기 이미지와 다를 수 있으며 당사 사정에 따라 다른 품목으로 변경될 수 있습니다.
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="./src/js/event.js"/></script>
+    <script>
+        // 출석 버튼 누를시 발생할 이벤트
+        $(".login-check-btn").click((e)=>{
+            const target = $(e.target);
+            target.html("");
+            target.prepend('<i class="bi bi-check2-all"></i>');
+
+        });
+    </script>
+
+    <!-- <script>
+        let particles = [];
+        const colors = ["#eb6383","#fa9191","#ffe9c5","#b4f2e1"];
+        function particleSet () {
+            const point = $(".login-check-promo-count");
+            for (let i = 0; i < 150; i++) {
+                const p = document.createElement('particle');
+
+                // 입자 초기 위치
+                p.x = window.innerWidth * 0.3;
+                p.y = window.innerHeight + (Math.random() * window.innerHeight * 0.3);
+                
+                // 입자 초기 속도
+                p.vel = {
+                    x: (Math.random() - 0.5) * 10,
+                    y: Math.random() * -20 - 15
+                };
+
+                // 입자 질량
+                p.mass = Math.random() * 0.2 + 0.8;
+
+                particles.push(p);
+
+                // 입자 해당 위치로 이동시켜 대기
+                p.style.transform = `translate(${p.x}px, ${p.y}px)`;
+
+                // 입자 크기
+                const size = Math.random() * 15 + 5;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.background = colors[Math.floor(Math.random()*colors.length)];
+                
+                point.append(p);
+            }
+        }
+        let count = 0
+        function particleRender() {
+            for (let i = particles.length - 1; i >= 0; i--) {
+                    if(particles.length==20) return;
+                    const p = particles[i];
+                    p.style.transform = `translate3d(${p.x}px, ${p.y}px, 1px)`;
+                    
+                    p.x += p.vel.x;
+                    p.y += p.vel.y;
+                    
+                    p.vel.y += (0.5 * p.mass);
+                    if (p.y >= $(".login-check-promo-count").innerHeight()) {
+                        p.remove();
+                        particles.splice(i, 1);
+                    }
+            }
+            
+            //requestAnimationFrame(particleRender);
+        }
+
+        window.addEventListener('click', function(){
+            setTimeout(()=>{
+                particleSet();
+                particleRender();
+            },1000)
+        });
+    </script> -->
+    <!-- <script>
+        $(document).ready(function () {
+            let particles = [];
+            const colors = ["#eb6383", "#fa9191", "#ffe9c5", "#b4f2e1"];
+
+            function particleSet () {
+            const point = $(".login-check-promo-count");
+            for (let i = 0; i < 150; i++) {
+                const p = document.createElement('particle');
+
+                // 입자 초기 위치
+                p.x = window.innerWidth * 0.3;
+                p.y = window.innerHeight + (Math.random() * window.innerHeight * 0.3);
+                
+                // 입자 초기 속도
+                p.vel = {
+                    x: (Math.random() - 0.5) * 10,
+                    y: Math.random() * -20 - 15
+                };
+
+                // 입자 질량
+                p.mass = Math.random() * 0.2 + 0.8;
+
+                particles.push(p);
+
+                // 입자 해당 위치로 이동시켜 대기
+                p.style.transform = `translate(${p.x}px, ${p.y}px)`;
+
+                // 입자 크기
+                const size = Math.random() * 15 + 5;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.background = colors[Math.floor(Math.random()*colors.length)];
+                
+                point.append(p);
+            }
+        }
+
+            function particleRender() {
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    if (particles.length == 20) return;
+                    const p = particles[i];
+                    p.style.transform = `translate3d(${p.x}px, ${p.y}px, 1px)`;
+
+                    // Implement firework explosion effect
+                    if (p.y < $(".login-check-promo-count").innerHeight()) {
+                        p.remove();
+                        particles.splice(i, 1);
+                        createExplosion(p.x, p.y);
+                    } else {
+                        p.x += p.vel.x;
+                        p.y += p.vel.y;
+                        p.vel.y += (0.5 * p.mass);
+                    }
+                }
+            }
+
+            function createExplosion(x, y) {
+                for (let i = 0; i < 30; i++) {
+                    const p = document.createElement('particle');
+                    p.className = 'particle';
+                    p.x = x;
+                    p.y = y;
+                    p.vel = {
+                        x: (Math.random() - 0.5) * 10,
+                        y: Math.random() * -20 - 15
+                    };
+                    p.mass = Math.random() * 0.2 + 0.8;
+                    p.style.transform = `translate(${p.x}px, ${p.y}px)`;
+                    const size = Math.random() * 15 + 5;
+                    p.style.width = size + 'px';
+                    p.style.height = size + 'px';
+                    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    point.append(p);
+                    particles.push(p);
+                }
+            }
+
+            $(window).on('click', function () {
+                setTimeout(() => {
+                    particleSet();
+                    particleRender();
+                }, 1000);
+            });
+        });
+    </script> -->
+</body>
+</html>
