@@ -192,12 +192,12 @@ const Header = () => {
                                             <li></li>
                                             <li></li>
                                             <li></li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>회원정보 수정</li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 활동</li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>고객센터</li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 상점</li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 기부</li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>알림 내역</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/mypage/Info'>회원정보 수정</Link></li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/mypage/Myact'>내 활동</Link></li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to=''>고객센터</Link></li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/mypage/Myshop'>내 상점</Link></li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/mypage/Mydonation'>내 기부</Link></li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/mypage/Alert'>알림 내역</Link></li>
                                             <li></li>
                                         </ul>
                                     ); break;
