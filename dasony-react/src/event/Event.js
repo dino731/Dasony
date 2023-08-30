@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-// import ShopBest from './shopBest';
-// import './event.css';
+import './event.css';
 
 const Event = ()=>{
     return(
-        <div className="event-container container">
+        <div className="event-container">
             <Outlet />
         </div> 
     );
