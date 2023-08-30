@@ -38,7 +38,18 @@
   import EventForm from './event/EventForm';
   import EventDetailControl from './event/EventDetailControl';
   import EventBoard from './event/EventBoard';
-
+  import Mypage from './mypage/mypage';
+  import MypageHeader from './mypage/mypageHeader';
+  import MypageAct from './mypage/mypageAct';
+import MypageInfo from './mypage/mypageInfo';
+import MypageMyshopCoupon from './mypage/mypageMyshopCoupon';
+import MypageMyshopPoint from './mypage/mypageMyshopPoint';
+import MypageMyshopLikes from './mypage/mypageMyshopLikes';
+import MypageMyshops from './mypage/mypageMyshops';
+import MypageAlert from './mypage/mypageAlert';
+import MypageMydonation from './mypage/mypageMydonation';
+import MypageMyshopUsedPoint from './mypage/mypageMyshopUsedPoint';
+import {gamestart} from './mypage/realgame';
 
 
   function App() {
@@ -69,6 +80,7 @@
       //전체 창 영역
       <>
       <Header/>
+      <button onClick={gamestart}>시작합니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</button>
         <AnimatePresence>
           <Routes location={location} key={location.pathname}>
 
@@ -371,6 +383,110 @@
 
                     </Route>
                   {/*Board 중첩 route 끝 */}
+                    
+
+                    {/*mypage 중첩 route 시작 */}
+                    <Route path="/mypage/*" element={<div className=".for-main">
+                                                  <div className='for-normal-page'><motion.div
+                                                                          initial = {{opacity:0, y:30}}
+                                                                          animate = {{opacity:1, y:0}}
+                                                                          end = {{opacity:1, y:0}}
+                                                                          transition={{duration : 1}}>
+                                                                            <Mypage/>
+                                                                          </motion.div></div></div>}>
+                        <Route path="Info/*" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <MypageInfo/>
+                                                      </motion.div>}/>
+                        <Route path="myshop/*" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <MypageMyshops/>
+                                                      </motion.div>}>
+                        {/*myshop중첩 route 시작 */}                                 
+                        <Route path="Coupon" element={<motion.div
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
+                                                          <MypageMyshopCoupon/>
+                                                        </motion.div>}/>
+                          {/* Point 중첩 route 시작 */}
+                          <Route path="Point" element={<motion.div
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
+                                                          <MypageMyshopPoint/>
+                                                        </motion.div>}/>
+                          <Route path="MyUsedPoint" element={<motion.div
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
+                                                          <MypageMyshopUsedPoint/>
+                                                        </motion.div>}/>  
+                         {/* Point 중첩 route 끝 */}                     
+                          <Route path="Likes" element={<motion.div
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
+                                                          <MypageMyshopLikes/>
+                                                        </motion.div>}/>
+                        </Route>
+                        {/*myshop중첩 route 끝 */}
+                        <Route path="myAct" element={<motion.div
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
+                                                          <MypageAct/>
+                                                        </motion.div>}/>
+                        
+                        <Route path="Mydonation" element={<motion.div
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
+                                                          <MypageMydonation/>
+                                                        </motion.div>}/>
+                        <Route path="Alert" element={<motion.div
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
+                                                          <MypageAlert/>
+                                                        </motion.div>}>
+                          {/*shopCate 중첩 route 시작 */}
+                          <Route path="main" element={<ShopCateMain/>}/>
+                          <Route path="store" element={<ShopCateStore/>}/>
+                          <Route path='store/product' element={<ShopCateProduct/>}/>
+                          <Route path='product' element={<ShopCateProduct/>}/>
+                          </Route>{/*shop 중첩 route 끝 */}  
+
+                        <Route path="product/:storeName/:productName" element={<motion.div
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
+                                                          <ShopProductDetail/>
+                                                        </motion.div>}/>
+                        <Route path="product/:productName" element={<motion.div
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
+                                                          <ShopProductDetail/>
+                                                        </motion.div>}/>
+                        
+                    </Route>{/*mypage 중첩 route 끝 */}
+                  
  
           </Routes>
         </AnimatePresence>
