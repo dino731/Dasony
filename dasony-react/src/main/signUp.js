@@ -78,7 +78,7 @@ const SignUp = ()=>{
                     <tr>
                         <th>아이디</th>
                         <td><input type='text' onBlur={handleId}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='중복 확인'/></th>
+                        <th style={{textAlign:'left'}}><MainChecking txt='중복 확인' bodyTxt='이미 사용중인 아이디입니다.'/></th>
                     </tr>
                     <tr>
                         <th>비밀번호</th>
@@ -91,7 +91,7 @@ const SignUp = ()=>{
                     <tr>
                         <th>별명</th>
                         <td><input type='text' onBlur={handleNick}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='중복 확인'/></th>
+                        <th style={{textAlign:'left'}}><MainChecking txt='중복 확인' bodyTxt='이미 사용중인 별명입니다.'/></th>
                     </tr>
                     <tr>
                         <th>이름(실명)</th>
