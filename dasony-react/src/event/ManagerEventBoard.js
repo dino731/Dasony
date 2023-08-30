@@ -72,6 +72,11 @@ export default () => {
         // navigate(url);
     }
 
+    /** 이벤트 아이템 클릭시 해당 페이지로 이동 */
+    const moveToEventDetail = no => {
+        navigate(`/event/modifyEvent/${no}`)
+    };
+
     return(
         <div className="event-manager-board dragging">
             <div className="mb-3 row">
@@ -124,7 +129,7 @@ export default () => {
                     <tr className="notice-item">
                         <th scope="row">2</th>
                         <td>문화</td>
-                        <td className="text-cut" onClick="moveToEventDetail(1)">오펜하이머 관람표 증정 이벤트</td>
+                        <td className="text-cut" onClick={()=>moveToEventDetail(1)}>오펜하이머 관람표 증정 이벤트</td>
                         <td scope="row">2023-08-17</td>
                         <td scope="row">D-1</td>
                         <td scope="row" className="event-pm-button" onClick="sendMessage()"><span>작성</span></td>
@@ -132,7 +137,7 @@ export default () => {
                     <tr className="notice-item">
                         <th scope="row">1</th>
                         <td>기타</td>
-                        <td className="text-cut" onClick="moveToEventDetail(2)">8월 출석이벤트</td>
+                        <td className="text-cut" onClick={()=>moveToEventDetail(1)}>8월 출석이벤트</td>
                         <td scope="row">2023-08-01</td>
                         <td scope="row">D-3</td>
                         <td scope="row" className="event-pm-button" onClick="sendMessage()"><span>작성</span></td>

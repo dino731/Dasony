@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const EventBoard = () => {
 
     const item = useRef([]);
     const hoverList = ["none", "none", "none", "none", "none"];
     const [hoverStatus, setHoverStatus] = useState(hoverList);
+    const navigate = useNavigate();
 
     const changeEventChoice = (e, target) => {
         const eventTarget = e.target;
@@ -39,6 +40,10 @@ const EventBoard = () => {
         }
     }
 
+    /** 이벤트 아이템 클릭시 해당 페이지로 이동 */
+    const moveToEventDetail = no => {
+        navigate(`/event/detail/${no}`)
+    };
     
     useEffect(()=>{
         /** 이벤트 유형 선택 효과 부여 및 제거 */
@@ -99,7 +104,7 @@ const EventBoard = () => {
                                 <div className="event-item-deadline">D-5</div>
                             </div>
                         </Link>
-                        {hoverStatus[0] === "hover"?<div className="event-item-effect">
+                        {hoverStatus[0] === "hover"?<div className="event-item-effect" onClick={()=>moveToEventDetail(1)}>
                                                       <div className="event-close">조회</div>
                                                     </div> : null}
                     </div>
@@ -112,7 +117,7 @@ const EventBoard = () => {
                                 <div className="event-item-deadline">D-1</div>
                             </div>
                         </Link>
-                        {hoverStatus[1] === "hover"?<div className="event-item-effect">
+                        {hoverStatus[1] === "hover"?<div className="event-item-effect" onClick={()=>moveToEventDetail(1)}>
                                                       <div className="event-close">조회</div>
                                                     </div> : null}
                     </div>
@@ -125,7 +130,7 @@ const EventBoard = () => {
                                 <div className="event-item-deadline">D-1</div>
                             </div>
                         </Link>
-                        {hoverStatus[2] === "hover"?<div className="event-item-effect">
+                        {hoverStatus[2] === "hover"?<div className="event-item-effect" onClick={()=>moveToEventDetail(1)}>
                                                       <div className="event-close">조회</div>
                                                     </div> : null}
                     </div>
@@ -137,7 +142,7 @@ const EventBoard = () => {
                                 </div>
                             </div>
                         </Link>
-                        {hoverStatus[3] === "hover"?<div className="event-item-effect">
+                        {hoverStatus[3] === "hover"?<div className="event-item-effect" onClick={()=>moveToEventDetail(1)}>
                                                       <div className="event-close">조회</div>
                                                     </div> : null}
                     </div>
@@ -150,7 +155,7 @@ const EventBoard = () => {
                                 <div className="event-item-deadline">D-1</div>
                             </div>
                         </Link>
-                        {hoverStatus[4] === "hover"?<div className="event-item-effect">
+                        {hoverStatus[4] === "hover"?<div className="event-item-effect" onClick={()=>moveToEventDetail(1)}>
                                                       <div className="event-close">조회</div>
                                                     </div> : null}
                     </div>

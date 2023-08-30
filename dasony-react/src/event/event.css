@@ -105,6 +105,7 @@ div>.event-status-list{
             height: 100%;
             border-radius: 10px; 
             background-color: rgba(0, 0, 0, 0.705);
+            cursor: pointer;
 
             position: absolute;
             top: 0;
@@ -272,10 +273,12 @@ div>.event-status-list{
         .promo-media-part{
             width: 100%;
             padding: 0 5%;
+            margin-bottom: 15%;
         }
 
         .promo-reward-info{
             width: 100%;
+            background-color: rgb(26 26 26 / 75%);
             
             .promo-reward-item{
                 width: 100%;
@@ -296,7 +299,7 @@ div>.event-status-list{
 
                 >i{
                     color: white;
-                    font-size: 11em;
+                    font-size: 9em;
                     line-height: 15px;
                 }
 
@@ -617,6 +620,8 @@ div>.event-status-list{
         }
 
         >tbody>tr>th, >tbody>tr>td{padding: 4% 0;}
+
+        .text-cut{cursor: pointer;}
     }
 
     .event-selectBox{
