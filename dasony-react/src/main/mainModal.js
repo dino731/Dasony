@@ -19,6 +19,7 @@ function MainChecking(props){
         <button onClick={handleShow}>{props.txt}</button>
         <Modal show={show} onHide={handleClose}>
             <ModalHeader>{props.txt}</ModalHeader>
+            <ModalBody>{props.bodyTxt}</ModalBody>
             <ModalFooter><Button onClick={handleClose}>닫기</Button></ModalFooter>
         </Modal>
         </>

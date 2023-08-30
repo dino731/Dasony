@@ -7,7 +7,7 @@
 .shopCate-container{
     font-family: 'HakgyoansimWoojuR';
     font-size: 1.5vw;
-    color: #344E41;
+    color:#CB9DE7;
 }
 
 
@@ -19,13 +19,14 @@
 }
 
 .shopCate-title-box>div{
-    background-color: #588157;
     width: 20%;
     height: 10vh;
     line-height: 10vh;
-    color: #DAD7CD;
+    color: #CB9DE7;
     text-align: center;
     border-radius: 0.5vw;
+    border : 3px solid #CB9DE7;
+    font-weight: 900;
 }
 
 
@@ -35,15 +36,16 @@
     padding-top: 5vh;
 }
 .shopCate-search-box input:first-child{
-    border: 1px solid #344E41;
-    border-radius: 0.5vw;
+    border:2px solid #CB9DE7;
+    border-radius:0.5vw;
     height: 5vh;
 }
 .shopCate-search-box input:last-child{
-    border: none;
-    border-radius: 0.5vw;
     width: 5vw;
     height: 5vh;
-    background-color: #588157;
-    color: #DAD7CD;
+    border : 3px solid #CB9DE7; 
+    color:#CB9DE7; 
+    background-color:white; 
+    font-weight: 900; 
+    border-radius:0.5vw;
 }

@@ -1,9 +1,13 @@
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'react-bootstrap';
 import './ShopProductDetail.css';
-import HeartIcon from './heart';
-import { useEffect, useState } from 'react';
+import HeartIcon from '../heart';
+import { useEffect, useState, } from 'react';
+import { useParams } from 'react-router-dom';
 
 const ShopProductDetail = () => {
+
+    const {store, product} = useParams();
+    console.log(product);
 
     const [show, setShow] = useState(false);
     const [modalText, setModalText] = useState(`상품 이름을 5000포인트로 구매하시겠습니까?
@@ -12,6 +16,8 @@ const ShopProductDetail = () => {
                                                 *구매 이후 환불은 불가능합니다.*`);
     const [modalButton, setModalButton] = useState('inline-block');
     const [modalButtonText, setModalButtonText] = useState('취소');
+
+    const [modalClass, setModalClass] = useState('modalButton-no');
 
     const handleClose = () => setShow(false);
     const handleShow = () => {
@@ -22,12 +28,14 @@ const ShopProductDetail = () => {
                                     setModalText(`구매가 정상적으로 완료되었습니다.`);
                                     setModalButton('none');
                                     setModalButtonText('확인');
+                                    setModalClass('modalButton-yes');
                                 }
     const handleModalOff = ()=>{
                                     setModalText(<div textalign='center'>상품 이름을<br/>5000포인트로 구매하시겠습니까?<br/><br/>
                                                     *구매 이후 환불은 불가능합니다.*</div>);
                                     setModalButton('inline-block');
                                     setModalButtonText('취소');
+                                    setModalClass('modalButton-no');
                                 }
     const handleModalOffAndClose = () => {
         if(modalButtonText == '확인' && modalButton == 'inline-block' && show){
@@ -44,7 +52,7 @@ const ShopProductDetail = () => {
                 </div>
                 <div className='product-info-head'>
                     <div className='product-info-store'>
-                        상점 이름
+                        {store}
                     </div>
                     <div>
                         <HeartIcon/>
@@ -53,12 +61,12 @@ const ShopProductDetail = () => {
                 
                 <div className='product-info-middle'>
                     <div className='product-info-middle-left'>
-                        <div>상품 이름</div>
+                        <div>{product}</div>
                         <div>5000 다손</div>
                     </div>
                     <div className='product-info-middle-right'>
                         <button onClick={handleShow}>구매</button>
-                        <Modal show={show} onHide={handleClose}>
+                        <Modal className='modal' show={show} onHide={handleClose} >
                             <ModalHeader>
                                 상품 구매
                             </ModalHeader>
@@ -68,8 +76,8 @@ const ShopProductDetail = () => {
                                 </div>
                             </ModalBody>
                             <ModalFooter>
-                                <Button onClick={handleModalOffAndClose}>{modalButtonText}</Button>
-                                <Button onClick={handleModalOn} style={{display:modalButton}}>구매</Button>
+                                <button className={modalClass} onClick={handleModalOffAndClose}>{modalButtonText}</button>
+                                <button className='modalButton-yes' onClick={handleModalOn} style={{display:modalButton}}>구매</button>
                             </ModalFooter>
                         </Modal>
                     </div>

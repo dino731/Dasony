@@ -16,6 +16,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: #7A7A7A;
 }
 .main-container{
     width: 100vw;
@@ -47,17 +48,19 @@
 }
 .container2{
     display: flex;
+    width: 100%;
 }
 
 /*로그인창-div*/
 .login{
-    width: 30%;
+    width: 35%;
     height: 70vh;
-    background-color: #DAD7CD;
+    background-color: white;
     border-radius: 40px;
     display: block;
     position: inherit;
 }
+
 
 
 /* table, td, tr, th{
@@ -76,9 +79,9 @@
 
 .container table{
     font-family: 'HakgyoansimWoojuR';
-    font-size: 1.5vw;
+    font-size: 1.4vw;
     letter-spacing: 0.2vw;
-    color: #344E41;
+    color: rgb(93, 93, 93);
 }
 
 .container table img{
@@ -87,13 +90,13 @@
 
 .container table tfoot th, a{
     font-size: 1vw;
-    color: #344E41;
+    color: #A3A3A3;
     text-decoration: none;
 }
 
 .container table input{
     width: 90%;
-    border: 1px solid #344E41;
+    border: 2px solid #CB9DE7;
     border-radius:0.5vw;
 }
 
@@ -102,31 +105,34 @@
     height: 40%;
     border: none;
     border-radius:0.5vw;
-    color: #DAD7CD;
-    background-color: #588157;
+    border: 3px solid #CB9DE7;
+    color: #CB9DE7;
+    font-weight: 900;
+    background-color: white;
 }
 
 /*호버 효과*/
 .login button:hover{
-    background-color: #344E41;
+    background-color:#CB9DE7; 
+    color:#FCFA90;
     transition-duration: 0.5s;
 }
 
 .login a:hover{
-    color: #588157;
+    color: #CB9DE7; 
     transition-duration: 0.5s;
 }
 
 
 /*오른쪽 문구*/
 .container-right{
-    width: 50vw;
-    margin-left: 5vw;
+    width: 100%;
     border: 1px solid blue;
-    color: #DAD7CD;
+    color: white;
     font-family: 'HakgyoansimWoojuR';
     font-size: 4vh;
     font-weight: bold;
     letter-spacing: 0.5vw;
     text-align: center;
+    margin-left:5%;
 }

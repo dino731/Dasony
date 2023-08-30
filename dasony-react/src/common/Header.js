@@ -1,9 +1,151 @@
 import './Header.css';
 import { useEffect, useState, useTransition } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 
 
 const Header = () => {
+    const location = useLocation();
+    const path = location.pathname;
+    const [mainList, setMainList] = useState('');
+    /*관리자 헤더, 사용자 헤더 설정 */
+    const HandleMainList = async function(location){
+        let mainListText = '';
+        if(path.includes('admin')){
+            mainListText = (
+                <>
+                <ul>
+                    <li></li>
+                    <li className="logo-li"><img src='/resources/common-img/dasony-logo.png'/></li>
+                    <Link to='/admin/main' style={{textDecoration:'none'}}>
+                        <li className="board-li" 
+                            onClick={(event)=>{HandleOpacity(event.target.id);}}
+                            style={{fontSize:'1.5vw'}}
+                        >
+                            <i className="bi bi-house-door"></i> 메인
+                        </li>
+                    </Link>
+
+                    <li className="board-li" id="board" 
+                        onClick={(event)=>{HandleOpacity(event.target.id);}}
+                        style={{fontSize:'1.5vw'}}
+                    >
+                        <i className="bi bi-clipboard"></i> 게시판 관리
+                    </li>
+
+                    <Link to='/chat' style={{textDecoration:'none'}}> 
+                        <li className="board-li"  
+                            onClick={(event)=>{HandleOpacity(event.target.id);}}
+                            style={{fontSize:'1.5vw'}}
+                        >
+                            <i className="bi bi-people-fill"></i> 회원 관리
+                        </li>
+                    </Link> 
+
+                    <li className="board-li" id="point"
+                        onClick={(event)=>{HandleOpacity(event.target.id);}}
+                        style={{fontSize:'1.5vw'}}
+                    >
+                        <i className="bi bi-coin"></i> 포인트 관리
+                    </li>
+
+                    <Link to='/event' style={{textDecoration:'none'}}>
+                        <li className="board-li"
+                            onClick={(event)=>{HandleOpacity(event.target.id);}}
+                            style={{fontSize:'1.5vw'}}
+                        >
+                            <i className="bi bi-search-heart"></i> 이벤트 관리
+                        </li>
+                    </Link>
+                    <li className="board-li" id="myPage" 
+                        
+                        onClick={(event)=>{HandleOpacity(event.target.id);}}
+                        style={{fontSize:'1.5vw'}}
+                    >
+                        <i className="bi bi-person"></i> 내 정보
+                    </li>
+                    <Link to='/' style={{textDecoration:'none'}}>
+                        <li className="board-li" 
+                            onClick={(event)=>{HandleOpacity(event.target.id);}}
+                            style={{fontSize:'1.5vw'}}
+                        >
+                            <i className="bi bi-exclamation-triangle-fill"></i> 신고 관리
+                        </li>
+                    </Link>
+                    <Link to='/plzLogin' style={{textDecoration:'none'}}>
+                        <li className="logout-li" 
+                            onClick={(event)=>{HandleOpacity(event.target.id);}}
+                        >
+                            <p><i className="bi bi-box-arrow-right"></i> 로그아웃</p>
+                        </li>
+                    </Link> 
+                </ul>
+            </>
+            );
+        } else {
+            mainListText = (
+                <>
+                    <ul>
+                        <li></li>
+                        <li className="logo-li"><img src='/resources/common-img/dasony-logo.png'/></li>
+                        <li></li>
+                        <Link to='/' style={{textDecoration:'none'}}>
+                            <li className="board-li" 
+                                onClick={(event)=>{HandleOpacity(event.target.id);}}
+                            >
+                                <i className="bi bi-house-door"></i> 메인
+                            </li>
+                        </Link>
+
+                        <li className="board-li" id="board" 
+                            onClick={(event)=>{HandleOpacity(event.target.id);}}
+                        >
+                            <i className="bi bi-clipboard"></i> 게시판
+                        </li>
+
+                        <Link to='/chat' style={{textDecoration:'none'}}> 
+                            <li className="board-li"  
+                                onClick={(event)=>{HandleOpacity(event.target.id);}}
+                            >
+                                <i className="bi bi-chat-quote"></i> 채팅
+                            </li>
+                        </Link> 
+
+                        <li className="board-li" id="point"
+                            onClick={(event)=>{HandleOpacity(event.target.id);}}
+                        >
+                            <i className="bi bi-coin"></i> 포인트
+                        </li>
+
+                        <Link to='/event' style={{textDecoration:'none'}}>
+                            <li className="board-li"
+                                onClick={(event)=>{HandleOpacity(event.target.id);}}
+                            >
+                                <i className="bi bi-search-heart"></i> 이벤트
+                            </li>
+                        </Link>
+                        <li className="board-li" id="myPage" 
+                            
+                            onClick={(event)=>{HandleOpacity(event.target.id);}}
+                        >
+                            <i className="bi bi-person"></i> 내 정보
+                        </li>
+                        <Link to='/plzLogin' style={{textDecoration:'none'}}>
+                            <li className="logout-li" 
+                                onClick={(event)=>{HandleOpacity(event.target.id);}}
+                            >
+                                <p><i className="bi bi-box-arrow-right"></i> 로그아웃</p>
+                            </li>
+                        </Link> 
+                    </ul>
+                </>
+            );
+        }
+        setMainList(mainListText);
+    }
+
+    useEffect(()=>{
+        HandleMainList();
+    }, [location]);
 
     /*사이드바 속성 useState */
     const [sideId, setSideId] = useState('');
@@ -85,61 +227,8 @@ const Header = () => {
             /* 사이드바 - 메인 사이드 바 */
                 <div id="head-container">
                     <div id="main-container">
-                        <ul>
-                            <li></li>
-                            <li className="logo-li"><img src='/resources/common-img/dasony-logo.png'/></li>
-                            <li></li>
-                            <Link to='/' style={{textDecoration:'none'}}>
-                                <li className="board-li" 
-                                    onClick={(event)=>{HandleOpacity(event.target.id);}}
-                                >
-                                    <i className="bi bi-house-door"></i> 메인
-                                </li>
-                            </Link>
-
-                            <li className="board-li" id="board" 
-                                onClick={(event)=>{HandleOpacity(event.target.id);}}
-                            >
-                                <i className="bi bi-clipboard"></i> 게시판
-                            </li>
-
-                            <Link to='/chat' style={{textDecoration:'none'}}> 
-                                <li className="board-li"  
-                                    onClick={(event)=>{HandleOpacity(event.target.id);}}
-                                >
-                                    <i className="bi bi-chat-quote"></i> 채팅
-                                </li>
-                            </Link> 
-
-                            <li className="board-li" id="point"
-                                onClick={(event)=>{HandleOpacity(event.target.id);}}
-                            >
-                                <i className="bi bi-coin"></i> 포인트
-                            </li>
-
-                            <Link to='/event/list' style={{textDecoration:'none'}}>
-                                <li className="board-li"
-                                    onClick={(event)=>{HandleOpacity(event.target.id);}}
-                                >
-                                    <i className="bi bi-search-heart"></i> 이벤트
-                                </li>
-                            </Link>
-                            <li className="board-li" id="myPage" 
-                                
-                                onClick={(event)=>{HandleOpacity(event.target.id);}}
-                            >
-                                <i className="bi bi-person"></i> 내 정보
-                            </li>
-                            <Link to='/plzLogin' style={{textDecoration:'none'}}>
-                                <li className="logout-li" 
-                                    onClick={(event)=>{HandleOpacity(event.target.id);}}
-                                >
-                                    <p><i className="bi bi-box-arrow-right"></i> 로그아웃</p>
-                                </li>
-                            </Link> 
-                        </ul>
+                        {mainList}
                         <br/><br/>
-                        
                     </div>
                 
                     {/* 사이드바 - 보조 사이드 바 */}

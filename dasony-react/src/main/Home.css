@@ -1,0 +1,84 @@
+@font-face {
+    font-family: 'HakgyoansimWoojuR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.home-container{
+    width: 100%;
+    font-family: 'HakgyoansimWoojuR';
+}
+
+.home-container>div{
+    width: 100%;
+    font-size: 150%;
+    font-weight: 900;
+    letter-spacing: 0.1vw;
+}
+
+.home-title{
+    font-size: 100%;
+    height: 7vh;
+}
+
+.home-content{
+    width: 100%;
+    margin-bottom: 4vh;
+}
+
+
+.home-content>table>thead>tr{
+    height: 20vh;
+}
+.home-content>table{
+    width: 100%;
+}
+.home-content>table>thead>tr>td:first-child{
+    width:30%;
+    padding-left: 2%;
+}
+.home-content>table>thead>tr>td:last-child{
+    width:70%;
+    padding-right: 2%;
+}
+.home-content>table>thead>tr>td:first-child>div{
+    border: 2px solid #CB9DE7;
+    border-radius: 0.5vw;
+    width: 100%;
+    height: 20vh;
+    text-align: center;
+    display: flex;
+}
+.home-content>table>thead>tr>td:last-child{
+    display: flex;
+    width: 100%;
+}
+.home-content>table>thead>tr>td>div{
+    width: 100%;
+    height: 20vh;
+}
+.weather-board-info{
+    text-align: center;
+    font-size: 1.2vw;
+    margin-left: 2%;
+    width: 10vw;
+    border: 2px solid #CB9DE7;
+    border-radius: 0.5vw;
+}
+.weather-board-info>div{
+    margin: auto;
+}
+.weather-board-info>div:first-child{
+    border: 2px solid #CB9DE7;
+    border-radius: 0.5vw;
+    position: relative;
+    overflow: hidden;
+    width: 70%;
+    margin-top:10%;
+    margin-bottom: 5%;
+
+}
+.weather-board-info>div>img{
+    width: 100%;
+}
