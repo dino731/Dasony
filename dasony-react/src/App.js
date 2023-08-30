@@ -70,6 +70,15 @@ function App() {
 
   const [mainPage, setMainPage] = '';
 
+  const HandleMainPage = () => {
+    if(1){
+      setMainPage((<PlzLogin/>));
+    } else {
+      setMainPage((<Home/>));
+    }
+  }
+  const location = useLocation();
+  
   return (
     //loading ? (<Loading/>) : ''
     //전체 창 영역

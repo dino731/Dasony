@@ -15,7 +15,7 @@ const MypageHeader = () => {
         </div>
         <div className="button-div">
           <div>
-            <button  className="mypage-btn"><Link to='/mypage/Info'>회원정보 수정</Link></button>
+            <button  className="mypage-btn"><Link to='/mypage/Info'>회원정보</Link></button>
           </div>
           <div>
             <button className="mypage-btn"><Link to='/mypage/Myact'>내 활동</Link></button>
