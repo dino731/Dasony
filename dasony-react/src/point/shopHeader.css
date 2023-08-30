@@ -1,0 +1,27 @@
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
+.shop-nav{
+    display: flex;
+    height: 10vh;
+}
+.shop-nav>div{
+    width: 100%;
+}
+.shop-nav .bi{
+    font-size: 1.8vw;
+    color: #344E41;
+}
+.icon{
+    display: flex;
+    justify-content: space-between;
+    padding:0 10% 0 0;
+}
+.user-info{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 0 5%;
+}
+.bi>span{
+    font-size: 1.3vw;
+}
