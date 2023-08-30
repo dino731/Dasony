@@ -227,9 +227,7 @@ const Header = () => {
             /* 사이드바 - 메인 사이드 바 */
                 <div id="head-container">
                     <div id="main-container">
-
                         {mainList}
-
                         <br/><br/>
                     </div>
                 

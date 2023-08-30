@@ -250,8 +250,9 @@ function App() {
                                                       transition={{duration : 1}}>
                                                         <ShopProductDetail/>
                                                       </motion.div>}/>
+                          </Route>
                         </Route>{/*shop 중첩 route 끝 */}  
-
+                      
                     
                     {/* event 중첩 route 시작 */}
                     <Route path="/event" element={<div className=".for-main">
