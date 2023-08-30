@@ -74,7 +74,7 @@ export default () => {
 
     /** 이벤트 아이템 클릭시 해당 페이지로 이동 */
     const moveToEventDetail = no => {
-        navigate(`/event/modifyEvent/${no}`)
+        navigate(`/event/modifyEvent/${no}`);
     };
 
     return(

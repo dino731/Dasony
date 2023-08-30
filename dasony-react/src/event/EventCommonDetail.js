@@ -14,44 +14,16 @@ const EventDetail = ({data}) => {
     const [hoverStatus, setHoverStatus] = useState("none");
 
     // 아이콘 위에 내용 위치시키기 -?? 위치 이동X
-    // const updateTicketTextPosition = () => {
-    //     // const x = ticket.current.getBoundingClientRect().left;
-    //     // const y = ticket.current.getBoundingClientRect().top;
-    //     // const width = ticket.current?.offsetWidth;
-    //     // const height = ticket.current?.offsetHeight;
-    //     // const ticketTextWidth = ticketText.current?.offsetWidth;
-    //     // const ticketTextHeight = ticketText.current?.offsetHeight;
-
-    //     // // ticketText를 ticket의 중앙에 위치시키기 위해 계산된 위치 설정
-    //     // const centerX = x + width / 2 - ticketTextWidth / 2;
-    //     // const centerY = y + height / 2 - ticketTextHeight / 2;
-
-    //     // // ticketText 위치 조정
-    //     // ticketText.current.style.left = centerX + "px";
-    //     // ticketText.current.style.top = centerY + "px";
-
-    //     // console.log("ticket-x" + (x + width / 2));
-    //     // console.log("ticketText-x" + centerX);
-    //     // console.log("ticket-y" + (y + height / 2));
-    //     // console.log("ticketText-y" + centerY);
-
-    //     // const p = $(ticket).offset();
-    //     // const pWidth = $(ticket).width();
-    //     // const pHeight = $(ticket).height();
-    //     // console.log(p);
-    //     // $(ticketText).offset({top: p.top + pHeight/8*3, left: p.left + pWidth/7*2});
-        
-    // };
-
     const updateTicketTextPosition = () => {
         if (ticket.current && ticketText.current) {
             const ticketRect = ticket.current.getBoundingClientRect();
-            const ticketTextWidth = ticketText.current.offsetWidth;
+            const ticketTextWidth = ticketText.current.offsetWidth; // offsetWidth / offsetHeight
             const ticketTextHeight = ticketText.current.offsetHeight;
+            
+            const centerX = ticketRect.left / 2 + ticketTextWidth/20;
+            const centerY = - ticketTextHeight * 2;
 
-            const centerX = ticketRect.left + ticketRect.width / 2 - ticketTextWidth / 2;
-            const centerY = ticketRect.top + ticketRect.height / 2 - ticketTextHeight / 2;
-
+            ticketText.current.style.position = "relative";
             ticketText.current.style.left = centerX + "px";
             ticketText.current.style.top = centerY + "px";
         }
@@ -61,13 +33,15 @@ const EventDetail = ({data}) => {
     const navigate = useNavigate();
 
     useLayoutEffect(() => {
-        // 컴포넌트가 렌더링된 후 ticketText 위치 업데이트
-        updateTicketTextPosition();
-
         // textarea <br> -> enter
         const text = "시사회 이벤트!!!<br>으악 보고싶음";
         textarea.current.value = text.replaceAll("<br>", "\r\n");
     }, []);
+    
+    useEffect(()=>{
+        // 컴포넌트가 렌더링된 후 ticketText 위치 업데이트
+        updateTicketTextPosition();
+    });
 
     return(
         <>

@@ -169,7 +169,7 @@
                                                       transition={{duration : 1}}>
                                                         <EventForm editStatus="등록"/>
                                                       </motion.div>}/>
-                        <Route path="modifyEvent:no" element={<motion.div
+                        <Route path="modifyEvent/:no" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
                                                       end = {{opacity:1, y:0}}
