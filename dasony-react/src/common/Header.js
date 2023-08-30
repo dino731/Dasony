@@ -117,7 +117,7 @@ const Header = () => {
                                 <i className="bi bi-coin"></i> 포인트
                             </li>
 
-                            <Link to='/event' style={{textDecoration:'none'}}>
+                            <Link to='/event/list' style={{textDecoration:'none'}}>
                                 <li className="board-li"
                                     onClick={(event)=>{HandleOpacity(event.target.id);}}
                                 >
