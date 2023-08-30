@@ -27,6 +27,7 @@ const AdminShop = () => {
     const handleModifyOn = ()=> setModifyShow(true);
     const handleModifyOff = () => setModifyShow(false);
 
+{/* 상점 수정 추가 모달 열기 */}
     const [modifyingShop, setModifyingShop] = useState([]);
     const handleModifyingShop = (event) => {
         let {id, value} = event.target;
@@ -135,7 +136,9 @@ const AdminShop = () => {
                     <table style={{width:'100%', textAlign:'center', marginTop:'5%'}}>
                         <tr style={{height:'10vh'}}>
                             <th>상점 이름</th>
-                            <td><input type="text" defaultValue={newShop.name}/></td>
+                            <td>
+                                <input type="text" defaultValue={newShop.name} onClick={handleModifyingShop}/>
+                            </td>
                         </tr>
                         <tr>
                             <th>지역</th>
