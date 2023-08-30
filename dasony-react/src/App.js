@@ -26,6 +26,10 @@ import ShopProductDetail from './point/ShopProductDetail';
 import ShopMyCoupon from './point/ShopMyCoupon';
 import CouponList from './point/CouponList';
 import UserLocation from './main/UserLocation';
+import HomeSide from './main/HomeSide';
+import AdminMain from './admin/adminMain';
+import AdminShop from './admin/shop/adminShop';
+import { AdminShopDetail } from './admin/shop/adminShopDetail';
 
 
 
@@ -71,6 +75,32 @@ function App() {
                   
 
                   {/* 로그인 된 경우 */}
+                  {/*관리자로 로그인 한 경우 */}
+                  <Route path="/admin/main" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                          <AdminMain/>
+                                                                        </motion.div></div></div>}/>
+                  <Route path="/admin/shop" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                          <AdminShop/>
+                                                                        </motion.div></div></div>}/>
+                  <Route path="/admin/shop/detail" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                          <AdminShopDetail/>
+                                                                        </motion.div></div></div>}/>
+                                                                        
                   {/* 메인페이지 부분 */}
                   <Route path="/" element={<motion.div
                                                 initial = {{opacity:0, y:30}}
@@ -82,7 +112,7 @@ function App() {
                                                   <Home/>
                                                 </div>
                                                 <div id="right-window">
-                                                  여기가 바로 롸이트 윈도우라네
+                                                  <HomeSide/>
                                                 </div>
                                               </div>
                                               </motion.div>
@@ -200,24 +230,17 @@ function App() {
                         {/*shopCate 중첩 route 시작 */}
                         <Route path="main" element={<ShopCateMain/>}/>
                         <Route path="store" element={<ShopCateStore/>}/>
-                        <Route path='store/product' element={<ShopCateProduct/>}/>
-                        <Route path='product' element={<ShopCateProduct/>}/>
+                        <Route path=':store/product' element={<ShopCateProduct/>}/>
+                        <Route path='every/product' element={<ShopCateProduct/>}/>
+                        <Route path=":store/:product" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <ShopProductDetail/>
+                                                      </motion.div>}/>
                         </Route>{/*shop 중첩 route 끝 */}  
 
-                      <Route path="product/:storeName/:productName" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <ShopProductDetail/>
-                                                      </motion.div>}/>
-                      <Route path="product/:productName" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <ShopProductDetail/>
-                                                      </motion.div>}/>
                       
                   </Route>{/*shop 중첩 route 끝 */}
            
