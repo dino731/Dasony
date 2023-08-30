@@ -18,7 +18,7 @@
     box-sizing: border-box;
 }
 .main-container{
-    width: 100vw;
+    width: 100%;
 }
 
 .window{
@@ -52,7 +52,7 @@ video {
 
 /*로그인창-div*/
 .login{
-    width: 25vw;
+    width: 35%;
     height: 70vh;
     background-color: #DAD7CD;
     border-radius: 40px;
@@ -121,8 +121,7 @@ video {
 
 /*오른쪽 문구*/
 .container-right{
-    width: 50vw;
-    margin-left: 5vw;
+    width: 100%;
     border: 1px solid blue;
     color: #DAD7CD;
     font-family: 'HakgyoansimWoojuR';
@@ -130,4 +129,5 @@ video {
     font-weight: bold;
     letter-spacing: 0.5vw;
     text-align: center;
+    margin-left:5%;
 }

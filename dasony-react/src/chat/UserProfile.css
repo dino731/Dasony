@@ -1,0 +1,19 @@
+#profile{
+    display: flex;
+    margin-left: 8.5%;
+}
+#profileimg{
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 1px solid #7A7A7A;
+    margin-top: 13%;
+}
+
+#username{
+    font-size: 23px;
+    font-family: 'ImcreSoojin';
+    color: #7A7A7A;
+    margin-left: 10%;
+    margin-top: 33%;
+}

@@ -1,0 +1,78 @@
+#donahamcontent{
+    /* flex : 3; */
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    /* top: 25%; */
+    /* margin: 5%; */
+    border-collapse: collapse;
+    /* width: 60%; */
+    margin-bottom: 29%;
+}
+
+#donamogh{
+    font-weight: 500; 
+    font-size: 25px; 
+    color: #7A7A7A;
+    font-family: 'ImcreSoojin';
+}
+
+#donaham{
+    width: 97%;
+    color: #7A7A7A;
+    
+}
+
+#dona{
+    width: 11%;
+    height: 50px;
+    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white;font-weight: 900; border-radius:0.5vw;
+    font-family: 'HakgyoansimWoojuR';
+    font-size: 17px;
+    margin-right: 1%;
+}
+
+#dona, #back_dona:hover{
+    cursor: pointer;
+}
+
+#back_dona{
+    width: 15%;
+    height: 50px;
+    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white;font-weight: 900; border-radius:0.5vw;
+    font-family: 'HakgyoansimWoojuR';
+    font-size: 17px;
+}
+
+#dona:hover, #back_dona:hover{
+    background-color:#CB9DE7; color:#FCFA90;
+}
+
+#donationForm{
+    font-family: 'HakgyoansimWoojuR'; 
+    font-size: 18px;
+}
+
+#donationForm input[type=text]{
+    width: 200px;
+    height: 30px;
+    border: 2px solid #CB9DE7;border-radius:5px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+#donaham hr{
+    margin: 10px 0;
+    width: 60%;
+    margin-left: 20%;
+}
+
+#gibutxt{
+    font-size: 16px;
+    font-family: 'HakgyoansimWoojuR';
+}

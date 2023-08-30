@@ -32,18 +32,18 @@
 
 #new_chat>button{
     height: 40px;
-    width: 11%;
-    border-radius :4px;
-    border: 1px solid #344E41;
-    background-color: #DAD7CD;
-    color: #344E41;
-    font-size: 15px;
+    width: 10%;
+    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
+}
+
+#new_chat>button:hover{
+    background-color:#CB9DE7; color:#FCFA90;
 }
 
 #new_chat>span{
     font-size: 22px;
     font-weight: 500; 
-    color: #344E41; 
+    color: #7A7A7A;; 
     font-family: 'ImcreSoojin';
 }
 
@@ -60,10 +60,11 @@
     height: 40px;
     width: 300px;
     border-radius :5px;
-    border: 1px solid #344E41;
+    border: 2px solid #CB9DE7;border-radius:5px;
+
 }
 
-#search_btn input{
+/* #search_btn input{
     position: relative;
     left: 30%;
     top: 5%;
@@ -74,7 +75,7 @@
     background-color: #DAD7CD;
     color: #344E41;
     font-family: 'HakgyoansimWoojuR';
-}
+} */
 
 #openchat{
     text-align: center;
@@ -107,8 +108,8 @@
 }
 
 #openchat>thead{
-    background-color: #DAD7CD;
-    color: #344E41;
+    /* background-color: #DAD7CD; */
+    color: #7A7A7A;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
 }
@@ -120,18 +121,22 @@
 
 #scrollchat tbody button{
     border-radius :4px;
-    border: 1px solid #344E41;
-    background-color: #DAD7CD;
-    color: #344E41;
+    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
     height: 32px;
-    width: 57px;
+    width: 71px;
+    font-size: 15px;
+}
+
+#scrollchat tbody button:hover{
+    background-color:#CB9DE7; color:#FCFA90;
 }
 
 #scrollchat{
     max-height: 575px; /*오픈채팅 리스트 높이 조절*/
     overflow: auto;
     word-wrap: break-word;
-    /* height: 100%; */
+    height: 100%;
+    /* border-right: 1px solid black; */
 }
 
 #toggle_head{
@@ -146,6 +151,11 @@
 
 }
 
+#tchattable td{
+    color: #7A7A7A;
+    font-size: 17px;
+}
+
 #talklistcontent button, #search_btn>input[type="submit"]:hover{
     cursor: pointer;
 }
@@ -155,9 +165,13 @@
     
 }
 
-#scrollchat, #openchat{
+/* #openchat, #tchattable{
     border-right: 1px solid black;
     
+} */
+
+#openchat, #tchattable{
+    border-right: 1px solid black;
 }
 
 #search_key>input{

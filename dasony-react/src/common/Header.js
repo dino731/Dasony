@@ -40,7 +40,7 @@ const Header = () => {
                                             <li></li>
                                             <li></li>
                                             <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/shop/main'>상점</Link></li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>기부</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/donalist'>기부</Link></li>
                                             <li></li>
                                             <li></li>
                                         </ul>

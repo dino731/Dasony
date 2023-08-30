@@ -1,0 +1,102 @@
+#donalistcontent{
+    /* flex : 3; */
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* width: 60%; */
+    margin-top: 6%;
+    margin-top: 11%;
+}
+
+.donation_list{
+    text-align: center;
+    margin: auto;
+    /* border-collapse: collapse; */
+    margin-bottom: 5%;
+    margin-top: 1.5%;
+    /* width: 97%; */
+    /* border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black; */
+    height: 630px;
+    font-family: 'HakgyoansimWoojuR';
+}
+
+.donation_list table{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    /* border-bottom: 1px solid black; */
+}
+
+#donalistthead{
+    text-align: center;
+    margin: auto;
+    border-collapse: collapse;
+    position: absolute;
+    margin-top: -1px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+#scrolldona tr{
+    height: 6vh;
+    color: #7A7A7A;
+}
+
+#donalistthead>thead>tr{
+    height: 5vh;
+}
+
+#donalisttbody td{
+    border-bottom: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+#donalistthead>thead{
+    color:#7A7A7A;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+#scrolldona tr:hover{
+    background-color: ghostwhite; 
+    cursor: pointer;
+}
+
+#scrolldona{
+    max-height: 575px; /*오픈채팅 리스트 높이 조절*/
+    overflow: auto;
+    word-wrap: break-word;
+    /* height: 100%; */
+}
+
+#donalisttbody{
+    border-spacing: 0px;
+}
+
+#dolistbtn{
+    height: 38px;
+}
+
+#donalistcontent{
+    width: 97%;
+    margin-bottom: 2%;
+    margin-left: 1.5%;
+    display: block;
+}
+
+#dona_btn{
+    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
+    width: 9%;
+    height: 38px;
+    right: 3%;
+    font-size: 15px;
+}
+
+#dona_btn:hover{
+    cursor: pointer;
+    background-color:#CB9DE7; color:#FCFA90;
+}
