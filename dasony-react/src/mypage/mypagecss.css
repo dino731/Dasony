@@ -1,0 +1,152 @@
+@font-face {
+    font-family: 'HakgyoansimWoojuR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+    list-style: none;
+}
+body{
+    padding-top: 1%;
+    display: flex;
+}
+.header{
+    width: 30%;
+}
+.main{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    margin: 30px auto 0;
+}
+
+div{
+    border: 1px solid blac
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+/* 알람css */
+.alert-table{
+    font-size: 22px;
+}
+.alert-table th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .alert-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .alert-table tr:hover {
+    background-color: #f5f5f5;
+  }
+
+/* 회원정보css */
+.edit-info{
+    display: flexbox;
+    width: 950px;
+}
+.user-infos{
+    font-size: 22px;
+   
+}
+.user-infos li{
+    float: left;
+    margin: 0 10px;;
+}
+.user-infos input{
+    width: 700px;
+    height: 45px;
+    top: 50%;
+}
+
+.button-div{
+    display: block;
+    
+}
+.button-div button{
+    margin: 45px;
+    width: 100px;
+    height: 30px;
+}
+.edit-info{
+    border: .5px solid lightgray;
+    height: 80%;
+    margin-left: 30px;
+}
+
+/*
+    내활동css
+*/
+
+.delete-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .act-table th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .act-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .act-table tr:hover {
+    background-color: #f5f5f5;
+  }
+  .mys{
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+
+  .my-like-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .my-like-table td {
+    width: 33.33%;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .my-like-table img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .btnh1{
+        
+
+    padding: 0;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color:transparent;
+    
+} /* 하트 */
+
+/* 베이지 : #DAD7CD
+초록 : #588157
+진초록 : #344E41 */

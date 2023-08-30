@@ -1,0 +1,25 @@
+table{
+    margin: auto;
+    border-collapse: collapse;
+    
+    
+    
+    /* opacity: 0.1; */
+}
+td{
+
+    width: 30px;
+    height: 30px;
+    text-align:center;
+    vertical-align:middle;
+    
+}
+
+#game{
+    position: absolute;
+    display: none;
+    top: 0;
+    border: 1px solid red;
+    
+}
+
