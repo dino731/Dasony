@@ -165,8 +165,8 @@ const Header = () => {
                                             <li></li>
                                             <li></li>
                                             <li></li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>사담</li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>정보공유</li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/general/daily'>사담</Link></li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/info/jmt'>정보공유</Link></li>
                                             <li onClick={(event)=>{HandleOpacity(event.target.id);}}>나눔</li>
                                             <li></li>
                                             <li></li>
@@ -227,7 +227,9 @@ const Header = () => {
             /* 사이드바 - 메인 사이드 바 */
                 <div id="head-container">
                     <div id="main-container">
+
                         {mainList}
+
                         <br/><br/>
                     </div>
                 

@@ -1,5 +1,13 @@
+import { useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import './event.css';
+
 const Event = ()=>{
-    return(<h1>이벤트창이요</h1>);
+    return(
+        <div className="event-container">
+            <Outlet />
+        </div> 
+    );
 }
 
 export default Event;
