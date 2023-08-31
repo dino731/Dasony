@@ -12,6 +12,11 @@
   font-size: x-large;
   font-weight: 800;
 }
+.boardListSelect{
+  border: none;
+  width: 8vw;
+  height: 3vh;
+}
 .BoardList-head-title-btn{
   width: 100px;
   height: 30px;

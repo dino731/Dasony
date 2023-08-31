@@ -1,9 +1,13 @@
 import {Link} from 'react-router-dom';
 import { useState } from 'react';
 import './Board.css';
-
+import { useRecoilState } from 'recoil';
+import { boardPostState } from '../atoms';
+import BoardListHeader from './BoardListHeader';
 
 const BoardDailyList = ()=>{
+  const [boardPost, setBoardPost] = useRecoilState(boardPostState);
+
   const [keyword, setKeyword] = useState([]);
   const [inputContent, setInputContent] = useState('');
 
@@ -31,16 +35,7 @@ const BoardDailyList = ()=>{
   return(
     <>
       <div className="BoardList-head-title-wrapper">
-        <div className="row justify-content-md-center BoardList-head-title">
-          <div className="col-md-9 BoardList-head-title-text">일상 게시판</div>
-            <div className="col-3 col-md-3">
-              <Link to="/board/writer/dwriter" style={{textDecoration:'none'}}>
-                <button className="board-li BoardList-head-title-btn" id="dwriter"                                       
-                        // onClick={(event)=>{HandleOpacity(event.target.id);}}
-                >글쓰기</button>
-              </Link>
-            </div>
-          </div>
+        <BoardListHeader/>
         </div>
 
         <div className="boardList-container">
@@ -51,7 +46,7 @@ const BoardDailyList = ()=>{
                   <div className="boardList-search-box-title">
                     <input type="text" className="boardList-search-input-title" placeholder="제목, 내용을 검색해보세요"/>
                       <div className="boardList-search-input-title-img-div">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                         </svg>
                         {/* <i className="bi bi-search boardList-search-input-title-imgcon"></i> */}
@@ -107,48 +102,34 @@ const BoardDailyList = ()=>{
             </form>
           </div>
         <div className="boardList-list-wrapper">
-          <ul className="boardList-list-ul-wrapper">
-            <li className="boardList-list-li">
-              <div className="boardList-list-wrapper">
-                <div className="boardList-list-container">
-                    <Link to='/board/general/daily/detail' style={{textDecoration:'none'}}>
-                      <div className="boardList-list-content-container">
-                          <div className="boardList-list-keyword">날씨</div>
-                          <div className="boardList-list-content-title">유기동물 봉사자 찾아요</div>
-                          <div className="boardList-list-content">반달이네 유기동물 센터에서 함께 봉사하실 용자를 찾아요. 파티원 모집합니다 지현, 유진, 미선, 정준, 아인 원하시면 당근을 흔들어주세요~ (원양어선 아님)</div>
-                          <div className="boardList-list-content-info"><span>박지현</span><span>2023.08.22</span><span>11:50</span></div>
-                          <div className="boardList-list-content-action">
-                            <span><img src="/resources/common-img/boardImg/비밀번호표시아이콘.png"/>1 <a style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/-" title="비밀번호 표시 아이콘">비밀번호 표시 아이콘  제작자: exomoon design studio - Flaticon</a></span>
-                            <span><img src="/resources/common-img/boardImg/빈하트.png"/>1 <a style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="심장 아이콘">심장 아이콘  제작자: Noplubery - Flaticon</a></span>
-                            <span><img src="/resources/common-img/boardImg/대화아이콘.png"/>1 <a style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="대화 아이콘">대화 아이콘  제작자: exomoon design studio - Flaticon</a></span></div>
-                      </div>
-                    </Link>
-                    <div className="boardList-list-img">
-                      <img src="/resources/common-img/boardImg/지현님슈퍼슈퍼지능.jpg" alt="썸네일" className="board-img"/>
-                    </div>
-                </div>
-              </div>
-            </li>
-            <li className="boardList-list-li">
-              <div className="boardList-list-wrapper">
-                <div className="boardList-list-container">
-                    <div className="boardList-list-content-container">
-                        <div className="boardList-list-keyword">날씨</div>
-                        <div className="boardList-list-content-title">유기동물 봉사자 찾아요</div>
-                        <div className="boardList-list-content">반달이네 유기동물 센터에서 함께 봉사하실 용자를 찾아요. 파티원 모집합니다 지현, 유진, 미선, 정준, 아인 원하시면 당근을 흔들어주세요~ (원양어선 아님)</div>
-                        <div className="boardList-list-content-info"><span>박지현</span><span>2023.08.22</span><span>11:50</span></div>
-                        <div className="boardList-list-content-action">
-                          <span><img src="/resources/common-img/boardImg/비밀번호표시아이콘.png"/>1 <a style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/-" title="비밀번호 표시 아이콘">비밀번호 표시 아이콘  제작자: exomoon design studio - Flaticon</a></span>
-                          <span><img src="/resources/common-img/boardImg/빈하트.png"/>1 <a style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="심장 아이콘">심장 아이콘  제작자: Noplubery - Flaticon</a></span>
-                          <span><img src="/resources/common-img/boardImg/대화아이콘.png"/>1 <a style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="대화 아이콘">대화 아이콘  제작자: exomoon design studio - Flaticon</a></span></div>
-                    </div>
-                    <div className="boardList-list-img">
-                      <img src="/resources/common-img/boardImg/지현님슈퍼슈퍼지능.jpg" alt="썸네일" className="board-img"/>
-                    </div>
-                </div>
-              </div>
-            </li>
-          </ul>
+          {
+            boardPost && boardPost.map( (board)=>(
+            <ul key={board.boardNo} className="boardList-list-ul-wrapper">
+             <li className="boardList-list-li">
+               <div className="boardList-list-wrapper">
+                 <div className="boardList-list-container">
+                     <Link to={'/board/general/daily/detail/'+board.boardNo+'/'+board.userName} style={{textDecoration:'none'}}>
+                       <div className="boardList-list-content-container">
+                           <div className="boardList-list-keyword">{board.boardCateNo}</div>
+                           <div className="boardList-list-content-title">{board.boardTitle}</div>
+                           <div className="boardList-list-content">{board.boardContent}</div>
+                           <div className="boardList-list-content-info"><span>{board.userName}</span><span>{board.boardWriteDate}</span><span>11:50</span></div>
+                           <div className="boardList-list-content-action">
+                             <span><img src="/resources/common-img/boardImg/비밀번호표시아이콘.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/-" title="비밀번호 표시 아이콘">비밀번호 표시 아이콘  제작자: exomoon design studio - Flaticon</span></span>
+                             <span><img src="/resources/common-img/boardImg/빈하트.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="심장 아이콘">심장 아이콘  제작자: Noplubery - Flaticon</span></span>
+                             <span><img src="/resources/common-img/boardImg/대화아이콘.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="대화 아이콘">대화 아이콘  제작자: exomoon design studio - Flaticon</span></span></div>
+                       </div>
+                     </Link>
+                     <div className="boardList-list-img">
+                       <img src="/resources/common-img/boardImg/지현님슈퍼슈퍼지능.jpg" alt="썸네일" className="board-img"/>
+                     </div>
+                 </div>
+               </div>
+             </li>
+           </ul>
+            ))
+             
+          }
         </div>
       </div>
     </>

@@ -58,6 +58,7 @@ import {gamestart} from './mypage/realgame';
 
 
 
+
 function App() {
   
   const [loading, setLoading] = useState(true);
@@ -310,10 +311,8 @@ function App() {
                                                         <ManagerEventBoard/>
                                                       </motion.div>}/>                                            
                     </Route>
-
-
-                  {/*Board 중첩 route 시작 */}
-                  <Route path="/board/*" element={<div className=".for-main">
+                   {/*Board 중첩 route 시작 */}
+                   <Route path="/board/*" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
@@ -328,89 +327,107 @@ function App() {
                                                     transition={{duration : 1}}>
                                                       <General/>
                                                     </motion.div>}>
-                          <Route path="daily" element={<motion.div
+                          <Route path="daily/" element={<motion.div
                                                         initial = {{opacity:0, y:30}}
                                                         animate = {{opacity:1, y:0}}
                                                         end = {{opacity:1, y:0}}
                                                         transition={{duration : 1}}>
                                                            <BoardDailyList/>
                                                         </motion.div>}/>
-                          <Route path="interest" element={<motion.div
+                                <Route path="daily/dwriter" element={<motion.div
+                                                              initial = {{opacity:0, y:30}}
+                                                              animate = {{opacity:1, y:0}}
+                                                              end = {{opacity:1, y:0}}
+                                                              transition={{duration : 1}}>
+                                                                <BoardDailyWriter/>
+                                                              </motion.div>}/>
+                                <Route path="daily/vwriter" element={<motion.div
+                                                              initial = {{opacity:0, y:30}}
+                                                              animate = {{opacity:1, y:0}}
+                                                              end = {{opacity:1, y:0}}
+                                                              transition={{duration : 1}}>
+                                                                <BoardVoteUploader/>
+                                                              </motion.div>}/>
+                                <Route path="daily/swriter" element={<motion.div
+                                                              initial = {{opacity:0, y:30}}
+                                                              animate = {{opacity:1, y:0}}
+                                                              end = {{opacity:1, y:0}}
+                                                              transition={{duration : 1}}>
+                                                                <BoardShortsUploader/>
+                                                              </motion.div>}/>
+                          <Route path="interest/" element={<motion.div
                                                           initial = {{opacity:0, y:30}}
                                                           animate = {{opacity:1, y:0}}
                                                           end = {{opacity:1, y:0}}
                                                           transition={{duration : 1}}>
                                                             <BoardDailyList/>
-                                                          </motion.div>}/>                                
-                          <Route path="daily/detail" element={<motion.div
+                                                          </motion.div>}/>        
+                                <Route path="interest/dwriter" element={<motion.div
+                                                                initial = {{opacity:0, y:30}}
+                                                                animate = {{opacity:1, y:0}}
+                                                                end = {{opacity:1, y:0}}
+                                                                transition={{duration : 1}}>
+                                                                  <BoardDailyWriter/>
+                                                                </motion.div>}/>                   
+                          <Route path="daily/detail/:boardNo/:userName" element={<motion.div
                                                         initial = {{opacity:0, y:30}}
                                                         animate = {{opacity:1, y:0}}
                                                         end = {{opacity:1, y:0}}
                                                         transition={{duration : 1}}>
                                                            <BoardDetail/>
                                                         </motion.div>}/>
-                                                        </Route>
-
-                      <Route path="info/*" element={<motion.div
+                      </Route>
+                    <Route path="info/*" element={<motion.div
                                                     initial = {{opacity:0, y:30}}
                                                     animate = {{opacity:1, y:0}}
                                                     end = {{opacity:1, y:0}}
                                                     transition={{duration : 1}}>
                                                       <Info/>
                                                     </motion.div>}>
-                          <Route path="jmt"/* 임시로 지정 DB랑 맞추기 */ element={<motion.div
+                          <Route path="jmt/" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <BoardDailyList/>
+                                                      </motion.div>}/>
+                                <Route path="jmt/dwriter" element={<motion.div
+                                                                initial = {{opacity:0, y:30}}
+                                                                animate = {{opacity:1, y:0}}
+                                                                end = {{opacity:1, y:0}}
+                                                                transition={{duration : 1}}>
+                                                                  <BoardDailyWriter/>
+                                                                </motion.div>}/>
+                          <Route path="fashion/" element={<motion.div
+                                                          initial = {{opacity:0, y:30}}
+                                                          animate = {{opacity:1, y:0}}
+                                                          end = {{opacity:1, y:0}}
+                                                          transition={{duration : 1}}>
+                                                            <BoardDailyList/>
+                                                          </motion.div>}/>
+                                    <Route path="fashion/dwriter" element={<motion.div
+                                                                    initial = {{opacity:0, y:30}}
+                                                                    animate = {{opacity:1, y:0}}
+                                                                    end = {{opacity:1, y:0}}
+                                                                    transition={{duration : 1}}>
+                                                                      <BoardDailyWriter/>
+                                                                    </motion.div>}/>
+                          <Route path="local/" element={<motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
                                                                           <BoardDailyList/>
-                                                                        </motion.div>}/>
-                          <Route path="fashion" element={<motion.div
-                                                                        initial = {{opacity:0, y:30}}
-                                                                        animate = {{opacity:1, y:0}}
-                                                                        end = {{opacity:1, y:0}}
-                                                                        transition={{duration : 1}}>
-                                                                          <BoardDailyList/>
-                                                                        </motion.div>}/>
-                          <Route path="local" element={<motion.div
-                                                                        initial = {{opacity:0, y:30}}
-                                                                        animate = {{opacity:1, y:0}}
-                                                                        end = {{opacity:1, y:0}}
-                                                                        transition={{duration : 1}}>
-                                                                          <BoardDailyList/>
-                                                                        </motion.div>}/>                                  
-                                                                        </Route>
-                      <Route path="writer/*" element={<motion.div
-                                                    initial = {{opacity:0, y:30}}
-                                                    animate = {{opacity:1, y:0}}
-                                                    end = {{opacity:1, y:0}}
-                                                    transition={{duration : 1}}>
-                                                      <BoardDailyWriter/>
-                                                    </motion.div>}>                                                 
-                          <Route path="dwriter" element={<motion.div
-                                                        initial = {{opacity:0, y:30}}
-                                                        animate = {{opacity:1, y:0}}
-                                                        end = {{opacity:1, y:0}}
-                                                        transition={{duration : 1}}>
-                                                          <BoardDailyWriter/>
-                                                        </motion.div>}/>
-                          <Route path="vwriter" element={<motion.div
-                                                        initial = {{opacity:0, y:30}}
-                                                        animate = {{opacity:1, y:0}}
-                                                        end = {{opacity:1, y:0}}
-                                                        transition={{duration : 1}}>
-                                                          <BoardVoteUploader/>
-                                                        </motion.div>}/>
-                          <Route path="swriter" element={<motion.div
-                                                        initial = {{opacity:0, y:30}}
-                                                        animate = {{opacity:1, y:0}}
-                                                        end = {{opacity:1, y:0}}
-                                                        transition={{duration : 1}}>
-                                                          <BoardShortsUploader/>
-                                                        </motion.div>}/>
-                                                        </Route>
-
-</Route>
+                                                                        </motion.div>}/> 
+                                <Route path="local/dwriter" element={<motion.div
+                                                                initial = {{opacity:0, y:30}}
+                                                                animate = {{opacity:1, y:0}}
+                                                                end = {{opacity:1, y:0}}
+                                                                transition={{duration : 1}}>
+                                                                  <BoardDailyWriter/>
+                                                                </motion.div>}/>                          
+                    </Route>
+                  </Route>{/*Board 중첩 route 끝 */}
                     {/*mypage 중첩 route 시작 */}
                     <Route path="/mypage/*" element={<div className=".for-main">
                                                   <div className='for-normal-page'><motion.div
