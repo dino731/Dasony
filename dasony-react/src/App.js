@@ -1,4 +1,3 @@
-
 import './App.css';
 import Header from './common/Header';
 import {Route, Routes, useLocation} from 'react-router-dom';
@@ -44,7 +43,7 @@ import AdminShop from './admin/shop/adminShop';
 import { AdminShopDetail } from './admin/shop/adminShopDetail';
 import { AdminUser } from './admin/user/adminUser';
 import { AdminUserDetail } from './admin/user/adminUserDetail';
-import Mypage from './mypage/mypage';
+import Mypage from './mypage/Mypage';
 import MypageHeader from './mypage/mypageHeader';
 import MypageAct from './mypage/mypageAct';
 import MypageInfo from './mypage/mypageInfo';
@@ -56,8 +55,10 @@ import MypageAlert from './mypage/mypageAlert';
 import MypageMydonation from './mypage/mypageMydonation';
 import MypageMyshopUsedPoint from './mypage/mypageMyshopUsedPoint';
 import {gamestart} from './mypage/realgame';
-
-
+import Notice from './mypage/Notice';
+import NoticeBoard from './mypage/NoticeBoard';
+import NoticeDetail from './mypage/NoticeDetail';
+import ManagerNoticeBoard from './mypage/ManagerNoticeBoard';
 
 
 
@@ -196,14 +197,6 @@ function App() {
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
                                                                           <Chat/>
-                                                                        </motion.div></div></div>}/>
-                  <Route path="/event" element={<div className=".for-main">
-                                                <div className='for-normal-page'><motion.div
-                                                                        initial = {{opacity:0, y:30}}
-                                                                        animate = {{opacity:1, y:0}}
-                                                                        end = {{opacity:1, y:0}}
-                                                                        transition={{duration : 1}}>
-                                                                          <Event/>
                                                                         </motion.div></div></div>}/>
                   {/*shop 중첩 route 시작 */}
                   <Route path="/shop/*" element={<div className=".for-main">
@@ -506,40 +499,45 @@ function App() {
                                                         end = {{opacity:1, y:0}}
                                                         transition={{duration : 1}}>
                                                           <MypageAlert/>
-                                                        </motion.div>}>
-                          {/*shopCate 중첩 route 시작 */}
-                          <Route path="main" element={<ShopCateMain/>}/>
-                          <Route path="store" element={<ShopCateStore/>}/>
-                          <Route path='store/product' element={<ShopCateProduct/>}/>
-                          <Route path='product' element={<ShopCateProduct/>}/>
-                          </Route>{/*shop 중첩 route 끝 */}  
-
-                        <Route path="product/:storeName/:productName" element={<motion.div
-                                                        initial = {{opacity:0, y:30}}
-                                                        animate = {{opacity:1, y:0}}
-                                                        end = {{opacity:1, y:0}}
-                                                        transition={{duration : 1}}>
-                                                          <ShopProductDetail/>
                                                         </motion.div>}/>
-                        <Route path="product/:productName" element={<motion.div
-                                                        initial = {{opacity:0, y:30}}
-                                                        animate = {{opacity:1, y:0}}
-                                                        end = {{opacity:1, y:0}}
-                                                        transition={{duration : 1}}>
-                                                          <ShopProductDetail/>
-                                                        </motion.div>}/>
-                        
-                    </Route>{/*mypage 중첩 route 끝 */}
-                  
- 
+                 </Route>{/*mypage 중첩 route 끝 */}
+                  {/* notice 중첩 route 시작 */}
+                  <Route path="/notice" element={<div className=".for-main">
+                                                  <div className='for-normal-page'><motion.div
+                                                                          initial = {{opacity:0, y:30}}
+                                                                          animate = {{opacity:1, y:0}}
+                                                                          end = {{opacity:1, y:0}}
+                                                                          transition={{duration : 1}}>
+                                                                            <Notice/>
+                                                                          </motion.div></div></div>}>
+                        <Route path="list" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <NoticeBoard/>
+                                                      </motion.div>}/> 
+                        <Route path="detail/:no" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <NoticeDetail/>
+                                                      </motion.div>}/>  
+                        <Route path="managerBoard" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <ManagerNoticeBoard/>
+                                                      </motion.div>}/>                                                                        
+                  </Route>
           </Routes>
         </AnimatePresence>
 
             {/*푸터 영역 */}
             <div className="for-main" style={{display:'none'}}><Footer/></div>
-            
-
-      </>                                  
+        </>                                  
     );
   }
 

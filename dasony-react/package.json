@@ -24,6 +24,9 @@
     "react-loader-spinner": "^5.4.5",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
+    "react-virtualized-auto-sizer": "^1.0.20",
+    "react-window": "^1.8.9",
+    "react-window-infinite-loader": "^1.0.9",
     "styled-components": "^5.3.11",
     "web-vitals": "^2.1.4"
   },
