@@ -592,12 +592,11 @@ function App() {
                                                         end = {{opacity:1, y:0}}
                                                         transition={{duration : 1}}>
                                                         <ManagerNoticeBoard/>
-                                                        </motion.div>}/>                                                                        
-                    </Route>
-                </Route>
 
-                {/* chat */}
-                <Route path="/chat/:chatname" element={<div className=".for-main">
+                                                      </motion.div>}/>                                                                        
+                  </Route>
+                  <Route path="/chat/:id/:chatname" element={<div className=".for-main">
+
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}

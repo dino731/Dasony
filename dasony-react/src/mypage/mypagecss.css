@@ -200,8 +200,17 @@
     border-radius: 8px;
     cursor: pointer;
   }
+
+
+  .act-table th, .act-table td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
   .delete-button :hover{
     background-color:#FCFA90;; color:#CB9DE7;
+
   }
 
   

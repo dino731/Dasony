@@ -98,7 +98,31 @@
 
 #tchattable td{
     border-bottom: 1px solid black;
+    /* width: 100%; */
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+
 }
+/* #tchattable td:first-child{
+    width: 9%;
+}
+
+#tchattable td:nth-child(2){
+    width: 40%;
+}
+
+#tchattable td:nth-child(3){
+    width: 30%;
+}
+
+#tchattable td:nth-child(4){
+    width: 15%;
+}
+
+#tchattable td:nth-child(5){
+    width: 10%;
+} */
 
 #chatlist{
     height: 617px;

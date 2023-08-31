@@ -40,12 +40,14 @@ const AdminDonaList = () => {
                 <table id='listhead'>
                     <thead>
                         <tr>
-                            <th width="110">번호</th>
+                            <th width="100">번호</th>
                             <th width="400">제목</th>
-                            <th width="270">모금단체</th>
-                            <th width="220">작성일</th>
+                            <th width="260">모금단체</th>
+                            <th width="190">작성일</th>
                             <th width="210">마감일</th>
-                            <th width="230">모금액</th>
+                            <th width="200">모금액</th>
+                            <th width="200">목표금액</th>
+                            <th width="200">달성률</th>
                         </tr>
                     </thead>
                 </table>
@@ -55,12 +57,14 @@ const AdminDonaList = () => {
                             {
                                 adDonaList.map(list => (
                                     <tr key={list.id} onClick={() => handleAdDetail(list.id)}>
-                                        <td width="110">{list.id}</td>
-                                        <td width="450">{list.title}</td>
+                                        <td width="150">{list.id}</td>
+                                        <td width="550">{list.title}</td>
                                         <td width="350">{list.dona}</td>
-                                        <td width="200">{list.createdate}</td>
-                                        <td width="250">{list.enddate}</td>
+                                        <td width="220">{list.createdate}</td>
+                                        <td width="242">{list.enddate}</td>
                                         <td width="250">{list.mony}</td>
+                                        <td width="250">{list.goalmony}</td>
+                                        <td width="250">{list.achieve}</td>
                                     </tr>
                                 ))
                             }

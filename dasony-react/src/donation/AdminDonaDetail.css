@@ -81,7 +81,6 @@
     width: 46%; 
     text-align: center; 
     background-color: red; 
-    color:white; 
     font-size: 22px; 
     font-weight: 600; 
     border-radius: 4px; 
@@ -89,7 +88,11 @@
     padding : 10px 0;
 }
 
+#addday>b{
+    color:white;  
+}
+
 #controlldona{
     /* margin-top: 20%; */
-    margin-left: 50%;
+    margin-left: 47%;
 }
