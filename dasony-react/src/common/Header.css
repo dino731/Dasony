@@ -27,7 +27,7 @@
     height: 100vh;
     box-sizing: border-box;
     position: fixed;
-    color: #CB9DE7;
+    color: #7A7A7A;
     display: flex;
 }
 #container *{
@@ -38,6 +38,7 @@
 /*사이드바 - 메인*/
 #main-container{
     width:50%;
+    color: #7A7A7A;
     
 }
 
