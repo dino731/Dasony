@@ -5,42 +5,49 @@ import {Link} from 'react-router-dom';
 
 // import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
 const MypageAlert = () => {
-    return(
-    <div className="main">
 
+    
+
+    return(
+    
+        <div className='Alert-table'>
+        <h2>내 알림</h2>
         
-    <div className="alert-table">
-     <table>
+        <div className="jefftable">
+
+      <table>
         <thead>
-            <tr>
-            <th>활동 번호</th>
-            <th>제목</th>
-            <th>내용</th>
-            <th>작성자</th>
-            </tr>
+          <tr>
+            <th className='nf-history-header2'>알람 번호</th>
+            <th className='nf-history-header2'>어디사용</th>
+            <th className="nf-history-header1">알림내용</th>
+            <th className="nf-history-header2">알림날짜</th>
+          </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>구매완료</td>
-                <td>홈런볼 500원</td>
+        
+          <tr>
+                <td className="nf-td1">1</td>
+                <td className="nf-td1" >
+                  
+                  
+                  <span className="mypage-product-title"> 상점 이용</span>
+                  
+               
+                </td>
+                <td className="nf-td2">홈런볼 구매 500원</td>
+                <td className="nf-td3">2023-08-04</td>
+            
+              
             </tr>
-            <tr>
-                <td>2</td>
-                <td>구매완료</td>
-                <td>초코송이 500원</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>신고대상 제재 완료</td>
-                <td>미선님 강퇴</td>
-            </tr>
+         
         </tbody>
-    </table>
-</div>
+      </table>
+      </div>
+    </div>
+    
 
 
-</div> 
-    )
+    );
 }
 export default MypageAlert;

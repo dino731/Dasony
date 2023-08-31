@@ -1,4 +1,6 @@
-
+.admin-user-datail-container{
+    width: 100%;
+}
 .admin-user-datail-head{
     display: flex;
     justify-content: space-between;
