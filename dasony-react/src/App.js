@@ -230,7 +230,7 @@ function App() {
                   </Route>{/*shop 중첩 route 끝 */}
 
                   {/*Board 중첩 route 시작 */}
-                  <Route path="/board/*" element={<div className=".for-main">
+                <Route path="/board/*" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
@@ -250,7 +250,7 @@ function App() {
                                                         animate = {{opacity:1, y:0}}
                                                         end = {{opacity:1, y:0}}
                                                         transition={{duration : 1}}>
-                                                           <BoardDailyList/>
+                                                           <BoardDailyList />
                                                         </motion.div>}/>
                           <Route path="interest" element={<motion.div
                                                           initial = {{opacity:0, y:30}}
@@ -259,16 +259,16 @@ function App() {
                                                           transition={{duration : 1}}>
                                                             <BoardDailyList/>
                                                           </motion.div>}/>                                
-                          <Route path="daily/detail" element={<motion.div
+                          <Route path="daily/detail/:boardNo/:userName" element={<motion.div
                                                         initial = {{opacity:0, y:30}}
                                                         animate = {{opacity:1, y:0}}
                                                         end = {{opacity:1, y:0}}
                                                         transition={{duration : 1}}>
                                                            <BoardDetail/>
                                                         </motion.div>}/>
-                                                        </Route>
+                      </Route>
 
-                      <Route path="info/*" element={<motion.div
+                    <Route path="info/*" element={<motion.div
                                                     initial = {{opacity:0, y:30}}
                                                     animate = {{opacity:1, y:0}}
                                                     end = {{opacity:1, y:0}}
@@ -296,7 +296,7 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <BoardDailyList/>
                                                                         </motion.div>}/>                                  
-                                                                        </Route>
+                    </Route>
                       <Route path="writer/*" element={<motion.div
                                                     initial = {{opacity:0, y:30}}
                                                     animate = {{opacity:1, y:0}}
@@ -325,7 +325,7 @@ function App() {
                                                         transition={{duration : 1}}>
                                                           <BoardShortsUploader/>
                                                         </motion.div>}/>
-                                                        </Route>
+                      </Route>
 
                   </Route>{/*Board 중첩 route 끝 */}
  
