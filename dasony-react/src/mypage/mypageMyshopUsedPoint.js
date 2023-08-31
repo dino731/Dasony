@@ -8,6 +8,8 @@ const MypageMyshopUsedPoint = () => {
     return (
 
         <div className="myUsedPoint">
+
+          
           
            현재 포인트 : 100포인트입니다.
 
