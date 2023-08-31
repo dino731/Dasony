@@ -43,6 +43,8 @@ import HomeSide from './main/HomeSide';
 import AdminMain from './admin/adminMain';
 import AdminShop from './admin/shop/adminShop';
 import { AdminShopDetail } from './admin/shop/adminShopDetail';
+import { AdminUser } from './admin/user/adminUser';
+import { AdminUserDetail } from './admin/user/adminUserDetail';
 
 
 
@@ -111,7 +113,22 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <AdminShopDetail/>
                                                                         </motion.div></div></div>}/>
-                                                                        
+                  <Route path="/admin/user" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                          <AdminUser/>
+                                                                        </motion.div></div></div>}/> 
+                  <Route path="/admin/user/detail" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                          <AdminUserDetail/>
+                                                                        </motion.div></div></div>}/>                                                                                        
                   {/* 메인페이지 부분 */}
                   <Route path="/" element={<motion.div
                                                 initial = {{opacity:0, y:30}}

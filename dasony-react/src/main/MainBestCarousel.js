@@ -244,23 +244,23 @@ const MainVsCarousel = () => {
     const [left, setLeft] = useState(0);
     const handleLeft = () => {
         let changedLeft = 0;
-        if(-51*5<left&& left<-46*5){
+        if(-18*6<left&& left<=-18*5){
             changedLeft = 0;
             setLeft(changedLeft);
         } else {
-            changedLeft = left-49.3;
-            setLeft(left-49.3);
+            changedLeft = left-19.25;
+            setLeft(left-19.25);
             console.log(changedLeft);
         }
     }
     const handleRight = () => {
         let changedLeft = 0;
-        if(-30<=left && left<30){
+        if(-17<=left && left<17){
             changedLeft = 0;
             setLeft(changedLeft);
             console.log(changedLeft);
         } else {
-            changedLeft=left+49.3;
+            changedLeft=left+19.25;
             setLeft(changedLeft);
             console.log(changedLeft);
         }
@@ -271,7 +271,7 @@ const MainVsCarousel = () => {
             <span className='vs-carousel-btn-left' onClick={handleRight}>
                 {"<"}
             </span>
-            <div className='mainVs-box' style={{left:(left+'%')}}>
+            <div className='mainVs-box' style={{left:(left+'vw')}}>
                 <div>
                    치킨 
                 </div>
@@ -281,7 +281,7 @@ const MainVsCarousel = () => {
                 </div>
             </div>
 
-            <div className='mainVs-box' style={{left:(left+'%')}}>
+            <div className='mainVs-box' style={{left:(left+'vw')}}>
                 <div>
                     불고기
                 </div>
@@ -291,7 +291,7 @@ const MainVsCarousel = () => {
                 </div>
             </div>
 
-            <div className='mainVs-box' style={{left:(left+'%')}}>
+            <div className='mainVs-box' style={{left:(left+'vw')}}>
                 <div>
                     돼지 갈비
                 </div>
@@ -301,7 +301,7 @@ const MainVsCarousel = () => {
                 </div>
             </div>
 
-            <div className='mainVs-box' style={{left:(left+'%')}}>
+            <div className='mainVs-box' style={{left:(left+'vw')}}>
                 <div>
                 
                 </div>
@@ -311,7 +311,7 @@ const MainVsCarousel = () => {
                 </div>
             </div>
 
-            <div className='mainVs-box' style={{left:(left+'%')}}>
+            <div className='mainVs-box' style={{left:(left+'vw')}}>
                 <div>
                     
                 </div>
@@ -320,7 +320,7 @@ const MainVsCarousel = () => {
                     
                 </div>
             </div>
-            <div className='mainVs-box' style={{left:(left+'%')}}>
+            <div className='mainVs-box' style={{left:(left+'vw')}}>
                 <div>
                     
                 </div>
@@ -329,7 +329,7 @@ const MainVsCarousel = () => {
                     
                 </div>
             </div>
-            <div className='mainVs-box' style={{left:(left+'%')}}>
+            <div className='mainVs-box' style={{left:(left+'vw')}}>
                 <div>
                     
                 </div>
@@ -338,7 +338,7 @@ const MainVsCarousel = () => {
                     
                 </div>
             </div>
-            <div className='mainVs-box' style={{left:(left+'%')}}>
+            <div className='mainVs-box' style={{left:(left+'vw')}}>
                 <div>
                     
                 </div>

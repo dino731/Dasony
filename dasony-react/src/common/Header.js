@@ -15,7 +15,11 @@ const Header = () => {
                 <>
                 <ul>
                     <li></li>
+                    <Link to='/admin/main' style={{textDecoration:'none'}}>
                     <li className="logo-li"><img src='/resources/common-img/dasony-logo.png'/></li>
+                    </Link>
+
+                    <li></li>
                     <Link to='/admin/main' style={{textDecoration:'none'}}>
                         <li className="board-li" 
                             onClick={(event)=>{HandleOpacity(event.target.id);}}
@@ -25,14 +29,16 @@ const Header = () => {
                         </li>
                     </Link>
 
+                    <Link to='/admin/board' style={{textDecoration:'none'}}>
                     <li className="board-li" id="board" 
                         onClick={(event)=>{HandleOpacity(event.target.id);}}
                         style={{fontSize:'1.5vw'}}
                     >
                         <i className="bi bi-clipboard"></i> 게시판 관리
                     </li>
+                    </Link>
 
-                    <Link to='/chat' style={{textDecoration:'none'}}> 
+                    <Link to='/admin/user' style={{textDecoration:'none'}}> 
                         <li className="board-li"  
                             onClick={(event)=>{HandleOpacity(event.target.id);}}
                             style={{fontSize:'1.5vw'}}
@@ -48,7 +54,7 @@ const Header = () => {
                         <i className="bi bi-coin"></i> 포인트 관리
                     </li>
 
-                    <Link to='/event' style={{textDecoration:'none'}}>
+                    <Link to='/admin/event' style={{textDecoration:'none'}}>
                         <li className="board-li"
                             onClick={(event)=>{HandleOpacity(event.target.id);}}
                             style={{fontSize:'1.5vw'}}
@@ -56,14 +62,9 @@ const Header = () => {
                             <i className="bi bi-search-heart"></i> 이벤트 관리
                         </li>
                     </Link>
-                    <li className="board-li" id="myPage" 
-                        
-                        onClick={(event)=>{HandleOpacity(event.target.id);}}
-                        style={{fontSize:'1.5vw'}}
-                    >
-                        <i className="bi bi-person"></i> 내 정보
-                    </li>
-                    <Link to='/' style={{textDecoration:'none'}}>
+
+
+                    <Link to='/admin/declare' style={{textDecoration:'none'}}>
                         <li className="board-li" 
                             onClick={(event)=>{HandleOpacity(event.target.id);}}
                             style={{fontSize:'1.5vw'}}
@@ -86,7 +87,9 @@ const Header = () => {
                 <>
                     <ul>
                         <li></li>
+                        <Link to='/' style={{textDecoration:'none'}}>
                         <li className="logo-li"><img src='/resources/common-img/dasony-logo.png'/></li>
+                        </Link>
                         <li></li>
                         <Link to='/' style={{textDecoration:'none'}}>
                             <li className="board-li" 
@@ -158,51 +161,85 @@ const Header = () => {
     /*사이드바 텍스트 Handle */
     const HandleSideList =  async function(id){
         let sideList = "";
-        switch(id){
-            case'board': sideList = (
-                                        <ul>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/general/daily'>사담</Link></li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/info/jmt'>정보공유</Link></li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>나눔</li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                        </ul>
-                                    ); break;
-            case'point' : sideList = (
-                                        <ul>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/shop/main'>상점</Link></li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>기부</li>
-                                            <li></li>
-                                            <li></li>
-                                        </ul>
-                                    ); break;
-            case'myPage': sideList = (
-                                        <ul>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>회원정보 수정</li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 활동</li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>고객센터</li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 상점</li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 기부</li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}>알림 내역</li>
-                                            <li></li>
-                                        </ul>
-                                    ); break;
-            default : sideList = "";
+        if(path.includes('admin')){
+            switch(id){
+                case'board': sideList = (
+                                            <ul>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/board'>사담</Link></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/board'>정보공유</Link></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>나눔</li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                        ); break;
+                case'point' : sideList = (
+                                            <ul>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/shop'>상점</Link></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>기부</li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                        ); break;
+                default : sideList = "";
+            }
+        } else {
+            switch(id){
+                case'board': sideList = (
+                                            <ul>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/general/daily'>사담</Link></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/info/jmt'>정보공유</Link></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>나눔</li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                        ); break;
+                case'point' : sideList = (
+                                            <ul>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/shop/main'>상점</Link></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>기부</li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                        ); break;
+                case'myPage': sideList = (
+                                            <ul>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>회원정보 수정</li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 활동</li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>고객센터</li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 상점</li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>내 기부</li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>알림 내역</li>
+                                                <li></li>
+                                            </ul>
+                                        ); break;
+                default : sideList = "";
         }
+    }
         await HandleSideId(id);
         setSideListText(sideList);
         
