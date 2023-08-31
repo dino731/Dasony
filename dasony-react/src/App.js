@@ -44,7 +44,7 @@ import { AdminShopDetail } from './admin/shop/adminShopDetail';
 import { AdminUser } from './admin/user/adminUser';
 import { AdminUserDetail } from './admin/user/adminUserDetail';
 import { AdminCalendar } from './admin/board/adminCalendar';
-import Mypage from './mypage/mypage';
+import Mypage from './mypage/Mypage';
 import MypageHeader from './mypage/mypageHeader';
 import MypageAct from './mypage/mypageAct';
 import MypageInfo from './mypage/mypageInfo';
