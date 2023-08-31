@@ -1,20 +1,21 @@
 // import { useState } from 'react';
 import './DonaTotal.css';
-// import { useParams } from 'react-router-dom';
-import { useDonaData } from './DonaDataContext';
 
 const DonaTotal = () => {
 
-    const donationAmount = localStorage.getItem('donationAmount');
     const donaId = localStorage.getItem('id');
+
+    let donationAmount = 0;
+
+    donaId.split(", ").forEach(function(element){
+        const donationAmountId = parseInt(localStorage.getItem(`donationAmount_${element}`));
+        donationAmount += donationAmountId;
+    });
 
     const donaInfo = JSON.parse(localStorage.getItem('donaInfo'));
 
-    const {donalist} = useDonaData();
-
-    
     const formatWithCommas = (number) => {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); // 기부 금액 ,설정
     };
     
     const dataFormat = (date) => { // 현재 날짜 가져와서 -로 변경
@@ -25,26 +26,7 @@ const DonaTotal = () => {
         day = day >= 10 ? day : '0' + day;
         return [year, month, day].join('-');
     }
-
-    // const donaAllList = {
-    //     id : donaId,
-    //     title : donaInfo.title,
-    //     dona : donaInfo.dona,
-    //     dasondason : formatWithCommas(donationAmount) + '다손',
-    //     donadate : dataFormat(new Date())
-    // };
     
-    // donaInfo.push(donaAllList);
-
-    // const parseDonaInfo = JSON.parse(donaInfo);
-
-    // const donaTotal = [
-    //     {id : 1, title : '기부해주세요', dona : '초록 어린이 우산 재단', donadason : '5000다손', donadate : '2023-02-22'},
-    //     {id : 2, title : '기부해주세요', dona : '초록 어린이 우산 재단', donadason : '5000다손', donadate : '2023-02-22'},
-    //     {id : 3, title : '기부해주세요', dona : '초록 어린이 우산 재단', donadason : '5000다손', donadate : '2023-02-22'},
-    //     {id : 4, title : '기부해주세요', dona : '초록 어린이 우산 재단', donadason : '5000다손', donadate : '2023-02-22'}
-    // ];
-
     return(
         <div id="totalcontent">
             <div className="donation_total">
@@ -67,23 +49,12 @@ const DonaTotal = () => {
                         <table id='totaltboty'>
                             <tbody style={{height: '100%'}}>
                                 <tr>
-                                    <td width="100">{donaId}</td>
+                                    <td width="100">{donaInfo.id}</td>
                                     <td width="500">{donaInfo.title}</td>
                                     <td width="250">{donaInfo.dona}</td>
                                     <td width="150">{formatWithCommas(donationAmount)}다손</td>
                                     <td width="200">{dataFormat(new Date())}</td>
                                 </tr>
-                            {/* {
-                                donaInfo.map((total) => {
-                                    return <tr key={total.id}>
-                                        <td width="100">{donaInfo.id}</td>
-                                        <td width="500">{donaInfo.title}</td>
-                                        <td width="250">{donaInfo.dona}</td>
-                                        <td width="150">{formatWithCommas(donaInfo.donadason)}</td>
-                                        <td width="200">{dataFormat(donaInfo.donadate)}</td>
-                                    </tr>
-                                })
-                            } */}
                             </tbody>
                         </table>
                     </div>

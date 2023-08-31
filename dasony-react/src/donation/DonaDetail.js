@@ -1,22 +1,33 @@
 import { useEffect, useState } from 'react';
 import './DonaDetail.css';
 import { useParams } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
+import { useDonaData } from './DonaDataContext';
 
 
 const DonaDetail = () => {
     const {id} = useParams();
+    const {donalist} = useDonaData();
+
+    const donationAmount = localStorage.getItem(`donationAmount_${id}`);
+    // const countDona = localStorage.getItem(`countDona_${id}`);
+
+
+    const donaInfo = donalist.find(dona => dona.id === parseInt(id));
+
+    const formatWithCommas = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
     const [remainingDays, setRemainingDays] = useState('');
 
-    const donaInfo = localStorage.getItem('donaInfo');
-    const parseDonaInfo = JSON.parse(donaInfo);
+    // const donaInfo = localStorage.getItem('donaInfo');
+    // const parseDonaInfo = JSON.parse(donaInfo);
 
     const handlemogh = (id) => {
         window.location.href = `/donadona/${id}`;
-
     }
 
-    const data = new Date(parseDonaInfo.createdate);
+    const data = new Date(donaInfo.createdate);
     data.setMonth(data.getMonth() + 7);
     data.setDate(data.getDate() - 1);
 
@@ -50,13 +61,13 @@ const DonaDetail = () => {
             <table className="donation_detail">
                 <tr>
                     <th width="70">제목</th>
-                    <td colSpan="3">{parseDonaInfo.title}</td>
+                    <td colSpan="3">{donaInfo.title}</td>
                 </tr>
                 <tr>
                     <th width="70">모금단체</th>
-                    <td width="250" style={{borderRight : '1px solid black'}}>{parseDonaInfo.dona}</td>
+                    <td width="250" style={{borderRight : '1px solid black'}}>{donaInfo.dona}</td>
                     <th width="70">작성일</th>
-                    <td width="250">{parseDonaInfo.createdate}</td>
+                    <td width="250">{donaInfo.createdate}</td>
                 </tr>
                 <tr>
                     <th width="70">내용</th>
@@ -107,12 +118,12 @@ const DonaDetail = () => {
                 <br/><br/><br/><br/>
                 <span id="donatxt" style={{fontSize : '20px'}}>총 <b>57건</b>이<br/>
                     기부되었습니다<br/><br/>
-                    {parseDonaInfo.createdate} ~ <br/>
+                    {donaInfo.createdate} ~ <br/>
                     {dataFormat(data)}<br/><br/>
                     <div id="dday"><b>D - {remainingDays}</b></div>
                     <br/>
                     모인 금액<br/>
-                    <b style={{fontSize : '25px'}}>233,222</b><span style={{fontSize : '17px'}}>다손</span>
+                    <b style={{fontSize : '25px'}}>{donationAmount ? formatWithCommas(donationAmount) : "0"}</b><span style={{fontSize : '17px'}}>다손</span>
                 </span>
                 <br/><br/><br/><br/>
                 <button id="mogh" onClick={() => handlemogh(id)}>모금함 기부하기</button>

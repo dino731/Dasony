@@ -1,19 +1,17 @@
-// import { expr } from 'jquery';
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import './DonaDona.css';
-// import { event } from 'jquery';
 import { useParams } from 'react-router-dom';
 
 const DonaDona = () => {
 
     const {id} = useParams();
     // const donaAmount = localStorage.getItem('donationAmount');
-    
 
     const [isAllDonation, setIsAllDonation] = useState(false);
-    const [donationAmount, setDonationAmount] = useState(''); // 초기값을 빈 문자열로
+    const [donationAmount, setDonationAmount] = useState([]); // 초기값을 빈 배열로
     const initialAmount = 5000; // 보유 다손 초기 값
     const [currentDason, setCurrentDason] = useState(initialAmount);
+    // const [countDona, setCountDona] = useState(1); // 기부버튼 클릭 시 해당 기부 글 건수 카운트
 
     const handleAllDonationChange = () => {
         setIsAllDonation((prevIsAllDonation) => !prevIsAllDonation);
@@ -50,12 +48,24 @@ const DonaDona = () => {
         if(isAllDonation || donationAmount !== ''){ // check버튼을 눌렀거나, 기부 금액 값을 입력했을 때
             alert("기부가 완료되었습니다");
             
+            const donationAmountInt = parseInt(donationAmount);
+            console.log(donationAmountInt);
+
+            setDonationAmount(donationAmountInt); // donationAmount 업데이트
+            setCurrentDason(currentDason - donationAmountInt); // 남은 다손 업데이트
+            // setCountDona(countDona + 1);
+
+            // 기부 금액을 localStorage에 저장
+            localStorage.setItem(`donationAmount_${id}`, donationAmountInt);
+            // localStorage.setItem(`countDona_${id}`, countDona);
+            // console.log("count : " + countDona);
+
+            let idList = localStorage.getItem('id').split(", ");
+            console.log("donation part ID : " + idList);
+            localStorage.setItem('id', localStorage.getItem('id') + ", " + id);
+            console.log(localStorage.getItem("id"));
+            
             window.location.href = '/donatotal';
-            setCurrentDason(initialAmount - donationAmount); // 보유하고 있는 다손 - 기부한 다손 = 남은 다손
-
-            localStorage.setItem('donationAmount', donationAmount);
-            localStorage.setItem('id', id);
-
         }else{
             alert("기부 금액을 입력해주세요");
             return;

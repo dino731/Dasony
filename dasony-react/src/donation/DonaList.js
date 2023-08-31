@@ -1,28 +1,19 @@
-import { useState, useEffect } from 'react';
 import './DonaList.css';
 import { useDonaData } from './DonaDataContext';
 
 const DonaList = () => {
-
     const {donalist} = useDonaData();
 
     const handlemydona = () => {
         window.location.href = '/donatotal';
     }
-
+    
     const handeldetail = (id) => {
         const donaInfo = donalist.find(dona => dona.id === id);
         localStorage.setItem("donaInfo", JSON.stringify(donaInfo));
 
         window.location.href = `/donadetail/${id}`;
     }
-
-    // const donalist =[
-    //     {id : 1, title : '기부해주세요1', dona : '초록 어린이 우산 재단', createdate : '2023-03-22'},
-    //     {id : 2, title : '도와주세요', dona : '노인복지단체', createdate : '2023-03-25'},
-    //     {id : 3, title : '기부해주세요2', dona : '어린이 보호 재단', createdate : '2023-03-27'},
-    //     {id : 4, title : '기부해주세요3', dona : '해피빈', createdate : '2023-03-28'}
-    // ];
 
     return(
         <div id="donalistcontent">

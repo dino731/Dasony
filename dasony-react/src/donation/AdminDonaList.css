@@ -71,3 +71,14 @@
     color: #7A7A7A;
     
 }
+
+#createdona>.btn-warning{
+    margin-left: 94.5%;
+    display: flex;
+    justify-content: right;
+}
+
+#addonalist>#areas{
+    margin-left: 93.5%;
+    margin-bottom: 1%;
+}
