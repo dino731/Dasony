@@ -13,26 +13,28 @@ const MypageMyshopLikes = () => {
 
           <h3>내 찜 목록</h3>
 
-          <div class="product-content">
+          <div className="product-content">
 
     <table>
         <tr>
-            <td class="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 1</div><div>찜 설명 1</div></td>
-            <td class="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 2</div><div>찜 설명 2</div></td>
-            <td class="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 3</div><div>찜 설명 3</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 1</div><div>찜 설명 1</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 2</div><div>찜 설명 2</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 3</div><div>찜 설명 3</div></td>
         </tr>
         <tr>
-            <td class="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 4</div><div>찜 설명 4</div></td>
-            <td class="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 5</div><div>찜 설명 5</div></td>
-            <td class="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 6</div><div>찜 설명 6</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 4</div><div>찜 설명 4</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 5</div><div>찜 설명 5</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 6</div><div>찜 설명 6</div></td>
         </tr>
         <tr>
-            <td class="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 7</div><div>찜 설명 7</div></td>
-            <td class="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 8</div><div>찜 설명 8</div></td>
-            <td class="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 9</div><div>찜 설명 9</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 7</div><div>찜 설명 7</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 8</div><div>찜 설명 8</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 9</div><div>찜 설명 9</div></td>
         </tr>
     </table>
     </div>
+
+    <button className="gotoshop"><Link to='/Shop'>상점으로</Link></button>
 
           {/* <div>
             <table>

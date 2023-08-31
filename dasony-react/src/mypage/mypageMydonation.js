@@ -10,9 +10,11 @@ const MypageMydonation = () =>{
                 <div className='jefftable'>
         <table>
         <thead>
+            <tr>
             <th className='nf-history-header2'>기부 날짜</th>
             <th className='nf-history-header1'>모금단체</th>
             <th className='nf-history-header2'>금액</th>
+            </tr>
         </thead>
         <tbody>
             <tr>
@@ -30,7 +32,7 @@ const MypageMydonation = () =>{
                 <td className="nf-td2">유니쉐프</td>
                 <td className="nf-td1">백원</td>
             </tr>
-        </tbody>
+            </tbody>
     </table>
     </div>
         </div>

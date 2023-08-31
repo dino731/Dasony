@@ -8,14 +8,11 @@
     list-style: none;
 }
 
-
-
-
 /* 알람css */
 .alert-table{
     font-size: 22px;
 }
-.alert-table th, td {
+.alert-table th, .alert-table td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
@@ -59,7 +56,7 @@
     border-radius: 1vw;
     
     width: 80%;
-    height: 115.7vh;
+    height: auto;
     border: 1px solid #d0cfcf;
   }
 
@@ -80,11 +77,13 @@
   .nf-history-header1{
     width: 60vw ;
     border-top-left-radius: 1vw;
+    border-top-right-radius: 1vw;
    }
 
    .nf-history-header2{
     width: 11vw ;
     border-top-right-radius: 1vw;
+    
   }
   
   .nf-history-header1,
@@ -118,22 +117,28 @@
   }
 
 /* 회원정보css */
-.edit-info{
-    display: flexbox;
-    width: 950px;
-}
+/* .edit-info {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid lightgray;
+  padding: 20px;
+} */
 .user-infos{
     font-size: 22px;
-   
 }
-.user-infos li{
-    float: left;
-    margin: 0 10px;;
+
+.user-infos li {
+  position: relative;
+  margin: 10px;
 }
-.user-infos input{
-    width: 700px;
-    height: 45px;
-    top: 50%;
+
+.user-infos input {
+  width: 400px;
+  height: 35px;
+  right: -10;
 }
 
 .button-div{
@@ -159,20 +164,24 @@
   background-color:#CB9DE7; color:#FCFA90;
 }
 
-.edit-info{
-    border: .5px solid lightgray;
-    height: 80%;
-    margin-left: 30px;
-}
-
 .Mypage{
   display: flex;
+  width: 100%;
+}
+.Mypage>div:first-child{
+  display: block;
+  width: 20%;
+}
+.Mypage>div:nth-child(2){
+  display: block;
+  width: 80%;
+
 }
 
 .edit-button{
   border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
   width: 400px; 
-  margin-left: 280px;
+  margin-top: 20px;
 }
 .edit-button :hover{
   background-color:#CB9DE7; color:#FCFA90;

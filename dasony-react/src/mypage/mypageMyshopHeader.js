@@ -11,7 +11,7 @@ const MyShopHeader = () => {
 <div className="mys">
     <h2>내 상점</h2>
     
-            <span style={{marginLeft:10}}> <br/> 무엇을 도와드릴까요? </span>
+            <span style={{marginLeft:1}}> <br/> 무엇을 도와드릴까요? </span>
            <button className='Link-button'><Link to='Likes'>찜한 목록</Link></button>
            <button className='Link-button'><Link to='Point'>포인트 관리</Link></button>
            <button className='Link-button'><Link to='Coupon'>쿠폰 관리</Link></button>
