@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* table{
     margin: auto;
     border-collapse: collapse;
@@ -5,15 +6,20 @@
     
     
     opacity: 0.1;
+=======
+
+/* table{
+    margin: auto;
+    border-collapse: collapse;
+>>>>>>> main
 }
 td{
-
     width: 30px;
     height: 30px;
     text-align:center;
     vertical-align:middle;
-    
 }
+
 
 #game{
     position: absolute;

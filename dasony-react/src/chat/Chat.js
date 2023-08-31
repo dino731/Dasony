@@ -26,7 +26,7 @@ const Chat = () =>{
         setSendChat('');
     }
 
-    const handleReport = (e) =>{ // 마우스 우클릭 이벤트(채팅 내용 신고 시) 
+    const handleReport = (e) =>{ // 마우스 우클릭 이벤트(채팅 내용 신고 시)
         e.preventDefault();
         alert("해당 채팅을 신고하시겠습니까?");
     }
