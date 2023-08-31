@@ -7,28 +7,9 @@
 *{
     list-style: none;
 }
-body{
-    padding-top: 1%;
-    display: flex;
-}
-.header{
-    width: 30%;
-}
-.main{
-    width: 60%;
-    height: 100%;
-    display: flex;
-    margin: 30px auto 0;
-}
 
-div{
-    border: 1px solid blac
-}
 
-table {
-    border-collapse: collapse;
-    width: 100%;
-  }
+
 
 /* 알람css */
 .alert-table{
@@ -80,6 +61,10 @@ table {
     border: .5px solid lightgray;
     height: 80%;
     margin-left: 30px;
+}
+
+.Mypage{
+  display: flex;
 }
 
 /*
@@ -146,6 +131,10 @@ table {
     background-color:transparent;
     
 } /* 하트 */
+
+
+
+
 
 /* 베이지 : #DAD7CD
 초록 : #588157

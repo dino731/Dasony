@@ -1,5 +1,7 @@
 import React from 'react';
 import './mypagecss.css';
+import { useEffect, useState, useTransition } from 'react';
+import {Link} from 'react-router-dom';
 const MypageHeader = () => {
   return (
  <div className="btn-line">
@@ -13,19 +15,19 @@ const MypageHeader = () => {
         </div>
         <div className="button-div">
           <div>
-            <button className="mypage-btn">내 프로필</button>
+            <button  className="mypage-btn"><Link to='/mypage/Info'>회원정보</Link></button>
           </div>
           <div>
-            <button className="mypage-btn">내 활동</button>
+            <button className="mypage-btn"><Link to='/mypage/Myact'>내 활동</Link></button>
           </div>
           <div>
-            <button className="mypage-btn">나만의 상점</button>
+            <button className="mypage-btn"><Link to='/mypage/Myshop'>내 상점</Link></button>
           </div>
           <div>
-            <button className="mypage-btn">기부내역</button>
+            <button className="mypage-btn"><Link to='/mypage/Mydonation'>내 기부</Link></button>
           </div>
           <div>
-            <button className="mypage-btn">알림</button>
+            <button className="mypage-btn"><Link to='/mypage/Alert'>알림 내역</Link></button>
           </div>
         </div>
       </div>
