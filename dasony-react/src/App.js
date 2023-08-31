@@ -592,18 +592,12 @@ function App() {
                                                         end = {{opacity:1, y:0}}
                                                         transition={{duration : 1}}>
                                                         <ManagerNoticeBoard/>
-<<<<<<< HEAD
+
                                                       </motion.div>}/>                                                                        
                   </Route>
+                  </Route>
                   <Route path="/chat/:id/:chatname" element={<div className=".for-main">
-=======
-                                                        </motion.div>}/>                                                                        
-                    </Route>
-                </Route>
 
-                {/* chat */}
-                <Route path="/chat/:chatname" element={<div className=".for-main">
->>>>>>> main
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
@@ -709,7 +703,8 @@ function App() {
                                                                       end = {{opacity:1, y:0}}
                                                                       transition={{duration : 1}}>
                                                                         <DonaDona/>
-                                                                      </motion.div></div></div>}/>                                                                                                                                                                                    
+                                                                      </motion.div></div></div>}/> 
+                                                                                                                                                                                                 
           </Routes>
         </AnimatePresence>
 
