@@ -4,8 +4,10 @@ import {useEffect, useNavigate, useOutletContext} from 'react-router-dom';
     공지사항 목록 게시판
     - 스크롤 감지하여 다음 내용 출력 이벤트 부여되어 있음
  */
-const NoticeBoard = () => {
-    const {data} = useOutletContext();
+const NoticeBoard = ({context}) => {
+    // const {data} = useOutletContext();
+    console.log(context);
+    const data = context.data;
     const navigate = useNavigate();
     
     return(

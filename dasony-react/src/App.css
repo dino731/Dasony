@@ -6,12 +6,7 @@
 }
 
 
-*{
-  padding:0;
-  margin:0;
-  box-sizing: border-box;
-  color: #7A7A7A;
-}
+
 
 /*메인영역, 푸터영역*/
 .for-main{

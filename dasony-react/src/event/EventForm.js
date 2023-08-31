@@ -60,7 +60,7 @@ export default ({editStatus}) => {
 
         return () => {
             clickList.current.forEach((el) => {
-                el.removeEventListener('click', handleLabelClick);
+                if(el!=null) el.removeEventListener('click', handleLabelClick);
             });
         };
     }, []);

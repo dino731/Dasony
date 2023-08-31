@@ -231,7 +231,7 @@ const Header = () => {
                                             <li></li>
                                             <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/mypage/Info'>회원정보 수정</Link></li>
                                             <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/mypage/Myact'>내 활동</Link></li>
-                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to=''>고객센터</Link></li>
+                                            <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/service/notice'>고객센터</Link></li>
                                             <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/mypage/Myshop'>내 상점</Link></li>
                                             <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/mypage/Mydonation'>내 기부</Link></li>
                                             <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/mypage/Alert'>알림 내역</Link></li>
