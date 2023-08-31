@@ -3,7 +3,9 @@
     line-height: 8vh;
     font-weight: 900;
     text-align: center;
-    background-color: #DAD7CD;
-    border-radius: 0.5vw;
+    border : 3px solid #CB9DE7; 
+    color:#CB9DE7; 
+    background-color:white;
+    border-radius:0.5vw;
     margin: 2vh 0 5vh 0 ;
 }

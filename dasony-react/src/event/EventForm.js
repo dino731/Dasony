@@ -1,12 +1,13 @@
 import './event.css';
 import { useRef, useEffect, useState  } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
     
 /** 
     이벤트 등록 양식
     -이벤트 관리에서 사용 
 */
 export default ({editStatus}) => {
+    const {no} = useParams();
     const clickList = useRef([]);
     const paramList = useRef([]);
     const content = useRef(null);
