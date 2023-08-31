@@ -81,7 +81,7 @@ const Notice = () => {
     return(
         <div className="notice-container" ref={scrollTarget} >
             {loadStatus ? <Loading /> : null}
-            {subPath.length == 3 ? <NoticeBoard context={{data, loadStatus}} /> : <Outlet />}
+            {subPath.length == 3 && subPath[subPath.length-1]=="notice" ? <NoticeBoard context={{data, loadStatus}} /> : <Outlet />}
         </div>
     );
     

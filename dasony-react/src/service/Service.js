@@ -9,7 +9,7 @@ const Service = () => {
 
     return(
         <>
-            {subPath.length == 3 && subPath[subPath.length - 1] == "notice"? <Notice /> : <Outlet /> }
+            {subPath[2] == "notice"? <Notice /> : null }
         </>
     );
 };
