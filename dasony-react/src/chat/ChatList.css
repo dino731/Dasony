@@ -1,0 +1,179 @@
+#talklistcontent{
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    /* top: 25%; */
+    /* margin: 5%; */
+    border-collapse: collapse;
+    /* width: 60%; */
+}
+
+#talklistcontent button{
+    font-family: 'HakgyoansimWoojuR';   
+}
+
+#opentalk{
+    width: 97%;
+    /* top: 30%; */
+  
+    margin-bottom: 2%;
+    margin-left: 1.5%;
+} 
+
+#new_chat{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    /* padding: 20px; */
+}
+
+#new_chat>button{
+    height: 40px;
+    width: 10%;
+    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
+}
+
+#new_chat>button:hover{
+    background-color:#CB9DE7; color:#FCFA90;
+}
+
+#new_chat>span{
+    font-size: 22px;
+    font-weight: 500; 
+    color: #7A7A7A;; 
+    font-family: 'ImcreSoojin';
+}
+
+
+#search_form{
+    display: flex;
+    right: 10px;
+    
+}
+
+#search_key input{
+    position: relative;
+    left: 10px;
+    height: 40px;
+    width: 300px;
+    border-radius :5px;
+    border: 2px solid #CB9DE7;border-radius:5px;
+
+}
+
+/* #search_btn input{
+    position: relative;
+    left: 30%;
+    top: 5%;
+    height: 36px;
+    width: 50px;
+    border-radius :5px;
+    border: 1px solid #344E41;
+    background-color: #DAD7CD;
+    color: #344E41;
+    font-family: 'HakgyoansimWoojuR';
+} */
+
+#openchat{
+    text-align: center;
+    margin: auto;
+    border-collapse: collapse;
+    position: absolute;
+    margin-top: -1px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+#scrollchat tr{
+    height: 7vh;
+}
+
+#openchat>thead>tr{
+    height: 5vh;
+}
+
+#tchattable td{
+    border-bottom: 1px solid black;
+}
+
+#chatlist{
+    height: 617px;
+    /* border-bottom: 1px solid black; */
+    height: 630px;
+    font-family: 'HakgyoansimWoojuR';
+}
+
+#openchat>thead{
+    /* background-color: #DAD7CD; */
+    color: #7A7A7A;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+#scrollchat tr:hover{
+    background-color: ghostwhite; 
+    cursor: pointer;
+}
+
+#scrollchat tbody button{
+    border-radius :4px;
+    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
+    height: 32px;
+    width: 71px;
+    font-size: 15px;
+}
+
+#scrollchat tbody button:hover{
+    background-color:#CB9DE7; color:#FCFA90;
+}
+
+#scrollchat{
+    max-height: 575px; /*오픈채팅 리스트 높이 조절*/
+    overflow: auto;
+    word-wrap: break-word;
+    height: 100%;
+    /* border-right: 1px solid black; */
+}
+
+#toggle_head{
+    overflow: hidden;
+    border-collapse: collapse;
+    position: absolute;
+    position: relative;
+}
+
+#tchattable{
+    border-spacing: 0px;
+
+}
+
+#tchattable td{
+    color: #7A7A7A;
+    font-size: 17px;
+}
+
+#talklistcontent button, #search_btn>input[type="submit"]:hover{
+    cursor: pointer;
+}
+
+#openchat, #tchattable{
+    border-left: 1px solid black;
+    
+}
+
+/* #openchat, #tchattable{
+    border-right: 1px solid black;
+    
+} */
+
+#openchat, #tchattable{
+    border-right: 1px solid black;
+}
+
+#search_key>input{
+    outline: none;
+  }

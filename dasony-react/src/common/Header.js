@@ -105,7 +105,8 @@ const Header = () => {
                             <i className="bi bi-clipboard"></i> 게시판
                         </li>
 
-                        <Link to='/chat' style={{textDecoration:'none'}}> 
+                        <Link to='/chatlist' style={{textDecoration:'none'}}> 
+
                             <li className="board-li"  
                                 onClick={(event)=>{HandleOpacity(event.target.id);}}
                             >
@@ -187,7 +188,8 @@ const Header = () => {
                                                 <li></li>
                                                 <li></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/shop'>상점</Link></li>
-                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>기부</li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admindonalist'>기부</Link></li>
+
                                                 <li></li>
                                                 <li></li>
                                             </ul>
@@ -219,7 +221,9 @@ const Header = () => {
                                                 <li></li>
                                                 <li></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/shop/main'>상점</Link></li>
-                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>기부</li>
+
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/donalist'>기부</Link></li>
+
                                                 <li></li>
                                                 <li></li>
                                             </ul>
