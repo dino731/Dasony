@@ -9,13 +9,12 @@
     display: flex;
     font-family: 'HakgyoansimWoojuR';
     padding-top: 10vh;
-    color: #344E41;
     font-weight: 900;
     letter-spacing: 0.1vw;
     width: 100%;
 }
 .myCoupon-info{
-    border-right: 1px solid #344E41;
+    border-right: 1px solid #CB9DE7; 
     width: 30%;
 }
 
@@ -31,7 +30,7 @@
 
 .myCoupon-img{
     width: 80%;
-    border: 1px solid #344E41;
+    border: 1px solid #CB9DE7; 
     border-radius: 0.5vw;
     position: relative;
     overflow: hidden;
@@ -52,26 +51,32 @@
     height: 7vh;
 }
 .myCoupon-code>div:first-child{
-    border: 1px solid red;
-    width: 90%;
-    height: 20vh;
+    border: 1px solid #CB9DE7;
+    border-radius: 0.5vw;
+    width: 60%;
+    height: 25vh;
     text-align: center;
+    padding: 2%;
     margin: auto;
 }
-.myCoupon-code>div:nth-child(2){
+.myCoupon-code>div>img{
+    width: 100%;
+    height: 100%;
+}
+.myCoupon-code>div:nth-child(1){
     margin-top: 1vh;
-    font-size: 1.8vw;
+    font-size: 1.5vw;
 }
 .myCoupon-code>span{
     font-size: 1.5vw;
 }
-.myCoupon-code>div:nth-child(4){
+.myCoupon-code>div:nth-child(3){
     font-size: 2vw;
 }
 .coupon-alert1{
     font-family: 'HakgyoansimWoojuR';
     padding-top: 3vh;
-    color: #344E41;
+    color: #CB9DE7; 
     font-weight: 900;
     letter-spacing: 0.1vw;
     width: 100%;
@@ -80,8 +85,8 @@
 }
 .coupon-alert2{
     font-family: 'HakgyoansimWoojuR';
-    padding-top: 1vh;
-    color: #344E41;
+    padding-top: 2vh;
+    color:#CB9DE7; 
     font-weight: 900;
     letter-spacing: 0.1vw;
     width: 100%;

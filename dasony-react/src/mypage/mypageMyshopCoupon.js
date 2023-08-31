@@ -2,16 +2,12 @@ import React from 'react';
 import './mypagecss.css';
 const MypageMyshopCoupon = () => {
     return (
-    <div class="main">
+    
 
      
 
-        <div class="my-shop">
-          <div class="mys">
-           <div> <button>찜한 목록</button></div>
-           <div> <button>포인트 관리</button></div>
-           <div><button>쿠폰 관리</button></div>
-          </div>
+        <div className="my-shop">
+         
 
           <table>
 
@@ -55,7 +51,7 @@ const MypageMyshopCoupon = () => {
         
      
 
-    </div> 
+    
     );}
 export default MypageMyshopCoupon;
 

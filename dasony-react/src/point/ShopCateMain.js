@@ -1,5 +1,5 @@
 import './ShopCateMain.css';
-import HeartIcon from "./heart";
+import HeartIcon from "../heart";
 import { Link } from 'react-router-dom';
 
 const ShopCateMain = ()=>{
@@ -28,7 +28,7 @@ const ShopCateMain = ()=>{
             <div className="shopBest-box">
                 
                     <div className="shopBest-item">
-                        <Link to='/shop/cate/product'>
+                        <Link to='/shop/cate/every/product'>
                         <div className="shopBest-item-img">
                             <img src='/resources/shop/product/1/001.png'/>
                         </div>

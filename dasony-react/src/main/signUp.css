@@ -16,14 +16,11 @@
     margin: 0;
     width: 100vw;
     height: 100vh;
-    border: 1px solid blue;
     box-sizing: border-box;
 }
 
 
-table, tr, th, td{
-    /* border: 1px solid green; */
-}
+
 
 .sign-up-container table{
     padding-top: 10px;
@@ -32,7 +29,6 @@ table, tr, th, td{
     margin: auto;
     font-size: 1.5vw;
     font-family: 'HakgyoansimWoojuR';
-    color: #344E41;
 }
 .sign-up-container table tbody{
     text-align: center;
@@ -55,30 +51,35 @@ table, tr, th, td{
 
 .sign-up-container input{
     width: 80%;
-    border: 1px solid #344E41;
+    border: 2px solid #CB9DE7;
     border-radius: 0.5vw;
 }
 
 .sign-up-container button{
     width: 70%;
     height: 5.5vh;
-    border: none;
     border-radius: 0.5vw;
     font-size: 1vw;
     letter-spacing: 0.1vw;
-    background-color: #588157;
-    color:white;
+    border : 3px solid #CB9DE7; 
+    color:#CB9DE7; 
+    background-color:white; 
+    font-weight: 900;
 }
 
 .sign-up-container tfoot button{
-    width:80%;
+    width:50%;
     height: 8vh;
     font-size: 1.5vw;
+    border : 3px solid #CB9DE7; 
+    color:#CB9DE7; 
+    background-color:white; 
+    font-weight: 900;
 }
 
 .sign-up-container button:hover{
-    background-color: #344E41;
-    color: #DAD7CD;
+    background-color:#CB9DE7;
+    color:#FCFA90;
     transition-duration: 0.5s;
 }
 
@@ -86,4 +87,9 @@ table, tr, th, td{
     width: 70%;
     height: 5.5vh;
     font-size: 1vw;
+    border : 3px solid #CB9DE7; 
+    color:#CB9DE7; 
+    background-color:white; 
+    font-weight: 900;
+    border-radius: 0.5vw;
 }

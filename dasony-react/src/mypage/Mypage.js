@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import MypageHeader from './mypage-Header';
-import MypageAct from './mypage-act';
-import MypageInfo from './mypage-info';
+import MypageHeader from './mypageHeader';
+import MypageAct from './mypageAct';
+import MypageInfo from './mypageInfo';
+
+
 
 
 const Mypage = ()=>{

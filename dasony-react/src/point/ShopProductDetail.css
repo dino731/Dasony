@@ -9,7 +9,6 @@
     display: flex;
     font-family: 'HakgyoansimWoojuR';
     padding-top: 10vh;
-    color: #344E41;
     font-weight: 900;
     letter-spacing: 0.1vw;
 }
@@ -26,7 +25,7 @@
 
 .product-info-img{
     width: 80%;
-    border: 1px solid #344E41;
+    border: 3px solid #CB9DE7; ;
     border-radius: 0.5vw;
     position: relative;
     overflow: hidden;
@@ -39,48 +38,55 @@
 .product-info-head{
     display: flex;
     margin: auto;
+    width: 80%;
 }
 .product-info-head>div:first-child{
     width: 90%;
-    font-size: 1.5vw;
-    margin: auto;
+    font-size: 75%;
+    text-align: left;
+    line-height: 250%;
 }
 .product-info-head>div:last-child{
     width: 20%;
-    text-align: center;
     margin: auto;
 }
 /*왼쪽 영역-중간부분*/
 .product-info-middle{
     display: flex;
     justify-content: space-between;
+    width: 80%;
+    margin: auto;
 }
 .product-info-middle>div:first-child{
     width: 70%;
 }
+.product-info-middle-left{
+    text-align: left;
+}
 .product-info-middle-left>div:first-child{
-    font-size: 2vw;
+    font-size: 75%;
 }
 .product-info-middle-left>div:last-child{
-    font-size: 1.7vw;
+    font-size: 75%;
 }
 .product-info-middle>div:last-child{
     width: 30%;
     margin: auto;
 }
 .product-info-middle button{
-    border: none;
-    border-radius: 0.5vw;
-    background-color: #588157;
-    color : #DAD7CD;
-    width: 8vh;
-    height: 7.5vh;
-    font-size: 1.5vw;
-    font-weight: 900;
+    border : 3px solid #CB9DE7; 
+    color:#CB9DE7; 
+    background-color:white; 
+    font-weight: 900; 
+    border-radius:0.5vw;
+    width: 70%;
+    height: 5.5vh;
+    font-size: 65%;
     letter-spacing: 0.1vw;
 }
 .product-info-middle button:hover{
-    background-color: #344E41;
+    background-color:#CB9DE7; 
+    color:#FCFA90;
     transition-duration: 0.5s;
 }
 
@@ -89,4 +95,43 @@
 }
 .buy-info>div>div{
     font-size: 1.5vw;
+}
+.buy-info>div{
+    font-size:1vw;
+}
+
+.modalButton-yes{
+    border: 3px solid #CB9DE7; 
+    color:#CB9DE7; 
+    background-color:white; 
+    font-weight: 900;
+    border-radius:0.5vw;
+    width: 20%;
+    height: 7vh;
+}
+
+.modal{
+    font-family: 'HakgyoansimWoojuR';
+    font-weight: 900;
+    letter-spacing: 0.1vw;
+    font-size: 1.5vw;
+}
+.modalButton-yes:hover{
+    background-color:#CB9DE7; 
+    color:#FCFA90;
+    transition-duration:0.5s
+}
+.modalButton-no{
+    border : 3px solid #FCFA90; 
+    color:#CB9DE7; 
+    background-color:white; 
+    font-weight: 900;
+    border-radius:0.5vw;
+    width: 20%;
+    height: 7vh;
+}
+.modalButton-no:hover{
+    background-color:#FCFA90;
+    color:#CB9DE7;
+    transition-duration:0.5s
 }
