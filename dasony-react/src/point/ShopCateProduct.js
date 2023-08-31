@@ -1,68 +1,57 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import HeartIcon from "./heart";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import HeartIcon from "../heart";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import './ShopCateProduct.css';
 
 
 const ShopCateProduct = () => {
     
-
-    const[storeName, setStoreName] = useState('none');
-    const[storeTitle, setStoreTitle] = useState('');
-    const[productName, setProductName] = useState('');
-    const[path, setPath] = useState('');
+    const {store} = useParams();
+    const [storeDisplay, setStoreDisplay] = useState('');
+    const[storeTitle, setStoreTitle] = useState(store==null?'every':store);
 
     const navigate = useNavigate();
 
-    const handleNoneStoreName = ()=> setStoreName('none');
-    const handleBlockStoreName = () => setStoreName('block');
+    const handleNoneStoreName = ()=> setStoreDisplay('none');
+    const handleBlockStoreName = () => setStoreDisplay('block');
 
     const location = useLocation();
 
-    // const handlePath = ()=>{
-    //     if(location.pathname.includes('store')){
-    //         // handleNoneStoreName();
-    //         handleBlockStoreName();
-    //         setStoreTitle(location.state.title);
-    //         setPath(`${storeTitle}/${productName}`);
-    //     } else {
-    //         // handleBlockStoreName();
-    //         handleNoneStoreName();
-    //         setPath(productName);
-    //     }
-    // }
-    
     useEffect(() => {
-        if (productName) {
-            let newPath;
-            if (location.pathname.includes('store')) {
-                handleBlockStoreName();
-                setStoreTitle(location.state.title);
-                newPath = `${storeTitle}/${productName}`;
-            } else {
-                handleNoneStoreName();
-                newPath = productName;
-            }
-            navigate(`/shop/product/${newPath}`);
+        
+        if(storeTitle=='every'){
+            handleNoneStoreName();
+        }else {
+            handleBlockStoreName();
         }
-    }, [productName, location.pathname, storeTitle, navigate]);
+    }, [storeDisplay, location.pathname, storeTitle]);
 
+    
+    const handleNav = (event) => {
+        
+        const clickedElement = event.currentTarget;
+        const storeName = clickedElement.querySelector('.shopBest-item-shop').textContent;
+        const productName = clickedElement.querySelector('.shopBest-item-product').textContent;
 
+        console.log('Shop Name:', storeName);
+        console.log('Product Name:', productName);
+        
+        navigate(`/shop/cate/${storeName}/${productName}`);
+
+    }
     return(
         <div className="shopCate-product-container">
             <div className="shopCate-store-title">
                 <div>상품</div>
             </div>{/* shopCate-box-head 끝*/}
-            <div className="title-for-product" style={{display:storeName}}>
+            <div className="title-for-product" style={{display:storeDisplay}}>
                 <div>{storeTitle}</div>
             </div>{/* shopCate-box-head 끝*/}
 
             <div className="shopBest-box">
                 
                 
-                    <div className="shopBest-item" 
-                        onClick={()=>{setProductName('몸보신 전복 장어 전골');
-                                        }}>
+                    <div className="shopBest-item" onClick={handleNav}>
                             <div className="shopBest-item-img">
                                 <img src='/resources/shop/product/1/001.png'/>
                             </div>
@@ -72,15 +61,13 @@ const ShopCateProduct = () => {
                        
                     </div>
 
-                    <div className="shopBest-item"  onClick={()=>{setProductName('카페라떼(hot)');}}>
-                        <Link to={`/shop/product/${productName}`}>
+                    <div className="shopBest-item" onClick={handleNav}>
                             <div className="shopBest-item-img">
                                 <img src="/resources/shop/product/5/005.png"/>
                             </div>
                             <div className='shopBest-item-shop'>마시리 카페</div>
                             <div className='shopBest-item-product'>카페라떼(hot)</div>
                             <div className='shopBest-item-point'>5000 다손{" "}<HeartIcon/></div>
-                        </Link>
                     </div>
 
                     <div className="shopBest-item">

@@ -1,7 +1,7 @@
 import './ShopMain.css';
 import ControlledCarousel from './shopBanner';
 import { Link } from 'react-router-dom';
-import HeartIcon from './heart';
+import HeartIcon from '../heart';
 
 const ShopMain = ()=>{
     return(
@@ -12,10 +12,10 @@ const ShopMain = ()=>{
             <div className="shop-cate">
                 <div className='shop-title'>상품 카테고리</div>
                 <div className='cate-box'>
-                    <div><Link to='/shop/cate/main'>카페<br/>베이커리</Link></div>
-                    <div style={{paddingTop:'7vh'}}><Link to='/shop/cate/main'>외식</Link></div>
-                    <div style={{paddingTop:'7vh'}}><Link to='/shop/cate/main'>편의점</Link></div>
-                    <div><Link to='/shop/cate/main'>문화<br/>생활</Link></div>
+                    <Link to='/shop/cate/main'>카페<br/>베이커리</Link>
+                    <Link to='/shop/cate/main' style={{paddingTop:'6.5%'}}>외식</Link>
+                    <Link to='/shop/cate/main' style={{paddingTop:'6.5%'}}>편의점</Link>
+                    <Link to='/shop/cate/main'>문화<br/>생활</Link>
                 </div>
             </div>{/*shop-cate끝*/}
 

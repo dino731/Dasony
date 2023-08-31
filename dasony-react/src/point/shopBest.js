@@ -1,6 +1,6 @@
 
 import './shopBest.css';
-import HeartIcon from "./heart";
+import HeartIcon from "../heart";
 
 const ShopBest = ()=>{
     return(
