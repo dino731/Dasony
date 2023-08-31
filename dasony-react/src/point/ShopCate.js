@@ -1,6 +1,6 @@
 import { Link, Outlet } from 'react-router-dom';
 import './ShopCate.css';
-import HeartIcon from "./heart";
+import HeartIcon from "../heart";
 
 const ShopCate = ()=>{
    
