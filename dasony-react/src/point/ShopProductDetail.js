@@ -1,9 +1,14 @@
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'react-bootstrap';
 import './ShopProductDetail.css';
+<<<<<<< HEAD
 import HeartIcon from '../heart';
 import { useEffect, useState, } from 'react';
 import { useParams } from 'react-router-dom';
 
+=======
+import HeartIcon from './heart';
+import { useEffect, useState } from 'react';
+>>>>>>> parent of ace4ded (2028.08.31 ain commit)
 
 const ShopProductDetail = () => {
 
