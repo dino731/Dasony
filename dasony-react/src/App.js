@@ -595,6 +595,7 @@ function App() {
 
                                                       </motion.div>}/>                                                                        
                   </Route>
+                  </Route>
                   <Route path="/chat/:id/:chatname" element={<div className=".for-main">
 
                                                 <div className='for-normal-page'><motion.div
@@ -702,7 +703,8 @@ function App() {
                                                                       end = {{opacity:1, y:0}}
                                                                       transition={{duration : 1}}>
                                                                         <DonaDona/>
-                                                                      </motion.div></div></div>}/>                                                                                                                                                                                    
+                                                                      </motion.div></div></div>}/> 
+                                                                                                                                                                                                 
           </Routes>
         </AnimatePresence>
 
