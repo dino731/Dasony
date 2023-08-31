@@ -43,7 +43,8 @@ import AdminShop from './admin/shop/adminShop';
 import { AdminShopDetail } from './admin/shop/adminShopDetail';
 import { AdminUser } from './admin/user/adminUser';
 import { AdminUserDetail } from './admin/user/adminUserDetail';
-import Mypage from './mypage/Mypage';
+import { AdminCalendar } from './admin/board/adminCalendar';
+import Mypage from './mypage/mypage';
 import MypageHeader from './mypage/mypageHeader';
 import MypageAct from './mypage/mypageAct';
 import MypageInfo from './mypage/mypageInfo';
@@ -59,7 +60,6 @@ import Notice from './mypage/Notice';
 import NoticeBoard from './mypage/NoticeBoard';
 import NoticeDetail from './mypage/NoticeDetail';
 import ManagerNoticeBoard from './mypage/ManagerNoticeBoard';
-
 
 
 function App() {
@@ -141,6 +141,14 @@ function App() {
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
                                                                           <AdminUserDetail/>
+                                                                        </motion.div></div></div>}/>
+                  <Route path="/admin/calendar" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                          <AdminCalendar/>
                                                                         </motion.div></div></div>}/>                                                                                        
                   {/* 메인페이지 부분 */}
                   <Route path="/" element={<motion.div
