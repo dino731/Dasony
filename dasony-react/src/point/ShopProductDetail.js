@@ -4,6 +4,7 @@ import HeartIcon from '../heart';
 import { useEffect, useState, } from 'react';
 import { useParams } from 'react-router-dom';
 
+
 const ShopProductDetail = () => {
 
     const {store, product} = useParams();
