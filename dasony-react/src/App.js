@@ -391,6 +391,7 @@ function App() {
                                                         </motion.div>}/>
                                                         </Route>
 
+
                       <Route path="info/*" element={<motion.div
                                                     initial = {{opacity:0, y:30}}
                                                     animate = {{opacity:1, y:0}}
@@ -428,6 +429,7 @@ function App() {
                                                       <BoardDailyWriter/>
                                                     </motion.div>}>                                                 
                           <Route path="dwriter" element={<motion.div
+
                                                         initial = {{opacity:0, y:30}}
                                                         animate = {{opacity:1, y:0}}
                                                         end = {{opacity:1, y:0}}
@@ -435,13 +437,16 @@ function App() {
                                                           <BoardDailyWriter/>
                                                         </motion.div>}/>
                           <Route path="vwriter" element={<motion.div
+
                                                         initial = {{opacity:0, y:30}}
                                                         animate = {{opacity:1, y:0}}
                                                         end = {{opacity:1, y:0}}
                                                         transition={{duration : 1}}>
+
                                                           <BoardVoteUploader/>
                                                         </motion.div>}/>
                           <Route path="swriter" element={<motion.div
+
                                                         initial = {{opacity:0, y:30}}
                                                         animate = {{opacity:1, y:0}}
                                                         end = {{opacity:1, y:0}}
