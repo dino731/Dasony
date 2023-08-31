@@ -1,0 +1,125 @@
+#donadetailcontent{
+    /* flex : 3; */
+    /* justify-content: center; */
+    align-items: center;
+    position: relative;
+    display: flex;
+    margin-left: 4.7%;
+    margin-bottom: 2%;
+    font-family: 'HakgyoansimWoojuR';
+    width: 100%;
+    margin-top: 9%;
+}
+
+#dona_tbl{
+    flex: 0 0 76.7%; 
+    height: 100%;
+    margin-right: 10%;
+}
+
+/* #dona_btn{
+    /* flex: 1.5; Fill the remaining space */
+    /* height: 100%; */
+
+
+.donation_detail{
+    text-align: center;
+    margin: auto;
+    border-collapse: collapse;
+    /* position: absolute; */
+    top: 16%;
+    border: 1px solid black;
+    width: 100%;
+    /* position: relative; */
+    /* table-layout: fixed; */
+    color: #7A7A7A;
+}
+
+#db{
+    text-align: center;
+    margin: auto;
+    border-collapse: collapse;
+    position: absolute;
+    /* top: 16%; */
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    height: 100%;
+    width: 14%;
+    bottom: 0%;
+    margin-left: -10%;
+    color: #7A7A7A;
+}
+
+/* #dona_tbl, #dona_btn{
+    width: 97%;
+} */
+
+.donation_detail tr{
+    height: 5vh;
+    border-bottom: 1px solid black;
+}
+
+.donation_detail th{
+    border-right: 1px solid black;
+    color: #7A7A7A;
+}
+
+#scrollable-td {
+    max-height: 200px;
+    overflow: auto;
+    word-wrap: break-word;
+}
+
+#scrollable {
+    max-height: 400px;
+    overflow: auto;
+    word-wrap: break-word;
+    line-height : 1.7;
+}
+
+#scrollable-td hr{
+    margin: 10px 0;
+    width: 95%;
+}
+
+#donatxt{
+    text-align: center;
+}
+
+#donatxt>div{
+    margin-left: 40px;
+}
+
+#dday{
+    width: 46%; 
+    text-align: center; 
+    background-color: #CB9DE7; 
+    color:#FCFA90; 
+    font-size: 22px; 
+    font-weight: 600; 
+    border-radius: 4px; 
+    height: 7%;
+    padding : 10px 0;
+}
+
+#mogh{
+    width: 100%; 
+    height: 10%; 
+    font-weight: 600; 
+    font-size: medium;
+    background-color: #DAD7CD; 
+    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900;
+    border-left: none;
+    border-right: none;
+    font-family: 'HakgyoansimWoojuR';
+    margin-top: 1.5%;
+}
+
+#mogh:hover{
+    background-color:#CB9DE7; color:#FCFA90;
+}
+
+#mogh:hover{
+    cursor: pointer;
+}

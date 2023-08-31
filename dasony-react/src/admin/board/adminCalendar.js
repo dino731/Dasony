@@ -1,10 +1,11 @@
-import './adminUser.css';
+import '../user/adminUser.css';
+import './adminCalendar.css';
 import { Button, Modal, ModalBody, ModalHeader } from "react-bootstrap";
 import AdvancedExample from '../shop/Pagination';
 import { useState, useEffect } from 'react';
-import { AdminUserModal } from './adminUserModal';
+import { AdminUserModal } from '../user/adminUserModal';
 
-export const AdminUser = () => {
+export const AdminCalendar = () => {
 
     {/*새로운 회원 추가 모달 열기 */}
     const [show, setShow] = useState(false);
@@ -50,31 +51,38 @@ export const AdminUser = () => {
     return(
         <div className="admin-user-container">
             <div className="admin-user-head">
-                <div>회원 목록</div>
+                <div>달력 신청 목록</div>
                 <div><input type="text"/><Button className="btn btn-primary">검색</Button></div>
             </div>
-            <div className='admin-user-table'>
+            <div className='admin-calendar-table'>
             <table>
                     <thead>
                         <tr>
                             <th>번호</th>
-                            <th>회원 고유키</th>
-                            <th>이름</th>
-                            <th>아이디</th>
-                            <th>비밀번호</th>
-                            <th>별명</th>
-                            <th>상태</th>
+                            <th>날짜(기간)</th>
+                            <th>신청 회원 아이디</th>
+                            <th>일정 이름</th>
+                            <th>장소</th>
+                            <th>특이사항</th>
+                            <th>종류</th>
+                            <th>승인 상태</th>
+                            <th>승인 검토</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>몰</td>
-                            <td>몰</td>
-                            <td>몰</td>
-                            <td>몰</td>
-                            <td>몰</td>
-                            <td>몰</td>
-                            <td>몰</td> 
+                            <td>a</td>
+                            <td>2023-10-09 ~ 2023-12-25</td>
+                            <td>developerchoims</td>
+                            <td>신나는 여름 물놀이 축제</td>
+                            <td>광진구 여름 목장</td>
+                            <td>물놀이 장비 챙기기</td>
+                            <td>축제</td>
+                            <td>P</td> 
+                            <td>   
+                                <Button className="btn btn-primary">Y</Button>
+                                <Button className='btn btn-danger'>N</Button>
+                            </td> 
                         </tr>
                         <tr>
                         <td>몰</td>
@@ -84,13 +92,13 @@ export const AdminUser = () => {
                             <td>몰</td>
                             <td>몰</td>
                             <td>몰</td>
+                            <td>몰</td> 
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div className='adminShop-pagination'>
                 <AdvancedExample/>
-                <div><AdminUserModal title={'회원 정보 추가'} btnTitle={'회원 추가'}/></div>
             </div>
         </div>
     );
