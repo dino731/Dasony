@@ -80,7 +80,6 @@ import ManagerNoticeBoard from './service/ManagerNoticeBoard';
 import Service from './service/Service';
 
 
-
 function App() {
   
   const [loading, setLoading] = useState(true);
@@ -695,7 +694,6 @@ function App() {
       </DonationProvider>
       </DonaDataProvider>
       </ChatDataProvider> 
-
         </>                                  
     );
   }
