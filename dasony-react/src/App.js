@@ -44,7 +44,7 @@ import { AdminShopDetail } from './admin/shop/adminShopDetail';
 import { AdminUser } from './admin/user/adminUser';
 import { AdminUserDetail } from './admin/user/adminUserDetail';
 import { AdminCalendar } from './admin/board/adminCalendar';
-import Mypage from './mypage/Mypage';
+import Mypage from './mypage/mypage';
 import MypageHeader from './mypage/mypageHeader';
 import MypageAct from './mypage/mypageAct';
 import MypageInfo from './mypage/mypageInfo';
@@ -199,6 +199,26 @@ function App() {
                                                       transition={{duration : 1}}>
                                                         <EventForm editStatus="등록"/>
                                                       </motion.div>}/>                           
+                  </Route>
+
+                  {/* 
+                    고객센터 관리자 페이지
+                    -기본 : 공지 게시판 
+                    -신고
+                    -문의
+                  */}
+                  <Route path="/admin/service" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                          <Service />
+                                                                        </motion.div></div></div>}>
+                      {/* notice 중첩 route 시작 */}
+                      <Route path="notice" element={<Notice/>}>
+                            <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                      
+                      </Route>                          
                   </Route>
                                                                         
                   {/* 메인페이지 부분 */}

@@ -7,35 +7,38 @@ import { Link, Outlet } from 'react-router-dom';
 const MypageMyshopUsedPoint = () => {
     return (
 
-        <div className="myUsedPoint">
-          
-           현재 포인트 : 100포인트입니다.
+        <div className="myUsedPointtable">
+
+           <h2>현재 포인트 : 100 포인트</h2>
+
+           <div className='jefftable'>
 
            <table>
           <thead>
             <tr>
-              <th></th>
-              <th>사용 내용</th>
-              <th>사용량</th>
-              <th>날짜</th>
+              <th className='nf-history-header1'>번호</th>
+              <th className='nf-history-header1'>사용 내용</th>
+              <th className='nf-history-header2'>사용량</th>
+              <th className='nf-history-header2'>날짜</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>1</td>
-              <td>초코볼</td>
-              <td>100포인트</td>
-              <td>2023-08-22</td>
+              <td className="nf-td1">1</td>
+              <td className="nf-td2">초코볼</td>
+              <td className="nf-td1">100포인트</td>
+              <td className="nf-td3">2023-08-22</td>
             </tr>
             <tr>
-              <td>2</td>
-              <td>포카칩</td>
-              <td>300포인트</td>
-              <td>2023-08-23</td>
+              <td className="nf-td1">2</td>
+              <td className="nf-td2">포카칩</td>
+              <td className="nf-td1">500포인트</td>
+              <td className="nf-td3">2023-08-24</td>
             </tr>
           </tbody>
         </table>
                 
+        </div>
         </div>
 
     );}

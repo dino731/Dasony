@@ -10,7 +10,7 @@ const MypageMyshopPoint = () => {
   
         <div className="my-shop">
           
-           현재 포인트 : 100포인트
+           <h2>현재 포인트 : 100포인트 </h2>
 
           <button><Link to='/mypage/Myshop/MyUsedPoint'>포인트 내역 보기</Link></button>
                 

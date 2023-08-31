@@ -3,6 +3,7 @@ import { Outlet, useLocation} from 'react-router-dom';
 import Loading from '../common/Loading';
 import './customer.css';
 import NoticeBoard from './NoticeBoard';
+import ManagerNoticeBoard from './ManagerNoticeBoard';
 
 const Notice = () => {
     const { pathname } = useLocation();
@@ -34,7 +35,7 @@ const Notice = () => {
     useEffect(()=>{
         // observer
         // notice/list 경로인 경우에만
-        if(subPath[subPath.length-1]==="notice"){
+        if(subPath[subPath.length-1] && subPath[1]!="admin" ==="notice"){
             // 관찰할 item 요소
             const items = document.querySelectorAll(".notice-content-body .row");
             console.log(items.length);
@@ -78,10 +79,15 @@ const Notice = () => {
         io.observe(lastItem);
     };
 
+    console.log(subPath);
     return(
         <div className="notice-container" ref={scrollTarget} >
             {loadStatus ? <Loading /> : null}
-            {subPath.length == 3 && subPath[subPath.length-1]=="notice" ? <NoticeBoard context={{data, loadStatus}} /> : <Outlet />}
+            { subPath[subPath.length-1]=="notice" ? 
+                subPath.length != 3 ?
+                    subPath[1]=="admin" ? <ManagerNoticeBoard /> : <NoticeBoard context={{data, loadStatus}} />
+                : <Outlet /> 
+            : <Outlet />}
         </div>
     );
     
