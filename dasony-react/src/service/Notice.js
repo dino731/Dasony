@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from 'react';
 import { Outlet, useLocation} from 'react-router-dom';
 import Loading from '../common/Loading';
 import './customer.css';
+import NoticeBoard from './NoticeBoard';
+import ManagerNoticeBoard from './ManagerNoticeBoard';
 
 const Notice = () => {
     const { pathname } = useLocation();
@@ -29,43 +31,47 @@ const Notice = () => {
         setLoadStatus(false);
     };
 
-    // observer
-    // 관찰할 item 요소
+    
     useEffect(()=>{
-        const items = document.querySelectorAll(".notice-content-body .row");
-        console.log(items.length);
+        // observer
+        // notice/list 경로인 경우에만
+        if(subPath[subPath.length-1] && subPath[1]!="admin" ==="notice"){
+            // 관찰할 item 요소
+            const items = document.querySelectorAll(".notice-content-body .row");
+            console.log(items.length);
 
-        const callback = (entries, observer) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting){
-                    observer.unobserve(entry.target);
-                    if(!loadStatus) {
-                        setLoadStatus(true);
+            const callback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        observer.unobserve(entry.target);
+                        if(!loadStatus) {
+                            setLoadStatus(true);
 
-                        // 비동기 구현시 setTimeout 지울 것
-                        setTimeout(() => {
-                            loadData();
-                            console.log(loadStatus);
-                            // observeLastItem(observer, document.querySelectorAll(".notice-content-body row"));
-                        }, 3000);
+                            // 비동기 구현시 setTimeout 지울 것
+                            setTimeout(() => {
+                                loadData();
+                                console.log(loadStatus);
+                                // observeLastItem(observer, document.querySelectorAll(".notice-content-body row"));
+                            }, 3000);
+                        }
                     }
-                }
-            });
-        };
+                });
+            };
 
-        // 관찰 영역
-        const option = {
-            root : scrollTarget.current, 
-            rootMargin: "2%",
-            threshold: 0.6
-        };
+            // 관찰 영역
+            const option = {
+                root : scrollTarget.current, 
+                rootMargin: "2%",
+                threshold: 0.6
+            };
 
-        const observer = new IntersectionObserver(callback, option);
-        observeLastItem(observer, items);
+            const observer = new IntersectionObserver(callback, option);
+            observeLastItem(observer, items);
 
-        return ()=>{
-            observer.disconnect();
-        };
+            return ()=>{
+                observer.disconnect();
+            };
+        }
     }, [loadStatus]);
 
     const observeLastItem = (io, items)=>{
@@ -73,10 +79,15 @@ const Notice = () => {
         io.observe(lastItem);
     };
 
+    console.log(subPath);
     return(
         <div className="notice-container" ref={scrollTarget} >
             {loadStatus ? <Loading /> : null}
-            {subPath[subPath.length-1]==="list" ? <Outlet context={{data, loadStatus}} /> : <Outlet />}
+            { subPath[subPath.length-1]=="notice" ? 
+                subPath.length != 3 ?
+                    subPath[1]=="admin" ? <ManagerNoticeBoard /> : <NoticeBoard context={{data, loadStatus}} />
+                : <Outlet /> 
+            : <Outlet />}
         </div>
     );
     

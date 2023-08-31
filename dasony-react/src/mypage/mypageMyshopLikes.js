@@ -6,39 +6,41 @@ import HeartIcon from '../heart';
 // import 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css';
 
 const MypageMyshopLikes = () => {
-  useEffect(() => {
-    $(".btnh1").off("click"); // 이전에 등록된 클릭 이벤트 핸들러 제거
-    $(".btnh1").on("click", function() {
-      let $btn = $(this);
-      let col = $btn.children().css("color");
-      
-      if (col === "rgba(255, 0, 0, 0.85)") {
-        $btn.children().css("color", "rgba(136, 137, 143, 0.4)");
-        $btn.find("path").attr("fill", "rgba(136, 137, 143, 0.4)"); // SVG path의 fill 속성 변경
-        console.log("확인");
-      } else {
-        $btn.children().css("color", "rgba(255, 0, 0, 0.85)");
-        $btn.find("path").attr("fill", "rgba(255, 0, 0, 0.85)"); // SVG path의 fill 속성 변경
-        console.log("확인2");
-      }
-      
-      $btn.toggleClass("active");
-      $(".btnh1").toggleClass("active");
-    });
-  }, []);
 
   return (
 
+        <div className="myShopLikes-table">
 
-    <div className="main">
+          <h3>내 찜 목록</h3>
 
-        <div className="my-shop">
-          
+          <div className="product-content">
 
-            <table className="my-like-table">
+    <table>
+        <tr>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 1</div><div>찜 설명 1</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 2</div><div>찜 설명 2</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 3</div><div>찜 설명 3</div></td>
+        </tr>
+        <tr>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 4</div><div>찜 설명 4</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 5</div><div>찜 설명 5</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 6</div><div>찜 설명 6</div></td>
+        </tr>
+        <tr>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 7</div><div>찜 설명 7</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 8</div><div>찜 설명 8</div></td>
+            <td className="product"><div><img src="" alt=""/><HeartIcon/></div><div>찜 9</div><div>찜 설명 9</div></td>
+        </tr>
+    </table>
+    </div>
+
+    <button className="gotoshop"><Link to='/Shop'>상점으로</Link></button>
+
+          {/* <div>
+            <table>
               <tbody>
                 <tr>
-                  <td><img src="image1.jpg" alt="Image 1"/>
+                  <td ><img src="image1.jpg" alt="Image 1"/>
                   <HeartIcon/>
                 </td>
                    <td><img src="image2.jpg" alt="Image 2"/>
@@ -62,12 +64,13 @@ const MypageMyshopLikes = () => {
                 </tbody>
                 </table>
                 <button className="gotoshop"><Link to='/Shop'>상점으로</Link></button>
+        </div> */}
         </div>
 
         
      
 
-    </div> 
+    
  );}
 export default MypageMyshopLikes;
        

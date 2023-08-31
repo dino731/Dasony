@@ -32,7 +32,7 @@ const NoticeDetail = () => {
                 <span>2023-08-22</span>
             </div>
             <div className="notice-content">
-                <textarea className="dragging" ref={textarea} readonly></textarea>
+                <textarea className="dragging" ref={textarea} readOnly></textarea>
             </div>
             <div className="notice-content-nav">
                 {list[1] != null ? <div className="notice-content-nav-item prev">

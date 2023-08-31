@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './mypagecss.css';
+import '../admin/user/adminUserDetail.css'
 
 
 
@@ -7,42 +7,74 @@ const MypageInfo = () => {
   const [isEditing, setIsEditing] = useState(false); // 상태 추가
 
   const handleEditClick = () => {
-    setIsEditing(true);
+    setIsEditing(!isEditing);
   };
 
   return (
 
-      <div className="edit-info">
-        <div className="user-infos">
-          <ul>
-            <li>
-              id : {isEditing? <input type="text" placeholder="id" ></input> : <input type="text" placeholder="id" readOnly></input>}
-            </li>
-            <li>
-              비번 : {isEditing?<input type="text" placeholder="pwd"></input>:<input type="text" placeholder="pwd"readOnly></input>}
-            </li>
-            <li>
-              이름 : {isEditing?<input type="text" placeholder="이름" ></input>:<input type="text" placeholder="이름" readOnly></input>}
-            </li>
-            <li>
-              별명 : {isEditing?<input type="text" placeholder="닉네임"></input>:<input type="text" placeholder="닉네임"readOnly></input>}
-            </li>
-            <li>
-              이메일 : {isEditing?<input type="text" placeholder="이메일"></input>:<input type="text" placeholder="이메일"readOnly></input>}
-            </li>
-            <li>
-              번호 : {isEditing?<input type="text" placeholder="번호"></input>:<input type="text" placeholder="번호"readOnly></input>}
-            </li>
-            <li>
-              지역 : {isEditing?<input type="text" placeholder="지역"></input>:<input type="text" placeholder="지역"readOnly></input>}
-            </li>
-          </ul>
+    <div className="admin-user-datail-container">
+          
+                <h2>회원 정보</h2>
+            <div className="admin-user-datail-head">
+                
+            </div>
+            <div className='admin-user-datail-table'>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>회원 번호</th>
+                            <td>ㄴㅇ</td>
+                        </tr>
+                        <tr>
+                            <th>회원 이름</th>
+                            <td>cc</td>
+                        </tr>
+                        <tr>
+                            <th>회원 아이디</th>
+                            <td>cc</td>
+                        </tr>
+                        <tr>
+                            <th>회원 비밀번호</th>
+                            <td>멀라 가게</td>
+                        </tr>
+                        <tr>
+                            <th>회원 별명</th>
+                            <td>ㅇㅇ</td>
+                        </tr>
+                        <tr>
+                            <th>핸드폰 번호</th>
+                            <td>ㅇㅇ</td>
+                        </tr>
+                        <tr>
+                            <th>이메일</th>
+                            <td>ㅇㅇ</td>
+                        </tr>
+                        <tr>
+                            <th>주소</th>
+                            <td>ㅇㅇ</td>
+                        </tr>
+                        <tr>
+                            <th>상태</th>
+                            <td>ㅇㅇ</td>
+                        </tr>
+                        <tr>
+                            <th>등급</th>
+                            <td>ㅇㅇ</td>
+                        </tr>
+                        <tr>
+                            <th>수정 날짜</th>
+                            <td>ㅇㅇ</td>
+                        </tr>
+                        <tr>
+                            <th>가입 날짜</th>
+                            <td>ㅇㅇ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            
         </div>
-
-        <button onClick={handleEditClick} style={{ width: '400px', marginLeft: '280px' }}>
-          {isEditing? <p>수정완료</p> : <p>수정하기</p>}
-        </button>
-      </div>
     
   );
 };
