@@ -1,7 +1,5 @@
 import { useEffect, useRef, useLayoutEffect, useState } from "react";
-import { useNavigate,  } from 'react-router-dom';
-// import $ from "jquery";
-// import './event.css';
+import { useNavigate  } from 'react-router-dom';
 
 /** 이벤트 상세조회 게시판 */
 const EventDetail = ({data}) => {
@@ -13,7 +11,7 @@ const EventDetail = ({data}) => {
 
     const [hoverStatus, setHoverStatus] = useState("none");
 
-    // 아이콘 위에 내용 위치시키기 -?? 위치 이동X
+    // 아이콘 위에 내용 위치시키기 
     const updateTicketTextPosition = () => {
         if (ticket.current && ticketText.current) {
             const ticketRect = ticket.current.getBoundingClientRect();

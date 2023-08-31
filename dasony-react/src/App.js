@@ -38,6 +38,10 @@
   import EventForm from './event/EventForm';
   import EventDetailControl from './event/EventDetailControl';
   import EventBoard from './event/EventBoard';
+  import Notice from './mypage/Notice';
+  import NoticeBoard from './mypage/NoticeBoard';
+import NoticeDetail from './mypage/NoticeDetail';
+import ManagerNoticeBoard from './mypage/ManagerNoticeBoard';
 
 
 
@@ -371,6 +375,38 @@
 
                     </Route>
                   {/*Board 중첩 route 끝 */}
+
+                  {/* notice 중첩 route 시작 */}
+                  <Route path="/notice" element={<div className=".for-main">
+                                                  <div className='for-normal-page'><motion.div
+                                                                          initial = {{opacity:0, y:30}}
+                                                                          animate = {{opacity:1, y:0}}
+                                                                          end = {{opacity:1, y:0}}
+                                                                          transition={{duration : 1}}>
+                                                                            <Notice/>
+                                                                          </motion.div></div></div>}>
+                        <Route path="list" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <NoticeBoard/>
+                                                      </motion.div>}/> 
+                        <Route path="detail/:no" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <NoticeDetail/>
+                                                      </motion.div>}/>  
+                        <Route path="managerBoard" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <ManagerNoticeBoard/>
+                                                      </motion.div>}/>                                                                        
+                  </Route>
  
           </Routes>
         </AnimatePresence>

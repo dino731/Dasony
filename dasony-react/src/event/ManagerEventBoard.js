@@ -9,7 +9,6 @@ import $ from 'jquery';
  */
 export default () => {
 
-    const cateList = useRef([]);
     const navigate = useNavigate();
 
     let category;
@@ -41,12 +40,14 @@ export default () => {
             }
         };
 
-        cateList.current.forEach((el, index) => {
-            el.addEventListener('click', handleLabelClick);
+        document.querySelectorAll(".manager-select-btn>div").forEach((el)=>{
+            console.log(el);
+            el.removeEventListener('click', handleLabelClick);
         });
 
         return () => {
-            cateList.current.forEach((el) => {
+            document.querySelectorAll(".manager-select-btn>div").forEach((el)=>{
+                console.log(el);
                 el.removeEventListener('click', handleLabelClick);
             });
         };
@@ -84,7 +85,7 @@ export default () => {
                     <div className="event-selectBox">
                         <span>분류</span>
                         <div className="manager-select-btn">
-                            <div ref={(el) => cateList.current[0] = el}>
+                            <div> 
                                 <span className="manager-select-label">카테고리</span>
                                 <i className="bi bi-caret-down-fill"></i>
                             </div>
@@ -100,7 +101,7 @@ export default () => {
                     <div className="event-selectBox">
                         <span style={{width: "50%"}}>진행상태</span>
                         <div className="manager-select-btn">
-                            <div ref={(el) => cateList.current[1] = el}>
+                            <div>
                                 <span className="manager-select-label">선택</span>
                                 <i className="bi bi-caret-down-fill"></i>
                             </div>
