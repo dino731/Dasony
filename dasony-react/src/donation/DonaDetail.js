@@ -123,9 +123,11 @@ const DonaDetail = () => {
                     <div id="dday"><b>D - {remainingDays}</b></div>
                     <br/>
                     모인 금액<br/>
-                    <b style={{fontSize : '25px'}}>{donationAmount ? formatWithCommas(donationAmount) : "0"}</b><span style={{fontSize : '17px'}}>다손</span>
+                    <b style={{fontSize : '25px'}}>{donationAmount ? formatWithCommas(donationAmount) : "0"}</b><span style={{fontSize : '17px'}}>다손</span><br/><br/>
+                    달성률<br/>
+                    <b style={{fontSize : '25px'}}>6%</b>
                 </span>
-                <br/><br/><br/><br/>
+                <br/><br/>
                 <button id="mogh" onClick={() => handlemogh(id)}>모금함 기부하기</button>
             </div>
         </div>
