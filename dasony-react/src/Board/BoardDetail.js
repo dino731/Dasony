@@ -6,7 +6,7 @@ import BoardWTitle from './BoardWTitle';
 import '../point/ShopProductDetail.css';
 import Vote from './Vote';
 import Shorts from './Shorts';
-import Heart from '../point/heart';
+import Heart from '../heart';
 
 
 const BoardDetail = () =>{
