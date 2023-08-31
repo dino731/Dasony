@@ -1,8 +1,7 @@
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'react-bootstrap';
 import './ShopProductDetail.css';
 import HeartIcon from './heart';
-import { useEffect, useState} from 'react';
-
+import { useEffect, useState } from 'react';
 
 const ShopProductDetail = () => {
 
