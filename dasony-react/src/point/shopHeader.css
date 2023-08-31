@@ -4,6 +4,7 @@
 .shop-nav{
     display: flex;
     height: 10vh;
+    color: #7A7A7A;
 }
 .shop-nav>div{
     width: 100%;
