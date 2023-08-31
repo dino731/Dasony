@@ -75,7 +75,7 @@ export default () => {
 
     /** 이벤트 아이템 클릭시 해당 페이지로 이동 */
     const moveToEventDetail = no => {
-        navigate(`/event/modifyEvent/${no}`);
+        navigate(`/admin/event/detail/${no}`);
     };
 
     return(
@@ -147,6 +147,7 @@ export default () => {
                 <tfoot>
                 </tfoot>
             </table>
+            <button className="btn" onClick={()=>navigate("/admin/event/new")}>등록하기</button>
         </div>
     );
 }

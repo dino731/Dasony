@@ -56,9 +56,6 @@ import MypageAlert from './mypage/mypageAlert';
 import MypageMydonation from './mypage/mypageMydonation';
 import MypageMyshopUsedPoint from './mypage/mypageMyshopUsedPoint';
 import {gamestart} from './mypage/realgame';
-import Notice from './mypage/Notice';
-import NoticeBoard from './mypage/NoticeBoard';
-import NoticeDetail from './mypage/NoticeDetail';
 import ManagerNoticeBoard from './mypage/ManagerNoticeBoard';
 import ChatList from './chat/ChatList';
 import ChatIcon from './chat/ChatIcon';
@@ -76,7 +73,11 @@ import { ChatDataProvider } from './chat/ChatDataContext';
 import { DonaDataProvider } from './donation/DonaDataContext';
 import { DonationProvider } from './donation/DonationContext';
 import { AdminDonaListContext } from './donation/AdminDonaListContext';
-
+import Notice from './service/Notice';
+import NoticeBoard from './service/NoticeBoard';
+import NoticeDetail from './service/NoticeDetail';
+import ManagerNoticeBoard from './service/ManagerNoticeBoard';
+import Service from './service/Service';
 
 
 
@@ -170,8 +171,38 @@ function App() {
                                                                         animate = {{opacity:1, y:0}}
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
-                                                                          <AdminCalendar/>
-                                                                        </motion.div></div></div>}/>                                                                                        
+                                                                            <AdminCalendar/>
+                                                                        </motion.div></div></div>}/> 
+                  {/* 
+                    이벤트 관리자 페이지
+                    -기본 : 목록 게시판 
+                    -상세 조회시 수정 및 삭제 가능한 폼으로 이동 
+                    -등록버튼 클릭시 이벤트 등록폼으로
+                  */}
+                  <Route path="/admin/event" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                          <Event />
+                                                                        </motion.div></div></div>}>
+                      <Route path="detail/:no" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <EventForm editStatus="수정"/>
+                                                      </motion.div>}/>
+                      <Route path="new" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <EventForm editStatus="등록"/>
+                                                      </motion.div>}/>                           
+                  </Route>
+                                                                        
                   {/* 메인페이지 부분 */}
                   <Route path="/" element={<motion.div
                                                 initial = {{opacity:0, y:30}}
@@ -306,51 +337,23 @@ function App() {
                         </Route>{/*shop 중첩 route 끝 */}  
                       
                     
-                    {/* event 중첩 route 시작 */}
-                    <Route path="/event" element={<div className=".for-main">
+                  {/* event 중첩 route 시작 */}
+                  <Route path="/event" element={<div className=".for-main">
                                                   <div className='for-normal-page'><motion.div
                                                                           initial = {{opacity:0, y:30}}
                                                                           animate = {{opacity:1, y:0}}
                                                                           end = {{opacity:1, y:0}}
                                                                           transition={{duration : 1}}>
                                                                             <Event/>
-                                                                          </motion.div></div></div>}>
-                        <Route path="list" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <EventBoard/>
-                                                      </motion.div>}/>      
-                        <Route path="detail/:no" element={<motion.div
+                                                                          </motion.div></div></div>}>     
+                    <Route path="detail/:no" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <EventDetailControl editStatus="등록"/>
                                                       </motion.div>}/>                                                    
-                        <Route path="addNewEvent" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <EventForm editStatus="등록"/>
-                                                      </motion.div>}/>
-                        <Route path="modifyEvent/:no" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <EventForm editStatus="수정"/>
-                                                      </motion.div>}/>
-                        <Route path="managerEvent" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <ManagerEventBoard/>
-                                                      </motion.div>}/>                                            
-                    </Route>
+                </Route>
 
 
                   {/*Board 중첩 route 시작 */}
@@ -536,38 +539,47 @@ function App() {
                                                           <MypageAlert/>
                                                         </motion.div>}/>
                  </Route>{/*mypage 중첩 route 끝 */}
-                  {/* notice 중첩 route 시작 */}
-                  <Route path="/notice" element={<div className=".for-main">
-                                                  <div className='for-normal-page'><motion.div
-                                                                          initial = {{opacity:0, y:30}}
-                                                                          animate = {{opacity:1, y:0}}
-                                                                          end = {{opacity:1, y:0}}
-                                                                          transition={{duration : 1}}>
+
+                {/* 
+                고객센터(service) 중첩 route 시작
+                path : /service/notice/*
+                */}
+                <Route path="/service" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                        <Service/>
+                                                                        </motion.div></div></div>}>
+                    {/* notice 중첩 route 시작 */}
+                    <Route path="notice" element={<div className=".for-main">
+                                                    <div className='for-normal-page'><motion.div
+                                                                            initial = {{opacity:0, y:30}}
+                                                                            animate = {{opacity:1, y:0}}
+                                                                            end = {{opacity:1, y:0}}
+                                                                            transition={{duration : 1}}>
                                                                             <Notice/>
-                                                                          </motion.div></div></div>}>
-                        <Route path="list" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <NoticeBoard/>
-                                                      </motion.div>}/> 
+                                                                            </motion.div></div></div>}>
                         <Route path="detail/:no" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
                                                         <NoticeDetail/>
-                                                      </motion.div>}/>  
+                                                        </motion.div>}/>  
                         <Route path="managerBoard" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
                                                         <ManagerNoticeBoard/>
-                                                      </motion.div>}/>                                                                        
-                  </Route>
-                  <Route path="/chat/:chatname" element={<div className=".for-main">
+                                                        </motion.div>}/>                                                                        
+                    </Route>
+                </Route>
+
+                {/* chat */}
+                <Route path="/chat/:chatname" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
@@ -674,8 +686,6 @@ function App() {
                                                                       transition={{duration : 1}}>
                                                                         <DonaDona/>
                                                                       </motion.div></div></div>}/>                                                                                                                                                                                    
-
-                  
           </Routes>
         </AnimatePresence>
 

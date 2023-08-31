@@ -4,8 +4,10 @@ import {useEffect, useNavigate, useOutletContext} from 'react-router-dom';
     공지사항 목록 게시판
     - 스크롤 감지하여 다음 내용 출력 이벤트 부여되어 있음
  */
-const NoticeBoard = () => {
-    const {data} = useOutletContext();
+const NoticeBoard = ({context}) => {
+    // const {data} = useOutletContext();
+    console.log(context);
+    const data = context.data;
     const navigate = useNavigate();
     
     return(
@@ -23,7 +25,7 @@ const NoticeBoard = () => {
                     <div className="col col-3">
                         [안내]
                     </div>
-                    <div className="col col-9 notice-board-title" onClick={()=>navigate("/notice/detail/1")}>
+                    <div className="col col-9 notice-board-title" onClick={()=>navigate("notice/detail/1")}>
                         개인정보보호법 개정안에 따른 휴먼 정책 변경 안내
                     </div>
                 </div>
@@ -163,7 +165,7 @@ const NoticeBoard = () => {
                                         <span key={index}>[{c}] </span>
                                     ))}
                                 </div>
-                                <div className="col col-9 notice-board-title" onClick={()=>navigate(`/notice/detail/${element.no}`)}>
+                                <div className="col col-9 notice-board-title" onClick={()=>navigate(`notice/detail/${element.no}`)}>
                                     {element.title}
                                 </div>
                             </div>
