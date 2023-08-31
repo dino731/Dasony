@@ -19,9 +19,8 @@ const ShopMyCoupon = () => {
             </div>
             <div className="myCoupon-code"> 
                 <div>
-                    바코드입니다.
+                    <img src='http://bwipjs-api.metafloor.com/?bcid=code128&text=AB1234567890&scale=3&includetext&backgroundcolor=ffffff'/>
                 </div>
-                <div>0840651061064 코드 번호 복사</div>
                 <span>유효 기간 2023-10-05까지</span>
                 <div>카카오톡으로 공유하기 <i className="bi bi-wechat"/></div>
             </div>

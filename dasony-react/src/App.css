@@ -1,7 +1,16 @@
+@font-face {
+  font-family: 'HakgyoansimWoojuR';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 *{
   padding:0;
   margin:0;
   box-sizing: border-box;
+  color: #7A7A7A;
 }
 
 /*메인영역, 푸터영역*/
@@ -10,15 +19,16 @@
   display: flex;
   padding-left: 25%;
   padding-top: 10vh;
+  font-family: 'HakgyoansimWoojuR';
 }
 /*메인 페이지 내부*/
 #main-window{
   width: 60%;
-  border:  1px solid blue;
 }
 #right-window{
   width:40%;
   border:  1px solid blue;
+  padding: 0 2% 0 2%;
 }
 
 /*메인 페이지 이외의 페이지가 들어가는 부분*/
@@ -26,7 +36,7 @@
   width: 90%;
   display: block;
   padding: 10vh 0 0 25%;
-  border: 1px solid black;
+  font-family: 'HakgyoansimWoojuR';
 }
 /*로그인 안 한 페이지가 들어가는 부분*/
 .main-container{
@@ -35,4 +45,19 @@
   position: relative;
   z-index: 999;
   background-color: white;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #CB9DE7;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+::-webkit-scrollbar-track {
+  background-color:#e7d2f3;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
 }

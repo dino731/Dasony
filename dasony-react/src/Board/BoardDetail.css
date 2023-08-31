@@ -1,0 +1,209 @@
+.BoardDetail-wrapper{
+  width: 100%;
+  /* height: 1000px; */
+
+}
+.BoardDetail-wrapper>*{
+  font-family: 'HakgyoansimWoojuR';
+
+}
+.BoardDetail-side-wrapper{
+  display: flex;
+  justify-content: space-between;
+}
+.BoardDetail-main-wrapper{
+  width: 95%;
+}
+.BoardDetail-side-container{
+  border: 1px solid red;
+  width: 5%;
+
+
+}
+.BoardDetail-side-by-side{
+  position: sticky;
+  top: 75vh;
+  right: 300px;
+}
+/* 다른 스타일을 덮어씌우기 위해 우선순위를 높임 */
+.BoardDetail-side-haert .bi{
+  font-size: 30px;
+}
+.BoardDetail-side-up{
+  border: none;
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff;
+}
+.BoardDetail-side-up .bi{
+  font-size: 30px;
+}
+
+.BoardDetail-head-list{
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid gray;
+  justify-content: space-between;
+  display: flex;
+  padding: 0 2vw 0;
+}
+.BoardDetail-head-list-text{
+  font-family: 'HakgyoansimWoojuR';
+  font-size: x-large;
+  font-weight: 800;
+  margin-left: 20px;
+  /* border: 1px solid red; */
+}
+
+
+
+
+
+
+
+.BoardDetail-boardlist-title-wrapper{
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid gray;
+}
+.BoardDetail-boardlist-title-container{
+  margin: 10px;
+  padding: 0 1vw 0;
+  /* border: 1px solid red; */
+  width: 95%;
+  height: 30px;
+}
+.BoardDetail-boardlist-title-keyword{
+  margin: 0 8px 0;
+  color:  aquamarine;
+  font-family: 'HakgyoansimWoojuR';
+  font-weight: 900;
+  font-size: 22px;
+}
+.BoardDetail-boardlist-title{
+  margin: 0 8px 0;
+  color: #373737;
+  font-family: 'HakgyoansimWoojuR';
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.BoardDetail-boardlist-title-userinfo-container{
+  justify-content: space-between;
+  display: flex;
+  padding: 0 1vw 0;
+  /* border: 1px solid red; */
+  width: 95%;
+  height: 50px;
+  margin: 10px;
+}
+
+.BoardDetail-boardlist-title-userinfo-img>img{
+  width: 45px;
+  height: 45px;
+  border-radius: 25vh;
+}
+.BoardDetail-boardlist-title-userinfo>span{
+  margin: 0 0.2vw 0;
+}
+.BoardDetail-boardlist-title-userinfo-nikname{
+  font-size: 20px;
+  font-weight: normal;
+  color: #555555;
+}
+.BoardDetail-boardlist-title-views-wrapper{
+ padding-top: 1vh;
+}
+.BoardDetail-boardlist-title-views-wrapper>span{
+  margin: 0 1vw 0;
+}
+.BoardDetail-boardlist-content-wrapper{
+  width: 100%;
+  /* border: 1px solid gray; */
+
+}
+.BoardDetail-boardlist-content{
+  width: 98%;
+  padding: 0 0 5vh;
+  margin: 0 auto;
+  white-space: pre-line
+}
+
+.BoardDetail-boardlist-reply-wrapper{
+  width: 100%;
+  border: 1px solid #d4d4d4;
+  border-radius: 1vh;
+  background-color: #f4f4f4;
+}
+.BoardDetail-boardlist-reply{
+  margin-top: 10px;
+}
+.BoardDetail-boardlist-reply-wrapper>ul{
+  list-style: none;
+}
+.BoardDetail-boardlist-reply{
+  width: 98%;
+  /* border: 1px solid gray; */
+  
+}
+
+.BoardDetail-boardlist-reply-container{
+  justify-content: space-between;
+  display: flex;
+  
+}
+
+.BoardDetail-boardlist-reply-content-wrapper{
+  /* border: 1px solid yellowgreen; */
+  width: 98%;
+  padding: 0 1vw 0;
+}
+.BoardDetail-boardlist-reply-btn>button{
+  border: none;
+  border-radius: .5vh;
+  padding: 5px;
+  background-color: #CB9DE7;
+  color:#FCFA90;
+}
+.BoardDetail-boardlist-meetball-btn{
+  border: none;
+}
+.BoardDetail-boardlist-reply-userinfo-wrapper>span{
+  margin: 0 0.2vw 0;
+}
+.BoardDetail-boardlist-reply-userinfo-nikname{
+  font-size: 20px;
+  font-weight: normal;
+}
+.BoardDetail-boardlist-reply-userinfo-date{
+  font-size: 16px;
+  font-weight: normal;
+}
+.BoardDetail-boardlist-reply-form-wrapper{
+  width: 100%;
+  /* border: 1px solid gray; */
+  
+}
+.BoardDetail-boardlist-reply-form-container{
+  width: 95%;
+  /* border: 1px solid gray; */
+  border-radius: 1vh;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  
+
+}
+.BoardDetail-boardlist-reply-form{
+  width: 90%;
+}
+.BoardDetail-boardlist-reply-form-input{
+  width: 100vh;
+  height: 7vh;
+  padding-inline-start: 30px;
+  border: none;
+  align-content: space-between;
+  display: flex;
+  border-radius: 1vh;
+}
