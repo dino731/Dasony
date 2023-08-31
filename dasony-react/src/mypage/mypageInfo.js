@@ -13,6 +13,8 @@ const MypageInfo = () => {
   return (
 
       <div className="edit-info">
+
+        <h2>회원정보 수정</h2>
         <div className="user-infos">
           <ul>
             <li>
@@ -39,9 +41,10 @@ const MypageInfo = () => {
           </ul>
         </div>
 
-        <button onClick={handleEditClick} style={{ width: '400px', marginLeft: '280px' }}>
-          {isEditing? <p>수정완료</p> : <p>수정하기</p>}
-        </button>
+        
+          {isEditing? <button className='edit-button' onClick={handleEditClick}>수정완료</button> : 
+          <button className='edit-button' onClick={handleEditClick}>수정 하기</button>}
+        
       </div>
     
   );
