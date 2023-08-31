@@ -1,276 +1,276 @@
 @font-face {
-    font-family: 'HakgyoansimWoojuR';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'HakgyoansimWoojuR';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 *{
-    list-style: none;
+  list-style: none;
 }
 
 /* 알람css */
 .alert-table{
-    font-size: 22px;
+  font-size: 22px;
 }
 .alert-table th, .alert-table td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: center;
-  }
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+.alert-table th {
+  background-color: #f2f2f2;
+}
+
+.alert-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.product_info{
+  /* background-color: red; */
+  display: flex;
+  text-align: left;
+  height: 100%;
+  margin: 0;
+}
+.nf-td1{
+  padding-left: 1vw;
+}
+
+.nf-td2{
+  width: 15vw;
+  color: #CB9DE7;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.nf-td3{
+  font-size: 0.9em;
+}
+
+.jefftable{
+  background-color: rgb(245, 244, 244);
+}
+
+.jefftable{
+  border-radius: 1vw;
   
-  .alert-table th {
-    background-color: #f2f2f2;
-  }
+  width: 80%;
+  height: auto;
+  border: 1px solid #d0cfcf;
+}
+
+.jefftable tbody tr:hover{
+  background-color: #ebeaea;
+}
+.jefftable td{
+  border-top: 1px solid #d0cfcf;
+}
+.jefftable table{
+  text-align: center;
+}
+
+.jefftable tbody>tr{
+height: 16vh; 
+}
+
+.nf-history-header1{
+  width: 60vw ;
+  border-top-left-radius: 1vw;
+  border-top-right-radius: 1vw;
+ }
+
+ .nf-history-header2{
+  width: 11vw ;
+  border-top-right-radius: 1vw;
   
-  .alert-table tr:hover {
-    background-color: #f5f5f5;
-  }
+}
 
-  .product_info{
-    /* background-color: red; */
-    display: flex;
-    text-align: left;
-    height: 100%;
-    margin: 0;
-  }
-  .nf-td1{
-    padding-left: 1vw;
-  }
+.nf-history-header1,
+.nf-history-header2{
+  background-color: rgb(230, 230, 230);
 
-  .nf-td2{
-    width: 15vw;
-    color: #CB9DE7;
-    font-weight: bold;
-    font-size: 0.9em;
-  }
+ }
 
-  .nf-td3{
-    font-size: 0.9em;
-  }
-
-  .jefftable{
-    background-color: rgb(245, 244, 244);
-  }
-
-  .jefftable{
-    border-radius: 1vw;
-    
-    width: 80%;
-    height: auto;
-    border: 1px solid #d0cfcf;
-  }
-
-  .jefftable tbody tr:hover{
-    background-color: #ebeaea;
-  }
-  .jefftable td{
-    border-top: 1px solid #d0cfcf;
-  }
-  .jefftable table{
-    text-align: center;
-  }
-
-  .jefftable tbody>tr{
-  height: 16vh; 
-  }
-
-  .nf-history-header1{
-    width: 60vw ;
-    border-top-left-radius: 1vw;
-    border-top-right-radius: 1vw;
-   }
-
-   .nf-history-header2{
-    width: 11vw ;
-    border-top-right-radius: 1vw;
-    
-  }
+.mypage-product-brand{
+  margin-bottom: 0;
   
-  .nf-history-header1,
-  .nf-history-header2{
-    background-color: rgb(230, 230, 230);
+  font-weight: bold;
+}
 
-   }
-  
-  .mypage-product-brand{
-    margin-bottom: 0;
-    
-    font-weight: bold;
-  }
+.mypage-product-brand a{
+  font-size: 0.8em;
+}
 
-  .mypage-product-brand a{
-    font-size: 0.8em;
-  }
+.mypage-product-brand a:hover{
+  text-decoration: underline;
+}
 
-  .mypage-product-brand a:hover{
-    text-decoration: underline;
-  }
+.mypage-product-title a{
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.mypage-product-title a:hover{
+  text-decoration: underline;
   
-  .mypage-product-title a{
-    font-weight: bold;
-    font-size: 0.9em;
-  }
-  
-  .mypage-product-title a:hover{
-    text-decoration: underline;
-    
-  }
+}
 
 /* 회원정보css */
 /* .edit-info {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  border: 1px solid lightgray;
-  padding: 20px;
+display: flex;
+width: 100%;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+border: 1px solid lightgray;
+padding: 20px;
 } */
 .user-infos{
-    font-size: 22px;
+  font-size: 22px;
 }
 
 .user-infos li {
-  position: relative;
-  margin: 10px;
+position: relative;
+margin: 10px;
 }
 
 .user-infos input {
-  width: 400px;
-  height: 35px;
-  right: -10;
+width: 400px;
+height: 35px;
+right: -10;
 }
 
 .button-div{
-    display: block;
-    
+  display: block;
+  
 }
 .button-div button{
-    margin: 45px;
-    width: 100px;
-    height: 30px;
-    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
-}
-.button-div button :hover{
-  background-color:#CB9DE7; color:#FCFA90;
-}
-.Link-button{
   margin: 45px;
   width: 100px;
   height: 30px;
   border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
 }
+.button-div button :hover{
+background-color:#CB9DE7; color:#FCFA90;
+}
+.Link-button{
+margin: 45px;
+width: 100px;
+height: 30px;
+border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
+}
 .Link-button:hover{
-  background-color:#CB9DE7; color:#FCFA90;
+background-color:#CB9DE7; color:#FCFA90;
 }
 
 .Mypage{
-  display: flex;
-  width: 100%;
+display: flex;
+width: 100%;
 }
 .Mypage>div:first-child{
-  display: block;
-  width: 20%;
+display: block;
+width: 20%;
 }
 .Mypage>div:nth-child(2){
-  display: block;
-  width: 80%;
+display: block;
+width: 80%;
 
 }
 
 .edit-button{
-  border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
-  width: 400px; 
-  margin-top: 20px;
+border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
+width: 400px; 
+margin-top: 20px;
 }
 .edit-button :hover{
-  background-color:#CB9DE7; color:#FCFA90;
+background-color:#CB9DE7; color:#FCFA90;
 }
 /*
-    내활동css
+  내활동css
 */
 
 .delete-button {
-    border : 3px solid #FCFA90; color:#CB9DE7; background-color:white; font-weight: 900;border-radius:0.5vw;
-    padding: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 20px;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-
-
-  .act-table th, .act-table td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: center;
+  border : 3px solid #FCFA90; color:#CB9DE7; background-color:white; font-weight: 900;border-radius:0.5vw;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-  .delete-button :hover{
-    background-color:#FCFA90;; color:#CB9DE7;
 
-  }
+.act-table th, .act-table td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
 
-  
-  
-  .act-table th {
-    background-color: #f2f2f2;
-  }
-  
-  .jefftable tr:hover {
-    background-color: #f5f5f5;
-  }
-  .mys{
-    display: flex;
-    background-color: white;
-    justify-content: space-between;
-    margin-bottom: 30px;
-  }
+.delete-button :hover{
+  background-color:#FCFA90;; color:#CB9DE7;
 
-  .my-like-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+}
 
-  .my-like-table td {
-    width: 33.33%;
-    padding: 10px;
-    text-align: center;
-  }
 
-  .my-like-table img {
-    max-width: 100%;
-    height: auto;
-  }
 
- .myShopLikes-table table{
-    border: none;
- }
+.act-table th {
+  background-color: #f2f2f2;
+}
 
- .product-content{
+.jefftable tr:hover {
+  background-color: #f5f5f5;
+}
+.mys{
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.my-like-table {
   width: 100%;
+  border-collapse: collapse;
+}
+
+.my-like-table td {
+  width: 33.33%;
+  padding: 10px;
+  text-align: center;
+}
+
+.my-like-table img {
+  max-width: 100%;
+  height: auto;
+}
+
+.myShopLikes-table table{
+  border: none;
+}
+
+.product-content{
+width: 100%;
 }
 
 
 .product-content{
-  width: 100%;
+width: 100%;
 }
 .product-content>table{
- 
-  justify-content: center;
+
+justify-content: center;
 }
 .product {
-    width: 33%;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
+  width: 33%;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
 }
 .product img {
-  width: 220px;
-  height: 250px;
-  object-fit: cover;
+width: 220px;
+height: 250px;
+object-fit: cover;
 }
 
 
