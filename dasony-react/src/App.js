@@ -44,7 +44,7 @@ import { AdminShopDetail } from './admin/shop/adminShopDetail';
 import { AdminUser } from './admin/user/adminUser';
 import { AdminUserDetail } from './admin/user/adminUserDetail';
 import { AdminCalendar } from './admin/board/adminCalendar';
-import Mypage from './mypage/mypage';
+import Mypage from './mypage/Mypage';
 import MypageHeader from './mypage/mypageHeader';
 import MypageAct from './mypage/mypageAct';
 import MypageInfo from './mypage/mypageInfo';
@@ -77,6 +77,7 @@ import NoticeBoard from './service/NoticeBoard';
 import NoticeDetail from './service/NoticeDetail';
 import ManagerNoticeBoard from './service/ManagerNoticeBoard';
 import Service from './service/Service';
+import NoticeForm from './service/NoticeForm';
 
 
 function App() {
@@ -218,6 +219,7 @@ function App() {
                       {/* notice 중첩 route 시작 */}
                       <Route path="notice" element={<Notice/>}>
                             <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                      
+                            <Route path="edit/:no" element={<NoticeForm/>}/>                                                                      
                       </Route>                          
                   </Route>
                                                                         
@@ -571,30 +573,9 @@ function App() {
                                                                         <Service/>
                                                                         </motion.div></div></div>}>
                     {/* notice 중첩 route 시작 */}
-                    <Route path="notice" element={<div className=".for-main">
-                                                    <div className='for-normal-page'><motion.div
-                                                                            initial = {{opacity:0, y:30}}
-                                                                            animate = {{opacity:1, y:0}}
-                                                                            end = {{opacity:1, y:0}}
-                                                                            transition={{duration : 1}}>
-                                                                            <Notice/>
-                                                                            </motion.div></div></div>}>
-                        <Route path="detail/:no" element={<motion.div
-                                                        initial = {{opacity:0, y:30}}
-                                                        animate = {{opacity:1, y:0}}
-                                                        end = {{opacity:1, y:0}}
-                                                        transition={{duration : 1}}>
-                                                        <NoticeDetail/>
-                                                        </motion.div>}/>  
-                        <Route path="managerBoard" element={<motion.div
-                                                        initial = {{opacity:0, y:30}}
-                                                        animate = {{opacity:1, y:0}}
-                                                        end = {{opacity:1, y:0}}
-                                                        transition={{duration : 1}}>
-                                                        <ManagerNoticeBoard/>
-
-                                                      </motion.div>}/>                                                                        
-                  </Route>
+                    <Route path="notice" element={<Notice/>}>
+                        <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
+                      </Route>
                   </Route>
                   <Route path="/chat/:id/:chatname" element={<div className=".for-main">
 

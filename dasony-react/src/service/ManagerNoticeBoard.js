@@ -29,12 +29,12 @@ const ManagerNoticeBoard = () => {
     };
 
     const moveToNoticeDetail = no => {
-        navigate(`/notice/detail/${no}`, {manager : "Y"});
+        navigate(`detail/${no}`, {manager : "Y"});
     };
 
     function updateNotice(action, no){
-        if(action === '수정') navigate('/notice/modify/' + no);
-        else navigate('/notice/modify/' + no); // 삭제 처리하는 로직 추가
+        if(action === '수정') navigate('edit/' + no);
+        else navigate('modify/' + no); // 삭제 처리하는 로직 추가
     }
 
     return(
@@ -95,7 +95,7 @@ const ManagerNoticeBoard = () => {
                         </li>
                     </ul>
                     <input type="text" id="notice-search-keyword" ref={keyword} maxLength="5" placeholder="검색어입력"/>
-                    <button className="notice-search-enter btn" onClick={() => {navigate("/notice/upload")}}>등록하기</button>
+                    <button className="notice-search-enter btn" onClick={() => {navigate("new")}}>등록하기</button>
                 </div>
             </div>
         </nav>

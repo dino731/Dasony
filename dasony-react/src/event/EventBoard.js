@@ -25,13 +25,14 @@ const EventBoard = () => {
             }
         }else{
             let parent = eventTarget.parentNode.parentNode;
+            console.log(parent);
             e.stopPropagation(); // 이벤트 전파 방지
     
             if(!parent.classList.contains("selected-event-status")){
                 parent.classList.add("selected-event-status");
                 eventTarget.previousElementSibling.style.display = "inline-block";
 
-                const siblings = Array.from(parent.parentNode.children).filter(sibling => sibling !== parent);
+                const siblings = Array.from(parent.parentNode.children).filter(sibling => sibling != parent);
                 siblings.forEach(sibling => {
                     sibling.classList.remove("selected-event-status");
                     sibling.querySelector("i").style.display = "none";
