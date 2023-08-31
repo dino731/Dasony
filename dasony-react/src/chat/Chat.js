@@ -63,7 +63,6 @@ const Chat = () =>{
     return (
     <>
        <div id="chatcontent">
-            <br/><br/><br/><br/>
             <div id="mychat">
                 <div id="chat_name">
                     <div id='chat_head'>

@@ -566,7 +566,7 @@ function App() {
                                                         <ManagerNoticeBoard/>
                                                       </motion.div>}/>                                                                        
                   </Route>
-                  <Route path="/chat/:chatname" element={<div className=".for-main">
+                  <Route path="/chat/:id/:chatname" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}

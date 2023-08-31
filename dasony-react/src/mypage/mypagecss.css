@@ -15,7 +15,7 @@
 .alert-table{
     font-size: 22px;
 }
-.alert-table th, td {
+.alert-table th, .alert-table td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
@@ -84,7 +84,7 @@
     cursor: pointer;
   }
 
-  .act-table th, td {
+  .act-table th, .act-table td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
