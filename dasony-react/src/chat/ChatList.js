@@ -53,8 +53,10 @@ import { useChatData } from './ChatDataContext';
         closeModal();
 
         const encodedChatname = encodeURIComponent(newChatRoom.chatname);
+        
+        // const chatId = chatData.find(chatId => chatId.id === id);
 
-       navigate(`/chat/${encodedChatname}`);
+        navigate(`/chat/${newChatRoom.id}/${encodedChatname}`);
         // setChatRoomNames([...chatRoomNames, newChatRoom]);
         // console.log(newChatRoom);
 
@@ -121,9 +123,9 @@ import { useChatData } from './ChatDataContext';
                                         <td width="110">{chat.id}</td>
                                         <td width="470">{chat.chatname}</td>
                                         <td width="235">{chat.username}</td>
-                                        <td width="205">{chat.people}명</td>
+                                        <td width="215">{chat.people}명</td>
                                         <td width="150">
-                                        <Link to={`/chat/${chat.chatname}`}><button>참여하기</button></Link>
+                                        <Link to={`/chat/${chat.id}/${chat.chatname}`}><button>참여하기</button></Link>
                                         </td>
                                     </tr>
                                     ))}

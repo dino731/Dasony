@@ -95,12 +95,16 @@
     width: 46%; 
     text-align: center; 
     background-color: #CB9DE7; 
-    color:#FCFA90; 
     font-size: 22px; 
     font-weight: 600; 
     border-radius: 4px; 
     height: 7%;
     padding : 10px 0;
+}
+
+#dday>b{
+    color:#FCFA90; 
+
 }
 
 #mogh{

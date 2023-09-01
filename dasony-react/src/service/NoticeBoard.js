@@ -25,7 +25,7 @@ const NoticeBoard = ({context}) => {
                     <div className="col col-3">
                         [안내]
                     </div>
-                    <div className="col col-9 notice-board-title" onClick={()=>navigate("notice/detail/1")}>
+                    <div className="col col-9 notice-board-title" onClick={()=>navigate("detail/1")}>
                         개인정보보호법 개정안에 따른 휴먼 정책 변경 안내
                     </div>
                 </div>
@@ -165,7 +165,7 @@ const NoticeBoard = ({context}) => {
                                         <span key={index}>[{c}] </span>
                                     ))}
                                 </div>
-                                <div className="col col-9 notice-board-title" onClick={()=>navigate(`notice/detail/${element.no}`)}>
+                                <div className="col col-9 notice-board-title" onClick={()=>navigate(`detail/${element.no}`)}>
                                     {element.title}
                                 </div>
                             </div>

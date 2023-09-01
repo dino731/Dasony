@@ -64,22 +64,24 @@ const AdminDonaDetail = () => {
                 </table>
                 <br/>
                 <div id='controlldona'>
-                    <button type="button" class="btn btn-primary" onClick={handleUpdate}>수정</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" onClick={handleUpdate}>수정</button>&nbsp;&nbsp;
                     <button type="button" class="btn btn-danger">삭제</button>
                 </div>
             </div>
             <div>
                 <div id="addb" style={{textAlign : 'center'}}>
-                    <br/><br/><br/><br/><br/><br/><br/><br/>
+                    <br/><br/><br/><br/><br/><br/>
                     <span id="addonatxt" style={{fontSize : '20px'}}>총 <b>57건</b>이<br/>
                         기부되었습니다<br/><br/>
                         {selectDona.createdate}~<br/>
                         {selectDona.enddate}
                         <br/><br/>
-                        <div id="addday"><b>D - </b></div>
+                        <div id="addday"><b>D - 77</b></div>
                         <br/>
                         모인 금액<br/>
-                        <b style={{fontSize : '25px'}}></b><span style={{fontSize : '17px'}}>다손</span>
+                        <b style={{fontSize : '25px'}}>222,222</b><span style={{fontSize : '17px'}}>다손</span><br/><br/>
+                        달성률<br/>
+                        <b style={{fontSize : '25px'}}>{selectDona.achieve}</b>
                     </span>
                 </div>
             </div>
