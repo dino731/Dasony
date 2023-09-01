@@ -8,18 +8,25 @@
 }
 
 .section_1_wrap {
-    width: 100%;
+    width: 90%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+.section_1_title {
+    width: 100%;
+    height: 10%;
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .section_1_content {
     width: 100%;
     height: 85%;
-    background-color: white;
 }
 
 .report_list {
@@ -27,21 +34,14 @@
     height: 90%;
     margin: auto;
     margin-top: 5%;
-    border-radius: 4px;
-    background-color: white;
 }
 
 .list-area {
+    border: 1px solid lightgray;
     text-align: center;
     color: gray;
     width: 100%;
     font-size: 1.4em;
-    background-color: white;
-}
-.list-area td{
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    height: 4vw;
 }
 
 .list-area>tbody>tr:hover {
@@ -52,11 +52,9 @@
 
 .paging-area>button {
     border: none;
-    border-left: 4px solid white;
     background-color: lightgray;
     color: gray;
     font-size: 1.5em;
-    width: 45px;
 }
 
 .paging-area>button:hover {
@@ -64,5 +62,33 @@
     color: black;
     cursor: pointer;
 }
+.navi_bar {
+    width: 100%;
+    height: 85%;
+    padding-top: 10%;
+}
 
+.navi_bar>button {
+    font-size: 1.3em;
+}
+
+.navi_btn {
+    border-radius: 10px;
+    border: none;
+    display: block;
+    width: 70%;
+    height: 5%;
+    margin: auto;
+    margin-top: 10%;
+    color: gray;
+    font-weight: bold;
+    font-size: 1em;
+    background-color: white;
+}
+
+.navi_btn:hover {
+    background-color: lightgray;
+    color: black;
+    cursor: pointer;
+}
 

@@ -19,9 +19,9 @@ const MypageAlert = () => {
         <thead>
           <tr>
             <th className='nf-history-header2'>알람 번호</th>
-            <th className='nf-history-header4'>카테고리                                                                                                                                                                                                                                                                                                                                                               고리</th>
-            <th className="nf-history-header1">알림 내용</th>
-            <th className="nf-history-header3">알림 날짜</th>
+            <th className='nf-history-header2'>어디사용</th>
+            <th className="nf-history-header1">알림내용</th>
+            <th className="nf-history-header2">알림날짜</th>
           </tr>
         </thead>
         <tbody>

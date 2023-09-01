@@ -21,10 +21,10 @@ const MypageMyshopUsedPoint = () => {
            <table>
           <thead>
             <tr>
-              <th className='nf-history-header2'>번호</th>
+              <th className='nf-history-header1'>번호</th>
               <th className='nf-history-header1'>사용 내용</th>
-              <th className='nf-history-header4'>사용량</th>
-              <th className='nf-history-header3'>날짜</th>
+              <th className='nf-history-header2'>사용량</th>
+              <th className='nf-history-header2'>날짜</th>
             </tr>
           </thead>
           <tbody>
