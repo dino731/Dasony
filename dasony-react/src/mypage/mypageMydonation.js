@@ -19,7 +19,7 @@ const MypageMydonation = () =>{
         <tbody>
             <tr>
                 <td className="nf-td3">2023.06.01</td>
-                <td className="nf-td2">행복한 지옥악마</td>
+                <td className="nf-td2">행복한 지옥천사</td>
                 <td className="nf-td1">500원</td>
             </tr>
             <tr>
