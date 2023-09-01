@@ -13,7 +13,7 @@ const MypageMydonation = () =>{
             <tr>
             <th className='nf-history-header2'>기부 날짜</th>
             <th className='nf-history-header1'>모금단체</th>
-            <th className='nf-history-header2'>금액</th>
+            <th className='nf-history-header3'>금액</th>
             </tr>
         </thead>
         <tbody>

@@ -81,6 +81,8 @@ import AdminReport from './admin/user/adminReport';
 import NoticeForm from './service/NoticeForm';
 import AdminReception from './admin/user/adminReception';
 import AdminReportDetail from './admin/user/adminReportDetail';
+import AdminAlert from './admin/user/adminAlert';
+import AdminReceptionDetail from './admin/user/adminReceptionDetail';
 
 
 
@@ -200,6 +202,22 @@ function App() {
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
                                                                             <AdminReportDetail/>
+                                                                        </motion.div></div></div>}/>
+                    <Route path="/admin/receptionDetail" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                            <AdminReceptionDetail/>
+                                                                        </motion.div></div></div>}/>
+                  <Route path="/admin/alert" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                            <AdminAlert/>
                                                                         </motion.div></div></div>}/>
                                                                        
 
@@ -428,7 +446,7 @@ function App() {
                                                       </motion.div>}/>                                            
                     </Route>
 
-                </Route>
+                
 
 
                   {/*Board 중첩 route 시작 */}
@@ -651,7 +669,7 @@ function App() {
                         <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
                       </Route>
                   </Route>
-                  </Route>
+                  
                   <Route path="/chat/:id/:chatname" element={<div className=".for-main">
 
                                                 <div className='for-normal-page'><motion.div
