@@ -8,6 +8,12 @@
   list-style: none;
 }
 
+#rabitimg{
+  border-radius: 8px;
+  width: 50%;
+  margin-left: 20%;
+}
+
 /* 알람css */
 .alert-table{
   font-size: 22px;
@@ -146,7 +152,18 @@ right: -10;
   
 }
 .button-div button{
-  margin: 45px;
+
+    margin: 45px;
+    width: 100px;
+    height: 30px;
+    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
+}
+.button-div button :hover{
+  background-color:#CB9DE7; color:#FCFA90;
+}
+.Link-button{
+  margin: 10px;
+
   width: 100px;
   height: 30px;
   border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
@@ -262,15 +279,17 @@ width: 100%;
 justify-content: center;
 }
 .product {
-  width: 33%;
-  padding: 20px;
-  box-sizing: border-box;
-  text-align: center;
+
+    width: 33.33%;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
 }
 .product img {
-width: 220px;
-height: 250px;
-object-fit: cover;
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
+
 }
 
 

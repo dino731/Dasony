@@ -1,6 +1,11 @@
-import React from 'react';
+
+import React, { useRef,useEffect } from 'react';
 import './mypagecss.css';
+import $ from 'jquery';
 const MypageMyshopCoupon = () => {
+
+    $('#rabitimg').css('display', 'none');
+
     return (
     
         <div className="myShopCoupon-table">
