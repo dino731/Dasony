@@ -82,24 +82,18 @@ height: 16vh;
 
 .nf-history-header1{
   width: 60vw ;
+  border-top-left-radius: 1vw;
+  border-top-right-radius: 1vw;
  }
 
  .nf-history-header2{
   width: 11vw ;
-  border-top-left-radius: 1vw;
-}
-.nf-history-header3{
-  width: 11vw ;
   border-top-right-radius: 1vw;
-}
-.nf-history-header4{
-  width: 11vw ;
+  
 }
 
 .nf-history-header1,
-.nf-history-header2,
-.nf-history-header3,
-.nf-history-header4{
+.nf-history-header2{
   background-color: rgb(230, 230, 230);
 
  }
@@ -158,13 +152,11 @@ right: -10;
   
 }
 .button-div button{
+
     margin: 45px;
     width: 100px;
     height: 30px;
     border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
-}
-.gotoUsedPoint{
-  border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
 }
 .button-div button :hover{
   background-color:#CB9DE7; color:#FCFA90;
@@ -228,6 +220,7 @@ background-color:#CB9DE7; color:#FCFA90;
 
 
 .act-table th, .act-table td {
+  border: 1px solid black;
   padding: 8px;
   text-align: center;
 }
