@@ -5,7 +5,7 @@ const DonaList = () => {
     const {donalist} = useDonaData();
 
     const handlemydona = () => {
-        window.location.href = '/donatotal';
+        window.location.href = '/mypage/Mydonation';
     }
     
     const handeldetail = (id) => {

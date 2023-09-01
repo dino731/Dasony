@@ -1,12 +1,62 @@
-import {Link} from 'react-router-dom';
-import { useState } from 'react';
+import {Link, useLocation} from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import './Board.css';
-import { useRecoilState } from 'recoil';
-import { boardPostState } from '../atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { boardCateState, boardPostState } from '../atoms';
 import BoardListHeader from './BoardListHeader';
+import {BoardDetailcategoryState, BoardVotecategoryState, BoardShortscategoryState, BoardInterestCategoryState, 
+  BoardJMTCategoryState, BoardFashionCategoryState, BoardLocalCategoryState } from '../atoms';
 
 const BoardDailyList = ()=>{
   const [boardPost, setBoardPost] = useRecoilState(boardPostState);
+  const boardDetailCategory = useRecoilValue(BoardDetailcategoryState);
+  const boardVotecategory = useRecoilValue(BoardVotecategoryState);
+  const boardShortscategory = useRecoilValue(BoardShortscategoryState);
+  const boardInterestCategory = useRecoilValue(BoardInterestCategoryState);
+  const boardJMTCategory = useRecoilValue(BoardJMTCategoryState);
+  const boardFashionCategory = useRecoilValue(BoardFashionCategoryState);
+  const boardLocalCategory = useRecoilValue(BoardLocalCategoryState);
+
+  const location = useLocation();
+  const path = location.pathname;
+
+  const dailypath = new RegExp("daily/dwriter");
+
+  const dailyOptions = path.match(dailypath) ? path : null;
+  const shortsOptions = path.includes('swriter')? path : null;
+  const voteOptions = path.includes('vwriter')? path : null;
+  const interestOptions = path.includes('interest')? path : null;
+  const jmtOptions = path.includes('jmt')? path : null;
+  const fashionOptions = path.includes('fashion')? path : null;
+
+ const [boardCate, setBoardCate] = useState([]);
+ // console.log('boardCate----->',boardCate);
+ useEffect(() => {
+   if (path == dailyOptions) {
+     setBoardCate(boardDetailCategory);
+     // console.log('보드카테 dailyOP',boardCate);
+   } else if (path == shortsOptions) {
+     setBoardCate(boardShortscategory);
+   } else if (path == voteOptions) {
+     setBoardCate(boardVotecategory);
+   } else if (path == interestOptions) {
+     setBoardCate(boardInterestCategory);
+   } else if (path == jmtOptions) {
+     setBoardCate(boardJMTCategory);
+   } else if (path == fashionOptions) {
+     setBoardCate(boardFashionCategory);
+   } else {
+     setBoardCate(boardLocalCategory);
+     // console.log('보드카테else:',boardCate);
+   }
+ }, []);
+
+
+
+
+
+
+
 
   const [keyword, setKeyword] = useState([]);
   const [inputContent, setInputContent] = useState('');
@@ -31,11 +81,12 @@ const BoardDailyList = ()=>{
     setKeyword(keyword.filter((item, i) => item !== keyword[index]));
     setInputContent('');
   }
+  // console.log('BoardDailyList : 'boardPost.boardCateNo, boardCateStateValue.name);
 
   return(
     <>
       <div className="BoardList-head-title-wrapper">
-        <BoardListHeader/>
+        <BoardListHeader path={path}/>
         </div>
 
         <div className="boardList-container">
@@ -103,7 +154,8 @@ const BoardDailyList = ()=>{
           </div>
         <div className="boardList-list-wrapper">
           {
-            boardPost.length > 0 && boardPost.map( (board, index)=>(
+            boardPost.length > 0 && boardPost.filter((board)=> board.boardCateNo == boardCate.name )
+            .map( (board, index)=>( 
             <ul key={index} className="boardList-list-ul-wrapper">
              <li className="boardList-list-li">
                <div className="boardList-list-wrapper">
