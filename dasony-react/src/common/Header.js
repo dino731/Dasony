@@ -64,14 +64,14 @@ const Header = () => {
                     </Link>
 
 
-                    <Link to='/admin/declare' style={{textDecoration:'none'}}>
-                        <li className="board-li" 
+                    
+                        <li className="board-li" id="reception" 
                             onClick={(event)=>{HandleOpacity(event.target.id);}}
                             style={{fontSize:'1.5vw'}}
                         >
-                            <i id="reception" className="bi bi-exclamation-triangle-fill"></i> 문의/신고
+                            <i className="bi bi-exclamation-triangle-fill"></i> 문의/신고
                         </li>
-                    </Link>
+                    
                     <Link to='/plzLogin' style={{textDecoration:'none'}}>
                         <li className="logout-li" 
                             onClick={(event)=>{HandleOpacity(event.target.id);}}
@@ -201,7 +201,7 @@ const Header = () => {
                                                     <li></li>
                                                     <li></li>
                                                     <li></li>
-                                                    <li></li>
+                                                    <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/alert'>알람</Link></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/reception'>문의</Link></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/report'>신고</Link></li>
                                                 </ul>

@@ -15,18 +15,18 @@ const AdminReport = () =>{
     
     return(
       <div className='section'>
+            <h2>신고 관리</h2>
         <div className="section_1">
         <div className="section_1_wrap">
-          <div className="section_1_title">
-            <span style={{fontsize: '4em'}}>신고관리</span>
-          </div>
-          <div className="section_1_content">
+          
+          
             <div className="report_list">
               <table align="center" className="list-area">
                 <thead>
                   <tr style ={{width:"100%"}}>
-                    <th style ={{width:"15%"}}>신고번호</th>
-                    <th style ={{width:"25%"}}>아이디</th>
+                    <th style ={{width:"10%"}}>신고번호</th>
+                    <th style ={{width:"15%"}}>신고 대상</th>
+                    <th style ={{width:"15%"}}>신고자</th>
                     <th style ={{width:"40%"}}>신고제목</th>
                     <th style ={{width:"20%"}}>신고일</th>
                   </tr>
@@ -36,8 +36,9 @@ const AdminReport = () =>{
                   <tr onClick={godetail}>
                     <td>1</td>
                     <td>최미선</td>
-                    <td>강퇴좀여</td>
-                    <td>오늘</td>
+                    <td>최정준</td>
+                    <td>욕설</td>
+                    <td>2023.09.01</td>
                     </tr>
                   
                   <tr>
@@ -45,55 +46,9 @@ const AdminReport = () =>{
                     <td></td>
                     <td></td>
                     <td></td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td></td>
-                    <td></td>
                     <td></td>
                   </tr>
-                  <tr>
-                    <td>4</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>6</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>7</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>8</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>9</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>10</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                  
                 </tbody>
               </table>
               <br /><br />
@@ -114,7 +69,7 @@ const AdminReport = () =>{
               </div>
             </div>
           </div>
-        </div>
+        
       </div>
       </div>
     );
