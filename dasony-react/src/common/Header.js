@@ -69,7 +69,7 @@ const Header = () => {
                             onClick={(event)=>{HandleOpacity(event.target.id);}}
                             style={{fontSize:'1.5vw'}}
                         >
-                            <i className="bi bi-exclamation-triangle-fill"></i> 신고 관리
+                            <i id="reception" className="bi bi-exclamation-triangle-fill"></i> 문의/신고
                         </li>
                     </Link>
                     <Link to='/plzLogin' style={{textDecoration:'none'}}>
@@ -192,7 +192,20 @@ const Header = () => {
                                                 <li></li>
                                             </ul>
                                         ); break;
-                default : sideList = "";
+                case 'reception': sideList = (
+                                                <ul>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/reception'>문의</Link></li>
+                                                    <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/report'>신고</Link></li>
+                                                </ul>
+                                            ); break;
             }
         } else {
             switch(id){

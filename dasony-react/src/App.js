@@ -631,6 +631,7 @@ function App() {
                         <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
                       </Route>
                   </Route>
+                  </Route>
                   <Route path="/chat/:id/:chatname" element={<div className=".for-main">
 
                                                 <div className='for-normal-page'><motion.div
