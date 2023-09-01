@@ -9,10 +9,12 @@ import MypageMyshopPoint from './mypageMyshopPoint';
 const MyShopHeader = () => {
     return(
 <div className="mys">
-            <div> 무엇을 도와드릴까요? </div>
-           <div><Link to='Likes'>찜한 목록</Link></div>
-           <div><Link to='Point'>포인트 관리</Link></div>
-           <div><Link to='Coupon'>쿠폰 관리</Link></div>
+    <h2>내 상점</h2>
+    
+            
+           <button className='Link-button'><Link to='Likes'>찜한 목록</Link></button>
+           <button className='Link-button'><Link to='Point'>포인트 관리</Link></button>
+           <button className='Link-button'><Link to='Coupon'>쿠폰 관리</Link></button>
 
            
           </div>

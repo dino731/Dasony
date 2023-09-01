@@ -1,7 +1,7 @@
 import { Button, Modal, ModalBody, ModalHeader, ModalFooter} from 'react-bootstrap';
 import './adminShop.css'
 import AdvancedExample from './Pagination';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 const AdminShop = () => {
@@ -16,33 +16,50 @@ const AdminShop = () => {
         location : '',
         cate : ''
     })
-    const handleNewShop = (addShop) => {
-        setNewShop(addShop);
+    const [newShopArray, setNewShopArray] = useState([]);
+{/*새로운 상점 추가 */}
+    const handleNewShop = (event) => {
+        const { id, value, defaultValue} = event.target;
+        setNewShop( prevShop => ({
+            ...prevShop,
+                [id] : value==''?defaultValue:value
+        }))
+    }
+{/*새로운 상점 추가 -버튼 클릭(배열 만들기) */}
+    const handleNewShopArray = ()=>{
+        setNewShopArray(newShop);
         handleOff();
+        setNewShop({name:"", location:"", cate:""});
     }
     
 
-{/* 상점 수정 추가 모달 열기 */}
+{/* 상점 수정 모달 열기 */}
     const [modifyShow, setModifyShow] = useState(false);
     const handleModifyOn = ()=> setModifyShow(true);
     const handleModifyOff = () => setModifyShow(false);
 
-{/* 상점 수정 추가 모달 열기 */}
-    const [modifyingShop, setModifyingShop] = useState([]);
+{/* 상점 수정 */}
+    const [modifyingShop, setModifyingShop] = useState({name:'', location:'', cate:''});
     const handleModifyingShop = (event) => {
-        let {id, value} = event.target;
-        let name = '';
-        let location = '';
-        let cate = '';
+        const { id, value } = event.target;
+        let name = modifyingShop.name;
+        let location = modifyingShop.location;
+        let cate = modifyingShop.cate;
         switch(id){
             case 'name': name=value; break;
             case 'location' : location=value; break;
             case 'cate' : cate = value; break;
         }
-        let shop = {name:name, location:location, cate:cate};
+        const shop = {name:name, location:location, cate:cate==''?'카페/베이커리':cate};
         setModifyingShop(shop);
     }
 
+    useEffect(()=>{
+        
+        console.log("modifyingShop",modifyingShop);
+        console.log("newShop",newShop);
+        console.log("newShopArray", newShopArray);
+    }, [modifyingShop, newShop, newShopArray]);
 
 
 
@@ -76,9 +93,9 @@ const AdminShop = () => {
                         </tr>
                         <tr>
                             <td>몰</td>
-                            <td>몰</td>
-                            <td>몰</td>
-                            <td>몰</td>
+                            <td>{modifyingShop.name}</td>
+                            <td>{modifyingShop.location}</td>
+                            <td>{modifyingShop.cate}</td>
                             <td>
                                 <Button className="btn btn-primary" onClick={handleModifyOn}>수정</Button>
                                 <Button className='btn btn-danger'>삭제</Button>
@@ -101,16 +118,23 @@ const AdminShop = () => {
                             <tbody>
                                 <tr style={{height:'7vh'}}>
                                     <th>상점 이름</th>
-                                    <td><input id='name' type='text' style={{width:'60%', height:'5vh'}}/></td>
+                                    <td>
+                                        <input id='name' type='text' style={{width:'60%', height:'5vh'}}
+                                                onChange={handleNewShop} value={newShop.name}/>
+                                    </td>
                                 </tr>
                                 <tr style={{height:'7vh'}}>
                                     <th>지역</th>
-                                    <td><input id='location' type='text' style={{width:'60%', height:'5vh'}}/></td>
+                                    <td>
+                                        <input id='location' type='text' style={{width:'60%', height:'5vh'}}
+                                                onChange={handleNewShop} value={newShop.location}/>
+                                    </td>
                                 </tr>
                                 <tr style={{height:'7vh'}}>
                                     <th>카테고리</th>
                                     <td>
-                                        <select id='cate' style={{width:'60%', height:'5vh'}}>
+                                        <select id='cate' style={{width:'60%', height:'5vh'}}
+                                                onChange={handleNewShop} value={newShop.cate}>
                                             <option>카페/베이커리</option>
                                             <option>외식</option>
                                             <option>문화생활</option>
@@ -120,7 +144,8 @@ const AdminShop = () => {
                                 </tr>
                                 <tr>
                                     <td  colSpan={2} style={{textAlign:'right'}}>
-                                        <Button className="btn btn-primary" onClick={()=>{handleNewShop({name:'멀라', location:'멀라', cate:'멀라'})}}>확인</Button>
+                                        <Button className="btn btn-primary"
+                                                onClick={handleNewShopArray}>확인</Button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -134,20 +159,32 @@ const AdminShop = () => {
                 <ModalBody style={{textAlign:'center'}}>
                     상점 정보를 수정하세요.
                     <table style={{width:'100%', textAlign:'center', marginTop:'5%'}}>
-                        <tr style={{height:'10vh'}}>
-                            <th>상점 이름</th>
-                            <td>
-                                <input type="text" defaultValue={newShop.name} onClick={handleModifyingShop}/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>지역</th>
-                            <td><input type="text" defaultValue={newShop.location}/></td>
-                        </tr>
-                        <tr style={{height:'10vh'}}>
-                            <th>카테고리</th>
-                            <td><input type="text" defaultValue={newShop.cate}/></td>
-                        </tr>
+                        <tbody>
+                            <tr style={{height:'10vh'}}>
+                                <th>상점 이름</th>
+                                <td>
+                                    <input id='name' type="text"
+                                            onChange={handleModifyingShop}  value={modifyingShop.name}/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>지역</th>
+                                <td><input id='location' type="text"
+                                            onChange={handleModifyingShop} value={modifyingShop.location}/></td>
+                            </tr>
+                            <tr style={{height:'10vh'}}>
+                                <th>카테고리</th>
+                                <td>
+                                    <select id='cate' style={{width:'60%', height:'5vh'}}
+                                                onChange={handleModifyingShop} value={modifyingShop.cate}>
+                                            <option>카페/베이커리</option>
+                                            <option>외식</option>
+                                            <option>문화생활</option>
+                                            <option>편의점</option>
+                                        </select>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </ModalBody>
                 <ModalFooter>

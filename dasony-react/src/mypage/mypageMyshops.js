@@ -10,7 +10,7 @@ return(
     <div className='mypageMyshops'>
     <MyShopHeader/>
     <Outlet/>
-   
+    <img id='rabitimg' src='/resources/common-img/mypageimg/토끼.jpg'></img>
     </div>
 ); 
 }
