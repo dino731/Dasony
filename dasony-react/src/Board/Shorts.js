@@ -1,9 +1,7 @@
-
 // import './Board.css';
 // import Heart from '../point/heart';
 // import Reply from './Reply';
 // import { useState } from 'react';
-
 
 // const Shorts = () =>{
 //   const [shortsFile, setShortsFile] = useState({});
