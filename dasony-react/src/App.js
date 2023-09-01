@@ -77,7 +77,9 @@ import NoticeBoard from './service/NoticeBoard';
 import NoticeDetail from './service/NoticeDetail';
 import ManagerNoticeBoard from './service/ManagerNoticeBoard';
 import Service from './service/Service';
+import AdminReport from './admin/user/adminReport';
 import NoticeForm from './service/NoticeForm';
+
 
 
 function App() {
@@ -171,6 +173,14 @@ function App() {
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
                                                                             <AdminCalendar/>
+                                                                        </motion.div></div></div>}/> 
+                  <Route path="/admin/report" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                            <AdminReport/>
                                                                         </motion.div></div></div>}/> 
                   {/* 
                     이벤트 관리자 페이지
