@@ -14,11 +14,11 @@ const MypageAct = () => {
           <thead>
             <tr>
               <th className='nf-history-header2'>게시글번호</th>
-              <th className='nf-history-header2'>시간</th>
+              <th className='nf-history-header4'>시간</th>
               <th className='nf-history-header1'>제목</th>
-              <th className='nf-history-header2'>조회수</th>
-              <th className='nf-history-header2'>종류</th>
-              <th className='nf-history-header2'></th>
+              <th className='nf-history-header4'>조회수</th>
+              <th className='nf-history-header4'>종류</th>
+              <th className='nf-history-header3'></th>
             </tr>
           </thead>
           <tbody>

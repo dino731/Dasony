@@ -56,14 +56,15 @@ import MypageAlert from './mypage/mypageAlert';
 import MypageMydonation from './mypage/mypageMydonation';
 import MypageMyshopUsedPoint from './mypage/mypageMyshopUsedPoint';
 import {gamestart} from './mypage/realgame';
+import { RecoilEnv } from 'recoil';
 import ChatList from './chat/ChatList';
 import ChatIcon from './chat/ChatIcon';
 import MyChstListModal from './chat/MyChatListModal';
 import NewChatModal from './chat/NewChatModal';
-import AdminDonaList from './donation/AdminDonaList';
-import AdminDonaEnroll from './donation/AdminDonaEnroll';
-import AdminDonaDetail from './donation/AdminDonaDetail';
-import AdminUpdate from './donation/AdminUpdate';
+import AdminDonaList from './admin/donation/AdminDonaList';
+import AdminDonaEnroll from './admin/donation/AdminDonaEnroll';
+import AdminUpdate from './admin/donation/AdminUpdate';
+import AdminDonaDetail from './admin/donation/AdminDonaDetail';
 import DonaDetail from './donation/DonaDetail';
 import DonaDona from './donation/DonaDona';
 import DonaList from './donation/DonaList';
@@ -71,7 +72,7 @@ import DonaTotal from './donation/DonaTotal';
 import { ChatDataProvider } from './chat/ChatDataContext';
 import { DonaDataProvider } from './donation/DonaDataContext';
 import { DonationProvider } from './donation/DonationContext';
-import { AdminDonaListContext } from './donation/AdminDonaListContext';
+import { AdminDonaListContext } from './admin/donation/AdminDonaListContext';
 import Notice from './service/Notice';
 import NoticeBoard from './service/NoticeBoard';
 import NoticeDetail from './service/NoticeDetail';
@@ -81,8 +82,11 @@ import AdminReport from './admin/user/adminReport';
 import NoticeForm from './service/NoticeForm';
 import AdminReception from './admin/user/adminReception';
 import AdminReportDetail from './admin/user/adminReportDetail';
+import AdminAlert from './admin/user/adminAlert';
+import AdminReceptionDetail from './admin/user/adminReceptionDetail';
 
 
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
 
 function App() {
@@ -200,6 +204,22 @@ function App() {
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
                                                                             <AdminReportDetail/>
+                                                                        </motion.div></div></div>}/>
+                    <Route path="/admin/receptionDetail" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                            <AdminReceptionDetail/>
+                                                                        </motion.div></div></div>}/>
+                  <Route path="/admin/alert" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                            <AdminAlert/>
                                                                         </motion.div></div></div>}/>
                                                                        
 
@@ -428,7 +448,7 @@ function App() {
                                                       </motion.div>}/>                                            
                     </Route>
 
-              
+
 
 
                   {/*Board 중첩 route 시작 */}
@@ -651,6 +671,7 @@ function App() {
                         <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
                       </Route>
                   </Route>
+
                   <Route path="/chat/:id/:chatname" element={<div className=".for-main">
 
                                                 <div className='for-normal-page'><motion.div

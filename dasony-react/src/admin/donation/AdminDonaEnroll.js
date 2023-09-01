@@ -19,6 +19,11 @@ const AdminDonaEnroll = () => {
     
     const handleaddonalist = () => {
 
+        if(!title || !crdona || !crcontent){
+            alert("값을 모두 입력해주세요");
+            return
+        }
+
         const currentDate = new Date();
         const year = currentDate.getFullYear();
         const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
@@ -29,6 +34,7 @@ const AdminDonaEnroll = () => {
         const endYear = endDate.getFullYear();
         const endMonth = (endDate.getMonth() + 1).toString().padStart(2, '0');
         const endDay = endDate.getDate().toString().padStart(2, '0');
+
         
         const newDona = {
             id : adDonaList.length + 1,
