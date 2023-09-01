@@ -27,7 +27,7 @@ const BoardDailyWriter = () => {
    // Recoil 상태 가져오기
    const [boardCateStateValue, setBoardCateState] = useRecoilState(boardCateState);
 
-   console.log('보드작성 초기화 전 :',boardCateStateValue);
+   console.log('보드작성 초기화 전 :',boardCateStateValue, boardCateStateValue.name);
 
 
   let [newBoardPost, setNewBoardPost] = useState({
@@ -36,13 +36,14 @@ const BoardDailyWriter = () => {
     boardTitle : '',
     boardWriteDate : getCurrentDateTime(),
     boardContent : '',
-    boardCateNo :  boardCateStateValue.name,
+    boardCateNo :  boardCateState
   });
 
   //input 값을 바뀌고 초기화해줌
   let handleInputChange = (e) =>{
     let {name,value} = e.target;
     setNewBoardPost({...newBoardPost, [name] : value});
+    console.log('핸들인풋', name, value, '이게 확인할 값:=======>>',boardCateStateValue);
   };
 
 

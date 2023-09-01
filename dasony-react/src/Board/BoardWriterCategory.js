@@ -55,19 +55,23 @@ const BoardWriterCategory = () =>{
 
   const handleBoardDCate = (e) =>{
     const selectedValue = e.target.value;
-    const selectedCategory = BoardDetailcategory.find(cat => cat.value === selectedValue);
-    // console.log('보드카테 :',selectedValue);
-    // console.log('보드카테 :',boardCateState);
+    const selectedCategory = boardCate.find(cat => cat.value === selectedValue);
+    console.log('보드카테 :',selectedValue);
+    console.log('보드카테 :',selectedCategory);
+    console.log('보드카테 :',boardCateState);
     setBoardCateItem(selectedValue);
     setBoardCateState(selectedCategory); // 전역 상태 업데이트
+    console.log('selectedCategory:====', selectedCategory);
   };
+  const dailypath = new RegExp("daily/dwriter");
 
-  const dailyOptions = path.includes('daily') ? path : null;
+  const dailyOptions = path.match(dailypath) ? path : null;
   const shortsOptions = path.includes('swriter')? path : null;
   const voteOptions = path.includes('vwriter')? path : null;
   const interestOptions = path.includes('interest')? path : null;
   const jmtOptions = path.includes('jmt')? path : null;
   const fashionOptions = path.includes('fashion')? path : null;
+  // console.log(dailyOptions);
 
   // console.log(jmtOptions);
   // console.log(path);
@@ -76,7 +80,7 @@ const BoardWriterCategory = () =>{
   useEffect(() => {
     if (path == dailyOptions) {
       setBoardCate(BoardDetailcategory);
-      console.log(setBoardCate);
+      console.log('보드카테 dailyOP',setBoardCate);
     } else if (path == shortsOptions) {
       setBoardCate(BoardVotecategory);
     } else if (path == voteOptions) {
@@ -89,6 +93,7 @@ const BoardWriterCategory = () =>{
       setBoardCate(BoardFashionCategory);
     } else {
       setBoardCate(BoardLocalCategory);
+      console.log('보드카테else:',setBoardCate);
     }
   }, []);
 

@@ -103,8 +103,8 @@ const BoardDailyList = ()=>{
           </div>
         <div className="boardList-list-wrapper">
           {
-            boardPost && boardPost.map( (board)=>(
-            <ul key={board.boardNo} className="boardList-list-ul-wrapper">
+            boardPost.length > 0 && boardPost.map( (board, index)=>(
+            <ul key={index} className="boardList-list-ul-wrapper">
              <li className="boardList-list-li">
                <div className="boardList-list-wrapper">
                  <div className="boardList-list-container">

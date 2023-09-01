@@ -5,6 +5,7 @@ import BoardWTitle from './BoardWTitle';
 import styled from 'styled-components';
 import Heart from '../heart';
 import Reply from './Reply';
+import BoardWriterCategory from './BoardWriterCategory';
 
 const BoardShorts = () => {
 
@@ -22,6 +23,13 @@ const BoardShorts = () => {
     console.log(imageTpye);
   };
 
+  //input 값을 바뀌고 초기화해줌
+  // let handleInputChange = (e) =>{
+  //   let {name,value} = e.target;
+  //   setNewBoardPost({...newBoardPost, [name] : value});
+  // };
+
+
 
   return (
     <>
@@ -30,8 +38,21 @@ const BoardShorts = () => {
           <BoardHeader/>
           <div className="boardDetail-container">
             <form action="" method="GET">
-              <BoardWTitle/>
-        
+              {/* <div className='row'>
+                <BoardWriterCategory/>
+                <div className="col-md-9 boardDetail-title-input">
+                <div className="boardList-search-box-title">
+                  <input 
+                  type="text" 
+                  name="boardTitle" 
+                  value={newBoardPost.boardTitle} 
+                  onChange={handleInputChange}
+                  className="boardList-search-input-title" 
+                  placeholder="제목, 내용을 검색해주세요"
+                  />
+                </div>
+                </div>
+              </div> */}
               <div className='Board-Shorts-Content-container'>
                   <div className='videoWrap'>
                     <div className='videoplayer-wrapper'>
