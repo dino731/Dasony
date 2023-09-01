@@ -56,6 +56,7 @@ import MypageAlert from './mypage/mypageAlert';
 import MypageMydonation from './mypage/mypageMydonation';
 import MypageMyshopUsedPoint from './mypage/mypageMyshopUsedPoint';
 import {gamestart} from './mypage/realgame';
+import { RecoilEnv } from 'recoil';
 import ChatList from './chat/ChatList';
 import ChatIcon from './chat/ChatIcon';
 import MyChstListModal from './chat/MyChatListModal';
@@ -85,6 +86,7 @@ import AdminAlert from './admin/user/adminAlert';
 import AdminReceptionDetail from './admin/user/adminReceptionDetail';
 
 
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
 
 function App() {

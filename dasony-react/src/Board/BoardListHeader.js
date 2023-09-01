@@ -1,12 +1,14 @@
 import './Board.css';
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import BoardDailyList from './BoardDailyList';
 
-const BoardListHeader = () => {
+const BoardListHeader = (props) => {
   const [selectedPath, setSelectedPath] = useState('');
-  const location = useLocation();
+  const {path} = props;
+  // const location = useLocation();
   const n = useNavigate();
-  const path = location.pathname;
+  // const path = location.pathname;
 
   let generalList = [
     { name: '일상게시판', value: '/board/general/daily', boardKey: 'general' },

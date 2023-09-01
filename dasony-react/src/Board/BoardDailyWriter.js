@@ -23,38 +23,50 @@ const BoardDailyWriter = () => {
 
   const [boardPost, setBoardPost] = useRecoilState(boardPostState);
   const [nextBoardNo, setnextBoardNo] =useRecoilState(nextBoardNoState);
-  const [boardCateItem, setBoardCateItem] = useState('');
    // Recoil 상태 가져오기
    const [boardCateStateValue, setBoardCateState] = useRecoilState(boardCateState);
 
-   console.log('보드작성 초기화 전 :',boardCateStateValue, boardCateStateValue.name);
+  //  console.log('보드작성 초기화 전 :',boardCateStateValue, boardCateStateValue.name);
+  // console.log('보드작성boardCateState:====', boardCateState);
+  console.log('보드작성boardCateStateValue:====.name', boardCateStateValue.name);
 
-
-  let [newBoardPost, setNewBoardPost] = useState({
+  const [newBoardPost, setNewBoardPost] = useState({
     boardNo : nextBoardNo,
     userName : '이아인',
     boardTitle : '',
     boardWriteDate : getCurrentDateTime(),
     boardContent : '',
-    boardCateNo :  boardCateState
+    boardCateNo :  boardCateStateValue.name
   });
 
   //input 값을 바뀌고 초기화해줌
-  let handleInputChange = (e) =>{
-    let {name,value} = e.target;
-    setNewBoardPost({...newBoardPost, [name] : value});
-    console.log('핸들인풋', name, value, '이게 확인할 값:=======>>',boardCateStateValue);
+  const handleInputChange = (e) =>{
+    const {name,value} = e.target;
+    let boardNo =newBoardPost.boardNo;
+    let boardTitle =newBoardPost.boardTitle;
+    let boardContent=newBoardPost.boardContent;
+    switch(name){
+      case 'boardNo' :   boardNo = value; break;
+      case 'boardTitle' : boardTitle = value; break;
+      case 'boardContent' : boardContent = value; break;
+    }
+    setNewBoardPost({[name]:value});
+    let test = {
+      boardNo : boardNo,
+      userName : '이아인',
+      boardTitle : boardTitle,
+      boardWriteDate : getCurrentDateTime(),
+      boardContent : boardContent,
+      boardCateNo :  boardCateStateValue.name
+    }
+    setNewBoardPost(test);
+    console.log('핸들인풋', name, value, '이게 확인할 값:newBoardPost.boardCateNo=======>>',test);
   };
 
 
   const handleBoardWriterSubmit = (e)=>{
     e.preventDefault();
-    console.log(newBoardPost.boardTitle);
-    console.log(newBoardPost.boardContent);
-    console.log(newBoardPost.boardCateNo);
-    console.log(newBoardPost.userName);
-    console.log(newBoardPost.boardWriteDate);
-    console.log(newBoardPost.boardNo);
+    
 
     if(!newBoardPost.boardTitle||!newBoardPost.boardContent|| !newBoardPost.boardCateNo){
       alert("모든 값을 바르게 입력해주세요.");
@@ -63,8 +75,14 @@ const BoardDailyWriter = () => {
     setBoardPost([...boardPost, newBoardPost]);
     setnextBoardNo(nextBoardNo + 1);
     setNewBoardPost({boardTitle : '',boardContent : '', boardCateNo : '' });
-    setBoardCateState(boardCateStateValue);
-    console.log('보드작성 :',boardCateStateValue);
+    // setBoardCateState([]);
+    // console.log('보드작성 :',boardCateStateValue);
+    console.log(newBoardPost.boardTitle);
+    console.log(newBoardPost.boardContent);
+    console.log(newBoardPost.userName);
+    console.log(newBoardPost.boardWriteDate);
+    console.log(newBoardPost.boardCateNo);
+    console.log('boardCate----->',boardCateStateValue.name);
   }
 
   return (
@@ -86,7 +104,7 @@ const BoardDailyWriter = () => {
                       value={newBoardPost.boardTitle} 
                       onChange={handleInputChange}
                       className="boardList-search-input-title" 
-                      placeholder="제목, 내용을 검색해주세요"
+                      placeholder="제목, 내용을 입력ㅎ"
                       />
                     </div>
                     </div>
