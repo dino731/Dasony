@@ -43,6 +43,7 @@
    } */
    .react-calendar__tile{
     height: 7vh;
+    color: #7A7A7A;
    }
    .react-calendar__tile:enabled:hover,
    .react-calendar__tile:enabled:focus {
