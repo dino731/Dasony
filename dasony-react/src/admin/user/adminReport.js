@@ -1,5 +1,17 @@
 import './adminReport.css';
+import { Link, useNavigate } from 'react-router-dom';
+
 const AdminReport = () =>{
+
+  const navigate = useNavigate(
+  );
+  
+  const godetail = ()=>{
+      navigate(
+        "../admin/reportDetail"
+      )
+  };
+
     
     return(
       <div className='section'>
@@ -20,12 +32,14 @@ const AdminReport = () =>{
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                 
+                  <tr onClick={godetail}>
                     <td>1</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                    <td>최미선</td>
+                    <td>강퇴좀여</td>
+                    <td>오늘</td>
+                    </tr>
+                  
                   <tr>
                     <td>2</td>
                     <td></td>
