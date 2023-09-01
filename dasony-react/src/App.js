@@ -448,7 +448,7 @@ function App() {
                                                       </motion.div>}/>                                            
                     </Route>
 
-                
+
 
 
                   {/*Board 중첩 route 시작 */}
@@ -671,7 +671,7 @@ function App() {
                         <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
                       </Route>
                   </Route>
-                  
+
                   <Route path="/chat/:id/:chatname" element={<div className=".for-main">
 
                                                 <div className='for-normal-page'><motion.div

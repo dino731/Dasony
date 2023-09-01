@@ -9,10 +9,9 @@
 
 #togglechat{
     position: absolute;
-    bottom: 16%;
+    bottom: 0vh;
     height: 480px;
     border: 1px solid black;
-    top: 0%;
 }
 
 #togglechat>table{
