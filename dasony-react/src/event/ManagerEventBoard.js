@@ -9,7 +9,6 @@ import $ from 'jquery';
  */
 export default () => {
 
-    const cateList = useRef([]);
     const navigate = useNavigate();
 
     let category;
@@ -41,12 +40,14 @@ export default () => {
             }
         };
 
-        cateList.current.forEach((el, index) => {
-            el.addEventListener('click', handleLabelClick);
+        document.querySelectorAll(".manager-select-btn>div").forEach((el)=>{
+            console.log(el);
+            el.removeEventListener('click', handleLabelClick);
         });
 
         return () => {
-            cateList.current.forEach((el) => {
+            document.querySelectorAll(".manager-select-btn>div").forEach((el)=>{
+                console.log(el);
                 el.removeEventListener('click', handleLabelClick);
             });
         };
@@ -74,7 +75,7 @@ export default () => {
 
     /** 이벤트 아이템 클릭시 해당 페이지로 이동 */
     const moveToEventDetail = no => {
-        navigate(`/event/modifyEvent/${no}`);
+        navigate(`/admin/event/detail/${no}`);
     };
 
     return(
@@ -84,7 +85,7 @@ export default () => {
                     <div className="event-selectBox">
                         <span>분류</span>
                         <div className="manager-select-btn">
-                            <div ref={(el) => cateList.current[0] = el}>
+                            <div> 
                                 <span className="manager-select-label">카테고리</span>
                                 <i className="bi bi-caret-down-fill"></i>
                             </div>
@@ -100,7 +101,7 @@ export default () => {
                     <div className="event-selectBox">
                         <span style={{width: "50%"}}>진행상태</span>
                         <div className="manager-select-btn">
-                            <div ref={(el) => cateList.current[1] = el}>
+                            <div>
                                 <span className="manager-select-label">선택</span>
                                 <i className="bi bi-caret-down-fill"></i>
                             </div>
@@ -146,6 +147,7 @@ export default () => {
                 <tfoot>
                 </tfoot>
             </table>
+            <button className="btn" onClick={()=>navigate("/admin/event/new")}>등록하기</button>
         </div>
     );
 }

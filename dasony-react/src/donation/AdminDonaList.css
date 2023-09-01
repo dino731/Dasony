@@ -1,0 +1,85 @@
+#adlistcontent{
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    /* top: 25%; */
+    /* margin: 5%; */
+    border-collapse: collapse;
+    /* width: 60%; */
+    margin-top: 11%;
+    margin-bottom: 5%;
+    width: 97%;
+    margin-left: 1.5%;
+}
+
+#listhead{
+    text-align: center;
+    margin: auto;
+    border-collapse: collapse;
+    position: absolute;
+    margin-top: -1px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+#scrolladmin tr{
+    height: 7vh;
+}
+
+#listhead>thead>tr{
+    height: 5vh;
+}
+
+#listbody td{
+    border-bottom: 1px solid black;
+}
+
+#addonalist{
+    height: 617px;
+    /* border-bottom: 1px solid black; */
+    height: 630px;
+    font-family: 'HakgyoansimWoojuR';
+}
+
+#listhead>thead{
+    color: #7A7A7A;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+#scrolladmin tr:hover{
+    background-color: ghostwhite; 
+    cursor: pointer;
+}
+
+#scrolladmin{
+    max-height: 575px; /*오픈채팅 리스트 높이 조절*/
+    overflow: auto;
+    word-wrap: break-word;
+    /* height: 100%; */
+}
+
+#listhead, #listbody{
+    border-left: 1px solid black;
+    
+}
+
+#listhead, #listbody{
+    border-right: 1px solid black;
+    color: #7A7A7A;
+    
+}
+
+#createdona>.btn-warning{
+    margin-left: 94.5%;
+    display: flex;
+    justify-content: right;
+}
+
+#addonalist>#areas{
+    margin-left: 93.5%;
+    margin-bottom: 1%;
+    outline: none;
+}

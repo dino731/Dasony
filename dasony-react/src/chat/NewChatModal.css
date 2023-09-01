@@ -1,0 +1,53 @@
+#modalCloseBtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: none;
+    color: rgba(0, 0, 0, 0.7);
+    background-color: transparent;
+    /* font-size: 20px; */
+  }
+
+  #modalCloseBtn, #createchat:hover{
+    cursor: pointer;
+  }
+
+  #makechat{
+    font-family: 'ImcreSoojin';
+    color: #7A7A7A;;
+    font-size: 25px;
+    font-weight: 500;
+  }
+
+  #chatname{
+    font-family: 'HakgyoansimWoojuR';
+    font-size: 17px;
+    color: #7A7A7A;
+  }
+
+  #inputtxt{
+    border-radius: 4px;
+    width : 350px;
+    height: 37px;
+    margin-top: 2%;
+    border: 2px solid #CB9DE7;border-radius:5px;
+  
+  }
+
+  #createchat{
+    border-radius :4px;
+    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
+    width: 67px;
+    height: 35px;
+    margin-top: 2%;
+    margin-left: 80%;
+    font-size: 14px;
+  }
+
+  #createchat:hover{
+    background-color:#CB9DE7; color:#FCFA90;
+  }
+
+  #cinputtxt{
+    outline: none;
+  }

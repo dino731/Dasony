@@ -3,37 +3,41 @@ import './mypagecss.css';
 
 const MypageAct = () => {
   return (
-    <div className="main">
+    
     
       <div className="act-table">
+
+        <h2>내 활동</h2>
+
+        <div className="jefftable">
         <table>
           <thead>
             <tr>
-              <th>게시글번호</th>
-              <th>시간</th>
-              <th>제목</th>
-              <th>조회수</th>
-              <th>종류</th>
-              <th></th>
+              <th className='nf-history-header2'>게시글번호</th>
+              <th className='nf-history-header4'>시간</th>
+              <th className='nf-history-header1'>제목</th>
+              <th className='nf-history-header4'>조회수</th>
+              <th className='nf-history-header4'>종류</th>
+              <th className='nf-history-header3'></th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>1</td>
-              <td>2023-08-22</td>
-              <td>첫 번째 게시글</td>
-              <td>100</td>
-              <td>댓글</td>
-              <td>
+              <td className="nf-td1"> 1 </td>
+              <td className="nf-td3">2023-08-22</td>
+              <td className="nf-td2">첫 번째 게시글</td>
+              <td className="nf-td1">100</td>
+              <td className="nf-td1">댓글</td>
+              <td className="nf-td1">
                 <button className="delete-button">삭제</button>
               </td>
             </tr>
             <tr>
-              <td>2</td>
-              <td>2023-08-23</td>
-              <td>두 번째 게시글</td>
-              <td>75</td>
-              <td>게시글</td>
+            <td className="nf-td1"> 2 </td>
+            <td className="nf-td3">2023-08-23</td>
+            <td className="nf-td2">두 번째 게시글</td>
+            <td className="nf-td1">75</td>
+            <td className="nf-td1">게시글</td>
               <td>
                 <button className="delete-button">삭제</button>
               </td>
@@ -41,7 +45,7 @@ const MypageAct = () => {
           </tbody>
         </table>
       </div>
-    </div>
+      </div>
   );
 };
 

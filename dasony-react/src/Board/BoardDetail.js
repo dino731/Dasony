@@ -6,6 +6,8 @@ import Heart from '../heart';
 import { useRecoilState } from 'recoil';
 import { boardPostState } from '../atoms';
 import { useParams } from 'react-router-dom';
+import Vote from './Vote';
+import Shorts from './Shorts'
 
 
 const BoardDetail = () =>{
