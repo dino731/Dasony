@@ -1,28 +1,40 @@
+import { useParams } from "react-router-dom";
 import CkEditor from "./OpenEditor";
-import {useRef, useEffect} from 'react';
+import {useRef, useEffect, useState} from 'react';
 
 /** 공지사항 등록폼
 -공지사항 등록하기 위한 경우 : 등록 버튼
 -공지사항 수정하기 위한 경우 : 수정 버튼 */
 const NoticeForm = () => {
-
     const submitBtn = useRef(null);
-    const sendForm = (e) => {
+    let btnStatus = "등록";
+
+    // 제출 버튼 변경
+    const {no} = useParams();
+    if(no > 0) btnStatus = "수정";
+
+    // editor에서 값 가져오기
+    const [content, setContent] = useState("");
+    const sendForm = (e, data) => {
         e.preventDefault();
 
-        alert("submit");
+        // alert(data);
     };
 
     useEffect(()=>{
-        submitBtn.current.addEventLister('click', sendForm);
+        console.log("form에서 data : " + content);
+        submitBtn.current.addEventListener('click', (e) => sendForm(e, content));
+        
+        // 값을 출력하는 곳에서 div + innerHtml로 태그 적용하여 내용 출력할 것
+        // editContent.current.innerHTML = `${content}`;
 
-        return () => submitBtn.current.removeEventLister('click', sendForm);
-    }, []);
+        return () => {if(submitBtn.current != null) submitBtn.current.removeEventListener('click', (e) => sendForm(e, content));};
+    }, [content]);
 
     return(
         <form className="noticeForm">
             <div className="mb-3 row">
-                <label for="noticeCategory" className="col-sm-2 col-form-label">Category</label>
+                <label htmlFor="noticeCategory" className="col-sm-2 col-form-label">Category</label>
                 <div className="col-sm-7" id="noticeCategory">
                     <nav className="navbar navbar-expand-lg" id="notice-form-bar" style={{"backgroundColor": "transparent"}}>
                         <div className="container-fluid">
@@ -48,17 +60,17 @@ const NoticeForm = () => {
             </div>
 
             <div className="row mb-3 noticeTitlePart">
-              <label for="noticeTitle" className="col-sm-2 col-form-label">제목</label>
+              <label htmlFor="noticeTitle" className="col-sm-2 col-form-label">제목</label>
               <input type="text" className="form-control" id="noticeTitle"/>
             </div>
             
             <div className="mb-3 noticeContentPart">
-                <label for="noticeContent" className="col-sm-2 col-form-label">내용</label><br />
-                <div id="noticeContent" className="form-control" >
-                    <CkEditor />
+                <label htmlFor="noticeContent" className="col-sm-2 col-form-label">내용</label><br />
+                <div id="noticeContent" className="form-control" style={{width: "100%", height: "100%"}}>
+                    <CkEditor className="ck-editor" editContent={{content, setContent}} />
                 </div>
             </div>
-            <button type="submit" ref={submitBtn} className="btn">등록 / 수정</button>
+            <button type="submit" ref={submitBtn} className="btn">{btnStatus}</button>
         </form>
     );
 };

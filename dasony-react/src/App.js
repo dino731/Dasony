@@ -79,6 +79,7 @@ import ManagerNoticeBoard from './service/ManagerNoticeBoard';
 import Service from './service/Service';
 import AdminReport from './admin/user/adminReport';
 import NoticeForm from './service/NoticeForm';
+import ChartManager from './admin/chart/ChartManager';
 
 
 
@@ -231,8 +232,19 @@ function App() {
                       <Route path="notice" element={<Notice/>}>
                             <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                      
                             <Route path="edit/:no" element={<NoticeForm/>}/>                                                                      
+                            <Route path="new" element={<NoticeForm/>}/>                                                                      
                       </Route>                          
                   </Route>
+
+                  {/* chart 파트 */}
+                  <Route path="/admin/chart" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                          <ChartManager />
+                                                                        </motion.div></div></div>} />
                                                                         
                   {/* 메인페이지 부분 */}
                   <Route path="/" element={<motion.div
@@ -383,33 +395,8 @@ function App() {
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <EventDetailControl editStatus="등록"/>
-                                                      </motion.div>}/>                                                    
-
-                        <Route path="addNewEvent" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <EventForm editStatus="등록"/>
-                                                      </motion.div>}/>
-                        <Route path="modifyEvent/:no" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <EventForm editStatus="수정"/>
-                                                      </motion.div>}/>
-                        <Route path="managerEvent" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <ManagerEventBoard/>
-                                                      </motion.div>}/>                                            
+                                                      </motion.div>}/>                                           
                     </Route>
-
-                </Route>
-
 
                   {/*Board 중첩 route 시작 */}
                   <Route path="/board/*" element={<div className=".for-main">
@@ -630,8 +617,7 @@ function App() {
                     <Route path="notice" element={<Notice/>}>
                         <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
                       </Route>
-                  </Route>
-                  </Route>
+                </Route>
                   <Route path="/chat/:id/:chatname" element={<div className=".for-main">
 
                                                 <div className='for-normal-page'><motion.div
