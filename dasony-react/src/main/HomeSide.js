@@ -3,6 +3,7 @@ import 'react-calendar/dist/Calendar.css';
 import './HomeSide.css';
 import { useEffect, useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "react-bootstrap";
+import ChatIcon from '../chat/ChatIcon';
 
 const HomeSide = () => {
     {/*달력 보이기 설정 */}
@@ -148,7 +149,7 @@ const HomeSide = () => {
                         onChange={setDate}
                         selectRange={true} />
             <Button className='calendar-detail-btn' onClick={handleOpen}>일정 확인</Button>
-
+            <div className="main-chat-icon-container"><ChatIcon/></div>
             <div className="calendar-detail-container" style={{display:show}} >
                 <div><button onClick={handleStyle}>x</button></div>
                 <div className="calendar-detail-box">

@@ -1,49 +1,58 @@
 import './adminReport.css';
 import { Link, useNavigate } from 'react-router-dom';
 
-const AdminReport = () =>{
+const AdminReception = () =>{
 
   const navigate = useNavigate(
   );
   
   const godetail = ()=>{
       navigate(
-        "../admin/reportDetail"
+        "../admin/receptionDetail"
       )
   };
 
     
     return(
       <div className='section'>
-            <h2>신고 관리</h2>
+            <h2>문의 관리</h2>
         <div className="section_1">
         <div className="section_1_wrap">
-          
-          
+        
+          <div className="section_1_content">
             <div className="report_list">
               <table align="center" className="list-area">
                 <thead>
                   <tr style ={{width:"100%"}}>
-                    <th style ={{width:"10%"}}>신고번호</th>
-                    <th style ={{width:"15%"}}>신고 대상</th>
-                    <th style ={{width:"15%"}}>신고자</th>
-                    <th style ={{width:"40%"}}>신고제목</th>
-                    <th style ={{width:"20%"}}>신고일</th>
+                    <th style ={{width:"15%"}}>문의번호</th>
+                    <th style ={{width:"25%"}}>문의자</th>
+                    <th style ={{width:"40%"}}>문의 제목</th>
+                    <th style ={{width:"20%"}}>문의 날짜</th>
                   </tr>
                 </thead>
                 <tbody>
                  
                   <tr onClick={godetail}>
                     <td>1</td>
-                    <td>최미선</td>
                     <td>최정준</td>
-                    <td>욕설</td>
-                    <td>2023.09.01</td>
+                    <td>배고파요</td>
+                    <td>2023.05.01</td>
                     </tr>
                   
                   <tr>
                     <td>2</td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -69,10 +78,10 @@ const AdminReport = () =>{
               </div>
             </div>
           </div>
-        
+        </div>
       </div>
       </div>
     );
 
 }
-export default AdminReport;
+export default AdminReception;

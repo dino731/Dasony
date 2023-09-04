@@ -17,9 +17,9 @@ const MypageMyshopCoupon = () => {
                 <tr>
                     <th className='nf-history-header2'>No</th>
                     <th className='nf-history-header1'>쿠폰 이름</th>
-                    <th className='nf-history-header2'>기한</th>
-                    <th className='nf-history-header2'>획득 날짜/사용날짜</th>
-                    <th className='nf-history-header2'>사용 가능 여부</th>
+                    <th className='nf-history-header4'>기한</th>
+                    <th className='nf-history-header4'>획득 날짜/사용날짜</th>
+                    <th className='nf-history-header3'>사용 가능 여부</th>
                 </tr>
             </thead>
             <tbody>

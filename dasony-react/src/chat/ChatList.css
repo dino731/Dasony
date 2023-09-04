@@ -15,8 +15,7 @@
 
 #opentalk{
     width: 97%;
-    /* top: 30%; */
-  
+    margin-top: -1%;
     margin-bottom: 2%;
     margin-left: 1.5%;
 } 
@@ -104,25 +103,6 @@
     vertical-align: middle;
 
 }
-/* #tchattable td:first-child{
-    width: 9%;
-}
-
-#tchattable td:nth-child(2){
-    width: 40%;
-}
-
-#tchattable td:nth-child(3){
-    width: 30%;
-}
-
-#tchattable td:nth-child(4){
-    width: 15%;
-}
-
-#tchattable td:nth-child(5){
-    width: 10%;
-} */
 
 #chatlist{
     height: 617px;

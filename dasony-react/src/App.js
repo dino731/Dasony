@@ -44,7 +44,7 @@ import { AdminShopDetail } from './admin/shop/adminShopDetail';
 import { AdminUser } from './admin/user/adminUser';
 import { AdminUserDetail } from './admin/user/adminUserDetail';
 import { AdminCalendar } from './admin/board/adminCalendar';
-import Mypage from './mypage/Mypage';
+import Mypage from './mypage/mypage';
 import MypageHeader from './mypage/mypageHeader';
 import MypageAct from './mypage/mypageAct';
 import MypageInfo from './mypage/mypageInfo';
@@ -56,14 +56,15 @@ import MypageAlert from './mypage/mypageAlert';
 import MypageMydonation from './mypage/mypageMydonation';
 import MypageMyshopUsedPoint from './mypage/mypageMyshopUsedPoint';
 import {gamestart} from './mypage/realgame';
+import { RecoilEnv } from 'recoil';
 import ChatList from './chat/ChatList';
 import ChatIcon from './chat/ChatIcon';
 import MyChstListModal from './chat/MyChatListModal';
 import NewChatModal from './chat/NewChatModal';
-import AdminDonaList from './donation/AdminDonaList';
-import AdminDonaEnroll from './donation/AdminDonaEnroll';
-import AdminDonaDetail from './donation/AdminDonaDetail';
-import AdminUpdate from './donation/AdminUpdate';
+import AdminDonaList from './admin/donation/AdminDonaList';
+import AdminDonaEnroll from './admin/donation/AdminDonaEnroll';
+import AdminUpdate from './admin/donation/AdminUpdate';
+import AdminDonaDetail from './admin/donation/AdminDonaDetail';
 import DonaDetail from './donation/DonaDetail';
 import DonaDona from './donation/DonaDona';
 import DonaList from './donation/DonaList';
@@ -71,7 +72,7 @@ import DonaTotal from './donation/DonaTotal';
 import { ChatDataProvider } from './chat/ChatDataContext';
 import { DonaDataProvider } from './donation/DonaDataContext';
 import { DonationProvider } from './donation/DonationContext';
-import { AdminDonaListContext } from './donation/AdminDonaListContext';
+import { AdminDonaListContext } from './admin/donation/AdminDonaListContext';
 import Notice from './service/Notice';
 import NoticeBoard from './service/NoticeBoard';
 import NoticeDetail from './service/NoticeDetail';
@@ -79,9 +80,14 @@ import ManagerNoticeBoard from './service/ManagerNoticeBoard';
 import Service from './service/Service';
 import AdminReport from './admin/user/adminReport';
 import NoticeForm from './service/NoticeForm';
+import AdminReception from './admin/user/adminReception';
+import AdminReportDetail from './admin/user/adminReportDetail';
+import AdminAlert from './admin/user/adminAlert';
+import AdminReceptionDetail from './admin/user/adminReceptionDetail';
 import ChartManager from './admin/chart/ChartManager';
 
 
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
 
 function App() {
@@ -183,7 +189,41 @@ function App() {
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
                                                                             <AdminReport/>
-                                                                        </motion.div></div></div>}/> 
+                                                                        </motion.div></div></div>}/>
+                  <Route path="/admin/reception" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                            <AdminReception/>
+                                                                        </motion.div></div></div>}/>
+                  <Route path="/admin/reportDetail" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                            <AdminReportDetail/>
+                                                                        </motion.div></div></div>}/>
+                    <Route path="/admin/receptionDetail" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                            <AdminReceptionDetail/>
+                                                                        </motion.div></div></div>}/>
+                  <Route path="/admin/alert" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                            <AdminAlert/>
+                                                                        </motion.div></div></div>}/>
+                                                                       
+
                   {/* 
                     이벤트 관리자 페이지
                     -기본 : 목록 게시판 
@@ -616,11 +656,11 @@ function App() {
                     {/* notice 중첩 route 시작 */}
                     <Route path="notice" element={<Notice/>}>
                         <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
-                      </Route>
+                    </Route>
                 </Route>
-                  <Route path="/chat/:id/:chatname" element={<div className=".for-main">
 
-                                                <div className='for-normal-page'><motion.div
+                <Route path="/chat/:id/:chatname" element={<div className=".for-main">
+                                                            <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
                                                                         end = {{opacity:1, y:0}}
@@ -628,7 +668,7 @@ function App() {
                                                                           <Chat/>
                                                                         </motion.div></div></div>}/>
 
-                  <Route path="/chatlist" element={<div className=".for-main">
+                <Route path="/chatlist" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
                                                                       animate = {{opacity:1, y:0}}
@@ -637,7 +677,7 @@ function App() {
                                                                         <ChatList/>
                                                                       </motion.div></div></div>}/>
 
-                  <Route path="/donalist" element={<div className=".for-main">
+                <Route path="/donalist" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
                                                                       animate = {{opacity:1, y:0}}
