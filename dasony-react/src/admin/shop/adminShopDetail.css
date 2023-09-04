@@ -33,3 +33,19 @@
     font-size: 1.5vw;
     text-align: center;
 }
+
+.product-add-img{
+    width: 100%;
+}
+.product-add-img>img{
+    width: 20%;
+}
+
+.product-add-table{
+    width: 100%;
+    text-align: center;
+}
+
+.product-add-table>table{
+    width: 100%;
+}
