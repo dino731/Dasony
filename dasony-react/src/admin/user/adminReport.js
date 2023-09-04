@@ -1,5 +1,6 @@
 import './adminReport.css';
 import { Link, useNavigate } from 'react-router-dom';
+import React, { useRef,useEffect, useState } from 'react';
 
 const AdminReport = () =>{
 
@@ -12,6 +13,25 @@ const AdminReport = () =>{
       )
   };
 
+  const [report, setReport] = useState([]);
+
+    useEffect(() => {
+        const newReport = [{
+            number :  1,
+            toName : '최정준',
+            fromName : '최미선',
+            title : '욕설신고',
+            date : '2023.09.04'
+        },{
+          number :  2,
+          toName : '최미선',
+          fromName : '최정준',
+          title : '광고 신고',
+          date : '2023.01.04'
+        }];
+        setReport(newReport);
+    
+    },[]);
     
     return(
       <div className='section'>
@@ -32,23 +52,15 @@ const AdminReport = () =>{
                   </tr>
                 </thead>
                 <tbody>
-                 
-                  <tr onClick={godetail}>
-                    <td>1</td>
-                    <td>최미선</td>
-                    <td>최정준</td>
-                    <td>욕설</td>
-                    <td>2023.09.01</td>
+                {report.map((item,index)=>(
+                  <tr onClick={godetail} key={index}>
+                    <td>{item.number}</td>
+                    <td>{item.toName}</td>
+                    <td>{item.fromNameName}</td>
+                    <td>{item.title}</td>
+                    <td>{item.date}</td>
                     </tr>
-                  
-                  <tr>
-                    <td>2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  
+                     ))}
                 </tbody>
               </table>
               <br /><br />

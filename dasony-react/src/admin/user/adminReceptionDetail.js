@@ -1,8 +1,14 @@
-import React from 'react';
 import './adminReportDetail.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate,useParams } from 'react-router-dom';
+import React, { useRef,useEffect, useState } from 'react';
+import AdminReception from './adminReception';
 
 const AdminReceptionDetail = () => {
+
+  const { receptionId } = useParams();
+
+  const [reception, setReception] = useState({});
+
   return (
     <div className="section_1">
       <div className="section_1_wrap">
@@ -12,28 +18,29 @@ const AdminReceptionDetail = () => {
         <div className="section_1_content">
           <div className="section1-1">
             <table id="detail-area" align="center" border="1">
-              <tbody>
-                <tr>
+              {reception.map((item,index)=>(
+              <tbody key={index}>
+                <tr >
                   <th style={{ width: '70px' }}>문의자</th>
-                  <td style={{ width: '200px' }}>최정준</td>
-
+                  <td style={{ width: '200px' }}>{item.name}</td>
                 </tr>
+                 
                 <tr>
                   <th>작성일</th>
-                  <td colSpan="3">2023.08.01</td>
+                  <td colSpan="3">{item.date}</td>
                 </tr>
                 <tr>
                   <th>문의 제목</th>
-                  <td colSpan="3">포인트 어떻게 얻어요?</td>
+                  <td colSpan="3">{item.title}</td>
                 </tr>
                 <tr>
                   <th>내용</th>
                   <td colSpan="3">
-                    <p style={{ height: '10em' }}>내용들</p>
+                    <p style={{ height: '10em' }}>{item.content}</p>
                   </td>
                 </tr>
-                
               </tbody>
+                 ))}
             </table>
           </div>
           <br />
