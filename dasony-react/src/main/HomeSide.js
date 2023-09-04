@@ -3,6 +3,7 @@ import 'react-calendar/dist/Calendar.css';
 import './HomeSide.css';
 import { useEffect, useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "react-bootstrap";
+import ChatIcon from '../chat/ChatIcon';
 
 const HomeSide = () => {
     {/*달력 보이기 설정 */}
@@ -33,7 +34,7 @@ const HomeSide = () => {
                 name: "",
                 location: "",
                 etc: "",
-                cate: ""
+                cate: "축제"
             });
         } else {
             alert('입력창을 모두 채워주세요.');
@@ -48,7 +49,7 @@ const HomeSide = () => {
             name: "",
             location: "",
             etc: "",
-            cate: ""
+            cate: "축제"
         });
     }
 
@@ -59,7 +60,7 @@ const HomeSide = () => {
                                                     name: "",
                                                     location: "",
                                                     etc: "",
-                                                    cate: ""
+                                                    cate: "축제"
                                                 });
     const [localEventArray, setLocalEventArray] = useState([]);
     const handleLocalEvent = (e) => {
@@ -90,7 +91,7 @@ const HomeSide = () => {
                 newEtc = value;
                 break;
             case 'event-cate':
-                newCate = value;
+                newCate = value==''?'축제':value;
                 break;
             default:
                 break;
@@ -148,7 +149,7 @@ const HomeSide = () => {
                         onChange={setDate}
                         selectRange={true} />
             <Button className='calendar-detail-btn' onClick={handleOpen}>일정 확인</Button>
-
+            <div className="main-chat-icon-container"><ChatIcon/></div>
             <div className="calendar-detail-container" style={{display:show}} >
                 <div><button onClick={handleStyle}>x</button></div>
                 <div className="calendar-detail-box">
@@ -243,7 +244,7 @@ const HomeSide = () => {
                                             <tr>
                                                 <th>종류</th>
                                                 <td>
-                                                    <select id="event-cate" onChange={handleLocalEvent} value={localEvent.cate}>
+                                                    <select id="event-cate" onChange={handleLocalEvent} defaultValue={localEvent.cate}>
                                                         <option>축제</option>
                                                         <option>공연</option>
                                                         <option>봉사</option>
