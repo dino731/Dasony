@@ -5,7 +5,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
     -이벤트 내용 확인하는 페이지
     (정적 페이지 / 데이터 호출해 렌더링하는 페이지로 나뉨)
 */
-const LoginEvent = () => {
+const LoginEvent08 = () => {
     const checkBtn = useRef(null);
     // 오늘 참여 여부
     const [tdyCheck, setTdyCheck] = useState(false);
@@ -124,4 +124,4 @@ const LoginEvent = () => {
     )
 };
 
-export default LoginEvent;
+export default LoginEvent08;

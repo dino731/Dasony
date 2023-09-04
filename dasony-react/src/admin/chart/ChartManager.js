@@ -9,7 +9,6 @@ import 'datatables.net-responsive-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import 'datatables.net-responsive-dt/css/responsive.dataTables.min.css';
 import './chart.css';
-import $ from 'jquery';
 const ChartManager = () => {
     const item = useRef([]);
     

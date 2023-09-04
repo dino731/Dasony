@@ -3,11 +3,9 @@ import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { useLayoutEffect, useRef } from "react";
 
-
 const LineChart = ({paddingRight, data}) => {
 
     const chartRef = useRef(null);
-    console.log(data);
 
     useLayoutEffect(() => {
     
@@ -171,7 +169,7 @@ const LineChart = ({paddingRight, data}) => {
     }, [paddingRight]);
   
     return (
-      <div id="chartdiv" style={{ width: "100%", height: "40vh", marginBottom: "6%" }}></div>
+        <div id="chartdiv" style={{ width: "100%", height: "40vh", marginBottom: "6%" }}></div>
     );
 };
 
