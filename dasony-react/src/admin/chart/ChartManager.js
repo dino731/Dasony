@@ -9,7 +9,7 @@ import 'datatables.net-responsive-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import 'datatables.net-responsive-dt/css/responsive.dataTables.min.css';
 import './chart.css';
-
+import $ from 'jquery';
 const ChartManager = () => {
     const item = useRef([]);
     
@@ -68,7 +68,7 @@ const ChartManager = () => {
             }
         }else{
             let parent = eventTarget.parentNode.parentNode;
-            console.log(parent);
+            // console.log(parent);
             e.stopPropagation(); // 이벤트 전파 방지
             
             if(!parent.classList.contains("selected-chart")){
@@ -81,10 +81,10 @@ const ChartManager = () => {
                     chartKindCopy[index-1] = false;
                 });
 
-                setChartKind([...chartKindCopy]);
+                setChartKind(chartKindCopy);
             }
         }
-        console.log(chartKind[0])
+        // console.log(chartKind[0])
     };
 
     // 시간 변환
@@ -100,33 +100,57 @@ const ChartManager = () => {
         return `${year}.${month}.${date}. (${day})`;
     };
 
+    // const selectLiHandler = (e) => selectChart(e, "li", 1);
+    // const selectspanHandler = (e) => selectChart(e, "span", 1);
+
     useEffect(()=>{
         /** 차트 유형 선택 효과 부여 및 제거 */
         item.current.forEach((element, index) => {
-            element.addEventListener('click', (e) => selectChart(e, "li", index));
             
-            element.querySelector(".chart-item span").addEventListener('click', (e) => {
-                selectChart(e, "span", index);
-            });
+            element.addEventListener('click',(e) => selectChart(e, "li", index));
+            
+            element.querySelector(".chart-item span").addEventListener('click', (e) => selectChart(e, "span", index));
         });
 
         /** 데이터 가져오는 로직 추가 필요 */
         // 데이터 정의
         // data = 
+        // initialTable();
+        // $(tableRef.current).DataTable();
 
         return(()=>{
+            // console.log(item.current)
             if(item.current[0]!=null){
                 item.current.forEach((element, index) => {
                     element.removeEventListener('click', (e) => selectChart(e, "li", index));
                     
-                    element.querySelector(".chart-item span").removeEventListener('click', (e) => {
-                        selectChart(e, "span", index);
-                    });
+                    element.querySelector(".chart-item span").removeEventListener('click', (e) => selectChart(e, "span", index));
                 });
             }
             // if(tableRef.current!=null) table.destroy();
         });
-    },[[...chartKind], data]);
+    },[chartKind, data]);
+
+
+    // const tableRef = useRef(null);
+
+
+    // // 테이블 속성
+    // const initialTable = () =>{
+    //     if(tableRef.current){
+    //         const table = $(tableRef.current).DataTable({
+    //             destroy: true,
+    //             // "bDestroy": true,
+    //             responsive: {
+    //                 details: {
+    //                 display: $.fn.dataTable.Responsive.display.childRowImmediate,
+    //                 },
+    //             },
+    //             paging: false,
+    //             select: false
+    //         });
+    //     }
+    // };
 
     return(
         <div className="chart-container dragging">
@@ -148,8 +172,8 @@ const ChartManager = () => {
 
             {/* 테이블 추가 */}
             {/* <ChartTable data={data}/> */}
-            <table id="chartTable" summary="이 테이블은 그래프 데이터를 나타내는 인터랙티브 테이블입니다."
-                style={{tableLayout: "fixed"}}>
+             <table id="chartTable" summary="이 테이블은 그래프 데이터를 나타내는 인터랙티브 테이블입니다."
+                  style={{tableLayout: "fixed"}}>
                 <thead>
                     <tr>
                         <th/>
@@ -183,7 +207,7 @@ const ChartManager = () => {
                         <td colSpan="5" className="text-center">Data retrieved frominfoplease and.</td>
                     </tr>
                 </tfoot>
-            </table>
+            </table> 
         </div>
     );
 };

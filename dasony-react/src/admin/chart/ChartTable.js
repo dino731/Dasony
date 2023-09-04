@@ -21,7 +21,7 @@ const ChartTable = ({data}) => {
     const initialTable = () =>{
         if(tableRef.current){
             const table = $(tableRef.current).DataTable({
-                // destroy: true,
+                 //destroy: true,
                 "bDestroy": true,
                 responsive: {
                     details: {
@@ -47,11 +47,11 @@ const ChartTable = ({data}) => {
     //     // "bDestroy": true
     // });
 
-    // useEffect(()=>{
-    //     console.log(tableRef.current);
-    //     $(tableRef.current).DataTable();
-    //     initialTable();
-    // },[]);
+    useEffect(()=>{
+        console.log(tableRef.current);
+        initialTable();
+        $(tableRef.current).DataTable();
+    },[]);
 
     return(
         <table id="chartTable" ref={tableRef} summary="이 테이블은 그래프 데이터를 나타내는 인터랙티브 테이블입니다."
