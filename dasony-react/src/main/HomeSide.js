@@ -34,7 +34,7 @@ const HomeSide = () => {
                 name: "",
                 location: "",
                 etc: "",
-                cate: ""
+                cate: "축제"
             });
         } else {
             alert('입력창을 모두 채워주세요.');
@@ -49,7 +49,7 @@ const HomeSide = () => {
             name: "",
             location: "",
             etc: "",
-            cate: ""
+            cate: "축제"
         });
     }
 
@@ -60,7 +60,7 @@ const HomeSide = () => {
                                                     name: "",
                                                     location: "",
                                                     etc: "",
-                                                    cate: ""
+                                                    cate: "축제"
                                                 });
     const [localEventArray, setLocalEventArray] = useState([]);
     const handleLocalEvent = (e) => {
@@ -91,7 +91,7 @@ const HomeSide = () => {
                 newEtc = value;
                 break;
             case 'event-cate':
-                newCate = value;
+                newCate = value==''?'축제':value;
                 break;
             default:
                 break;
@@ -244,7 +244,7 @@ const HomeSide = () => {
                                             <tr>
                                                 <th>종류</th>
                                                 <td>
-                                                    <select id="event-cate" onChange={handleLocalEvent} value={localEvent.cate}>
+                                                    <select id="event-cate" onChange={handleLocalEvent} defaultValue={localEvent.cate}>
                                                         <option>축제</option>
                                                         <option>공연</option>
                                                         <option>봉사</option>
