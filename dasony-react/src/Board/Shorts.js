@@ -1,5 +1,5 @@
 // import './Board.css';
-// import Heart from '../point/heart';
+// import Heart from '../heart';
 // import Reply from './Reply';
 // import { useState } from 'react';
 

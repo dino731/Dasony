@@ -116,6 +116,9 @@ html, body{margin: 0; padding: 0;}
     >div>label{padding-left: 2%; text-align: left;}
     >div>#noticeTitle{margin-left: 2%; width: 98%;}
     >.noticeTitlePart, .noticeContentPart{text-align: left;}
+    #noticeContent{
+        padding: 0;
+    }
 }
 
 .noticeContentPart>label{
@@ -141,9 +144,10 @@ html, body{margin: 0; padding: 0;}
     +i{margin-left: 3%; color: red;}
 }
 
-.ck.ck-editor {
+.ck-editor {
     /* max-width: 500px; */
     width: 100%;
+    margin-bottom: 0;
 }
 .ck-editor__editable {
     min-height: 50vh;

@@ -10,8 +10,8 @@ import { click } from "@testing-library/user-event/dist/click";
 
 const chatlistmodal = {
     content: {
-      top: '71%',
-      left: '77%',
+      top: '55%',
+      left: '70%',
       transform: 'translate(-50%, -50%)',
       width: '500px',
       height: '482px',
