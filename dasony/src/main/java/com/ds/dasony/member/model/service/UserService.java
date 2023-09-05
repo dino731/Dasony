@@ -8,4 +8,10 @@ public interface UserService {
 
 	public List<User> selectUserList();
 
+	public int insertUser(User user);
+
+	public int chkValidateId(String userId);
+
+	public int chkValidateNick(String userNick);
+
 }

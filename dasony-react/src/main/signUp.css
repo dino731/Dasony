@@ -26,13 +26,23 @@
 .sign-up-container table{
     padding-top: 10px;
     text-align: center;
-    width: 45%;
+    width: 55%;
     margin: auto;
     font-size: 1.5vw;
     font-family: 'HakgyoansimWoojuR';
 }
 .sign-up-container table tbody{
     text-align: center;
+}
+
+.sign-up-container table tbody>tr>th:first-child{
+    width: 15%;
+}
+.sign-up-container table tbody>tr>td:first-child{
+    width: 60%;
+}
+.sign-up-container table tbody>tr>th:last-child{
+    width: 25%;
 }
 
 .sign-up-container tr{
