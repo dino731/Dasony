@@ -25,6 +25,7 @@ const customStyles = {
         alert("채팅방 이름을 입력해주세요");
         return;
       }
+
       onChatRoomCreate(chatRoomName);
       setChatRoomName('');
       closeModal();
