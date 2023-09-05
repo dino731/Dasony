@@ -125,6 +125,11 @@ function App() {
     <DonationProvider>
     <AdminDonaListContext>
     <Header/>
+    <div id='game'> <img src='./resources/common-img/gameimg/bomul.png' style={{width:'30px' , height : '30px'}}></img>
+        <button onClick={gamestart}>게임 시작</button>
+      </div>
+      <div id='gameDiv'></div>
+      
       <AnimatePresence>
         <Routes location={location} key={location.pathname}>
 

@@ -10,6 +10,8 @@ const MypageInfo = () => {
     setIsEditing(!isEditing);
   };
 
+  
+
   return (
 
     <div className="admin-user-datail-container">
