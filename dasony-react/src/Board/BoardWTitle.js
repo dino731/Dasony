@@ -64,9 +64,9 @@ const BoardWTitle =()=>{
               </select>
             </div>
             <div className="col-md-9 boardDetail-title-input">
-            <div className="boardList-search-box-title">
-                    <input type="text" className="boardList-search-input-title" placeholder="제목, 내용을 검색해보세요"/>
-            </div>
+              <div className="boardList-search-box-title">
+                      <input type="text" className="boardList-search-input-title" placeholder="제목, 내용을 검색해보세요"/>
+              </div>
             </div>
             <div className="col-md-2 boardDetail-category-div"></div>
             <div className="col-md-9 boardList-search-input-tag-wrapper">

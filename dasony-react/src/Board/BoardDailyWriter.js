@@ -8,10 +8,14 @@ import { nextBoardNoState } from '../atoms';
 import BoardWriterCategory from './BoardWriterCategory';
 import { boardCateState } from '../atoms';
 import { useNavigate } from 'react-router-dom';
+import OpenEditor from '../service/OpenEditor';
 
 // import Editor from './Editor';
 
 const BoardDailyWriter = () => {
+
+  // editor에서 값 가져오기
+  const [content, setContent] = useState("");
   
   const getCurrentDateTime = () => {
     const today = new Date();
@@ -37,7 +41,7 @@ const BoardDailyWriter = () => {
     userName : '이아인',
     boardTitle : '',
     boardWriteDate : getCurrentDateTime(),
-    boardContent : '',
+    boardContent : content,
     boardCateNo :  boardCateStateValue.name
   });
 
@@ -58,7 +62,7 @@ const BoardDailyWriter = () => {
       userName : '이아인',
       boardTitle : boardTitle,
       boardWriteDate : getCurrentDateTime(),
-      boardContent : boardContent,
+      boardContent : content,
       boardCateNo :  boardCateStateValue.name
     }
     setNewBoardPost(test);
@@ -87,6 +91,27 @@ const BoardDailyWriter = () => {
     // console.log('boardCate----->',boardCateStateValue.name);
   }
 
+  /* 태그 입력 시작 */
+  const [keyword, setKeyword] = useState([]);
+  const [inputContent, setInputContent] = useState('');
+  const enter = (e) =>{
+    if(e.key == 'Enter'){
+      e.preventDefault();
+      if(keyword.includes(inputContent) || inputContent.trim() === '' ){
+        console.log('enter key 눌림 : ', inputContent );
+        return;
+      }
+      setKeyword([...keyword, inputContent]);
+      setInputContent('');
+    }
+  }
+
+  const deleteKeyWord = (index)=>{
+    setKeyword(keyword.filter((item, i) => item !== keyword[index]));
+    setInputContent('');
+  }
+
+  /* 태그 입력 끝 */
   return (
     <>
       <div className='BoardWriteForm-wrapper'>
@@ -99,26 +124,45 @@ const BoardDailyWriter = () => {
                   <div className='row'>
                     <BoardWriterCategory/>
                     <div className="col-md-9 boardDetail-title-input">
-                    <div className="boardList-search-box-title">
-                      <input 
-                      type="text" 
-                      name="boardTitle" 
-                      value={newBoardPost.boardTitle} 
-                      onChange={handleInputChange}
-                      className="boardList-search-input-title" 
-                      placeholder="제목, 내용을 입력ㅎ"
-                      />
+                      <div className="boardList-search-box-title">
+                        <input 
+                        type="text" 
+                        name="boardTitle" 
+                        value={newBoardPost.boardTitle} 
+                        onChange={handleInputChange}
+                        className="boardList-search-input-title" 
+                        placeholder="제목을 입력하세요."
+                        />
+                      </div>
                     </div>
-                    </div>
+                    <div className="col-md-2 boardDetail-category-div"></div>
+                      <div className="col-md-9 boardList-search-input-tag-wrapper">
+                        <div  className="boardList-search-box-tag" >
+                          <ul className="searchKeyword-ul">
+                            {
+                              keyword.map( (item, index) => (
+                                <li className="sKeyword" key={index}>
+                                  {item}
+                                  <p
+                                  onClick={() => {deleteKeyWord(index)}} className="boardSearchClose">x</p>
+                              
+                                </li>
+                              ))}
+                          </ul>
+                          <input type="text" className="boardList-search-input-tag"  placeholder="태그를 입력해보세요."
+                            value={inputContent} onKeyDown={enter} onChange={(e) => setInputContent(e.target.value)}/>
+                        </div>{/* boardList-search-box-tag */}
+                      </div>{/* boardList-search-input-tag-wrapper */}
                   </div>{/* row */}
                 </div> {/* row justify-content-md-center boardDetail-title-container */}    
               </div>{/* boardList-search-title-wrapper */}
               <div>
-                <textarea
+                <OpenEditor className="ck-editor" editContent={{content, setContent}}/>
+                {/* <textarea
                   name="boardContent" 
                   value={newBoardPost.boardContent} 
                   onChange={handleInputChange}
-                    />
+                    /> */}
               </div> 
               <button type="submit" className='board-submit-btn'>등록</button>  
             </form>
