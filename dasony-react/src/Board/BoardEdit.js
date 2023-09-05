@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 // import Editor from './Editor';
 
-const BoardDailyWriter = () => {
+const BoardEdit = () => {
   
   const getCurrentDateTime = () => {
     const today = new Date();
@@ -130,4 +130,4 @@ const BoardDailyWriter = () => {
 }
 
 
-export default BoardDailyWriter;
+export default BoardEdit;

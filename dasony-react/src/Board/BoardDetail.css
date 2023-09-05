@@ -15,10 +15,9 @@
   width: 95%;
 }
 .BoardDetail-side-container{
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 5%;
-
-
+  margin-left: 1vw;
 }
 .BoardDetail-side-by-side{
   position: sticky;
@@ -56,21 +55,20 @@
 }
 
 
-
-
-
-
-
 .BoardDetail-boardlist-title-wrapper{
   width: 100%;
-  height: 100px;
+  /* height: 100px; */
   border-bottom: 1px solid gray;
+}
+.BoardDetail-boardlist-title-flexdiv{
+  display: flex;
+  justify-content: space-between;
 }
 .BoardDetail-boardlist-title-container{
   margin: 10px;
   padding: 0 1vw 0;
   /* border: 1px solid red; */
-  width: 95%;
+  width: 90%;
   height: 30px;
 }
 .BoardDetail-boardlist-title-keyword{
@@ -120,7 +118,6 @@
 .BoardDetail-boardlist-content-wrapper{
   width: 100%;
   /* border: 1px solid gray; */
-
 }
 .BoardDetail-boardlist-content{
   width: 98%;
@@ -129,6 +126,7 @@
   white-space: pre-line
 }
 
+/* 답글 댓글 Reply 시작 */
 .BoardDetail-boardlist-reply-wrapper{
   width: 100%;
   border: 1px solid #d4d4d4;
@@ -146,17 +144,15 @@
   /* border: 1px solid gray; */
   
 }
-
 .BoardDetail-boardlist-reply-container{
   justify-content: space-between;
   display: flex;
   
 }
-
 .BoardDetail-boardlist-reply-content-wrapper{
   /* border: 1px solid yellowgreen; */
-  width: 98%;
-  padding: 0 1vw 0;
+  width: 100%;
+  padding-left: 1vw;
 }
 .BoardDetail-boardlist-reply-btn>button{
   border: none;
@@ -192,8 +188,6 @@
   display: flex;
   align-items: center;
   background-color: #ffffff;
-  
-
 }
 .BoardDetail-boardlist-reply-form{
   width: 90%;
@@ -206,4 +200,44 @@
   align-content: space-between;
   display: flex;
   border-radius: 1vh;
+  outline: none;
 }
+
+/* 답글 댓글 Reply 끝 */
+
+/* 리댓 답답글 Reply 시작 */
+.Board-reply-recoment-wrapper{
+  width: 100%;
+  background-color: #f4f4f4;
+}
+.Board-reply-recoment{
+  margin-top: 10px;
+}
+.Board-reply-recoment-container{
+  justify-content: space-between;
+  display: flex;
+}
+.replycoment-form-container{
+  width: 95%;
+  /* border: 1px solid gray; */
+  border-radius: 1vh;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+}
+.replycoment-form{
+  width: 90%;
+}
+.replycoment-input{
+  width: 100vh;
+  height: 7vh;
+  padding-inline-start: 30px;
+  border: none;
+  align-content: space-between;
+  /* display: flex; */
+  border-radius: 1vh;
+  outline: none;
+}
+
+/* 리댓 답답글 Reply 끝 */
