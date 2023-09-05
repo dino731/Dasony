@@ -20,6 +20,7 @@ function MainChecking(props){
     {/*바디 텍스트 설정 */}
     const [bodyTxt, setBodyTxt] = useState('');
     const getBodyTxt = () => {
+        
         let ModalData = {id:"", nick:""};
         if(props.txt.includes("아이디")){
             ModalData.id = props.data;
@@ -60,6 +61,8 @@ function MainChecking(props){
             console.log("실패:error:", error);
         })
     }
+
+
 
     return(
         <>
