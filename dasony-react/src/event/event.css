@@ -2,7 +2,7 @@ html, body{margin: 0; padding: 0;}
 *{box-sizing: border-box;}
 
 .event-container{
-    width: 80%; 
+    /* width: 80%;  */
     padding: 5% 5% 0 5%;
     text-align: center;
     overflow-y: scroll;
@@ -144,13 +144,15 @@ div>.event-status-list{
         text-align: center;
         position: relative;
 
+        >img{width: 100%;}
+
         >.login-check-promo-count{
             width: 100%;
             
 
             >.login-check-promo-count-content{
                 width: 80%;
-                height: 30vh;
+                height: 35vh;
                 border: 2px solid #abdbf2;
                 border-radius: 50px;
                 padding: 3%;
@@ -165,10 +167,10 @@ div>.event-status-list{
     }
 
     >.promo-body{
-        padding: 0 4.9%;
+        padding: 5% 0 0 0;
+        background-color: #363ca7;
 
         >.login-check-btn-part{
-            background-color: #363ca7;
             color: white;
             text-align: center;
             padding: 10% ;
@@ -184,12 +186,14 @@ div>.event-status-list{
                 position: absolute;
                 top: 5%;
                 left: 35%;
+
+                i{font-size: 1.2em;}
             }
         }
     }
     
     >.promo-footer{
-        padding: 0 4.9%;
+        /* padding: 0 4.9%; */
         margin-bottom: 10%;
     }
 }
@@ -620,7 +624,10 @@ div>.event-status-list{
             >tr>th{padding-bottom: 3%;}
         }
 
-        >tbody>tr>th, >tbody>tr>td{padding: 4% 0;}
+        >tbody>tr{
+            >th, >td{padding: 4% 0;}
+            >td:last-child>span{cursor: pointer;}
+        }
 
         .text-cut{cursor: pointer;}
     }
@@ -642,6 +649,28 @@ div>.event-status-list{
         right: 0;
         text-decoration: underline;
         line-height: 7px;
+    }
+
+    /* 쪽지 보내기 모달 */
+    #message-modal{
+        >.modal-dialog{
+            .modal-body{
+                .event-selectBox{
+                    width: 50%;
+                    font-size: 0.9em;
+                    >.manager-select-btn{
+                        width: 45%;
+                        padding-left: 2%;
+                    }
+                }
+                >input{
+                    width: 94%;
+                    min-height: 30vh;
+                    border-radius: 10px;
+                    padding: 2%;
+                }
+            }
+        }
     }
 }
 

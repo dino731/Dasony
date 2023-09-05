@@ -34,7 +34,12 @@ const ManagerNoticeBoard = () => {
 
     function updateNotice(action, no){
         if(action === '수정') navigate('edit/' + no);
-        else navigate('modify/' + no); // 삭제 처리하는 로직 추가
+        else {
+            alert("정말 삭제하시겠습니까?"); 
+
+            // 삭제 처리하는 로직 추가
+            // navigate(-2);
+        }
     }
 
     return(
@@ -60,7 +65,7 @@ const ManagerNoticeBoard = () => {
                     <td scope="row">2023-07-21</td>
                     <td scope="row">2023-08-21</td>
                     <td scope="row" className="notice-edit-button" onClick={()=>updateNotice('수정', 1)}><span>수정</span></td>
-                    <td scope="row" className="notice-edit-button" onclick={()=>updateNotice('삭제', 1)}><span>삭제</span></td>
+                    <td scope="row" className="notice-edit-button" onClick={()=>updateNotice('삭제', 1)}><span>삭제</span></td>
                 </tr>
                 <tr className="notice-item">
                     <th scope="row">1</th>

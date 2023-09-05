@@ -56,6 +56,7 @@ import MypageAlert from './mypage/mypageAlert';
 import MypageMydonation from './mypage/mypageMydonation';
 import MypageMyshopUsedPoint from './mypage/mypageMyshopUsedPoint';
 import {gamestart} from './mypage/realgame';
+import { RecoilEnv } from 'recoil';
 import ChatList from './chat/ChatList';
 import ChatIcon from './chat/ChatIcon';
 import MyChstListModal from './chat/MyChatListModal';
@@ -83,8 +84,11 @@ import AdminReception from './admin/user/adminReception';
 import AdminReportDetail from './admin/user/adminReportDetail';
 import AdminAlert from './admin/user/adminAlert';
 import AdminReceptionDetail from './admin/user/adminReceptionDetail';
+import ChartManager from './admin/chart/ChartManager';
+import { Share } from './share/share';
 
 
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
 
 function App() {
@@ -131,13 +135,13 @@ function App() {
 
                   {/* 로그인 된 경우 */}
                   {/*관리자로 로그인 한 경우 */}
-                  <Route path="/admin/main" element={<div className=".for-main">
+                  <Route path="/admin/chart" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
-                                                                          <AdminMain/>
+                                                                          <ChartManager />
                                                                         </motion.div></div></div>}/>
                   <Route path="/admin/shop" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
@@ -269,8 +273,10 @@ function App() {
                       <Route path="notice" element={<Notice/>}>
                             <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                      
                             <Route path="edit/:no" element={<NoticeForm/>}/>                                                                      
+                            <Route path="new" element={<NoticeForm/>}/>                                                                      
                       </Route>                          
                   </Route>
+
                                                                         
                   {/* 메인페이지 부분 */}
                   <Route path="/" element={<motion.div
@@ -421,8 +427,8 @@ function App() {
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <EventDetailControl editStatus="등록"/>
-                                                      </motion.div>}/>                                                    
-
+                                                      </motion.div>}/>  
+                                                      
                         <Route path="addNewEvent" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
@@ -445,9 +451,6 @@ function App() {
                                                         <ManagerEventBoard/>
                                                       </motion.div>}/>                                            
                     </Route>
-
-                
-
 
                   {/*Board 중첩 route 시작 */}
                   <Route path="/board/*" element={<div className=".for-main">
@@ -570,6 +573,13 @@ function App() {
                                                                   <BoardDailyWriter/>
                                                                 </motion.div>}/>                          
                     </Route>
+                    <Route path="share/*" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <Share/>
+                                                    </motion.div>}/>
                   </Route>{/*Board 중첩 route 끝 */}
 
                     {/*mypage 중첩 route 시작 */}
@@ -667,12 +677,11 @@ function App() {
                     {/* notice 중첩 route 시작 */}
                     <Route path="notice" element={<Notice/>}>
                         <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
-                      </Route>
-                  </Route>
-                  
-                  <Route path="/chat/:id/:chatname" element={<div className=".for-main">
+                    </Route>
+                </Route>
 
-                                                <div className='for-normal-page'><motion.div
+                <Route path="/chat/:id/:chatname" element={<div className=".for-main">
+                                                            <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
                                                                         end = {{opacity:1, y:0}}
@@ -680,7 +689,7 @@ function App() {
                                                                           <Chat/>
                                                                         </motion.div></div></div>}/>
 
-                  <Route path="/chatlist" element={<div className=".for-main">
+                <Route path="/chatlist" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
                                                                       animate = {{opacity:1, y:0}}
@@ -689,7 +698,7 @@ function App() {
                                                                         <ChatList/>
                                                                       </motion.div></div></div>}/>
 
-                  <Route path="/donalist" element={<div className=".for-main">
+                <Route path="/donalist" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
                                                                       animate = {{opacity:1, y:0}}

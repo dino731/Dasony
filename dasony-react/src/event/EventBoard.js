@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+// import LoginCheck09 from '../../public/resources/event/login-003.png';
 
 const EventBoard = () => {
 
@@ -124,9 +125,10 @@ const EventBoard = () => {
                     </div>
                     <div className="event-list-item">
                         <Link to="/event/detail/1">
-                            <div className="event-item-wrapper event-load-page">
+                            <div className="event-item-wrapper event-load-page"
+                            style={{backgroundImage: "url('./resources/event/login-003.png')"}}>
                                 <div className="event-item-title-part">
-                                    <div className="event-item-title">출.석.이벤트입니다 많은 참여!!</div>
+                                    <div className="event-item-title">9월 출석 이벤트 참여하고 선물받자</div>
                                 </div>
                                 <div className="event-item-deadline">D-1</div>
                             </div>

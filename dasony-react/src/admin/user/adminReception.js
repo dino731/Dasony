@@ -1,17 +1,38 @@
 import './adminReport.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,useParams } from 'react-router-dom';
+import React, { useRef,useEffect, useState } from 'react';
 
 const AdminReception = () =>{
 
   const navigate = useNavigate(
   );
+  const { receptionId } = useParams();
+
   
   const godetail = ()=>{
       navigate(
-        "../admin/receptionDetail"
-      )
+        "../admin/receptionDetail/${selectedReceptionId}"
+      );
   };
-
+  const [reception, setReception] = useState([]);
+  const [selectedReceptionId, setSelectedReceptionId] = useState(null);
+    useEffect(() => {
+        const newReception = [{
+            number :  1,
+            name : '최정준',
+            title : '포인트 어디서 얻나요?',
+            date : '2023.09.04',
+            content:'어디임?'
+        },{
+          number :  2,
+          name : '최미선',
+          title : '이벤트 추가해주세요',
+          date : '2023.01.04',
+          content:'이벤트 추가좀해라'
+        }];
+        setReception(newReception);
+    
+    },[]);
     
     return(
       <div className='section'>
@@ -31,33 +52,15 @@ const AdminReception = () =>{
                   </tr>
                 </thead>
                 <tbody>
-                 
-                  <tr onClick={godetail}>
-                    <td>1</td>
-                    <td>최정준</td>
-                    <td>배고파요</td>
-                    <td>2023.05.01</td>
+                  {reception.map((item,index)=>(
+
+                    <tr onClick={godetail} key={index}>
+                    <td>{item.number}</td>
+                    <td>{item.name}</td>
+                    <td>{item.title}</td>
+                    <td>{item.date}</td>
                     </tr>
-                  
-                  <tr>
-                    <td>2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  
+                    ))}
                 </tbody>
               </table>
               <br /><br />

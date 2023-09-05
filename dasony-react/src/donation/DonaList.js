@@ -10,7 +10,7 @@ const DonaList = () => {
     .catch(error => console.log(error));
 
     const handlemydona = () => {
-        window.location.href = '/donatotal';
+        window.location.href = '/mypage/Mydonation';
     }
     
     const handeldetail = (id) => {
