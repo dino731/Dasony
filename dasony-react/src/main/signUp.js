@@ -4,6 +4,7 @@ import {MainChecking} from './mainModal'
 import './signUp.css';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'react-bootstrap';
 import DaumPostcode from 'react-daum-postcode';
+import axios from 'axios';
 
 
 const SignUp = ()=>{
@@ -30,6 +31,8 @@ const SignUp = ()=>{
     const [address, setAddress] = useState('');
     const [detailAddress, setDetailAddress] = useState('');
     const [completeAddress, setCompleteAddress] = useState('');
+    let user = {};
+
 
     const handleId = (event)=>setId(event.target.value);
     const handlePwd = (event)=>setPwd(event.target.value);
@@ -61,9 +64,38 @@ const SignUp = ()=>{
     };
     const handleDetailAddress = (event)=> setDetailAddress(event.target.value);
     const handleCompleteAddress = ()=>setCompleteAddress(postcode+','+address+','+detailAddress);
-    const handleCompleteChk = ()=>{handleCompleteAddress(); handleCompleteEmail(); console.log(completeAddress, completeEmail);}
+    const handleCompleteChk = ()=>{
+        handleCompleteAddress();
+        handleCompleteEmail(); 
+        console.log(completeAddress, completeEmail);
+        user = {userId:id, userPwd:pwd, userName:name, userNo:20230904005,
+                userRegion: '서울특별시 강남구', userLevel: 'A',
+                userJoinDate:'2023-09-04',
+                userModDate: '2023-09-04',
+                userStatus: 'Y',
+                userNick:nick, userAddress:completeAddress, userPhone:phone, userEmail:completeEmail};
+        }
     /*유효성 검사 */
 
+    const handleSubmit = (event, user) => {
+        event.preventDefault();
+        //Spring Boot 컨트롤러 url
+
+        //axios이용해서 GET 요청 보내기
+        axios.post("/dasony/api/test", JSON.stringify(user), {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        })
+            .then(response => {
+                //요청 성공했을 때 실행할 코드
+                console.log(response.data);//응답 데이터 출력
+            })
+            .catch(error => {
+                //요청 실패했을 때 실행될 코드
+                console.log(error);//오류 메시지 출력
+            });
+    };
 
     return(
         <div className='sign-up-container' onClick={handleCompleteChk}>
@@ -131,7 +163,7 @@ const SignUp = ()=>{
                     <Modal show={show} onHide={handleClose}>
                         <ModalHeader>주소 찾기</ModalHeader>
                         <ModalBody>{<DaumPostcode onComplete={handlePostcodeComplete}/>}</ModalBody>
-                        <Button className='btn_close' variant='secondary' onClick={handleClose}>닫기</Button>
+                        <Button type='button' className='btn_close' variant='secondary' onClick={handleClose}>닫기</Button>
                         
                     </Modal>
       
@@ -139,7 +171,8 @@ const SignUp = ()=>{
                 <tfoot>
                     <tr>
                         <td></td>
-                        <td><button onClick={()=>navigate('/location')}>회원 가입</button></td>
+                        <td><button onClick={handleSubmit}>회원 가입</button></td>
+                        {/*()=>navigate('/location') */}
                         <td></td>
                     </tr>
                 </tfoot>
