@@ -162,11 +162,10 @@
 
     .calendar-detail-box{
         text-align: center;
+        color: #7A7A7A;
     }
     .calendar-detail-box>div{
         margin: auto;
-    }
-    table, tr, th, td{
     }
     .calendar-detail-box table{
         width: 100%;
@@ -175,8 +174,10 @@
     }
     .calendar-detail-box table tr{
         border-bottom: 1px solid #7A7A7A;
+        color: #7A7A7A;
     }
     .calendar-detail-box table td{
+        
         padding: 0.5vw;
     }
     .calendar-detail-box table th:first-child{
@@ -217,6 +218,7 @@
     .modalTable{
         width: 100%;
         text-align: center;
+        color: #7A7A7A;
     }
     .modalTable tr{
         height: 10vh;
@@ -230,8 +232,18 @@
     .modalTable input[type='text']{
         width: 90%;
     }
+    .modalTable input[type='date']{
+        width: 40%;
+    }
     .modalTable select{
         width: 90%;
         text-align: center;
         height: 5vh;
+    }
+
+
+    .main-chat-icon-container{
+        position: fixed;
+        top: 90%;
+        right: 11%;
     }

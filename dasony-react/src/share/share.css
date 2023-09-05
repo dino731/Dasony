@@ -1,0 +1,73 @@
+.share-container{
+    width: 100%;
+    border: 1px solid red;
+    color: #7A7A7A;
+}
+
+.share-container>div:first-child{
+    font-size: 2vw;
+    margin-bottom: 5vh;
+    display: flex;
+    justify-content: space-between;
+    padding:  0 1% 0 1%;
+}
+.share-content-box{
+    width: 75%;
+    border: 2px solid #CB9DE7;
+    border-radius: 0.5vw;
+    margin: auto;
+    padding: 1%;
+    margin-bottom: 10vh;
+}
+
+.share-content-box>table{
+    width: 100%;
+    table-layout: fixed;
+}
+.share-content-box>table th{
+    font-size: 120%;
+}
+.share-content-box>table th>span{
+    font-size: 40%;
+    color: #9A9A9A;
+}
+.share-content-box>table tr:first-child{
+    height: 5vh;
+}
+
+.share-content-box>table tr:nth-child(2){
+    height: 20vh;
+    font-size: 1.5vw;
+}
+.share-content-box>table tr:nth-child(2)>td:first-child{
+    width: 35%;
+}
+.share-content-box>table tr:nth-child(2)>td:last-child{
+    width: 65%;
+    padding: 0 2% 0 2%;
+    overflow-wrap: break-word;
+}
+.share-content-box>table tr:nth-child(3){
+    height: 10vh;
+    font-size: 2vw;
+}
+.share-content-box>table tr:nth-child(3)>td{
+    padding: 0 2% 0 2%;
+}
+.share-content-box>table tr:last-child>td>div{
+    display: flex;
+    justify-content: end;
+}
+.share-content-box>table tr:last-child>td>div>div{
+    padding-left: 10%;
+}
+.share-content-img{
+    border: 2px solid #CB9DE7;
+    border-radius: 0.5vw;
+    overflow: hidden;
+    width: 90%;
+    margin: auto;
+}
+.share-content-img>img{
+    width: 100%;
+}

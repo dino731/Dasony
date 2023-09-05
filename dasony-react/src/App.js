@@ -61,10 +61,10 @@ import ChatList from './chat/ChatList';
 import ChatIcon from './chat/ChatIcon';
 import MyChstListModal from './chat/MyChatListModal';
 import NewChatModal from './chat/NewChatModal';
-import AdminDonaList from './donation/AdminDonaList';
-import AdminDonaEnroll from './donation/AdminDonaEnroll';
-import AdminDonaDetail from './donation/AdminDonaDetail';
-import AdminUpdate from './donation/AdminUpdate';
+import AdminDonaDetail from './admin/donation/AdminDonaDetail';
+import AdminDonaEnroll from './admin/donation/AdminDonaEnroll';
+import AdminDonaList from './admin/donation/AdminDonaList';
+import AdminUpdate from './admin/donation/AdminUpdate';
 import DonaDetail from './donation/DonaDetail';
 import DonaDona from './donation/DonaDona';
 import DonaList from './donation/DonaList';
@@ -72,7 +72,7 @@ import DonaTotal from './donation/DonaTotal';
 import { ChatDataProvider } from './chat/ChatDataContext';
 import { DonaDataProvider } from './donation/DonaDataContext';
 import { DonationProvider } from './donation/DonationContext';
-import { AdminDonaListContext } from './donation/AdminDonaListContext';
+import { AdminDonaListContext } from './admin/donation/AdminDonaListContext';
 import Notice from './service/Notice';
 import NoticeBoard from './service/NoticeBoard';
 import NoticeDetail from './service/NoticeDetail';
@@ -88,6 +88,8 @@ import AdminBoardList from './admin/board/adminBoardList';
 import AdminBoard from './admin/board/adminBoard';
 import AdminBoardDelete from './admin/board/adminBoardDelete';
 import BoardEdit from './Board/BoardEdit';
+import ChartManager from './admin/chart/ChartManager';
+import { Share } from './share/share';
 
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
@@ -137,13 +139,13 @@ function App() {
 
                   {/* 로그인 된 경우 */}
                   {/*관리자로 로그인 한 경우 */}
-                  <Route path="/admin/main" element={<div className=".for-main">
+                  <Route path="/admin/chart" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
-                                                                          <AdminMain/>
+                                                                          <ChartManager />
                                                                         </motion.div></div></div>}/>
                   <Route path="/admin/shop" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
@@ -275,8 +277,10 @@ function App() {
                       <Route path="notice" element={<Notice/>}>
                             <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                      
                             <Route path="edit/:no" element={<NoticeForm/>}/>                                                                      
+                            <Route path="new" element={<NoticeForm/>}/>                                                                      
                       </Route>                          
                   </Route>
+
 
                   {/* Admin Board */}
                   <Route path="/admin/board" element={<div className=".for-main">
@@ -303,6 +307,7 @@ function App() {
                                                       </motion.div>}/>        
                                     
                   </Route>
+
 
                                                                         
                   {/* 메인페이지 부분 */}
@@ -454,8 +459,8 @@ function App() {
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <EventDetailControl editStatus="등록"/>
-                                                      </motion.div>}/>                                                    
-
+                                                      </motion.div>}/>  
+                                                      
                         <Route path="addNewEvent" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
@@ -478,9 +483,6 @@ function App() {
                                                         <ManagerEventBoard/>
                                                       </motion.div>}/>                                            
                     </Route>
-
-                
-
 
                   {/*Board 중첩 route 시작 */}
                   <Route path="/board/*" element={<div className=".for-main">
@@ -663,6 +665,13 @@ function App() {
                                                                                 <BoardEdit/>
                                                                               </motion.div>}/>                                   
                     </Route>
+                    <Route path="share/*" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <Share/>
+                                                    </motion.div>}/>
                   </Route>{/*Board 중첩 route 끝 */}
 
                     {/*mypage 중첩 route 시작 */}
@@ -760,12 +769,11 @@ function App() {
                     {/* notice 중첩 route 시작 */}
                     <Route path="notice" element={<Notice/>}>
                         <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
-                      </Route>
-                  </Route>
-                  
-                  <Route path="/chat/:id/:chatname" element={<div className=".for-main">
+                    </Route>
+                </Route>
 
-                                                <div className='for-normal-page'><motion.div
+                <Route path="/chat/:id/:chatname" element={<div className=".for-main">
+                                                            <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
                                                                         end = {{opacity:1, y:0}}
@@ -773,7 +781,7 @@ function App() {
                                                                           <Chat/>
                                                                         </motion.div></div></div>}/>
 
-                  <Route path="/chatlist" element={<div className=".for-main">
+                <Route path="/chatlist" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
                                                                       animate = {{opacity:1, y:0}}
@@ -782,7 +790,7 @@ function App() {
                                                                         <ChatList/>
                                                                       </motion.div></div></div>}/>
 
-                  <Route path="/donalist" element={<div className=".for-main">
+                <Route path="/donalist" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
                                                                       animate = {{opacity:1, y:0}}

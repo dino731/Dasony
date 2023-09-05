@@ -18,10 +18,10 @@
     top: 30%;
     margin-left: 5%;
     height: 80.7%;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
     margin-bottom: 2%;
 } 
 
@@ -101,7 +101,7 @@
     /* height: 20px; */
     background-color : #eee;
     font-size: 20px;
-    margin: 6px;
+    /* margin: 6px; */
     margin-top: 10px;
 }
 

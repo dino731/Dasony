@@ -11,6 +11,11 @@ const AdminDonaList = () => {
     const [selectedArea, setSelectedArea] = useState('');
 
     const handleCreateDona = () => {
+
+        if(!selectedArea){
+            alert("지역을 선택해주세요");
+            return
+        }
         navigate('/admindonaenroll?selectedArea='+selectedArea);
     }
 
@@ -75,4 +80,6 @@ const AdminDonaList = () => {
         </div>
     )
 }
+
 export default AdminDonaList;
+

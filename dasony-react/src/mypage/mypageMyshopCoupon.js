@@ -1,8 +1,40 @@
 
-import React, { useRef,useEffect } from 'react';
+import React, { useRef,useEffect,useState } from 'react';
 import './mypagecss.css';
 import $ from 'jquery';
 const MypageMyshopCoupon = () => {
+
+    const [coupon, setCoupon] = useState([]);
+
+    useEffect(() => {
+        const newCoupon = [{
+            number : 1 ,
+            couponName :  '뉴진스콘서트',
+            endDate : '2023.09.23',
+            getDate : '2023.05.30',
+            couponStatus : 'Y'
+        },{
+            number : 2 ,
+            couponName :  '블랙핑크콘서트',
+            endDate : '2023.05.13',
+            getDate : '2023.02.10',
+            couponStatus : 'Y'
+        },{
+            number : 3 ,
+            couponName :  '르세라핌콘서트',
+            endDate : '2023.09.27',
+            getDate : '2023.05.01',
+            couponStatus : 'Y'
+        },{
+            number : 4 ,
+            couponName :  '아이브콘서트',
+            endDate : '2023.09.23',
+            getDate : '2023.08.30',
+            couponStatus : 'Y'
+        }];
+        setCoupon(newCoupon);
+    
+    },[]);
 
     $('#rabitimg').css('display', 'none');
 
@@ -23,27 +55,16 @@ const MypageMyshopCoupon = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td className="nf-td1">1</td>
-                    <td className="nf-td2">뉴진스 콘서트</td>
-                    <td className="nf-td1">무제한</td>
-                    <td className="nf-td3">2023.05.05</td>
-                    <td className="nf-td1">Y</td>
+                {coupon.map((item,index)=>( 
+                    <tr key={index}>
+                    <td className="nf-td1">{item.number}</td>
+                    <td className="nf-td2">{item.couponName}</td>
+                    <td className="nf-td1">{item.endDate}</td>
+                    <td className="nf-td3">{item.getDate}</td>
+                    <td className="nf-td1">{item.couponStatus}</td>
                 </tr>
-                <tr>
-                    <td className="nf-td1">2</td>
-                    <td className="nf-td2">아이브 콘서트</td>
-                    <td className="nf-td1">무제한</td>
-                    <td className="nf-td3">2023.04.05</td>
-                    <td className="nf-td1">Y</td>
-                </tr>
-                <tr>
-                    <td className="nf-td1">3</td>
-                    <td className="nf-td2">르세라핌 콘서트</td>
-                    <td className="nf-td1">무제한</td>
-                    <td className="nf-td3">2023.06.05</td>
-                    <td className="nf-td1">Y</td>
-                </tr>
+                    ))}
+                
             </tbody>
 
           </table>

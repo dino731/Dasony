@@ -33,6 +33,15 @@ export const AdminShopDetail = ()=> {
         handleCancleOn();
     }
 
+    const [addShow, setAddShow] = useState(false);
+    const handleAddOn = ()=> setAddShow(true);
+    const handleAddOff = () => setAddShow(false);
+
+    const handleOnAdd = (product)=>{
+        setSelectedProduct(product);
+        handleCancleOn();
+    }
+
 
     return (
         <div className="admin-shop-detail-container">
@@ -58,6 +67,7 @@ export const AdminShopDetail = ()=> {
                                 <Button className="btn btn-primary" onClick={handleDetailOn}>관리</Button>
                             </td>
                         </tr>
+                        {/* 상품 관리 모달 */}
                             <Modal show={detailShow} onHide={handleOff} fullscreen={true}>
                                 <ModalHeader>
                                     상품 관리 
@@ -69,12 +79,14 @@ export const AdminShopDetail = ()=> {
                                             <th>상품 번호</th>
                                             <th>상품 이름</th>
                                             <th>상품 가격</th>
+                                            <th>상품 이미지</th>
                                             <th>상품 수정/삭제</th>
                                         </tr>
                                         <tr>
                                             <td>1</td>
                                             <td>몰라</td>
                                             <td>몰라</td>
+                                            <td><div className="product-add-img"><img src="/resources/shop/product/1/001.png"/></div></td>
                                             <td>
                                                 <Button className="btn btn-primary" onClick={()=>handleOnEdit({ name: '몰라', price: '몰라' })}>수정</Button>
                                                 {" "}
@@ -83,10 +95,49 @@ export const AdminShopDetail = ()=> {
                                         </tr>
                                     </table>
                                 </ModalBody>
+                                <ModalFooter>
+                                    <Button onClick={handleAddOn}>상품 추가</Button>
+                                    {/* 상품 추가 모달 */}
+                                    <Modal show={addShow} onHide={handleAddOff} fullscreen={true}>
+                                        <ModalHeader>상품 추가</ModalHeader>
+                                        <ModalBody>
+                                            <div className='product-add-table'>
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>상품 이름</th>
+                                                            <th>상품 가격</th>
+                                                            <th>상품 이미지</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style={{height:'15vh'}}>
+                                                                <input type="text"/>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text"/>
+                                                            </td>
+                                                            <td>
+                                                                <input type="file"/>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </ModalBody>
+
+                                        <ModalFooter>
+                                            <Button className='btn btn-danger' onClick={handleAddOff}>닫기</Button>
+                                        </ModalFooter>
+                                    </Modal>
+                                </ModalFooter>
                             </Modal>
                     </tbody>
                 </table>
             </div>
+            {/* 상품 수정 모달 */}
             <Modal show={show} onHide={handleOff}>
                 <ModalHeader>상품 수정</ModalHeader>
                 <ModalBody style={{textAlign:'center'}}>
@@ -100,6 +151,10 @@ export const AdminShopDetail = ()=> {
                             <th>상품 포인트(다손)</th>
                             <td><input type="text" defaultValue={selectedProduct.price}/></td>
                         </tr>
+                        <tr style={{height:'10vh'}}>
+                            <th>상품 이미지</th>
+                            <td><input type="file"/></td>
+                        </tr>
                     </table>
                 </ModalBody>
                 <ModalFooter>
@@ -108,6 +163,7 @@ export const AdminShopDetail = ()=> {
                 </ModalFooter>
             </Modal>
 
+            {/* 상품 삭제 모달 */}
             <Modal show={cancleShow} onHide={handleOff}>
                 <ModalHeader>상품 삭제</ModalHeader>
                 <ModalBody style={{textAlign:'center'}}>

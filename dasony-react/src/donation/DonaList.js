@@ -1,11 +1,16 @@
 import './DonaList.css';
 import { useDonaData } from './DonaDataContext';
+import axios from 'axios';
 
 const DonaList = () => {
-    const {donalist} = useDonaData();
+    const {donalist, setDonalist} = useDonaData();
+
+    axios.get("/dasony/donalist")
+    .then((response) => setDonalist(response.data.donalist))
+    .catch(error => console.log(error));
 
     const handlemydona = () => {
-        window.location.href = '/donatotal';
+        window.location.href = '/mypage/Mydonation';
     }
     
     const handeldetail = (id) => {

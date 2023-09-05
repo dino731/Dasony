@@ -530,8 +530,8 @@ input[type=file]:hover::file-selector-button {
   color:#FCFA90;
 }
 /* button btn 요소 */
-.ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+/* .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
   min-height: 400px;
   margin-bottom: 20px;
-}
+} */
 /* Editor css 끝 */
