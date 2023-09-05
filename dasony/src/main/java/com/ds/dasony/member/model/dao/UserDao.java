@@ -26,7 +26,6 @@ public class UserDao {
 		return session.insert("user.insertUser", user);
 	}
 	public int chkValidateId(String userId) {
-		log.error("유저 다오에서 userId를 확인함. userId=========={}", userId);
 		return session.selectOne("user.chkValidateId", userId);
 	}
 	public int chkValidateNick(String userNick) {
