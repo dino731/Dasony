@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import './game.css';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 export function gamestart(){
     
     alert("질뻑이가 보물상자를 다 먹기전에 질뻑이들을 피해서 먼저 보물상자를 차지하세요!");
@@ -91,6 +92,8 @@ export function gamestart(){
         var nowY = 10;
         var life = 3;
         var count = 0;
+        var pCount = 0;
+        var tCount = 0;
         var pikas = [
            
         ];
@@ -116,16 +119,18 @@ export function gamestart(){
         
                 if (life == 2) {
                     alert("포인트 획득에 실패하였습니다. 님 개못하네요.");
-                    axios.post('/dasoni/api/gamefinish')
+                    const gameData = {
+                        gameStatus: "N",
+                        pointStatus: "N",
+                        ticketStatus: "N",
+                        userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                    };
+                    axios.post("/dasony/api/gamefinish",gameData)
                     .then(response=>{
+                        console.log(response.data);
                         window.location.reload();
                     });
                     
-                }
-                if (count == 5) {
-                    alert("성공! 획득한 총 포인트 : 300 포인트");
-                    
-                    // window.location.href = "https://search.naver.com/search.naver?where=image&sm=tab_jum&query=%EC%B6%95%ED%95%98%ED%95%A9%EB%8B%88%EB%8B%A4";
                 }
 
             switch(key){
@@ -153,8 +158,8 @@ export function gamestart(){
                                             } 
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
-                                                window.location.reload();break;
-                                                break;
+                                                window.location.reload();
+                                                break;  
                                             }
                                         }
                                     }
@@ -180,7 +185,7 @@ export function gamestart(){
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
                                                 window.location.reload();break;
-                                                break;
+                                                
                                             }
                                         }
                                     }
@@ -204,7 +209,7 @@ export function gamestart(){
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
                                                 window.location.reload();break;
-                                                break;
+                                                
                                             }
                                         }
                                     }
@@ -228,7 +233,7 @@ export function gamestart(){
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
                                                 window.location.reload();break;
-                                                break;
+                                                
                                             }
                                         }
                                     }
@@ -265,8 +270,67 @@ export function gamestart(){
                         alert("질뻑이에게 잡아먹혔습니다! 목숨-1 (현재목숨 :"+life+")");
                     }
                     else if(map[nowX][nowY]==4){
-                        alert("100포인트 획득!");
-                        count++;
+                        var pointorticket= Math.floor(Math.random() * 2);
+                        if(pointorticket == 0){
+                            alert("50포인트 획득!");
+                            count++; 
+                            pCount++;
+                        }else{
+                            alert("응모권 당첨! 어떤 응모권인지는 마이페이지에서 확인해주세요~")
+                            tCount++;
+                        }
+                       
+                        if (boxcount == 0) {
+                            
+                            if(tCount > 0 && pCount >0){
+                                alert("성공! 획득한 포인트 : "+pCount*50+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "Y",
+                                ticketStatus: "Y",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            const pointData = {
+                                userNo : 1,
+                                pointAmount : pCount*50,
+                                pointCate : "G"  
+                            };
+                            axios.post("/dasony/api/insertpoint",pointData)
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }else if(tCount>0 && pCount < 0 ){
+                                alert("응모권 흭득! 마이페이지에서 확인하세요");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "N",
+                                ticketStatus: "Y",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }else if(tCount <0 && pCount >0){
+                                alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "Y",
+                                ticketStatus: "N",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }
+
+                        }
+
                     }
                     
                     map[nowX][nowY]=3;
@@ -400,8 +464,60 @@ export function gamestart(){
                         
                     }
                     else if(map[nowX][nowY]==4){
-                        alert("100포인트 획득!");
-                        count++;
+                        var pointorticket= Math.floor(Math.random() * 2);
+                        if(pointorticket == 0){
+                            alert("50포인트 획득!");
+                            count++; 
+                            pCount++;
+                        }else{
+                            alert("응모권 당첨! 어떤 응모권인지는 마이페이지에서 확인해주세요~")
+                            tCount++;
+                        }
+                        if (boxcount == 0) {
+                            
+                            if(tCount > 0 && pCount >0){
+                                alert("성공! 획득한 포인트 : "+pCount*50+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "Y",
+                                ticketStatus: "Y",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }else if(tCount>0 && pCount < 0 ){
+                                alert("응모권 흭득! 마이페이지에서 확인하세요");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "N",
+                                ticketStatus: "Y",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }else if(tCount <0 && pCount >0){
+                                alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "Y",
+                                ticketStatus: "N",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }
+
+                        }
+
                     }
                     map[nowX][nowY]=3;
                 break;
@@ -531,8 +647,60 @@ export function gamestart(){
                         
                     }
                     else if(map[nowX][nowY]==4){
-                        alert("100포인트 획득!");
-                        count++;
+                        var pointorticket= Math.floor(Math.random() * 2);
+                        if(pointorticket == 0){
+                            alert("50포인트 획득!");
+                            count++; 
+                            pCount++;
+                        }else{
+                            alert("응모권 당첨! 어떤 응모권인지는 마이페이지에서 확인해주세요~")
+                            tCount++;
+                        }
+                        if (boxcount == 0) {
+                            
+                            if(tCount > 0 && pCount >0){
+                                alert("성공! 획득한 포인트 : "+pCount*50+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "Y",
+                                ticketStatus: "Y",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }else if(tCount>0 && pCount < 0 ){
+                                alert("응모권 흭득! 마이페이지에서 확인하세요");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "N",
+                                ticketStatus: "Y",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }else if(tCount <0 && pCount >0){
+                                alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "Y",
+                                ticketStatus: "N",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }
+
+                        }
+
                     }
                     map[nowX][nowY]=3;
                 break;
@@ -662,10 +830,61 @@ export function gamestart(){
                         
                     }
                     else if(map[nowX][nowY]==4){
-                        alert("100포인트 획득!");
-                        count++;
+                        var pointorticket= Math.floor(Math.random() * 2);
+                        if(pointorticket == 0){
+                            alert("50포인트 획득!");
+                            count++; 
+                            pCount++;
+                        }else{
+                            alert("응모권 당첨! 어떤 응모권인지는 마이페이지에서 확인해주세요~")
+                            tCount++;
+                        }
+                        if (boxcount == 0) {
+                            
+                            if(tCount > 0 && pCount >0){
+                                alert("성공! 획득한 포인트 : "+pCount*50+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "Y",
+                                ticketStatus: "Y",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }else if(tCount>0 && pCount < 0 ){
+                                alert("응모권 흭득! 마이페이지에서 확인하세요");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "N",
+                                ticketStatus: "Y",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }else if(tCount <0 && pCount >0){
+                                alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                            const gameData = {
+                                gameStatus: "Y",
+                                pointStatus: "Y",
+                                ticketStatus: "N",
+                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                            };
+                            axios.post("/dasony/api/gamefinish",gameData)
+                            .then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            });
+                            }
+
+                        }
+
                     }
-                    map[nowX][nowY]=3;
                 break;
             }   
     

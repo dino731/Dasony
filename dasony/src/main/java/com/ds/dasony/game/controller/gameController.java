@@ -4,6 +4,7 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,9 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("*") // 공통주소
+@RequestMapping("/api") // 공통주소
 
-@SessionAttributes({"loginUser"})
+
 public class gameController {
 	
 	@Autowired
@@ -34,9 +35,24 @@ public class gameController {
 	private ResourceLoader resourceLoader;
 	
 	@PostMapping("/gamefinish")
-	public int insertGame(@RequestBody Game g) {
+	public  ResponseEntity<String> insertGame(@RequestBody Game gameData) {
+		log.info("Game={}",gameData);
+		if(gameData.getPointStatus() == "Y" && gameData.getPointStatus() == "Y") {
+			int result1 = 
+		}else if(gameData.getPointStatus() == "Y") {
+			
+		}else if(gameData.getTicketStatus() == "Y") {
+			
+		}else {
+			
+		}
+		int result2 =  gameService.insertGame(gameData);
+		if (result2 > 0 && result1 >0) {
+	        return ResponseEntity.ok("Success");
+	    } else {
+	        return ResponseEntity.badRequest().body("Failed");
+	    }
 		
-		return gameService.insertGame(g);
 	}
 	
 	
