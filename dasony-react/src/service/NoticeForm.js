@@ -31,13 +31,15 @@ const NoticeForm = () => {
         e.preventDefault();
 
         const title = document.querySelector("#noticeTitle").value;
-
-        const data = {menu, title, content};
+        let menuStr = menu.toString();
+        const data = {menuStr, title, content};
 
         axios.post("http://localhost:3000/dasony/notice/"+url, data)
              .then(response => {
-                alert("성공적으로 등록하였습니다.");
-                navi(-1);
+                let result = response.data;
+                alert(result);
+
+                if(result.includes) navi(-1);
             }).catch(console.log);
     };
 

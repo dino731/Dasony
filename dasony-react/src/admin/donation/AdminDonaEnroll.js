@@ -2,6 +2,9 @@ import './AdminDonaEnroll.css';
 import { useNavigate, useLocation} from 'react-router-dom';
 import React, {useState} from 'react';
 import { useDonaList } from './AdminDonaListContext';
+import axios from 'axios';
+import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
+
 
 const AdminDonaEnroll = () => {
 
@@ -16,10 +19,23 @@ const AdminDonaEnroll = () => {
     const [title, setTitle] = useState('');
     const [crdona, setCrdona] = useState('');
     const [crcontent, setCrContent] = useState('');
+
+    const [crgoalmony, setCrgoalmony] = useState('');
+
+    const formatWithComma = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
+    const handleGoalmonyChange = (e) => {
+        const goalmonyVal = e.target.value.replace(/,/g, '');
+        const formatGoalmonyVal = formatWithComma(goalmonyVal);
+        setCrgoalmony(formatGoalmonyVal);
+    }
     
     const handleaddonalist = () => {
 
-        if(!title || !crdona || !crcontent){
+        if(!title || !crdona || !crcontent || !crgoalmony){
+
             alert("값을 모두 입력해주세요");
             return
         }
@@ -43,10 +59,18 @@ const AdminDonaEnroll = () => {
             content : crcontent,
             createdate : `${year}-${month}-${day}`,
             enddate : `${endYear}-${endMonth}-${endDay}`,
-            mony : '0다손'
+
+            mony : '0다손',
+            goalmony : crgoalmony+"다손",
+            achieve : '0%'
         };
 
         const updateDonaList = [...adDonaList, newDona];
+
+        // axios test
+        axios.get("/dasony/test").then((response) => alert(response.data));
+
+
         setAdDonaList(updateDonaList);
 
         // setAdDonaList(newList => [...newList, newDona]);
@@ -69,7 +93,10 @@ const AdminDonaEnroll = () => {
                         <option value="강동">강동</option>
                     </select><br/> 
                     <label>모금단체</label><br/> 
-                    <input type="text" value={crdona} onChange={e => setCrdona(e.target.value)}/><br/> 
+                    <input type="text" value={crdona} onChange={e => setCrdona(e.target.value)}/><br/>
+                    <label>목표 다손</label><br/>
+                    <input type="text" value={crgoalmony} onChange={handleGoalmonyChange} style={{ textAlign: 'right' }}/>&nbsp;다손<br/>
+
                     <label>내용</label><br/> 
                     <textarea rows={20} cols={80} value={crcontent} onChange={e => setCrContent(e.target.value)}></textarea><br/>
                     <button type="button" class="btn btn-warning" onClick={handleaddonalist}>등록</button>
