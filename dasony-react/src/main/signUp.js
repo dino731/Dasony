@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {MainChecking} from './mainModal'
 import './signUp.css';
@@ -67,22 +67,49 @@ const SignUp = ()=>{
     const handleCompleteChk = ()=>{
         handleCompleteAddress();
         handleCompleteEmail(); 
-        console.log(completeAddress, completeEmail);
-        user = {userId:id, userPwd:pwd, userName:name, userNo:20230904005,
+        console.log(completeAddress, completeEmail, id, pwd, name);
+        user = {userId:id, userPwd:pwd, userName:name,
                 userRegion: '서울특별시 강남구', userLevel: 'A',
-                userJoinDate:'2023-09-04',
-                userModDate: '2023-09-04',
-                userStatus: 'Y',
                 userNick:nick, userAddress:completeAddress, userPhone:phone, userEmail:completeEmail};
         }
     /*유효성 검사 */
+    
+    /*비밀 번호 동일 검사 */
+        /*비밀 번호 동일 검사 결과 txt 설정 */
+    const [pwdTxt, setPwdTxt] = useState('');
+        /*비밀 번호 동일 검사 결과 txt 설정 */
+    const [pwdColor, setPwdColor] = useState('');
+        /*비밀 번호 동일 검사 함수 */
+    const handleValidatePwd = () => {
+        if(pwd && chkPwd){
+            if(pwd == chkPwd){
+                setPwdColor("#7A7A7A");
+                setPwdTxt("비밀 번호가 일치합니다.");
+            } else {
+                setPwdColor("red");
+                setPwdTxt("비밀 번호가 일치하지 않습니다.");
+            }
+        } else {
+            setPwdTxt("");
+        }
+    }
 
-    const handleSubmit = (event, user) => {
+
+     /*핸드폰 인증 검사 */
+
+
+    useEffect(()=>{
+        handleValidatePwd();
+    }, [chkPwd])
+
+
+    /*회원 가입 버튼 */
+    const handleSubmit = (event) => {
         event.preventDefault();
         //Spring Boot 컨트롤러 url
 
-        //axios이용해서 GET 요청 보내기
-        axios.post("/dasony/api/test", JSON.stringify(user), {
+        //axios이용해서 POST 요청 보내기
+        axios.post("/dasony/api/test", user, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
             }
@@ -90,6 +117,8 @@ const SignUp = ()=>{
             .then(response => {
                 //요청 성공했을 때 실행할 코드
                 console.log(response.data);//응답 데이터 출력
+                alert(response.data.msg);
+                navigate('/location', {state:user});
             })
             .catch(error => {
                 //요청 실패했을 때 실행될 코드
@@ -109,37 +138,38 @@ const SignUp = ()=>{
                 <tbody>
                     <tr>
                         <th>아이디</th>
-                        <td><input type='text' onBlur={handleId}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='중복 확인' bodyTxt='이미 사용중인 아이디입니다.'/></th>
+                        <td><input type='text' onChange={handleId} value={id}/></td>
+                        <th style={{textAlign:'left'}}><MainChecking txt='아이디 중복 확인' data={id} setId={setId}/></th>
                     </tr>
                     <tr>
                         <th>비밀번호</th>
-                        <td><input type='text' onBlur={handlePwd}/></td>
+                        <td><input type='password' onChange={handlePwd} value={pwd}/></td>
                     </tr>
                     <tr>
                         <th>비밀번호 확인</th>
-                        <td><input type='text' onBlur={handleChkPwd}/></td>
+                        <td><input type='password' onChange={handleChkPwd} value={chkPwd}/></td>
+                        <td style={{fontSize:'1vw', color:pwdColor, textAlign:'left'}}>{pwdTxt}</td>
                     </tr>
                     <tr>
                         <th>별명</th>
-                        <td><input type='text' onBlur={handleNick}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='중복 확인' bodyTxt='이미 사용중인 별명입니다.'/></th>
+                        <td><input type='text' onChange={handleNick} value={nick}/></td>
+                        <th style={{textAlign:'left'}}><MainChecking txt='별명 중복 확인' data={nick} setNick={setNick}/></th>
                     </tr>
                     <tr>
                         <th>이름(실명)</th>
-                        <td><input type='text' onBlur={handleName}/></td>
+                        <td><input type='text' onChange={handleName} value={name}/></td>
                     </tr>
                     <tr>
                         <th>핸드폰번호</th>
-                        <td><input type='text' onBlur={handlePhone}/></td>
+                        <td><input type='text' onChange={handlePhone} value={phone}/></td>
                         <th style={{textAlign:'left'}}><MainChecking txt='인증하기'/></th>
                     </tr>
                     <tr>
                         <th>이메일</th>
                         <td>
-                            <input type='text' style={{width:'39%'}} onChange={handleEmailId} onBlur={handleCompleteEmail}/>
+                            <input type='text' style={{width:'38%'}} onChange={handleEmailId} onBlur={handleCompleteEmail} value={emailId}/>
                             {" "}@{" "}
-                            <input type='text' style={{width:'34%'}} value={email==''?userEmail:email} readOnly={readOnly} onChange={handleUserEmail}  onBlur={handleCompleteEmail}/>
+                            <input type='text' style={{width:'36%'}} value={email==''?userEmail:email} readOnly={readOnly} onChange={handleUserEmail}  onBlur={handleCompleteEmail}/>
                         </td>
                         <th style={{textAlign:'left'}}>
                             <select onChange={handleEmail}>
@@ -172,7 +202,6 @@ const SignUp = ()=>{
                     <tr>
                         <td></td>
                         <td><button onClick={handleSubmit}>회원 가입</button></td>
-                        {/*()=>navigate('/location') */}
                         <td></td>
                     </tr>
                 </tfoot>
