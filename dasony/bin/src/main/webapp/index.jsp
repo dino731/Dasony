@@ -24,7 +24,7 @@
 </head>
 <body>
 	
-	<h4>다소니삼</h4>
+	<h4>다소니 index페이지</h4>
 	
 </body>
 </html>

@@ -8,7 +8,7 @@
 		<version>2.7.14</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.kh</groupId>
+	<groupId>com.ds</groupId>
 	<artifactId>springboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>springboot</name>
@@ -79,7 +79,12 @@
       </dependency>
       
       <!-- jsp를 이용하기 위한 추가 dependency 끝 -->
-		
+	
+	
+	<dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+    </dependency>
 		
 	</dependencies>
 
