@@ -44,7 +44,7 @@ import { AdminShopDetail } from './admin/shop/adminShopDetail';
 import { AdminUser } from './admin/user/adminUser';
 import { AdminUserDetail } from './admin/user/adminUserDetail';
 import { AdminCalendar } from './admin/board/adminCalendar';
-import Mypage from './mypage/Mypage';
+import Mypage from './mypage/mypage';
 import MypageHeader from './mypage/mypageHeader';
 import MypageAct from './mypage/mypageAct';
 import MypageInfo from './mypage/mypageInfo';
@@ -85,6 +85,7 @@ import AdminReportDetail from './admin/user/adminReportDetail';
 import AdminAlert from './admin/user/adminAlert';
 import AdminReceptionDetail from './admin/user/adminReceptionDetail';
 import ChartManager from './admin/chart/ChartManager';
+import { Share } from './share/share';
 
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
@@ -134,13 +135,13 @@ function App() {
 
                   {/* 로그인 된 경우 */}
                   {/*관리자로 로그인 한 경우 */}
-                  <Route path="/admin/main" element={<div className=".for-main">
+                  <Route path="/admin/chart" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
-                                                                          <AdminMain/>
+                                                                          <ChartManager />
                                                                         </motion.div></div></div>}/>
                   <Route path="/admin/shop" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
@@ -276,15 +277,6 @@ function App() {
                       </Route>                          
                   </Route>
 
-                  {/* chart 파트 */}
-                  <Route path="/admin/chart" element={<div className=".for-main">
-                                                <div className='for-normal-page'><motion.div
-                                                                        initial = {{opacity:0, y:30}}
-                                                                        animate = {{opacity:1, y:0}}
-                                                                        end = {{opacity:1, y:0}}
-                                                                        transition={{duration : 1}}>
-                                                                          <ChartManager />
-                                                                        </motion.div></div></div>} />
                                                                         
                   {/* 메인페이지 부분 */}
                   <Route path="/" element={<motion.div
@@ -435,7 +427,29 @@ function App() {
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <EventDetailControl editStatus="등록"/>
-                                                      </motion.div>}/>                                           
+                                                      </motion.div>}/>  
+                                                      
+                        <Route path="addNewEvent" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <EventForm editStatus="등록"/>
+                                                      </motion.div>}/>
+                        <Route path="modifyEvent/:no" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <EventForm editStatus="수정"/>
+                                                      </motion.div>}/>
+                        <Route path="managerEvent" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <ManagerEventBoard/>
+                                                      </motion.div>}/>                                            
                     </Route>
 
                   {/*Board 중첩 route 시작 */}
@@ -559,6 +573,13 @@ function App() {
                                                                   <BoardDailyWriter/>
                                                                 </motion.div>}/>                          
                     </Route>
+                    <Route path="share/*" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <Share/>
+                                                    </motion.div>}/>
                   </Route>{/*Board 중첩 route 끝 */}
 
                     {/*mypage 중첩 route 시작 */}
