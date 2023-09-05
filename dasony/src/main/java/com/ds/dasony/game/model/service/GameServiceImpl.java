@@ -12,8 +12,8 @@ public class GameServiceImpl implements GameService{
 	private GameDao gameDao;
 	
 	@Override
-	public int insertGame(Game g) {
-		return gameDao.insertGame(g);
+	public int insertGame(Game gameData) {
+		return gameDao.insertGame(gameData);
 	}
 	
 }
