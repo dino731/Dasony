@@ -84,6 +84,10 @@ import AdminReception from './admin/user/adminReception';
 import AdminReportDetail from './admin/user/adminReportDetail';
 import AdminAlert from './admin/user/adminAlert';
 import AdminReceptionDetail from './admin/user/adminReceptionDetail';
+import AdminBoardList from './admin/board/adminBoardList';
+import AdminBoard from './admin/board/adminBoard';
+import AdminBoardDelete from './admin/board/adminBoardDelete';
+import BoardEdit from './Board/BoardEdit';
 import ChartManager from './admin/chart/ChartManager';
 import { Share } from './share/share';
 
@@ -276,6 +280,34 @@ function App() {
                             <Route path="new" element={<NoticeForm/>}/>                                                                      
                       </Route>                          
                   </Route>
+
+
+                  {/* Admin Board */}
+                  <Route path="/admin/board" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                          <AdminBoard />
+                                                                        </motion.div></div></div>}>
+                      <Route path="delete" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <AdminBoardDelete/>
+                                                      </motion.div>}/>
+                      <Route path="new" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <BoardDailyList/>
+                                                      </motion.div>}/>        
+                                    
+                  </Route>
+
 
                                                                         
                   {/* 메인페이지 부분 */}
@@ -497,6 +529,20 @@ function App() {
                                                               transition={{duration : 1}}>
                                                                 <BoardShortsUploader/>
                                                               </motion.div>}/>
+                                <Route path="daily/detail/:boardNo/:userName" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardDetail/>
+                                                                              </motion.div>}/>
+                                <Route path="daily/edit/:boardNo/:userName" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardEdit/>
+                                                                              </motion.div>}/>                 
                           <Route path="interest/" element={<motion.div
                                                           initial = {{opacity:0, y:30}}
                                                           animate = {{opacity:1, y:0}}
@@ -510,18 +556,22 @@ function App() {
                                                                 end = {{opacity:1, y:0}}
                                                                 transition={{duration : 1}}>
                                                                   <BoardDailyWriter/>
-                                                                </motion.div>}/>                   
-                          <Route path="daily/detail/:boardNo/:userName" element={<motion.div
-                                                        initial = {{opacity:0, y:30}}
-                                                        animate = {{opacity:1, y:0}}
-                                                        end = {{opacity:1, y:0}}
-                                                        transition={{duration : 1}}>
-                                                           <BoardDetail/>
-                                                        </motion.div>}/>
-
-                                                        </Route>
-
-
+                                                                </motion.div>}/>
+                                <Route path="interest/detail/:boardNo/:userName" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardDetail/>
+                                                                              </motion.div>}/> 
+                                <Route path="interest/edit/:boardNo/:userName" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardEdit/>
+                                                                              </motion.div>}/>                    
+                      </Route>
                       <Route path="info/*" element={<motion.div
                                                     initial = {{opacity:0, y:30}}
                                                     animate = {{opacity:1, y:0}}
@@ -543,6 +593,20 @@ function App() {
                                                                 transition={{duration : 1}}>
                                                                   <BoardDailyWriter/>
                                                                 </motion.div>}/>
+                                <Route path="jmt/detail/:boardNo/:userName" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardDetail/>
+                                                                              </motion.div>}/>  
+                                <Route path="jmt/edit/:boardNo/:userName" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardEdit/>
+                                                                              </motion.div>}/>    
                           <Route path="fashion/" element={<motion.div
                                                           initial = {{opacity:0, y:30}}
                                                           animate = {{opacity:1, y:0}}
@@ -557,6 +621,20 @@ function App() {
                                                                     transition={{duration : 1}}>
                                                                       <BoardDailyWriter/>
                                                                     </motion.div>}/>
+                                    <Route path="fashion/detail/:boardNo/:userName" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardDetail/>
+                                                                              </motion.div>}/>    
+                                    <Route path="fashion/edit/:boardNo/:userName" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardEdit/>
+                                                                              </motion.div>}/>  
                           <Route path="local/" element={<motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}
@@ -571,7 +649,21 @@ function App() {
                                                                 end = {{opacity:1, y:0}}
                                                                 transition={{duration : 1}}>
                                                                   <BoardDailyWriter/>
-                                                                </motion.div>}/>                          
+                                                                </motion.div>}/>  
+                                <Route path="local/detail/:boardNo/:userName" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardDetail/>
+                                                                              </motion.div>}/> 
+                                <Route path="local/edit/:boardNo/:userName" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardEdit/>
+                                                                              </motion.div>}/>                                   
                     </Route>
                     <Route path="share/*" element={<motion.div
                                                     initial = {{opacity:0, y:30}}
