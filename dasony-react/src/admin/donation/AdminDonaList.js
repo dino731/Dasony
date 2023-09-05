@@ -80,4 +80,6 @@ const AdminDonaList = () => {
         </div>
     )
 }
+
 export default AdminDonaList;
+
