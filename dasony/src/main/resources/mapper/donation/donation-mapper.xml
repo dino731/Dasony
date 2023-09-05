@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="donationMapper">
+<resultMap type="donation" id="donaResultSet">
+  	<id column="DONA_NO" property="donaNo"/>
+  	<result column="DONA_CONTENT" property="donaContent"/>
+  	<result column="DONA_TITLE" property="donaTitle"/>
+  	<result column="DONA_WRITE_DATE" property="donaWriteDate"/>
+  	<result column="DONA_NAME" property="donaName"/>
+  	<result column="DONA_END_DATE" property="donaEndDate"/>
+  	<result column="DONA_ACHIEVE" property="donaAchieve"/>
+  	<result column="DONA_TOTAL_AMOUNT" property="donaTotalAmount"/>
+  	<result column="DONA_TARGET_AMOUNT" property="donaTargetAmount"/>
+  	<result column="DONA_EXECUTE_DATE" property="donaExecuteDate"/>
+  </resultMap>
+  
+  <sql id="donationDetail">
+  	DONA_TITLE,
+	DONA_NAME,
+	DONA_WRITE_DATE,
+	DONA_CONTENT,
+	DONA_END_DATE,
+	DONA_ACHIEVE,
+	DONA_TOTAL_AMOUNT
+  </sql>
+  
+  <!-- TO_CHAR(DONA_WRITE_DATE, 'YYYY"-"MM"-"DD"-"') DONA_WRITE_DATE -->
+  
+  <select id="selectDonaList" resultMap="donaResultSet">
+  	SELECT  
+  		DONA_NO,
+  		DONA_TITLE,
+  		DONA_NAME,
+  		DONA_WRITE_DATE
+  	FROM DONATION
+  	ORDER BY DONA_NO DESC
+  </select>
+  
+  <select id="selectDonaDetail" parameterType="int" resultMap="donaResultSet">
+  	SELECT 
+  		<include refid="donationDetail"/>
+  	FROM DONATION
+  	WHERE DONA_NO = #{donaNo}
+  </select>
+  
+  <!-- WHERE DONA_EXECUTE_DATE = #{donaExecuteDate} -->
+  <select id="selectAdminDonaList" resultMap="donaResultSet">
+  	SELECT
+  		DONA_NO,
+  		DONA_TITLE,
+  		DONA_NAME,
+  		DONA_WRITE_DATE,
+  		DONA_END_DATE,
+  		DONA_TOTAL_AMOUNT,
+  		DONA_TARGET_AMOUNT,
+  		DONA_ACHIEVE
+  	FROM DONATION
+  	ORDER BY DONA_NO DESC
+  </select>
+  
+  <select id="selectAdDonaDetail" parameterType="int" resultMap="donaResultSet">
+  	SELECT 
+  		<include refid="donationDetail"/>
+  	FROM DONATION
+  	WHERE DONA_NO = #{donaNo}
+  </select>
+</mapper>

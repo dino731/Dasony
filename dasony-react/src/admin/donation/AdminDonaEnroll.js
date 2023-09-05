@@ -14,6 +14,13 @@ const AdminDonaEnroll = () => {
 
     const searchParams = new URLSearchParams(location.search); // selectedArea url 정보 가져옴
     const selectedArea = searchParams.get('selectedArea');
+
+    axios.post("/dasony/", {
+        params : {
+            selectedArea : selectedArea
+        }})
+        .then((response) => console.log(response.data))
+        .catch(error => console.log(error));
          
     const {adDonaList, setAdDonaList} = useDonaList();
     const [title, setTitle] = useState('');
