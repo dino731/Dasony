@@ -2,6 +2,7 @@
   "name": "dasony",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8083",
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.38",
     "@amcharts/amcharts5": "^5.4.5",

@@ -15,12 +15,12 @@ const Header = () => {
                 <>
                 <ul>
                     <li></li>
-                    <Link to='/admin/main' style={{textDecoration:'none'}}>
+                    <Link to='/admin/chart' style={{textDecoration:'none'}}>
                     <li className="logo-li"><img src='/resources/common-img/dasony-logo.png'/></li>
                     </Link>
 
                     <li></li>
-                    <Link to='/admin/main' style={{textDecoration:'none'}}>
+                    <Link to='/admin/chart' style={{textDecoration:'none'}}>
                         <li className="board-li" 
                             onClick={(event)=>{HandleOpacity(event.target.id);}}
                             style={{fontSize:'1.5vw'}}
@@ -217,7 +217,7 @@ const Header = () => {
                                                 <li></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/general/daily'>사담</Link></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/info/jmt'>정보공유</Link></li>
-                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>나눔</li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/share'>나눔</Link></li>
                                                 <li></li>
                                                 <li></li>
                                                 <li></li>
