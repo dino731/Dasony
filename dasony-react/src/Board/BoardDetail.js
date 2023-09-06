@@ -11,7 +11,6 @@ import Shorts from './Shorts'
 import BoardDetailReply from './BoardDetailReply';
 
 
-
 const BoardDetail = () =>{
   const navigate = useNavigate();
   const location = useLocation();
@@ -256,10 +255,9 @@ const BoardDetail = () =>{
                     </div>
                   </div>
                   <div className='BoardDetail-boardlist-content-wrapper'>
-
-                    <div className='BoardDetail-boardlist-content'>
-
-
+                    <div className='BoardDetail-boardlist-content'
+                    dangerouslySetInnerHTML={{ __html: board.boardContent }}
+                    >
                     </div>
                   </div>
                 <BoardDetailReply/>
