@@ -8,6 +8,20 @@ import {BoardDetailcategoryState, BoardVotecategoryState, BoardShortscategorySta
   BoardJMTCategoryState, BoardFashionCategoryState, BoardLocalCategoryState } from '../atoms';
 
 const BoardDailyList = ()=>{
+  /* axios 시작 */
+  axios.get('/board'+listPath)
+  .then(function(response){ 
+    //handle success
+    console.log(response);
+  })
+  .catch(function(error){
+    //handle error
+    console.log(error);
+  })
+  .then(function(){
+    //always executed
+  })
+  /* axios 끝 */
   /* 보드 카테고리 atom관련 시작  ain 0904*/
   const [boardPost, setBoardPost] = useRecoilState(boardPostState);
   const boardInterestCategory = useRecoilValue(BoardInterestCategoryState);
@@ -158,7 +172,7 @@ const BoardDailyList = ()=>{
                 </div>
                 <div className="col-1 col-md-1">
                   <button type="button" className="boardList-search-reset-btn" onClick={handleReset}>
-                    <img src="/resources/common-img/boardImg/초기화아이콘.png" className="boardList-search-reset-btn-icon" />
+                    <img src="/resources/board/ricon.png" className="boardList-search-reset-btn-icon" />
                       <a style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="주기 아이콘">주기 아이콘  제작자: redempticon - Flaticon</a>
                   </button>
                   
@@ -179,16 +193,16 @@ const BoardDailyList = ()=>{
                        <div className="boardList-list-content-container">
                            <div className="boardList-list-keyword">{board.boardCateNo}</div>
                            <div className="boardList-list-content-title">{board.boardTitle}</div>
-                           <div className="boardList-list-content">{board.boardContent}</div>
+                           <div className="boardList-list-content"dangerouslySetInnerHTML={{ __html: board.boardContent }}></div>
                            <div className="boardList-list-content-info"><span>{board.userName}</span><span>{board.boardWriteDate}</span><span>11:50</span></div>
                            <div className="boardList-list-content-action">
-                             <span><img src="/resources/common-img/boardImg/비밀번호표시아이콘.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/-" title="비밀번호 표시 아이콘">비밀번호 표시 아이콘  제작자: exomoon design studio - Flaticon</span></span>
-                             <span><img src="/resources/common-img/boardImg/빈하트.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="심장 아이콘">심장 아이콘  제작자: Noplubery - Flaticon</span></span>
-                             <span><img src="/resources/common-img/boardImg/대화아이콘.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="대화 아이콘">대화 아이콘  제작자: exomoon design studio - Flaticon</span></span></div>
+                             <span><img src="/resources/board/eicon.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/-" title="비밀번호 표시 아이콘">비밀번호 표시 아이콘  제작자: exomoon design studio - Flaticon</span></span>
+                             <span><img src="/resources/board/hicon.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="심장 아이콘">심장 아이콘  제작자: Noplubery - Flaticon</span></span>
+                             <span><img src="/resources/board/ticon.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="대화 아이콘">대화 아이콘  제작자: exomoon design studio - Flaticon</span></span></div>
                        </div>
                      </Link>
                      <div className="boardList-list-img">
-                       <img src="/resources/common-img/boardImg/지현님슈퍼슈퍼지능.jpg" alt="썸네일" className="board-img"/>
+                       <img src="/resources/board/jh.jpg" alt="썸네일" className="board-img"/>
                      </div>
                  </div>
                </div>

@@ -172,6 +172,7 @@ width: 86%;
 height: 100%;
 text-align: left;
 display: inline-block;
+overflow: hidden;
 }
 .boardList-list-keyword{
 border: none;
@@ -294,13 +295,14 @@ float: right;
   width: 100px;
   height: 10px;
 }
-
-.boardDetail-title-input,.boardList-search-input-tag-wrapper{
+.BoardDetail-userImg-views-container{
   /* border: 1px solid purple; */
-
+  width: 100%;
+  text-align: center;
 }
-
-
+.BoardDetail-userImg-views-li>img{
+  height: 30vh;
+}
 
 
 /* BoardDetail css 끝 */
@@ -326,9 +328,6 @@ float: right;
 .Vote-button-container {
   display: flex;
   align-items: center;
-}
-.Vote-Content-btn-wrapper{
-  
 }
 .Vote-button-controll{
   border: 1px solid rgb(186, 186, 186);

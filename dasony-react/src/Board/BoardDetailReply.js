@@ -96,7 +96,7 @@ const BoardDetailReply = () =>{
               <div className='BoardDetail-boardlist-reply-container'>
                   <div className='BoardDetail-boardlist-reply-userinfo-wrapper'>
                       <span className='BoardDetail-boardlist-title-userinfo-img'>
-                        <img src="/resources/common-img/boardImg/지현님슈퍼슈퍼지능.jpg"/>
+                        <img src="/resources/board/jh.jpg"/>
                       </span>
                       <span className='BoardDetail-boardlist-reply-userinfo-nikname'>user2</span>
                       <span className='BoardDetail-boardlist-reply-userinfo-date'>2023.08.29</span>
