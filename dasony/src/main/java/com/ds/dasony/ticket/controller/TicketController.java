@@ -1,4 +1,4 @@
-package com.ds.dasony.game.controller;
+package com.ds.dasony.ticket.controller;
 
 import javax.servlet.ServletContext;
 
@@ -6,27 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.ds.dasony.game.model.dao.GameDao;
+import com.ds.dasony.game.controller.gameController;
 import com.ds.dasony.game.model.service.GameService;
 import com.ds.dasony.game.model.vo.Game;
+import com.ds.dasony.ticket.model.service.TicketService;
+import com.ds.dasony.ticket.model.vo.Ticket;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 @RequestMapping("/api") // 공통주소
+public class TicketController {
 
-
-public class gameController {
-	
 	@Autowired
-	private GameService gameService;
+	private TicketService ticketservice;
 		
 	@Autowired
 	private ServletContext application;
@@ -34,19 +32,17 @@ public class gameController {
 	@Autowired
 	private ResourceLoader resourceLoader;
 	
-	@PostMapping("/gamefinish")
-	public  ResponseEntity<String> insertGame(@RequestBody Game gameData) {
-		log.info("Game={}",gameData);
-		int result =  gameService.insertGame(gameData);
-		
-		if (result > 0) {
+	@PostMapping("/insertTicket")
+	public  ResponseEntity<String> insertTicket(@RequestBody Ticket ticketData) {
+		int result = ticketservice.insertTicket(ticketData);
+		log.info("Ticket={}",ticketData);
+		if (result>0) {
 	        return ResponseEntity.ok("Success");
 	    } else {
 	        return ResponseEntity.badRequest().body("Failed");
 	    }
 		
 	}
-	
 	
 	
 	

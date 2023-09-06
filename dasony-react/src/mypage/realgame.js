@@ -5,15 +5,15 @@ import { Navigate } from 'react-router-dom';
 export function gamestart(){
     
     alert("질뻑이가 보물상자를 다 먹기전에 질뻑이들을 피해서 먼저 보물상자를 차지하세요!");
-    var random = Math.floor(Math.random() * 1);
+    let random = Math.floor(Math.random() * 1);
     
     if(random == 0){
-        var map=[
+        let map=[
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,4,1,0,0,0,0,0,0,0,0,2,0,1],
+            [1,0,0,0,0,0,0,4,1,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,1,1,1,0,1,1,1,0,1,0,0,1,0,1,0,1,0,1],
             [1,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1],
-            [1,2,1,0,1,0,1,0,1,0,1,0,0,0,0,1,0,1,0,1],
+            [1,0,1,0,1,0,1,0,1,0,1,0,0,0,0,1,0,1,0,1],
             [1,1,1,0,1,0,1,0,1,0,1,0,1,4,1,1,0,1,4,1],
             [1,0,0,0,0,0,1,2,1,0,0,0,1,1,0,0,0,1,0,1],
             [1,0,1,1,0,1,1,0,1,0,1,0,0,0,0,1,0,1,0,1],
@@ -21,28 +21,28 @@ export function gamestart(){
             [1,1,0,1,1,1,0,1,1,1,1,0,1,0,1,0,1,0,0,1],
             [1,0,0,0,0,0,0,0,0,0,3,0,1,0,0,1,2,1,0,1],
             [1,0,1,1,1,1,0,1,1,1,1,0,1,1,0,1,0,1,0,1],
-            [1,0,0,0,0,0,0,0,0,2,1,0,1,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1],
             [1,0,1,1,1,1,0,1,1,1,1,0,1,0,1,0,1,1,0,1],
-            [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,1],
+            [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
             [1,0,0,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,0,1],
             [1,1,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1],
-            [1,2,1,0,1,0,1,0,1,0,1,1,1,0,1,1,1,1,0,1],
+            [1,0,1,0,1,0,1,0,1,0,1,1,1,0,1,1,1,1,0,1],
             [1,0,0,0,1,4,1,2,1,0,0,0,0,2,0,0,0,4,0,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ];
 
         function Board() {
-            var gameDiv = $("#gameDiv"); // gameDiv 선택
+            let gameDiv = $("#gameDiv"); // gameDiv 선택
         
-            var table = $("<table bgcolor='white' id='gameTable'></table>"); // 테이블 하나 생성
+            let table = $("<table bgcolor='white' id='gameTable'></table>"); // 테이블 하나 생성
             gameDiv.append(table); // gameDiv에 테이블 추가
         
-            for (var i = 0; i < 20; i++) {
-                var row = $("<tr></tr>"); // 새로운 행 생성
+            for (let i = 0; i < 20; i++) {
+                let row = $("<tr></tr>"); // 새로운 행 생성
                 table.append(row); // 테이블에 행 추가
         
-                for (var j = 0; j < 20; j++) {
-                    var cell = $("<td id='x" + i + "y" + j + "' width='30' height='30'></td>");
+                for (let j = 0; j < 20; j++) {
+                    let cell = $("<td id='x" + i + "y" + j + "' width='30' height='30'></td>");
                     row.append(cell); // 행에 셀 추가
                 }
             }
@@ -55,8 +55,8 @@ export function gamestart(){
         }
         
         function drawmaze() {
-            for (var i = 0; i < 20; i++) {
-                for (var j = 0; j < 20; j++){
+            for (let i = 0; i < 20; i++) {
+                for (let j = 0; j < 20; j++){
                     if(map[i][j]==1){
                         ChangeColor(i,j,"#DAD7CD"); //벽
                     }
@@ -79,8 +79,8 @@ export function gamestart(){
             }
         }
         // function erase() {
-        //     for (var i = 0; i < 20; i++) {
-        //         for (var j = 0; j < 20; j++) {
+        //     for (let i = 0; i < 20; i++) {
+        //         for (let j = 0; j < 20; j++) {
         //             ChangeColor(i, j, "white");
         //         }
         //     }
@@ -88,16 +88,16 @@ export function gamestart(){
         
         drawmaze();    
         
-        var nowX = 10;
-        var nowY = 10;
-        var life = 3;
-        var count = 0;
-        var pCount = 0;
-        var tCount = 0;
-        var pikas = [
+        let nowX = 10;
+        let nowY = 10;
+        let life = 3;
+        let count = 0;
+        let pCount = 0;
+        let tCount = 0;
+        let pikas = [
            
         ];
-        var boxcount = 0;
+        let boxcount = 3;
 
         for (let i = 0; i < map.length; i++) {
             for (let j = 0; j < map[i].length; j++) {
@@ -123,7 +123,7 @@ export function gamestart(){
                         gameStatus: "N",
                         pointStatus: "N",
                         ticketStatus: "N",
-                        userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                        userNo : 20230904032  
                     };
                     axios.post("/dasony/api/gamefinish",gameData)
                     .then(response=>{
@@ -139,23 +139,18 @@ export function gamestart(){
                     nowX--; 
                     
                     if(map[nowX][nowY]==0){
-                        for (var i = 0; i < pikas.length; i++) {
-                            var randommove = Math.floor(Math.random()*4);
-                            var nowPx = pikas[i].x;
-                            var nowPy = pikas[i].y;
+                        for (let i = 0; i < pikas.length; i++) {
+                            let randommove = Math.floor(Math.random()*4);
+                            let nowPx = pikas[i].x;
+                            let nowPy = pikas[i].y;
                              
                                 while(true){
                                 switch(randommove){
                                     case 0:  if(map[nowPx-1][nowPy] != 1){map[nowPx][nowPy] = 0;nowPx--;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            } 
+                                       if(map[nowPx][nowPy] == 4 ){
+                                           
+                                           boxcount --;
+                                            
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
                                                 window.location.reload();
@@ -172,15 +167,9 @@ export function gamestart(){
                                     
                                     break;
                                     case 1: if(map[nowPx+1][nowPy] != 1){map[nowPx][nowPy] = 0;nowPx++;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                        if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -196,15 +185,9 @@ export function gamestart(){
                                     }
                                      break;
                                     case 2: if(map[nowPx][nowPy-1] != 1){map[nowPx][nowPy] = 0;nowPy--;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                            
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -220,15 +203,9 @@ export function gamestart(){
                                     }
                                      break;
                                     case 3: if(map[nowPx][nowPy+1] != 1){map[nowPx][nowPy] = 0;nowPy++;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -270,13 +247,14 @@ export function gamestart(){
                         alert("질뻑이에게 잡아먹혔습니다! 목숨-1 (현재목숨 :"+life+")");
                     }
                     else if(map[nowX][nowY]==4){
-                        var pointorticket= Math.floor(Math.random() * 2);
+                        let pointorticket= Math.floor(Math.random() * 2);
+                        boxcount --;
                         if(pointorticket == 0){
                             alert("50포인트 획득!");
                             count++; 
                             pCount++;
                         }else{
-                            alert("응모권 당첨! 어떤 응모권인지는 마이페이지에서 확인해주세요~")
+                            alert("응모권 당첨! ")
                             tCount++;
                         }
                        
@@ -288,39 +266,67 @@ export function gamestart(){
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo: 20230904032 
                             };
-                            const pointData = {
-                                userNo : 1,
-                                pointAmount : pCount*50,
-                                pointCate : "G"  
-                            };
-                            axios.post("/dasony/api/insertpoint",pointData)
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
                                 console.log(response.data);
-                                window.location.reload();
+                                
                             });
-                            }else if(tCount>0 && pCount < 0 ){
+                            const ticektData = {  
+                                ticketStatus: "Y",
+                                userNo: 20230904032 
+                            };
+                            axios.post("/dasony/api/insertTicket",ticektData)
+                            .then(response=>{
+                                console.log(response.data);
+                            });
+                            const pointData = {
+                                userNo : 20230904032,
+                                pointAmount : pCount*50,
+                                pointCate : "G"  
+                            };
+                            axios.post("/dasony/api/insertPoint",pointData).then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            })
+                            }else if(tCount>0  ){
                                 alert("응모권 흭득! 마이페이지에서 확인하세요");
+                            const ticketData = {
+                                ticketStatus: "Y",
+                                userNo: 20230904032   
+                            };
+                            axios.post("/dasony/api/insertTicket",ticketData)
+                            .then(response=>{
+                                console.log(response.data);
+                                
+                            });
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "N",
                                 ticketStatus: "Y",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
                                 console.log(response.data);
                                 window.location.reload();
                             });
-                            }else if(tCount <0 && pCount >0){
+                            }else if(pCount >0){
                                 alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                                const pointData = {
+                                    userNo : 20230904032,
+                                    pointAmount : pCount*50,
+                                    pointCate : "G"  
+                                };
+                                axios.post("/dasony/api/insertPoint",pointData).then(response=>{
+                                    console.log(response.data);
+                                })
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "N",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo : 20230904032  
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -340,25 +346,19 @@ export function gamestart(){
                     map[nowX][nowY]=0
                     nowY++;
                     if(map[nowX][nowY]==0){
-                        for (var i = 0; i < pikas.length; i++) {
-                            var randommove = Math.floor(Math.random()*4);
-                            var nowPx = pikas[i].x;
-                            var nowPy = pikas[i].y;
+                        for (let i = 0; i < pikas.length; i++) {
+                            let randommove = Math.floor(Math.random()*4);
+                            let nowPx = pikas[i].x;
+                            let nowPy = pikas[i].y;
                              
                                 while(true){
 
                                 
                                 switch(randommove){
                                     case 0:  if(map[nowPx-1][nowPy] != 1){map[nowPx][nowPy] = 0;nowPx--;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -372,15 +372,9 @@ export function gamestart(){
                                         continue;}
                                     break;
                                     case 1: if(map[nowPx+1][nowPy] != 1){map[nowPx][nowPy] = 0;nowPx++;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -394,15 +388,9 @@ export function gamestart(){
                                         continue;
                                     } break;
                                     case 2: if(map[nowPx][nowPy-1] != 1){map[nowPx][nowPy] = 0;nowPy--;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -416,15 +404,9 @@ export function gamestart(){
                                         continue;
                                     } break;
                                     case 3: if(map[nowPx][nowPy+1] != 1){map[nowPx][nowPy] = 0;nowPy++;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -464,7 +446,8 @@ export function gamestart(){
                         
                     }
                     else if(map[nowX][nowY]==4){
-                        var pointorticket= Math.floor(Math.random() * 2);
+                        let pointorticket= Math.floor(Math.random() * 2);
+                        boxcount --;
                         if(pointorticket == 0){
                             alert("50포인트 획득!");
                             count++; 
@@ -481,33 +464,67 @@ export function gamestart(){
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
                                 console.log(response.data);
-                                window.location.reload();
+                                
                             });
-                            }else if(tCount>0 && pCount < 0 ){
+                            const ticektData = {  
+                                ticketStatus: "Y",
+                                userNo: 20230904032 
+                            };
+                            axios.post("/dasony/api/insertTicket",ticektData)
+                            .then(response=>{
+                                console.log(response.data);
+                            });
+                            const pointData = {
+                                userNo : 20230904032,
+                                pointAmount : pCount*50,
+                                pointCate : "G"  
+                            };
+                            axios.post("/dasony/api/insertPoint",pointData).then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            })
+                            }else if(tCount>0){
                                 alert("응모권 흭득! 마이페이지에서 확인하세요");
+                            const ticketData = {
+                                ticketStatus: "Y",
+                                userNo: 20230904032   
+                            };
+                            axios.post("/dasony/api/insertTicket",ticketData)
+                            .then(response=>{
+                                console.log(response.data);
+                                
+                            });
                             const gameData = {
                                 gameStatus: "Y",
-                                pointStatus: "N",
+                                pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
                                 console.log(response.data);
                                 window.location.reload();
                             });
-                            }else if(tCount <0 && pCount >0){
+                            }else if(pCount >0){
                                 alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                                const pointData = {
+                                    userNo : 20230904032,
+                                    pointAmount : pCount*50,
+                                    pointCate : "G"  
+                                };
+                                axios.post("/dasony/api/insertPoint",pointData).then(response=>{
+                                    console.log(response.data);
+                                })
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "N",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo : 20230904032  
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -525,23 +542,17 @@ export function gamestart(){
                     map[nowX][nowY]=0;
                     nowY--;
                     if(map[nowX][nowY]==0){
-                        for (var i = 0; i < pikas.length; i++) {
-                            var randommove = Math.floor(Math.random()*4);
-                            var nowPx = pikas[i].x;
-                            var nowPy = pikas[i].y;
+                        for (let i = 0; i < pikas.length; i++) {
+                            let randommove = Math.floor(Math.random()*4);
+                            let nowPx = pikas[i].x;
+                            let nowPy = pikas[i].y;
                              
                                 while(true){
                                 switch(randommove){
                                     case 0:  if(map[nowPx-1][nowPy] != 1){map[nowPx][nowPy] = 0;nowPx--;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -556,15 +567,9 @@ export function gamestart(){
                                         continue;}
                                     break;
                                     case 1: if(map[nowPx+1][nowPy] != 1){map[nowPx][nowPy] = 0;nowPx++;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -578,15 +583,9 @@ export function gamestart(){
                                         continue;
                                     } break;
                                     case 2: if(map[nowPx][nowPy-1] != 1){map[nowPx][nowPy] = 0;nowPy--;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -600,15 +599,9 @@ export function gamestart(){
                                         continue;
                                     } break;
                                     case 3: if(map[nowPx][nowPy+1] != 1){map[nowPx][nowPy] = 0;nowPy++;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -647,7 +640,8 @@ export function gamestart(){
                         
                     }
                     else if(map[nowX][nowY]==4){
-                        var pointorticket= Math.floor(Math.random() * 2);
+                        let pointorticket= Math.floor(Math.random() * 2);
+                        boxcount --;
                         if(pointorticket == 0){
                             alert("50포인트 획득!");
                             count++; 
@@ -664,33 +658,67 @@ export function gamestart(){
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
                                 console.log(response.data);
-                                window.location.reload();
+                                
                             });
-                            }else if(tCount>0 && pCount < 0 ){
+                            const ticektData = {  
+                                ticketStatus: "Y",
+                                userNo: 20230904032 
+                            };
+                            axios.post("/dasony/api/insertTicket",ticektData)
+                            .then(response=>{
+                                console.log(response.data);
+                            });
+                            const pointData = {
+                                userNo : 20230904032,
+                                pointAmount : pCount*50,
+                                pointCate : "G"  
+                            };
+                            axios.post("/dasony/api/insertPoint",pointData).then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            })
+                            }else if(tCount>0 ){
                                 alert("응모권 흭득! 마이페이지에서 확인하세요");
+                            const ticketData = {
+                                ticketStatus: "Y",
+                                userNo: 20230904032   
+                            };
+                            axios.post("/dasony/api/insertTicket",ticketData)
+                            .then(response=>{
+                                console.log(response.data);
+                                
+                            });
                             const gameData = {
                                 gameStatus: "Y",
-                                pointStatus: "N",
+                                pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
                                 console.log(response.data);
                                 window.location.reload();
                             });
-                            }else if(tCount <0 && pCount >0){
+                            }else if(pCount >0){
                                 alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                                const pointData = {
+                                    userNo : 20230904032,
+                                    pointAmount : pCount*50,
+                                    pointCate : "G"  
+                                };
+                                axios.post("/dasony/api/insertPoint",pointData).then(response=>{
+                                    console.log(response.data);
+                                })
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "N",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo : 20230904032  
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -708,23 +736,17 @@ export function gamestart(){
                     map[nowX][nowY]=0;
                     nowX++;
                     if(map[nowX][nowY]==0){
-                        for (var i = 0; i < pikas.length; i++) {
-                            var randommove = Math.floor(Math.random()*4);
-                            var nowPx = pikas[i].x;
-                            var nowPy = pikas[i].y;
+                        for (let i = 0; i < pikas.length; i++) {
+                            let randommove = Math.floor(Math.random()*4);
+                            let nowPx = pikas[i].x;
+                            let nowPy = pikas[i].y;
                              
                                 while(true){
                                 switch(randommove){
                                     case 0:  if(map[nowPx-1][nowPy] != 1){map[nowPx][nowPy] = 0;nowPx--;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -738,15 +760,9 @@ export function gamestart(){
                                         continue;}
                                     break;
                                     case 1: if(map[nowPx+1][nowPy] != 1){map[nowPx][nowPy] = 0;nowPx++;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -760,15 +776,9 @@ export function gamestart(){
                                         continue;
                                     } break;
                                     case 2: if(map[nowPx][nowPy-1] != 1){map[nowPx][nowPy] = 0;nowPy--;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -782,15 +792,9 @@ export function gamestart(){
                                         continue;
                                     } break;
                                     case 3: if(map[nowPx][nowPy+1] != 1){map[nowPx][nowPy] = 0;nowPy++;
-                                        if(map[nowPx][nowPy] == 4 || map[nowPx-1][nowPy] == 2 || map[nowPx-1][nowPy] == 0){
-                                            boxcount = 0;
-                                            for (let i = 0; i < map.length; i++) {
-                                                for (let j = 0; j < map[i].length; j++) {
-                                                    if (map[i][j] == 4) {
-                                                        boxcount ++;
-                                                    }
-                                                }
-                                            }
+                                       if(map[nowPx][nowPy] == 4 ){
+                                            
+                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
                                                 alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
@@ -830,7 +834,8 @@ export function gamestart(){
                         
                     }
                     else if(map[nowX][nowY]==4){
-                        var pointorticket= Math.floor(Math.random() * 2);
+                        let pointorticket= Math.floor(Math.random() * 2);
+                        boxcount --;
                         if(pointorticket == 0){
                             alert("50포인트 획득!");
                             count++; 
@@ -847,33 +852,67 @@ export function gamestart(){
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
                                 console.log(response.data);
-                                window.location.reload();
+                                
                             });
-                            }else if(tCount>0 && pCount < 0 ){
+                            const ticektData = {  
+                                ticketStatus: "Y",
+                                userNo: 20230904032 
+                            };
+                            axios.post("/dasony/api/insertTicket",ticektData)
+                            .then(response=>{
+                                console.log(response.data);
+                            });
+                            const pointData = {
+                                userNo : 20230904032,
+                                pointAmount : pCount*50,
+                                pointCate : "G"  
+                            };
+                            axios.post("/dasony/api/insertPoint",pointData).then(response=>{
+                                console.log(response.data);
+                                window.location.reload();
+                            })
+                            }else if(tCount>0){
                                 alert("응모권 흭득! 마이페이지에서 확인하세요");
+                            const ticketData = {
+                                ticketStatus: "Y",
+                                userNo: 20230904032   
+                            };
+                            axios.post("/dasony/api/insertTicket",ticketData)
+                            .then(response=>{
+                                console.log(response.data);
+                                
+                            });
                             const gameData = {
                                 gameStatus: "Y",
-                                pointStatus: "N",
+                                pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
                                 console.log(response.data);
                                 window.location.reload();
                             });
-                            }else if(tCount <0 && pCount >0){
+                            }else if(pCount >0){
                                 alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                                const pointData = {
+                                    userNo : 20230904032,
+                                    pointAmount : pCount*50,
+                                    pointCate : "G"  
+                                };
+                                axios.post("/dasony/api/insertPoint",pointData).then(response=>{
+                                    console.log(response.data);
+                                })
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "N",
-                                userNo: 1 // 사용자 번호 (사용자에 맞게 할당하세요)
+                                userNo : 20230904032  
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
