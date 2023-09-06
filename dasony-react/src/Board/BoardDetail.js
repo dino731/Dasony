@@ -9,7 +9,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Vote from './Vote';
 import Shorts from './Shorts'
 import BoardDetailReply from './BoardDetailReply';
-import ReactHtmlParser from 'react-html-parser';
 
 
 const BoardDetail = () =>{
@@ -240,8 +239,9 @@ const BoardDetail = () =>{
                     </div>
                   </div>
                   <div className='BoardDetail-boardlist-content-wrapper'>
-                    <div className='BoardDetail-boardlist-content'>
-                    {ReactHtmlParser(board.boardContent)}
+                    <div className='BoardDetail-boardlist-content'
+                    dangerouslySetInnerHTML={{ __html: board.boardContent }}
+                    >
                     </div>
                   </div>
                 <BoardDetailReply/>
