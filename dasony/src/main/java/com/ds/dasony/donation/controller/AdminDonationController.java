@@ -62,7 +62,7 @@ public class AdminDonationController {
 //		return insertDonation;
 //	}
 	
-	@PostMapping("/admindonaenroll")
+	@PostMapping("/admindonaenroll/")
     public ResponseEntity<String> insertDona(@RequestBody Donation donation, @RequestParam String selectedArea) {
         try {
             // Donation 객체에 selectedArea와 기타 필요한 속성 설정

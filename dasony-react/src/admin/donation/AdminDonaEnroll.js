@@ -1,6 +1,6 @@
 import './AdminDonaEnroll.css';
 import { useNavigate, useLocation} from 'react-router-dom';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDonaList } from './AdminDonaListContext';
 import axios from 'axios';
 import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
@@ -15,12 +15,18 @@ const AdminDonaEnroll = () => {
     const searchParams = new URLSearchParams(location.search); // selectedArea url 정보 가져옴
     const selectedArea = searchParams.get('selectedArea');
 
-    axios.post("/dasony/", {
-        params : {
-            selectedArea : selectedArea
-        }})
+    const getDonaEnroll = () => {
+        axios.post("/dasony/admindonaenroll/", {
+            params : {
+                selectedArea : selectedArea
+            }})
         .then((response) => console.log(response.data))
         .catch(error => console.log(error));
+    }
+
+    useEffect(() => {
+        getDonaEnroll();
+    })
          
     const {adDonaList, setAdDonaList} = useDonaList();
     const [title, setTitle] = useState('');

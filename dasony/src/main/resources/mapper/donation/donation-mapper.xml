@@ -64,4 +64,21 @@
   	FROM DONATION
   	WHERE DONA_NO = #{donaNo}
   </select>
+  
+  <insert id="insertDona" parameterType="donation">
+  	INSERT INTO DONATION
+  	(
+  		DONA_TITLE,
+  		DONA_NAME,
+  		DONA_TARGET_AMOUNT,
+  		DONA_CONTENT
+  	) VALUES(
+  		#{donaTitle},
+  		#{donaName},
+  		#{donaTargetAmount},
+  		#{donaContent}
+  	)
+  </insert>
+  
+  
 </mapper>
