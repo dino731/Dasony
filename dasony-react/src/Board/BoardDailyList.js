@@ -8,6 +8,20 @@ import {BoardDetailcategoryState, BoardVotecategoryState, BoardShortscategorySta
   BoardJMTCategoryState, BoardFashionCategoryState, BoardLocalCategoryState } from '../atoms';
 
 const BoardDailyList = ()=>{
+  /* axios 시작 */
+  axios.get('/board'+listPath)
+  .then(function(response){ 
+    //handle success
+    console.log(response);
+  })
+  .catch(function(error){
+    //handle error
+    console.log(error);
+  })
+  .then(function(){
+    //always executed
+  })
+  /* axios 끝 */
   /* 보드 카테고리 atom관련 시작  ain 0904*/
   const [boardPost, setBoardPost] = useRecoilState(boardPostState);
   const boardInterestCategory = useRecoilValue(BoardInterestCategoryState);
