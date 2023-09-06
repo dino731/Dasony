@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="game">
+
+<resultMap type="game" id="gameMap">
+		<id column="USER_NO" property="userNo"/>
+		
+		<result column="GAME_SUCCESS_STATUS" property="gameStatus"/>
+		<result column="GAME_POINT_STATUS" property="pointStatus"/>
+		<result column="GAME_APPTICKET_STATUS" property="ticketStatus"/>
+		<!-- <id column="USER_NO" property="userNo"/> -->
+	</resultMap>
+
+<insert id="insertGame" parameterType="game">
+		
+		INSERT INTO GAME VALUES
+		(SEQ_GNO.NEXTVAL,SYSDATE,#{gameStatus},#{pointStatus},#{ticketStatus},1)
+</insert>
+
+<insert id="insertPoint" parameterType="point">
+		
+		INSERT INTO GAME VALUES
+		(SEQ_GNO.NEXTVAL,SYSDATE,#{gameStatus},#{pointStatus},#{ticketStatus},1)
+</insert>
+
+
+
+</mapper>

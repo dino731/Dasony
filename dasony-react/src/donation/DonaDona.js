@@ -65,7 +65,7 @@ const DonaDona = () => {
             localStorage.setItem('id', localStorage.getItem('id') + ", " + id);
             console.log(localStorage.getItem("id"));
             
-            window.location.href = '/donatotal';
+            window.location.href = '/mypage/Mydonation';
         }else{
             alert("기부 금액을 입력해주세요");
             return;

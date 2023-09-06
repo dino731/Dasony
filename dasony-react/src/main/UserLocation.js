@@ -1,7 +1,10 @@
 import './UserLocation.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const UserLocation = () => {
+
+    const {state} = useLocation();
+    
     return(
         <div className="userLocation-container">
             <h1>다소니님의 지역은 어디인가요?</h1>

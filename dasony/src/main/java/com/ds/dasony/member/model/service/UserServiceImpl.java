@@ -21,5 +21,17 @@ public class UserServiceImpl implements UserService{
 	public List<User> selectUserList() {
 		return userDao.selectUserList();
 	}
+	@Override
+	public int insertUser(User user) {
+		return userDao.insertUser(user);
+	}
+	@Override
+	public int chkValidateId(String userId) {
+		return userDao.chkValidateId(userId);
+	}
+	@Override
+	public int chkValidateNick(String userNick) {
+		return userDao.chkValidateNick(userNick);
+	}
 
 }

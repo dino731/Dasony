@@ -23,4 +23,34 @@
 		FROM MEMBER
 		ORDER BY USER_NO DESC
 	</select>
+	
+	<insert id="insertUser" parameterType="user">
+		INSERT INTO MEMBER
+		VALUES(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYYMMDD') || TO_CHAR(LPAD(member_seq.nextval, 3, '0'))),
+	    #{userId}, 
+	    #{userPwd}, 
+	    #{userName}, 
+	    #{userNick},
+	    #{userAddress},
+	    DEFAULT,
+	    #{userPhone},
+	    #{userEmail},
+	    DEFAULT,
+	    SYSDATE,
+	    SYSDATE,
+	    DEFAULT
+    	)
+	</insert>
+	
+	<select id="chkValidateId" parameterType="string" resultType = "int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="chkValidateNick" parameterType="string" resultType = "int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_NICKNAME = #{userNick}
+	</select>
 </mapper>

@@ -125,6 +125,11 @@ function App() {
     <DonationProvider>
     <AdminDonaListContext>
     <Header/>
+    <div id='game'> <img src='./resources/common-img/gameimg/bomul.png' style={{width:'30px' , height : '30px'}}></img>
+        <button onClick={gamestart}>게임 시작</button>
+      </div>
+      <div id='gameDiv'></div>
+      
       <AnimatePresence>
         <Routes location={location} key={location.pathname}>
 
@@ -826,7 +831,7 @@ function App() {
                                                                         <AdminDonaEnroll/>
                                                                       </motion.div></div></div>}/> 
 
-                  <Route path="/admindonadetail/:id" element={<div className=".for-main">
+                  <Route path="/admindonadetail/:donaNo" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
                                                                       animate = {{opacity:1, y:0}}
@@ -835,7 +840,7 @@ function App() {
                                                                         <AdminDonaDetail/>
                                                                       </motion.div></div></div>}/>
 
-                  <Route path="/admindonadetail/:id" element={<div className=".for-main">
+                  <Route path="/admindonadetail/:donaNo" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
                                                                       animate = {{opacity:1, y:0}}
@@ -844,7 +849,7 @@ function App() {
                                                                         <AdminDonaDetail/>
                                                                       </motion.div></div></div>}/>
 
-                  <Route path="/admindonaupdate/:id" element={<div className=".for-main">
+                  <Route path="/admindonaupdate/:donaNo" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
                                                                       animate = {{opacity:1, y:0}}
@@ -862,7 +867,7 @@ function App() {
                                                                         <DonaTotal/>
                                                                       </motion.div></div></div>}/> 
 
-                  <Route path="/donadetail/:id" element={<div className=".for-main">
+                  <Route path="/donadetail/:donaNo" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
                                                                       animate = {{opacity:1, y:0}}
@@ -871,7 +876,7 @@ function App() {
                                                                         <DonaDetail/>
                                                                       </motion.div></div></div>}/>
 
-                  <Route path="/donadona/:id" element={<div className=".for-main">
+                  <Route path="/donadona/:donaNo" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
                                                                       animate = {{opacity:1, y:0}}

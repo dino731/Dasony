@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import com.ds.dasony.member.model.vo.User;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class UserDao {
 
@@ -18,6 +21,15 @@ public class UserDao {
 	}
 	public List<User> selectUserList() {
 		return session.selectList("user.selectUserList");
+	}
+	public int insertUser(User user) {
+		return session.insert("user.insertUser", user);
+	}
+	public int chkValidateId(String userId) {
+		return session.selectOne("user.chkValidateId", userId);
+	}
+	public int chkValidateNick(String userNick) {
+		return session.selectOne("user.chkValidateNick", userNick);
 	}
 
 }
