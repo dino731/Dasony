@@ -5,13 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
 @AllArgsConstructor
-public class BoardKeyword {
-	private String boardTag;	//BOARD_TAG
-	private int boardNo;	//BOARD_NO
-	
-	public BoardKeyword(){
-		
-	}
+@Builder
+public class BoardCare {
+	private int boardNo;//BOARD_NO
+	private int userNo;//USER_NO
 }

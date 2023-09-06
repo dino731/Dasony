@@ -6,21 +6,11 @@ import { boardCateState, boardPostState } from '../atoms';
 import BoardListHeader from './BoardListHeader';
 import {BoardDetailcategoryState, BoardVotecategoryState, BoardShortscategoryState, BoardInterestCategoryState, 
   BoardJMTCategoryState, BoardFashionCategoryState, BoardLocalCategoryState } from '../atoms';
+  import axios from 'axios';
 
 const BoardDailyList = ()=>{
   /* axios 시작 */
-  axios.get('/board'+listPath)
-  .then(function(response){ 
-    //handle success
-    console.log(response);
-  })
-  .catch(function(error){
-    //handle error
-    console.log(error);
-  })
-  .then(function(){
-    //always executed
-  })
+
   /* axios 끝 */
   /* 보드 카테고리 atom관련 시작  ain 0904*/
   const [boardPost, setBoardPost] = useRecoilState(boardPostState);
