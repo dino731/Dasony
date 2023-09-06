@@ -261,6 +261,9 @@ const BoardDailyWriter = () => {
               <div className='boardWriter-img-show-wrapper'>
                 {previews?.map((preview, index) => (
                   <div className='boardWriter-img-show-box' key={index}>
+                    <div>
+
+                    </div>
                     <img
                       src={preview}
                       width={200}
@@ -276,7 +279,7 @@ const BoardDailyWriter = () => {
                   </div>
                 ))}
               </div>
-              <div className='BoardShorts-btn board-btn-cntrol-box'>
+              <div className='boardWriter-btn board-btn-cntrol-box'>
                 <div className='board-btn-wrapper'>
                   <button onClick={()=> navigate('/board'+listPath)} className='board-cancel-btn'>취소 버튼</button>
                 </div>
@@ -285,6 +288,7 @@ const BoardDailyWriter = () => {
                 </div>
               </div>
             </form>
+            <div style={{height:'10vh'}}>{/* 공백용 디브 */}</div>
           </div>{/* BoardWriteForm-container */}
         </div> {/* BoardWriteForm-head-title-wrapper */}
       </div>{/* BoardWriteForm-wrapper */}
