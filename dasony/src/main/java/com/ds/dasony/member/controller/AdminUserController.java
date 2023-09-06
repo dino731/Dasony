@@ -15,8 +15,8 @@ import com.ds.dasony.member.model.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 
-@RestController
 @Slf4j
+@RestController
 @RequestMapping("/api/admin")
 public class AdminUserController {
 
