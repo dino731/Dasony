@@ -172,6 +172,7 @@ width: 86%;
 height: 100%;
 text-align: left;
 display: inline-block;
+overflow: hidden;
 }
 .boardList-list-keyword{
 border: none;

@@ -179,7 +179,7 @@ const BoardDailyList = ()=>{
                        <div className="boardList-list-content-container">
                            <div className="boardList-list-keyword">{board.boardCateNo}</div>
                            <div className="boardList-list-content-title">{board.boardTitle}</div>
-                           <div className="boardList-list-content">{board.boardContent}</div>
+                           <div className="boardList-list-content"dangerouslySetInnerHTML={{ __html: board.boardContent }}></div>
                            <div className="boardList-list-content-info"><span>{board.userName}</span><span>{board.boardWriteDate}</span><span>11:50</span></div>
                            <div className="boardList-list-content-action">
                              <span><img src="/resources/common-img/boardImg/비밀번호표시아이콘.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/-" title="비밀번호 표시 아이콘">비밀번호 표시 아이콘  제작자: exomoon design studio - Flaticon</span></span>
