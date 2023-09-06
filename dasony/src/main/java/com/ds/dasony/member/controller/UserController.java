@@ -16,9 +16,9 @@ import com.ds.dasony.member.model.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequestMapping("/api")
 @RestController
-@Slf4j
 public class UserController {
 
 	private final UserService userService;
