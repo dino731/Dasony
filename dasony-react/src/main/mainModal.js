@@ -38,6 +38,7 @@ function MainChecking(props){
                 if(!response.data){
                     setBodyTxt('사용가능한 아이디입니다.');
                     props.setId(ModalData.id);
+                    props.setCompleteDuplcateId(true);
                     return;
                 } else {
                     setBodyTxt('이미 사용 중인 아이디입니다.');
@@ -49,6 +50,7 @@ function MainChecking(props){
                 if(!response.data){
                     setBodyTxt('사용가능한 별명입니다.');
                     props.setNick(ModalData.nick);
+                    props.setCompleteDuplcateNick(true);
                     return;
                 } else {
                     setBodyTxt('이미 사용 중인 별명입니다.');

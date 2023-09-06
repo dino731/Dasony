@@ -4,9 +4,14 @@ import './Home.css';
 import { useState } from 'react';
 import {MainBestCarousel, MainLocalCarousel, MainShortsCarousel, MainVsCarousel} from "./MainBestCarousel";
 import Weather from './Weather';
+import { useRecoilValue } from 'recoil';
+import { loginUserState } from '../atoms';
 
 const Home = () =>{
 
+    const loginUserInfo = useRecoilValue(loginUserState);
+
+    console.log("리코일에서 받아온 유저 정보-main(사용자):",loginUserInfo);
 
     return (
         <div className="home-container">

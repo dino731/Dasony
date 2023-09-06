@@ -1,6 +1,7 @@
 package com.ds.dasony.member.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,18 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int chkValidateNick(String userNick) {
 		return userDao.chkValidateNick(userNick);
+	}
+	@Override
+	public User login(Map userMap) {
+		return userDao.login(userMap);
+	}
+	@Override
+	public int location(String location, Long userNo) {
+		return userDao.location(location, userNo);
+	}
+	@Override
+	public User chkNo(String userId) {
+		return userDao.chkNo(userId);
 	}
 
 }

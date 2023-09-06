@@ -26,7 +26,7 @@
 	
 	<insert id="insertUser" parameterType="user">
 		INSERT INTO MEMBER
-		VALUES(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYYMMDD') || TO_CHAR(LPAD(member_seq.nextval, 3, '0'))),
+		VALUES(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYYMMDD') || TO_CHAR(LPAD(member_seq.nextval, 2, '0'))),
 	    #{userId}, 
 	    #{userPwd}, 
 	    #{userName}, 
@@ -38,6 +38,7 @@
 	    DEFAULT,
 	    SYSDATE,
 	    SYSDATE,
+	    DEFAULT,
 	    DEFAULT
     	)
 	</insert>
@@ -52,5 +53,25 @@
 		SELECT COUNT(*)
 		FROM MEMBER
 		WHERE USER_NICKNAME = #{userNick}
+	</select>
+	
+	<select id="login" parameterType="map" resultMap="userMap">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd}
+	</select>
+	
+	<update id="location" parameterType="map">
+		UPDATE MEMBER
+		SET(
+			USER_REGION = #{userLocation}
+		)
+		WHERE USER_NO = #{userNo}
+		
+	</update>
+	<select id="login" parameterType="string" resultType = "user">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{userId}
 	</select>
 </mapper>
