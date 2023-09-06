@@ -11,17 +11,16 @@
 		<!-- <id column="USER_NO" property="userNo"/> -->
 	</resultMap>
 
-<insert id="insertGame" parameterType="game">
+<insert id="insertGame" parameterType="game" >
+		<!-- <selectKey resultType="int" keyProperty="gameNo" order="BEFORE">
+	        SELECT SEQ_GNO.NEXTVAL FROM DUAL     
+	    </selectKey>     -->
 		
 		INSERT INTO GAME VALUES
-		(SEQ_GNO.NEXTVAL,SYSDATE,#{gameStatus},#{pointStatus},#{ticketStatus},1)
+		(SEQ_GNO.NEXTVAL,SYSDATE,#{gameStatus},#{pointStatus},#{ticketStatus},#{userNo})
 </insert>
 
-<insert id="insertPoint" parameterType="point">
-		
-		INSERT INTO GAME VALUES
-		(SEQ_GNO.NEXTVAL,SYSDATE,#{gameStatus},#{pointStatus},#{ticketStatus},1)
-</insert>
+
 
 
 
