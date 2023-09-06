@@ -227,7 +227,7 @@ const BoardDetail = () =>{
                     </div>
                     <div className='BoardDetail-boardlist-title-userinfo-container'>
                       <div className='BoardDetail-boardlist-title-userinfo'>
-                        <span className='BoardDetail-boardlist-title-userinfo-img'><img src="/resources/common-img/boardImg/지현님슈퍼슈퍼지능.jpg"/></span>
+                        <span className='BoardDetail-boardlist-title-userinfo-img'><img src="/resources/board/jh.jpg"/></span>
                         <span className='BoardDetail-boardlist-title-userinfo-nikname'>{board.userName}</span>
                         <span className='BoardDetail-boardlist-title-userinfo-date'>{board.boardWriteDate}</span>
                       </div>
@@ -236,6 +236,22 @@ const BoardDetail = () =>{
                         <span className='BoardDetail-boardlist-title-views'>추천 1</span>
                         <span className='BoardDetail-boardlist-title-views'>댓글 1</span>
                       </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className='BoardDetail-userImg-views-container'>
+                        <div className='BoardDetail-userImg-views-li'>
+                        {/* {board.boardUserImg} */}
+                        <img src='/resources/board/jh.jpg'/>
+                        </div>
+                        <div className='BoardDetail-userImg-views-li'>
+                        {/* {board.boardUserImg} */}
+                        <img src='/resources/board/test1.png'/>
+                        </div>
+                        <div className='BoardDetail-userImg-views-li'>
+                        {/* {board.boardUserImg} */}
+                        <img src='/resources/shop/product/4/004.png'/>
+                        </div>
                     </div>
                   </div>
                   <div className='BoardDetail-boardlist-content-wrapper'>
