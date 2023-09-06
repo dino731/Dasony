@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +58,9 @@ public class UserController {
 			){
 		
 		Map<String, Object> map = new HashMap<>();
+		User validateUser = new User();
+		
+		
 		
 		// 응답 데이터 생성
 		log.info("user={}", user);
@@ -66,11 +70,61 @@ public class UserController {
 		if(result > 0) {
 			
 			map.put("msg", "회원 가입이 완료되었습니다! 즐거운 다소니와 함께해요");
+			
+			validateUser = userService.chkNo(user.getUserId());
+			map.put("user", validateUser);
+			
 		} else {
 			map.put("error", "회원 가입에 실패했습니다.");
 		}
         return map;
 		
 	}
+	
+	@PostMapping("/login")
+	public Map<String, Object> login(
+			@RequestBody User user
+			){
+		Map<String, Object> userMap = new HashMap();
+		userMap.put("userId", user.getUserId());
+		userMap.put("userPwd", user.getUserPwd());
+		
+		User result = userService.login(userMap);
+		
+		Map<String, Object> map = new HashMap();
+		
+		if(result != null) {
+			System.out.println(user);
+			map.put("msg", "로그인에 성공했습니다.");
+			map.put("user", result);
+		} else {
+			map.put("err", "아이디/비밀번호를 확인해주세요.");
+		}
+		
+		return map;
+	}
+	
+	
+	@PostMapping("/location")
+	public Map<String, Object> location(
+			@RequestBody String location, Long userNo
+			){
+		
+		
+		int result = userService.location(location, userNo);
+		
+		Map<String, Object> map = new HashMap();
+		
+		if(result > 0) {
+			map.put("msg", "지역 설정에 성공했습니다.");
+		} else {
+			map.put("msg", "지역 설정에 실패했습니다. 마이페이지에서 다시 설정해주세요.");
+		}
+		
+		return map;
+	}
+	
+	
+	
 	
 }

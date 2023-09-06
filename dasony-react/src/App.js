@@ -96,7 +96,7 @@ RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
 
 function App() {
-  
+ 
   const [loading, setLoading] = useState(true);
   const getPage = async()=>{
     setLoading(false);
@@ -130,11 +130,11 @@ function App() {
 
                   {/* 로그인 안 된 경우 */}
                   {/* 메인페이지 부분 */}
-                  <Route path="/plzLogin" element={
-                                                    <div className="main-container">
-                                                      <PlzLogin/>
-                                                    </div>
-                                                  }/>
+                  <Route path="/" element={
+                                            <div className="main-container">
+                                              <PlzLogin/>
+                                            </div>
+                                          }/>
                   
 
                   {/* 로그인 된 경우 */}
@@ -145,7 +145,7 @@ function App() {
                                                                         animate = {{opacity:1, y:0}}
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
-                                                                          <ChartManager />
+                                                                        <ChartManager/>
                                                                         </motion.div></div></div>}/>
                   <Route path="/admin/shop" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
@@ -311,7 +311,7 @@ function App() {
 
                                                                         
                   {/* 메인페이지 부분 */}
-                  <Route path="/" element={<motion.div
+                  <Route path="/main" element={<motion.div
                                                 initial = {{opacity:0, y:30}}
                                                 animate = {{opacity:1, y:0}}
                                                 end = {{opacity:1, y:0}}
@@ -481,7 +481,8 @@ function App() {
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <ManagerEventBoard/>
-                                                      </motion.div>}/>                                            
+                                                      </motion.div>}/>      
+                                                                                            
                     </Route>
 
                   {/*Board 중첩 route 시작 */}

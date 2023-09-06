@@ -2,6 +2,8 @@ package com.ds.dasony.member.model.vo;
 
 import java.sql.Date;
 
+import java.math.BigInteger;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

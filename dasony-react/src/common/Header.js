@@ -1,9 +1,12 @@
 import './Header.css';
 import { useEffect, useState, useTransition } from 'react';
 import {Link, useLocation} from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { loginUserState } from '../atoms';
 
 
 const Header = () => {
+    const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
     const location = useLocation();
     const path = location.pathname;
     const [mainList, setMainList] = useState('');
@@ -72,9 +75,12 @@ const Header = () => {
                             <i className="bi bi-exclamation-triangle-fill"></i> 문의/신고
                         </li>
                     
-                    <Link to='/plzLogin' style={{textDecoration:'none'}}>
+                    <Link to='/' style={{textDecoration:'none'}}>
                         <li className="logout-li" 
-                            onClick={(event)=>{HandleOpacity(event.target.id);}}
+                            onClick={(event)=>{
+                                HandleOpacity(event.target.id);
+                                setLoginUserInfo({});
+                            }}
                         >
                             <p><i className="bi bi-box-arrow-right"></i> 로그아웃</p>
                         </li>
@@ -87,11 +93,11 @@ const Header = () => {
                 <>
                     <ul>
                         <li></li>
-                        <Link to='/' style={{textDecoration:'none'}}>
+                        <Link to='/main' style={{textDecoration:'none'}}>
                         <li className="logo-li"><img src='/resources/common-img/dasony-logo.png'/></li>
                         </Link>
                         <li></li>
-                        <Link to='/' style={{textDecoration:'none'}}>
+                        <Link to='/main' style={{textDecoration:'none'}}>
                             <li className="board-li" 
                                 onClick={(event)=>{HandleOpacity(event.target.id);}}
                             >
@@ -132,9 +138,12 @@ const Header = () => {
                         >
                             <i className="bi bi-person"></i> 내 정보
                         </li>
-                        <Link to='/plzLogin' style={{textDecoration:'none'}}>
+                        <Link to='/' style={{textDecoration:'none'}}>
                             <li className="logout-li" 
-                                onClick={(event)=>{HandleOpacity(event.target.id);}}
+                                onClick={(event)=>{
+                                    HandleOpacity(event.target.id);
+                                    setLoginUserInfo({});
+                                }}
                             >
                                 <p><i className="bi bi-box-arrow-right"></i> 로그아웃</p>
                             </li>
