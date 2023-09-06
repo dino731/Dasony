@@ -1,24 +1,37 @@
 import './DonaList.css';
 import { useDonaData } from './DonaDataContext';
+import {useState, useEffect} from 'react';
+import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 const DonaList = () => {
-    const {donalist, setDonalist} = useDonaData();
 
-    axios.get("/dasony/donalist")
-    .then((response) => setDonalist(response.data.donalist))
-    .catch(error => console.log(error));
+    const navigate = useNavigate();
+
+    const [donalist, setDonalist] = useState([]);
+
+    const getDonaList = ()=> {
+        axios.get("/dasony/donalist")
+        .then((response) => setDonalist(response.data))
+        .catch(error => console.log(error));
+    }
 
     const handlemydona = () => {
         window.location.href = '/mypage/Mydonation';
     }
     
-    const handeldetail = (id) => {
-        const donaInfo = donalist.find(dona => dona.id === id);
+    const handeldetail = (donaNo) => {
+        const donaInfo = donalist.find(dona => dona.donaNo === donaNo);
+        console.log(donaInfo);
         localStorage.setItem("donaInfo", JSON.stringify(donaInfo));
 
-        window.location.href = `/donadetail/${id}`;
+        navigate(`/donadetail/${donaNo}`);
     }
+
+    useEffect(()=>{
+        getDonaList();
+        console.log(donalist);
+    }, [])
 
     return(
         <div id="donalistcontent">
@@ -40,18 +53,15 @@ const DonaList = () => {
                     <div id='scrolldona'>
                         <table id='donalisttbody'>
                             <tbody style={{height: '100%'}}>
-                                {
-                                    <div>
-                                        {donalist.map((dona) => {
-                                            return <tr key={dona.id} onClick={() => handeldetail(dona.id)}>
-                                                <td width="100">{dona.id}</td>
-                                                <td width="580">{dona.title}</td>
-                                                <td width="330">{dona.dona}</td>
-                                                <td width="240">{dona.createdate}</td>
-                                                </tr>
+                                
+                                        {donalist && donalist.length > 0 &&donalist.map((dona) => {
+                                            return( <tr key={dona.donaNo} onClick={() => handeldetail(dona.donaNo)}>
+                                                <td width="100">{dona.donaNo}</td>
+                                                <td width="580">{dona.donaTitle}</td>
+                                                <td width="330">{dona.donaName}</td>
+                                                <td width="240">{dona.donaWriteDate}</td>
+                                                </tr>)
                                         })}
-                                    </div>
-                                }
                             </tbody>
                         </table>
                     </div>

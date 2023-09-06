@@ -1,17 +1,39 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import './AdminDonaDetail.css';
 import { useDonaList } from './AdminDonaListContext';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const AdminDonaDetail = () => {
 
     const navigate = useNavigate();
-    const {adDonaList} = useDonaList();
-    const {id} = useParams();
+    // const {adDonaList} = useDonaList();
+    const {donaNo} = useParams();
 
-    const selectDona = adDonaList.find(donalist => donalist.id === parseInt(id));
+    const [admindonadetail, setAdminDonaDetail] = useState('');
+
+    const getAdDonaDetail = () => {
+        axios.get(`/dasony/admindonadetail/${donaNo}`)
+        .then((response) => {
+            setAdminDonaDetail(response.data);
+        })
+        .catch(error => console.log(error));
+    }
+
+    useEffect(() => {
+        getAdDonaDetail();
+    }, [])
+
+    // const selectDona = adDonaList.find(donalist => donalist.id === parseInt(id));
+
+    const writeDate = new Date(admindonadetail.donaWriteDate);
+    const endDate = new Date(admindonadetail.donaEndDate);
+
+    const timdDiff = endDate - writeDate;
+    const dayDiff = Math.ceil(timdDiff / (1000 * 3600 * 24));
 
     const handleUpdate = () => {
-        navigate(`/admindonaupdate/${id}`);
+        navigate(`/admindonaupdate/${donaNo}`);
     }
 
     return(
@@ -20,18 +42,18 @@ const AdminDonaDetail = () => {
                 <table className="addonation_detail">
                     <tr>
                         <th width="70">제목</th>
-                        <td colSpan="3">{selectDona.title}</td>
+                        <td colSpan="3">{admindonadetail.donaTitle}</td>
                     </tr>
                     <tr>
                         <th width="70">모금단체</th>
-                        <td width="250" style={{borderRight : '1px solid black'}}>{selectDona.dona}</td>
+                        <td width="250" style={{borderRight : '1px solid black'}}>{admindonadetail.donaName}</td>
                         <th width="70">작성일</th>
-                        <td width="250">{selectDona.createdate}</td>
+                        <td width="250">{admindonadetail.donaWriteDate}</td>
                     </tr>
                     <tr>
                         <th width="70">내용</th>
                         <td colSpan="3"style={{height : '400px', textAlign : 'left'}}> 
-                            <div id="adscrollable">{selectDona.content}</div>
+                            <div id="adscrollable">{admindonadetail.donaContent}</div>
                         </td>
                     </tr>
                     <tr>
@@ -73,15 +95,15 @@ const AdminDonaDetail = () => {
                     <br/><br/><br/><br/><br/><br/>
                     <span id="addonatxt" style={{fontSize : '20px'}}>총 <b>57건</b>이<br/>
                         기부되었습니다<br/><br/>
-                        {selectDona.createdate}~<br/>
-                        {selectDona.enddate}
+                        {admindonadetail.donaWriteDate}~<br/>
+                        {admindonadetail.donaEndDate}
                         <br/><br/>
-                        <div id="addday"><b>D - 77</b></div>
+                        <div id="addday"><b>D - {dayDiff}</b></div>
                         <br/>
                         모인 금액<br/>
-                        <b style={{fontSize : '25px'}}>222,222</b><span style={{fontSize : '17px'}}>다손</span><br/><br/>
+                        <b style={{fontSize : '25px'}}>{admindonadetail.donaTotalAmount}</b><span style={{fontSize : '17px'}}>다손</span><br/><br/>
                         달성률<br/>
-                        <b style={{fontSize : '25px'}}>{selectDona.achieve}</b>
+                        <b style={{fontSize : '25px'}}>{admindonadetail.donaAchieve}%</b>
                     </span>
                 </div>
             </div>
