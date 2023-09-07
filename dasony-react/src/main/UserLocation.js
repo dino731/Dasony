@@ -1,6 +1,6 @@
 import './UserLocation.css';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import { useRecoilState } from 'recoil';
 import { loginUserState } from '../atoms';
 import axios from 'axios';
@@ -18,13 +18,13 @@ const UserLocation = () => {
     {/*지역 정보 */}
     const [city, setCity] = useState('서울시');
     const [ward, setWard] = useState('강남구');
-    const [location, setLocation] = useState('');
+    const [location, setLocation] = useState('서울시 강남구');
     const userNo = loginUserInfo.userNo;
 
     const handleCity = (event) => setCity(event.target.value);
     const handleWard = (event) => setWard(event.target.value);
     const handleLocation = () => {setLocation(city+" "+ward);console.log(location);}
-
+    
     {/*지역 정보 전달 함수 */}
     const handleLocationSubmit = () =>{
         axios.post('/dasony/api/location', {location, userNo})

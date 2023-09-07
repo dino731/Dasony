@@ -71,8 +71,8 @@ public class UserController {
 			
 			map.put("msg", "회원 가입이 완료되었습니다! 즐거운 다소니와 함께해요");
 			
-			validateUser = userService.chkNo(user.getUserId());
-			map.put("user", validateUser);
+//			validateUser = userService.chkNo(user.getUserId());
+//			map.put("user", validateUser);
 			
 		} else {
 			map.put("error", "회원 가입에 실패했습니다.");
@@ -94,7 +94,6 @@ public class UserController {
 		Map<String, Object> map = new HashMap();
 		
 		if(result != null) {
-			System.out.println(user);
 			map.put("msg", "로그인에 성공했습니다.");
 			map.put("user", result);
 		} else {
