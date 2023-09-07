@@ -9,6 +9,7 @@ const DonaDetail = () => {
     const {donaNo} = useParams();
 
     const [donadetail, setDonaDetail] = useState('');
+    const [dayDiff, setDayDiff] = useState(0);
 
     const getDonaDetail = () => {
         axios.get(`/dasony/donadetail/${donaNo}`)
@@ -23,10 +24,7 @@ const DonaDetail = () => {
     },[donaNo])
 
     const donationAmount = localStorage.getItem(`donationAmount_${donaNo}`);
-    // const countDona = localStorage.getItem(`countDona_${id}`);
 
-
-    // const donaInfo = donalist.find(dona => dona.donaNo === parseInt(donaNo));
 
     const formatWithCommas = (number) => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -34,31 +32,38 @@ const DonaDetail = () => {
 
     const [remainingDays, setRemainingDays] = useState('');
 
-    // const donaInfo = localStorage.getItem('donaInfo');
-    // const parseDonaInfo = JSON.parse(donaInfo);
-
     const handlemogh = (donaNo) => {
         window.location.href = `/donadona/${donaNo}`;
     }
 
-    // const data = new Date(donaInfo.createdate);
-    // data.setMonth(data.getMonth() + 7);
-    // data.setDate(data.getDate() - 1);
+    useEffect(() => {
 
-    // const dataFormat = (date) => { 
-    //   var year = date.getFullYear();
-    //   var month = date.getMonth() + 1;
-    //   month = month >= 10 ? month : '0' + month;
-    //   var day = date.getDate();
-    //   day = day >= 10 ? day : '0' + day;
-    //   return [year, month, day].join('-');
-    // };
-
-    const writeDate = new Date(donadetail.donaWriteDate);
-    const endDate = new Date(donadetail.donaEndDate);
-
-    const timdDiff = endDate - writeDate;
-    const dayDiff = Math.ceil(timdDiff / (1000 * 3600 * 24));
+        const calculateDayDiff = () => {
+            const endDate = new Date(donadetail.donaEndDate);
+            const writeDate = new Date(donadetail.donaWriteDate);
+            const today = new Date();
+            endDate.setHours(0, 0, 0, 0); 
+            writeDate.setHours(0, 0, 0, 0); 
+      
+            const timeDiff = endDate - today;
+            const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+      
+            const writeDateDiff = today - writeDate;
+            const writeDateDays = Math.ceil(writeDateDiff / (1000 * 60 * 60 * 24));
+    
+            const dDay = days - writeDateDays;
+        
+            setDayDiff(dDay);
+          };
+      
+          calculateDayDiff();
+      
+          const updateDayDiff = setInterval(() => {
+            calculateDayDiff();
+          }, 1000 * 60 * 60 * 24); 
+      
+          return () => clearInterval(updateDayDiff);
+        }, [donadetail]);
 
     return(
         <div id="donadetailcontent">

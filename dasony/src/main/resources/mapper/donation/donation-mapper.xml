@@ -11,7 +11,7 @@
   	<result column="DONA_ACHIEVE" property="donaAchieve"/>
   	<result column="DONA_TOTAL_AMOUNT" property="donaTotalAmount"/>
   	<result column="DONA_TARGET_AMOUNT" property="donaTargetAmount"/>
-  	<result column="DONA_EXECUTE_DATE" property="donaExecuteDate"/>
+  	<result column="DONA_SELECT_AREA" property="donaSelectArea"/>
   </resultMap>
   
   <sql id="donationDetail">
@@ -38,7 +38,7 @@
   
   <select id="selectDonaDetail" parameterType="int" resultMap="donaResultSet">
   	SELECT 
-  		<include refid="donationDetail"/>
+  		*
   	FROM DONATION
   	WHERE DONA_NO = #{donaNo}
   </select>
@@ -60,23 +60,32 @@
   
   <select id="selectAdDonaDetail" parameterType="int" resultMap="donaResultSet">
   	SELECT 
-  		<include refid="donationDetail"/>
+  		*
   	FROM DONATION
   	WHERE DONA_NO = #{donaNo}
   </select>
   
-  <insert id="insertDona" parameterType="donation">
+  <insert id="insertDona" parameterType="Donation">
   	INSERT INTO DONATION
-  	(
+  	(	
+  		DONA_NO,
   		DONA_TITLE,
   		DONA_NAME,
   		DONA_TARGET_AMOUNT,
-  		DONA_CONTENT
+  		DONA_CONTENT,
+  		DONA_END_DATE,
+  		DONA_TOTAL_AMOUNT,
+  		DONA_SELECT_AREA
   	) VALUES(
+  		SEQ_DNO.NEXTVAL,
   		#{donaTitle},
   		#{donaName},
   		#{donaTargetAmount},
-  		#{donaContent}
+  		#{donaContent},
+  		ADD_MONTHS(SYSDATE, 5),
+  		#{donaTotalAmount},
+  		#{donaSelectArea}
+  		
   	)
   </insert>
   
@@ -93,5 +102,12 @@
 	DELETE FROM DONATION
 	WHERE DONA_NO = #{donaNo}
  </delete>
+ 
+  <!-- <select id="selectUserDason">
+ 	SELECT 
+ 		TOTAL_POINT
+ 	FROM MEMBER
+ 	WHERE USER_NO = #{userNo}
+ </select>  -->
   
 </mapper>

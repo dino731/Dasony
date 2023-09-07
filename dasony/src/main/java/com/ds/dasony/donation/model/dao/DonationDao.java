@@ -51,4 +51,8 @@ public class DonationDao {
 	public int deleteDona(int donaNo) {
 		return session.delete("donationMapper.deleteDona", donaNo);
 	}
+	
+//	public int selectUserDason(int userNo) {
+//	return session.selectOne("donationMapper.selectUserDason", userNo);
+//}
 }
