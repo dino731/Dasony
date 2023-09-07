@@ -11,7 +11,6 @@ const AdminDonaDetail = () => {
     const {donaNo} = useParams();
 
     const [admindonadetail, setAdminDonaDetail] = useState('');
-    const [dayDiff, setDayDiff] = useState(0);
 
     const getAdDonaDetail = () => {
         axios.get(`/dasony/admindonadetail/${donaNo}`)
@@ -22,38 +21,16 @@ const AdminDonaDetail = () => {
     }
 
     useEffect(() => {
-        
         getAdDonaDetail();
-    }, [donaNo]);
+    }, [])
 
-    useEffect(() => {
+    // const selectDona = adDonaList.find(donalist => donalist.id === parseInt(id));
 
-        const calculateDayDiff = () => {
-          const endDate = new Date(admindonadetail.donaEndDate);
-          const writeDate = new Date(admindonadetail.donaWriteDate);
-          const today = new Date();
-          endDate.setHours(0, 0, 0, 0); 
-          writeDate.setHours(0, 0, 0, 0); 
-    
-          const timeDiff = endDate - today;
-          const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-    
-          const writeDateDiff = today - writeDate;
-          const writeDateDays = Math.ceil(writeDateDiff / (1000 * 60 * 60 * 24));
+    const writeDate = new Date(admindonadetail.donaWriteDate);
+    const endDate = new Date(admindonadetail.donaEndDate);
 
-          const dDay = days - writeDateDays;
-    
-          setDayDiff(dDay);
-        };
-    
-        calculateDayDiff();
-    
-        const updateDayDiff = setInterval(() => {
-          calculateDayDiff();
-        }, 1000 * 60 * 60 * 24); 
-    
-        return () => clearInterval(updateDayDiff);
-      }, [admindonadetail]);
+    const timdDiff = endDate - writeDate;
+    const dayDiff = Math.ceil(timdDiff / (1000 * 3600 * 24));
 
     const handleUpdate = () => {
         navigate(`/admindonaupdate/${donaNo}`);

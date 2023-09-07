@@ -36,6 +36,10 @@ public class DonationDao {
 		return session.selectOne("donationMapper.selectAdDonaDetail", donaNo);
 	}
 
+//	public String insertDona(Donation donation) {
+//		return session.insert("donationMapper.insertDona", donation);
+//	}
+	
 	public int insertDona(Donation donation) throws Exception{
 		return session.insert("donationMapper.insertDona", donation);
 	}
@@ -47,8 +51,4 @@ public class DonationDao {
 	public int deleteDona(int donaNo) {
 		return session.delete("donationMapper.deleteDona", donaNo);
 	}
-
-//	public int selectUserDason(int userNo) {
-//		return session.selectOne("donationMapper.selectUserDason", userNo);
-//	}
 }

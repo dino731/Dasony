@@ -6,10 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ds.dasony.donation.model.service.DonationService;
@@ -47,21 +45,5 @@ public class DonationController {
 //		log.info("donation = {}", donation);
 		return donation;
 	}
-	
-//	@PostMapping("/donadona/{userId}")
-//	public String selectUserDason(@PathVariable int userNo){
-//		
-//		try {
-//			int userDason = donationService.selectUserDason(userNo);
-//			
-//			if(userDason > 0) {
-//				return "성공";
-//			}else {
-//				return	"실패";
-//			}
-//		}catch (Exception e) {
-//			 log.error("예외 발생: {}", e.getMessage(), e);
-//			    return "예상치 못한 에러가 발생했습니다. 다시 시도해주세요.";
-//		}
-//	}
+
 }

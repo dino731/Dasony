@@ -93,14 +93,5 @@
 	DELETE FROM DONATION
 	WHERE DONA_NO = #{donaNo}
  </delete>
- 
- <!-- <select id="selectUserDason">
- 	SELECT 
- 		USER_NO
- 		TOTAL_POINT
- 	FROM DONATION_LIST
- 	JOIN MEMBER USING (USER_NO)
- 	WHERE USER_NO = #{userNo}
- </select> -->
   
 </mapper>
