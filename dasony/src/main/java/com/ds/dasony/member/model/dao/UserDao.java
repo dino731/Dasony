@@ -45,5 +45,8 @@ public class UserDao {
 	public User findingId(String subEmail) {
 		return session.selectOne("memberMapper.findingId", subEmail);
 	}
+	public User userInfo(long userNo) {
+		return session.selectOne("memberMapper.userInfo", userNo);
+	}
 
 }

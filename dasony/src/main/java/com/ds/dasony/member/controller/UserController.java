@@ -15,9 +15,9 @@ import com.ds.dasony.member.model.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 
-@RequestMapping("/api")
-@RestController
 @Slf4j
+@RestController
+@RequestMapping("/api")
 public class UserController {
 
 	private final UserService userService;
@@ -141,7 +141,29 @@ public class UserController {
 		return map;
 	}
 	
-	
+	@PostMapping("/userInfo")
+	public Map<String, Object> userInfo(
+			@RequestBody Map<String, String> userno
+			){
+		
+		long userNo = Long.parseLong(userno.get("userNo"));
+		
+		log.info(userno.get("userNo"));
+		
+		Map<String, Object> map = new HashMap();
+		
+		User user = new User();
+		
+		user = userService.userInfo(userNo);
+		
+		if(user != null) {
+			map.put("user", user);
+		} else {
+			map.put("err","알 수 없는 오류가 발생했습니다.");
+		}
+		
+		return map;
+	}
 	
 	
 }
