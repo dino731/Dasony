@@ -17,8 +17,8 @@ public interface UserService {
 
 	public User login(Map<String, Object> userMap);
 
-	public int location(String location, Long userNo);
+	public User userForLocation(String string);
 
-	public User chkNo(String string);
+	public int location(Map<String, Object> request);
 
 }

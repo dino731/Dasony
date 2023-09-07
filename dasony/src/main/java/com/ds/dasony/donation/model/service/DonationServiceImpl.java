@@ -70,4 +70,9 @@ public class DonationServiceImpl implements DonationService{
 		donation.setDonaContent(donation.getDonaContent());
 		return donationDao.updateDona(donation);
 	}
+	
+	@Override
+	public int deleteDona(int donaNo) {
+		return donationDao.deleteDona(donaNo);
+	}
 }

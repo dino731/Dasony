@@ -5,12 +5,17 @@ import { Navigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { loginUserState } from '../atoms';
 
+
 const Gamestart = () =>{
 
 const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
 
 const Game= ()=>{
     
+
+
+    console.log(loginUserInfo);
+
     alert("질뻑이가 보물상자를 다 먹기전에 질뻑이들을 피해서 먼저 보물상자를 차지하세요!");
     let random = Math.floor(Math.random() * 1);
     

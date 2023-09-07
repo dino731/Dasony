@@ -62,13 +62,16 @@
 		WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd}
 	</select>
 	
-	<update id="location" parameterType="hashmap">
+	<select id="userForLocation" parameterType="string" resultMap="memberMap">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID = #{user_id}
+	</select>
+	
+	<update id="location" parameterType="map">
 		UPDATE MEMBER
-		SET(
-			USER_REGION = #{userLocation}
-		)
+		SET USER_REGION = #{location}
 		WHERE USER_NO = #{userNo}
-		
 	</update>
 
 </mapper>
