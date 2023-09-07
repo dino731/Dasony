@@ -6,7 +6,6 @@ import { useState } from 'react';
 
 
 
-
 function MainChecking(props){
     {/*모달 창 유무 */}
     const [show, setShow] = useState(false);
