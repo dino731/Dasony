@@ -80,5 +80,18 @@
   	)
   </insert>
   
+ <update id="updateDona" parameterType="Donation">
+	UPDATE DONATION SET
+		DONA_TITLE = #{donaTitle},
+		DONA_NAME = #{donaName},
+		DONA_TARGET_AMOUNT = #{donaTargetAmount},
+		DONA_CONTENT = #{donaContent}
+	WHERE DONA_NO = #{donaNo}
+ </update>
+
+ <delete id="deleteDona">
+	DELETE FROM DONATION
+	WHERE DONA_NO = #{donaNo}
+ </delete>
   
 </mapper>

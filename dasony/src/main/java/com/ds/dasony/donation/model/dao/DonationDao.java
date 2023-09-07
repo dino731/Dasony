@@ -47,4 +47,8 @@ public class DonationDao {
 	public int updateDona(Donation donation) throws Exception{
 		return session.update("donationMapper.updateDona", donation);
 	}
+	
+	public int deleteDona(int donaNo) {
+		return session.delete("donationMapper.deleteDona", donaNo);
+	}
 }
