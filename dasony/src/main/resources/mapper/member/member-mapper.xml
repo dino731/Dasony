@@ -73,5 +73,11 @@
 		SET USER_REGION = #{location}
 		WHERE USER_NO = #{userNo}
 	</update>
+	
+	<select id="findingId" parameterType="string" resultMap="memberMap">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_EMAIL = #{subEmail}
+	</select>
 
 </mapper>

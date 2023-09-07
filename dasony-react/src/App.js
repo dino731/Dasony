@@ -1,6 +1,6 @@
 import './App.css';
 import Header from './common/Header';
-import {Route, Routes, useLocation} from 'react-router-dom';
+import {Outlet, Route, Routes, useLocation, Navigate} from 'react-router-dom';
 import {AnimatePresence} from "framer-motion";
 import Home from './main/Home';
 import Footer from './common/Footer';
@@ -95,9 +95,20 @@ import { Share } from './share/share';
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
+//로그인 확인 - PrivateRoute
+const isLogin = localStorage.getItem("loginUserNo")?true:false;
+  export const PrivateRoute =() =>{
+    return isLogin?<Outlet/> : <Navigate to="/"/>;
+  }
+
+//관리자 확인 - AdminRoute
+const isAdmin = localStorage.getItem("loginUserLevel")=='Z'?true:false;
+export const AdminRoute = () => {
+  return isAdmin?<Outlet/> : <Navigate to="/"/>;
+}
 
 function App() {
- 
+  
   const [loading, setLoading] = useState(true);
   const getPage = async()=>{
     setLoading(false);
@@ -148,6 +159,7 @@ function App() {
 
                   {/* 로그인 된 경우 */}
                   {/*관리자로 로그인 한 경우 */}
+                <Route element = {<AdminRoute/>}>
                   <Route path="/admin/chart" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -156,6 +168,9 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                         <ChartManager/>
                                                                         </motion.div></div></div>}/>
+                </Route>
+
+                <Route element = {<AdminRoute/>}>
                   <Route path="/admin/shop" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -164,6 +179,9 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <AdminShop/>
                                                                         </motion.div></div></div>}/>
+                </Route>
+
+                <Route element = {<AdminRoute/>}>
                   <Route path="/admin/shop/detail" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -172,6 +190,9 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <AdminShopDetail/>
                                                                         </motion.div></div></div>}/>
+                </Route>
+
+                <Route element = {<AdminRoute/>}>   
                   <Route path="/admin/user" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -179,7 +200,10 @@ function App() {
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
                                                                           <AdminUser/>
-                                                                        </motion.div></div></div>}/> 
+                                                                        </motion.div></div></div>}/>
+                </Route>
+
+                <Route element = {<AdminRoute/>}>                                                       
                   <Route path="/admin/user/detail" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -188,6 +212,9 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <AdminUserDetail/>
                                                                         </motion.div></div></div>}/>
+                </Route>
+
+                <Route element = {<AdminRoute/>}>   
                   <Route path="/admin/calendar" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -195,7 +222,10 @@ function App() {
                                                                         end = {{opacity:1, y:0}}
                                                                         transition={{duration : 1}}>
                                                                             <AdminCalendar/>
-                                                                        </motion.div></div></div>}/> 
+                                                                        </motion.div></div></div>}/>
+                </Route>
+
+                <Route element = {<AdminRoute/>}>   
                   <Route path="/admin/report" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -204,6 +234,9 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                             <AdminReport/>
                                                                         </motion.div></div></div>}/>
+                </Route>
+
+                <Route element = {<AdminRoute/>}>  
                   <Route path="/admin/reception" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -212,6 +245,9 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                             <AdminReception/>
                                                                         </motion.div></div></div>}/>
+                </Route>  
+
+                <Route element = {<AdminRoute/>}>  
                   <Route path="/admin/reportDetail" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -220,6 +256,9 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                             <AdminReportDetail/>
                                                                         </motion.div></div></div>}/>
+                </Route>
+
+                <Route element = {<AdminRoute/>}>  
                     <Route path="/admin/receptionDetail" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -228,6 +267,9 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                             <AdminReceptionDetail/>
                                                                         </motion.div></div></div>}/>
+                </Route>
+
+                <Route element = {<AdminRoute/>}>   
                   <Route path="/admin/alert" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -236,7 +278,7 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                             <AdminAlert/>
                                                                         </motion.div></div></div>}/>
-                                                                       
+                </Route>                                                     
 
                   {/* 
                     이벤트 관리자 페이지
@@ -244,6 +286,7 @@ function App() {
                     -상세 조회시 수정 및 삭제 가능한 폼으로 이동 
                     -등록버튼 클릭시 이벤트 등록폼으로
                   */}
+                <Route element = {<AdminRoute/>}>   
                   <Route path="/admin/event" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -252,6 +295,7 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <Event />
                                                                         </motion.div></div></div>}>
+              
                       <Route path="detail/:no" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
@@ -267,13 +311,14 @@ function App() {
                                                         <EventForm editStatus="등록"/>
                                                       </motion.div>}/>                           
                   </Route>
-
+                </Route> 
                   {/* 
                     고객센터 관리자 페이지
                     -기본 : 공지 게시판 
                     -신고
                     -문의
                   */}
+                <Route element = {<AdminRoute/>}>  
                   <Route path="/admin/service" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -289,9 +334,10 @@ function App() {
                             <Route path="new" element={<NoticeForm/>}/>                                                                      
                       </Route>                          
                   </Route>
-
+                </Route>
 
                   {/* Admin Board */}
+                <Route element = {<AdminRoute/>}> 
                   <Route path="/admin/board" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -316,10 +362,11 @@ function App() {
                                                       </motion.div>}/>        
                                     
                   </Route>
-
+                </Route>
 
                                                                         
                   {/* 메인페이지 부분 */}
+                <Route element={<PrivateRoute/>}>
                   <Route path="/main" element={<motion.div
                                                 initial = {{opacity:0, y:30}}
                                                 animate = {{opacity:1, y:0}}
@@ -335,6 +382,8 @@ function App() {
                                               </div>
                                               </motion.div>
                                           }/>
+                </Route>
+
                   <Route path="/signUp" element={<motion.div
                                                       initial = {{opacity:0, x:30}}
                                                       animate = {{opacity:1, x:0}}
@@ -367,6 +416,7 @@ function App() {
                                                   }/>
 
                   {/*메인페이지 외 부분*/ }
+                <Route element={<PrivateRoute/>}>
                   <Route path="/chat" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -375,7 +425,11 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <Chat/>
                                                                         </motion.div></div></div>}/>
+                </Route>
+
+
                   {/*shop 중첩 route 시작 */}
+                <Route element={<PrivateRoute/>}>
                   <Route path="/shop/*" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -397,32 +451,28 @@ function App() {
                                                     end = {{opacity:1, y:0}}
                                                     transition={{duration : 1}}>
                                                       <ShopBest/>
-                                                    </motion.div>}/> 
-                      {/*coupon중첩 route 시작 */}                                 
-                      <Route path="coupon/*" element={<motion.div
+                                                    </motion.div>}/>
+
+
+                      {/*coupon중첩 route 시작 */}                              
+                      <Route path="coupon/list/*" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <CouponList/>
-                                                      </motion.div>}>
-                        <Route path="list" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <CouponList/>
-                                                      </motion.div>}/>
+                                                      </motion.div>}>  
+                        <Route path=":id" element={<motion.div
+                                                        initial = {{opacity:0, y:30}}
+                                                        animate = {{opacity:1, y:0}}
+                                                        end = {{opacity:1, y:0}}
+                                                        transition={{duration : 1}}>
+                                                          <ShopMyCoupon/>
+                                                        </motion.div>}/>       
                       </Route>
                       {/*coupon중첩 route 끝 */}
-                      <Route path="coupon/list/:id" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <ShopMyCoupon/>
-                                                      </motion.div>}/>
-                      
+
+
                       <Route path="heart" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
@@ -449,11 +499,14 @@ function App() {
                                                       transition={{duration : 1}}>
                                                         <ShopProductDetail/>
                                                       </motion.div>}/>
-                          </Route>
-                        </Route>{/*shop 중첩 route 끝 */}  
-                      
-                    
+                      </Route>
+                    </Route>{/*shop 중첩 route 끝 */}  
+                  </Route>
+
+
+
                   {/* event 중첩 route 시작 */}
+                <Route element={<PrivateRoute/>}>
                   <Route path="/event" element={<div className=".for-main">
                                                   <div className='for-normal-page'><motion.div
                                                                           initial = {{opacity:0, y:30}}
@@ -493,8 +546,13 @@ function App() {
                                                       </motion.div>}/>      
                                                                                             
                     </Route>
+                  </Route>
+
+
+
 
                   {/*Board 중첩 route 시작 */}
+                <Route element={<PrivateRoute/>}>
                   <Route path="/board/*" element={<div className=".for-main">
 
                                                 <div className='for-normal-page'><motion.div
@@ -682,9 +740,12 @@ function App() {
                                                     transition={{duration : 1}}>
                                                       <Share/>
                                                     </motion.div>}/>
-                  </Route>{/*Board 중첩 route 끝 */}
+                  </Route>
+                </Route>{/*Board 중첩 route 끝 */}
+
 
                     {/*mypage 중첩 route 시작 */}
+                  <Route element={<PrivateRoute/>}>
                     <Route path="/mypage/*" element={<div className=".for-main">
                                                   <div className='for-normal-page'><motion.div
                                                                           initial = {{opacity:0, y:30}}
@@ -762,12 +823,15 @@ function App() {
                                                         transition={{duration : 1}}>
                                                           <MypageAlert/>
                                                         </motion.div>}/>
-                 </Route>{/*mypage 중첩 route 끝 */}
+                 </Route>
+                </Route>{/*mypage 중첩 route 끝 */}
+
 
                 {/* 
                 고객센터(service) 중첩 route 시작
                 path : /service/notice/*
                 */}
+              <Route element={<PrivateRoute/>}>
                 <Route path="/service" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -781,7 +845,11 @@ function App() {
                         <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
                     </Route>
                 </Route>
+              </Route>
 
+
+              {/*chat */}
+              <Route element={<PrivateRoute/>}>
                 <Route path="/chat/:id/:chatname" element={<div className=".for-main">
                                                             <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
@@ -790,7 +858,9 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <Chat/>
                                                                         </motion.div></div></div>}/>
+              </Route>
 
+              <Route element={<PrivateRoute/>}>
                 <Route path="/chatlist" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
@@ -799,7 +869,9 @@ function App() {
                                                                       transition={{duration : 1}}>
                                                                         <ChatList/>
                                                                       </motion.div></div></div>}/>
+              </Route>
 
+              <Route element={<PrivateRoute/>}>
                 <Route path="/donalist" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
@@ -808,16 +880,9 @@ function App() {
                                                                       transition={{duration : 1}}>
                                                                         <DonaList/>
                                                                       </motion.div></div></div>}/>
+              </Route>     
 
-                  <Route path="/donalist" element={<div className=".for-main">
-                                                <div className='for-normal-page'><motion.div
-                                                                      initial = {{opacity:0, y:30}}
-                                                                      animate = {{opacity:1, y:0}}
-                                                                      end = {{opacity:1, y:0}}
-                                                                      transition={{duration : 1}}>
-                                                                        <DonaList/>
-                                                                      </motion.div></div></div>}/>       
-
+              <Route element={<PrivateRoute/>}>
                   <Route path="/admindonalist" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
@@ -826,7 +891,9 @@ function App() {
                                                                       transition={{duration : 1}}>
                                                                         <AdminDonaList/>
                                                                       </motion.div></div></div>}/>
+              </Route>
 
+              <Route element={<PrivateRoute/>}>
                   <Route path="/admindonaenroll" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
@@ -835,7 +902,9 @@ function App() {
                                                                       transition={{duration : 1}}>
                                                                         <AdminDonaEnroll/>
                                                                       </motion.div></div></div>}/> 
+              </Route>
 
+              <Route element={<PrivateRoute/>}>
                   <Route path="/admindonadetail/:donaNo" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
@@ -844,7 +913,9 @@ function App() {
                                                                       transition={{duration : 1}}>
                                                                         <AdminDonaDetail/>
                                                                       </motion.div></div></div>}/>
+              </Route>
 
+              <Route element={<PrivateRoute/>}>
                   <Route path="/admindonadetail/:donaNo" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
@@ -853,7 +924,9 @@ function App() {
                                                                       transition={{duration : 1}}>
                                                                         <AdminDonaDetail/>
                                                                       </motion.div></div></div>}/>
+              </Route>
 
+              <Route element={<PrivateRoute/>}>
                   <Route path="/admindonaupdate/:donaNo" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
@@ -862,7 +935,9 @@ function App() {
                                                                       transition={{duration : 1}}>
                                                                         <AdminUpdate/>
                                                                       </motion.div></div></div>}/>                                                                                                                                                                                                                                                          
+              </Route>
 
+              <Route element={<PrivateRoute/>}>
                    <Route path="/donatotal" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
@@ -871,7 +946,9 @@ function App() {
                                                                       transition={{duration : 1}}>
                                                                         <DonaTotal/>
                                                                       </motion.div></div></div>}/> 
+              </Route>
 
+              <Route element={<PrivateRoute/>}>
                   <Route path="/donadetail/:donaNo" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
@@ -880,7 +957,9 @@ function App() {
                                                                       transition={{duration : 1}}>
                                                                         <DonaDetail/>
                                                                       </motion.div></div></div>}/>
+              </Route>
 
+              <Route element={<PrivateRoute/>}>
                   <Route path="/donadona/:donaNo" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                       initial = {{opacity:0, y:30}}
@@ -889,7 +968,10 @@ function App() {
                                                                       transition={{duration : 1}}>
                                                                         <DonaDona/>
                                                                       </motion.div></div></div>}/> 
-                                                                                                                                                                                                 
+              </Route>
+              <Route element={<PrivateRoute/>}>
+                <Route path='*' element={<PlzLogin/>}/>  
+              </Route>                                                                                                                                                                           
           </Routes>
         </AnimatePresence>
 
