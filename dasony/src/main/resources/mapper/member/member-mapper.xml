@@ -79,5 +79,12 @@
 		FROM MEMBER
 		WHERE USER_EMAIL = #{subEmail}
 	</select>
+	
+	<select id="userInfo" parameterType="long" resultMap="memberMap">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_NO = #{userNo}
+	</select>
+
 
 </mapper>

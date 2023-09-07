@@ -4,6 +4,7 @@ import './HomeSide.css';
 import { useEffect, useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "react-bootstrap";
 import ChatIcon from '../chat/ChatIcon';
+import axios from 'axios';
 
 const HomeSide = () => {
     {/*달력 보이기 설정 */}
@@ -19,6 +20,19 @@ const HomeSide = () => {
         } else {
             handleClose();
         }
+    }
+
+    {/*달력 리스트 서버에서 받아오기 */}
+    const [calendarList, setCalendarList] = useState([]);
+    const handleCalendar = () => {
+        axios.post('/dasony/api/calendarList')
+        .then(res=> {
+            setCalendarList(res.data.CalendarList);
+        })
+        .catch(err=>{
+            console.log(err);
+            alert("다시 시도해주세요.");
+        })
     }
 
     {/*달력 일정 추가 모달 보이기 설정 */}
@@ -122,10 +136,12 @@ const HomeSide = () => {
         handleMyEvent();
     }, [localEventArray]);
 
-
-    {/*달력 창 기간 인식 */}
     let clickStart = '';
     let clickEnd = '';
+    useEffect(()=>{
+        clickDateStart();
+    }, [clickStart, clickEnd])
+    {/*달력 창 기간 인식 */}
     const clickDateStart = () => {
         if(document.querySelector(".react-calendar__tile--rangeStart") != null &&
         document.querySelector(".react-calendar__tile--rangeEnd") != null){
@@ -147,7 +163,7 @@ const HomeSide = () => {
         <div className="calendar-container"  style={{textAlign:'right'}}>
             <Calendar 
                         onChange={setDate}
-                        selectRange={true} />
+                        selectRange={true}/>
             <Button className='calendar-detail-btn' onClick={handleOpen}>일정 확인</Button>
             <div className="main-chat-icon-container"><ChatIcon/></div>
             <div className="calendar-detail-container" style={{display:show}} >
@@ -166,13 +182,18 @@ const HomeSide = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2023-10-20 ~ 2023-10-28</td>
-                                    <td>화산 단풍축제</td>
-                                    <td>화산</td>
-                                    <td>등산화 필수</td>
-                                    <td>축제</td>
-                                </tr>
+                                {calendarList.map(calendar=>{
+                                    return(
+                                    <tr>
+                                        <td>{calendar.date}</td>
+                                        <td>{calendar.date}</td>
+                                        <td>{calendar.date}</td>
+                                        <td>{calendar.date}</td>
+                                        <td>{calendar.date}</td>
+                                    </tr>
+                                    )
+                                })}
+                                
                             </tbody>
                             <tfoot style={{display:myLocalEventDisplay, width:'100%'}}>
                                 <tr>

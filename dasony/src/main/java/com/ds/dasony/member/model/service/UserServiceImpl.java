@@ -51,5 +51,9 @@ public class UserServiceImpl implements UserService{
 	public User findingId(String subEmail) {
 		return userDao.findingId(subEmail);
 	}
+	@Override
+	public User userInfo(long userNo) {
+		return userDao.userInfo(userNo);
+	}
 
 }

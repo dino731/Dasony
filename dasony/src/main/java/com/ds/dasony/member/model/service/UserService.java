@@ -23,4 +23,6 @@ public interface UserService {
 
 	public User findingId(String subEmail);
 
+	public User userInfo(long userNo);
+
 }
