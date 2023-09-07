@@ -21,4 +21,6 @@ public interface UserService {
 
 	public int location(Map<String, Object> request);
 
+	public User findingId(String subEmail);
+
 }

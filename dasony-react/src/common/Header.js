@@ -1,6 +1,6 @@
 import './Header.css';
 import { useEffect, useState, useTransition } from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { loginUserState } from '../atoms';
 
@@ -8,8 +8,21 @@ import { loginUserState } from '../atoms';
 const Header = () => {
     const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
     const location = useLocation();
+    const navigate = useNavigate();
     const path = location.pathname;
     const [mainList, setMainList] = useState('');
+    
+    /*경로 설정을 위한 사용자 정보 확인 */
+    const [isLogin, setIsLogin] = useState(false);
+    
+    useEffect(()=>{
+        if(localStorage.getItem("userNo")){
+            setIsLogin(true);
+        } else {
+            setIsLogin(false);
+        }
+    })
+
     /*관리자 헤더, 사용자 헤더 설정 */
     const HandleMainList = async function(location){
         let mainListText = '';
@@ -75,16 +88,20 @@ const Header = () => {
                             <i className="bi bi-exclamation-triangle-fill"></i> 문의/신고
                         </li>
                     
-                    <Link to='/' style={{textDecoration:'none'}}>
+                    
                         <li className="logout-li" 
                             onClick={(event)=>{
                                 HandleOpacity(event.target.id);
-                                setLoginUserInfo({});
-                            }}
-                        >
-                            <p><i className="bi bi-box-arrow-right"></i> 로그아웃</p>
+                                localStorage.removeItem("loginUserNo"); 
+                                localStorage.removeItem("loginUserLocation"); 
+                                localStorage.removeItem("loginUserLevel"); 
+                                navigate('/');
+                            }}>
+                            <p>
+                                <i className="bi bi-box-arrow-right"></i> 로그아웃
+                            </p>
+
                         </li>
-                    </Link> 
                 </ul>
             </>
             );
@@ -138,16 +155,18 @@ const Header = () => {
                         >
                             <i className="bi bi-person"></i> 내 정보
                         </li>
-                        <Link to='/' style={{textDecoration:'none'}}>
-                            <li className="logout-li" 
-                                onClick={(event)=>{
-                                    HandleOpacity(event.target.id);
-                                    setLoginUserInfo({});
-                                }}
-                            >
-                                <p><i className="bi bi-box-arrow-right"></i> 로그아웃</p>
-                            </li>
-                        </Link> 
+                        <li className="logout-li" 
+                            onClick={(event)=>{
+                                HandleOpacity(event.target.id);
+                                localStorage.removeItem("loginUserNo"); 
+                                localStorage.removeItem("loginUserLocation"); 
+                                localStorage.removeItem("loginUserLevel"); 
+                                navigate('/');
+                            }}>
+                            <p>
+                                <i className="bi bi-box-arrow-right"></i> 로그아웃
+                            </p>
+                        </li>
                     </ul>
                 </>
             );
