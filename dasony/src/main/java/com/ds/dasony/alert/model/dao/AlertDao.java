@@ -10,16 +10,22 @@ import org.springframework.stereotype.Repository;
 
 import com.ds.dasony.alert.model.vo.Alert;
 
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class AlertDao {
 	
 	@Autowired
 	private SqlSessionTemplate session;
 	
-	public List<Alert> getAlertList(long userNo){
+
+	public List<Alert> getAlertList(int userNo){
+		log.info("ㅎㅇ"+userNo);
 		List<Alert> result = session.selectList("alert.getAlertList",userNo);
-		
-		return result;
+
+	
 	}
 
 }
