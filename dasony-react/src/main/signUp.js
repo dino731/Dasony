@@ -213,7 +213,7 @@ const SignUp = ()=>{
             .then(response => {
                 //요청 성공했을 때 실행할 코드
                 console.log("회원가입", user);
-                setLoginUserInfo(response.data.user);
+                // setLoginUserInfo(response.data.user);
                 console.log(response.data);//응답 데이터 출력
                 alert(response.data.msg);
                 navigate('/location', {state:user});
@@ -238,7 +238,7 @@ const SignUp = ()=>{
                     <tr>
                         <th>아이디</th>
                         <td><input id='id' type='text' onChange={handleValidTxt} onBlur={handleIdLength} maxLength={20} value={id}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='아이디 중복 확인' data={id} setId={setId} setCompleteDuplcateId={setCompleteDuplcateId}/></th>
+                        <th style={{textAlign:'left'}}><MainChecking txt='아이디 중복 확인' data={id} setId={setId} setCompleteDuplcateId={setCompleteDuplcateId} /></th>
                     </tr>
                     <tr>
                         <th>비밀번호</th>
