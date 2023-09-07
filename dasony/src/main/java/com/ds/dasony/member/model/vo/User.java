@@ -26,6 +26,7 @@ public class User {
 	private Date userJoinDate;
 	private Date userModDate;
 	private String userStatus;
+	private int totalPoint;
 	
 	public User(){
 		
