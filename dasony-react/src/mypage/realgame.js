@@ -2,8 +2,12 @@ import $ from 'jquery';
 import './game.css';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-export function gamestart(){
-    
+import { useRecoilState } from 'recoil';
+import { loginUserState } from '../atoms';
+
+export function Gamestart(){
+    const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
+    console.log(loginUserInfo);
     alert("질뻑이가 보물상자를 다 먹기전에 질뻑이들을 피해서 먼저 보물상자를 차지하세요!");
     let random = Math.floor(Math.random() * 1);
     
