@@ -44,10 +44,10 @@ const SignUp = ()=>{
     let user = {};
 
 
-    const handleId = (event)=>setId(event.target.value);
+    const handleId = (event)=>{console.log("idValid확인", idValid);setIdValid(false); setDisable(true);setId(event.target.value);}
     const handlePwd = (event)=>{setPwd(event.target.value);setEncPwd(SHA256(event.target.value, secretKey).toString());}
     const handleChkPwd = (event)=>setChkPwd(event.target.value);
-    const handleNick = (event)=>setNick(event.target.value);
+    const handleNick = (event)=>{setNickValid(false); setDisable(true);setNick(event.target.value)};
     const handleName = (event)=>setName(event.target.value);
     const handlePhone = (event)=>setPhone(event.target.value);
     const handleEmailId = (event)=>setEmailId(event.target.value);
@@ -185,17 +185,22 @@ const SignUp = ()=>{
     }
 
 
-     /*핸드폰 인증 검사 */
+    /*핸드폰 인증 검사 */
 
+    /* 아이디, 별명 중복 검사 완료 */
+    const[idValid, setIdValid] = useState(false);
+    const[nickValid, setNickValid] = useState(false);
 
     useEffect(()=>{
         handleValidatePwd();
         if(id&&pwd&&nick&&name&&phone&&completeAddress!=',,'&&completeEmail!='@'
-            &&completeDuplicateId&&completeDuplicateNick)handleDisable();
+            &&completeDuplicateId&&completeDuplicateNick&&idValid&&nickValid){
+                handleDisable();
+            }
         user = {userId:id, userPwd:encPwd, userName:name,
             userNick:nick, userAddress:completeAddress, userPhone:phone, userEmail:completeEmail};
             console.log("유즈이펙트",user);
-    }, [id, pwd, chkPwd, nick, name, phone, completeEmail, completeAddress,completeDuplicateId,completeDuplicateNick])
+    }, [id, pwd, chkPwd, nick, name, phone, completeEmail, completeAddress,completeDuplicateId,completeDuplicateNick, idValid, nickValid])
 
 
     /*회원 가입 버튼 */
@@ -205,7 +210,7 @@ const SignUp = ()=>{
         console.log(pwd);
 
         //axios이용해서 POST 요청 보내기
-        axios.post("/dasony/api/test", user, {
+        axios.post("/dasony/api/signUp", user, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
             }
@@ -213,10 +218,10 @@ const SignUp = ()=>{
             .then(response => {
                 //요청 성공했을 때 실행할 코드
                 console.log("회원가입", user);
-                // setLoginUserInfo(response.data.user);
-                console.log(response.data);//응답 데이터 출력
+                setLoginUserInfo(response.data.user);
+                console.log("서버에서 회원 정보 받아왔는지 확인:", response.data.user);//응답 데이터 출력
                 alert(response.data.msg);
-                navigate('/location', {state:user});
+                navigate('/location');
             })
             .catch(error => {
                 //요청 실패했을 때 실행될 코드
@@ -238,7 +243,7 @@ const SignUp = ()=>{
                     <tr>
                         <th>아이디</th>
                         <td><input id='id' type='text' onChange={handleValidTxt} onBlur={handleIdLength} maxLength={20} value={id}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='아이디 중복 확인' data={id} setId={setId} setCompleteDuplcateId={setCompleteDuplcateId} /></th>
+                        <th style={{textAlign:'left'}}><MainChecking txt='아이디 중복 확인' data={id} setId={setId} setCompleteDuplcateId={setCompleteDuplcateId} setIdValid={setIdValid}/></th>
                     </tr>
                     <tr>
                         <th>비밀번호</th>
@@ -252,7 +257,7 @@ const SignUp = ()=>{
                     <tr>
                         <th>별명</th>
                         <td><input id='nick' type='text' onChange={handleValidTxt}  maxLength={6} value={nick}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='별명 중복 확인' data={nick} setNick={setNick} setCompleteDuplcateNick={setCompleteDuplcateNick}/></th>
+                        <th style={{textAlign:'left'}}><MainChecking txt='별명 중복 확인' data={nick} setNick={setNick} setCompleteDuplcateNick={setCompleteDuplcateNick} setNickValid={setNickValid}/></th>
                     </tr>
                     <tr>
                         <th>이름(실명)</th>

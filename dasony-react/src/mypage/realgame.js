@@ -5,6 +5,7 @@ import { Navigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { loginUserState } from '../atoms';
 
+
 const Gamestart = () =>{
 
 const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);

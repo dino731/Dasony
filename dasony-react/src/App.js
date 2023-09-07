@@ -55,7 +55,9 @@ import MypageMyshops from './mypage/mypageMyshops';
 import MypageAlert from './mypage/mypageAlert';
 import MypageMydonation from './mypage/mypageMydonation';
 import MypageMyshopUsedPoint from './mypage/mypageMyshopUsedPoint';
+
 import Gamestart from './mypage/realgame';
+
 import { RecoilEnv } from 'recoil';
 import ChatList from './chat/ChatList';
 import ChatIcon from './chat/ChatIcon';
@@ -125,12 +127,14 @@ function App() {
     <DonationProvider>
     <AdminDonaListContext>
     <Header/>
+
     <div id='game'> <img src='./resources/common-img/gameimg/bomul.png' style={{width:'30px' , height : '30px'}}></img>
 
       <Gamestart/>
       </div>
       <div id='gameDiv'></div>
       
+
       <AnimatePresence>
         <Routes location={location} key={location.pathname}>
 

@@ -3,6 +3,7 @@ import './mypagecss.css';
 import { useEffect, useState, useTransition } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+
 import { useRecoilState } from 'recoil';
 import { loginUserState } from '../atoms';
 
@@ -10,6 +11,10 @@ import { loginUserState } from '../atoms';
 const MypageAlert = () => {
 
   const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
+
+
+// import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
+const MypageAlert = () => {
   const [alert, setAlert] = useState([]);
 
   useEffect(() => {

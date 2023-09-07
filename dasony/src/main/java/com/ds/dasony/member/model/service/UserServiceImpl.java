@@ -23,10 +23,6 @@ public class UserServiceImpl implements UserService{
 		return userDao.selectUserList();
 	}
 	@Override
-	public int insertUser(User user) {
-		return userDao.insertUser(user);
-	}
-	@Override
 	public int chkValidateId(String userId) {
 		return userDao.chkValidateId(userId);
 	}
@@ -35,16 +31,21 @@ public class UserServiceImpl implements UserService{
 		return userDao.chkValidateNick(userNick);
 	}
 	@Override
+	public int insertUser(User user) {
+		return userDao.insertUser(user);
+	}
+
+	@Override
+	public int location(Map<String, Object> request) {
+		return userDao.location(request);
+	}
+	@Override
+	public User userForLocation(String userId) {
+		return userDao.userForLocation(userId);
+	}
+	@Override
 	public User login(Map userMap) {
 		return userDao.login(userMap);
-	}
-	@Override
-	public int location(String location, Long userNo) {
-		return userDao.location(location, userNo);
-	}
-	@Override
-	public User chkNo(String userId) {
-		return userDao.chkNo(userId);
 	}
 
 }

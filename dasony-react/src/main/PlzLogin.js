@@ -44,6 +44,9 @@ const TypingTitle = ({initialWord, fontSize, delay}) =>{
 
 
 const PlzLogin = () => {
+
+    /*회원 가입, 지역 설정 중에 사용했던 데이터 파기 용도 */
+    const [user, setUser] = useRecoilState(loginUserState);
     
     /*암호화 키 지정 */
     let secretKey = process.env.REACT_APP_CRYPTO_SECRET_KEY;
@@ -77,19 +80,21 @@ const PlzLogin = () => {
     }
     useEffect(()=>{
         handleDisable();
+        setUser({});
         console.log("리코일에 저장된 값 확인하기-plzlogin",user);
     }, [login.userId, pwd])
 
         /*로그인 정보 전달 */
-    const [user, setUser] = useRecoilState(loginUserState);
     const navigate = useNavigate();
     const handleLoginSubmit = () => {
         axios.post('/dasony/api/login', login)
         .then(res=>{
             if(res.data.msg !=null){
                 /*atom에 user정보 저장 */
-                setUser(res.data.user);
-                console.log(res.data.user);
+                localStorage.setItem("loginUserNo", res.data.user.userNo);
+                localStorage.setItem("loginUserRegion", res.data.user.userRegion);
+                console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserNo"));
+                console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserRegion"));
                 alert(res.data.msg);
                 if(res.data.user.userLevel == 'Z'){
                     navigate('/admin/chart');

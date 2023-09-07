@@ -14,8 +14,6 @@ import com.ds.dasony.alert.model.vo.Alert;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-
-
 @Repository
 public class AlertDao {
 	
@@ -24,9 +22,11 @@ public class AlertDao {
 	
 
 	public List<Alert> getAlertList(int userNo){
+
 		
 		List<Alert> result = session.selectList("alert.getAlertList",userNo);
 		return result;
+
 	}
 
 }

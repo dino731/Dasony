@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -109,5 +110,19 @@ public class AdminDonationController {
 			    return "예상치 못한 에러가 발생했습니다. 다시 시도해주세요.";
 		}
 		
+	}
+	
+	@DeleteMapping("/admindonadelete/{donaNo}")
+	public ResponseEntity<String> deleteDona(@PathVariable int donaNo) {
+		
+			log.info("donaNo = {}", donaNo);
+		
+            int result = donationService.deleteDona(donaNo);
+            
+            if(result > 0) {
+            	return new ResponseEntity(HttpStatus.OK);
+        } else {
+        	return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
 	}
 }

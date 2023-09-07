@@ -37,6 +37,7 @@ function MainChecking(props){
                 if(!response.data){
                     setBodyTxt('사용가능한 아이디입니다.');
                     props.setId(ModalData.id);
+                    props.setIdValid(true);
                     props.setCompleteDuplcateId(true);
                     return;
                 } else {
@@ -49,6 +50,7 @@ function MainChecking(props){
                 if(!response.data){
                     setBodyTxt('사용가능한 별명입니다.');
                     props.setNick(ModalData.nick);
+                    props.setNickValid(true);
                     props.setCompleteDuplcateNick(true);
                     return;
                 } else {
