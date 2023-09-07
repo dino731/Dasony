@@ -16,7 +16,6 @@ public class AlertServiceImpl implements AlertService {
 	
 	@Override
 	public List<Alert> getAlertList(int userNo){
-
 		return alertDao.getAlertList(userNo);
 	}
 }

@@ -55,7 +55,6 @@ import MypageMyshops from './mypage/mypageMyshops';
 import MypageAlert from './mypage/mypageAlert';
 import MypageMydonation from './mypage/mypageMydonation';
 import MypageMyshopUsedPoint from './mypage/mypageMyshopUsedPoint';
-
 import Gamestart from './mypage/realgame';
 
 import { RecoilEnv } from 'recoil';
