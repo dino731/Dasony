@@ -24,9 +24,9 @@ public class AlertDao {
 	
 
 	public List<Alert> getAlertList(int userNo){
-		log.info("ㅎㅇ"+userNo);
+		
 		List<Alert> result = session.selectList("alert.getAlertList",userNo);
-
+		return result;
 	}
 
 }

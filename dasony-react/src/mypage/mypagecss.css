@@ -289,7 +289,9 @@ justify-content: center;
   object-fit: cover;
 
 }
-
+.afterClick{
+  background-color: lightgray;
+}
 
 
 
