@@ -290,7 +290,9 @@ justify-content: center;
 
 }
 
-
+.afterClick{
+  background-color: lightgray;
+}
 
 
 

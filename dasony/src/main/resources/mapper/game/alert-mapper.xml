@@ -4,8 +4,7 @@
 
 	
 	<resultMap id="alertResultSet" type="Alert">
-		<id column="ALERT_NO" property="no" />
-		<result column="USER_NO" property="user_no"/>
+		<result column="USER_NO" property="userNo"/>
 		<result column="ALERT_CONTENT" property="alertContent"/>
 		<result column="ALERT_DATE" property="alertDate"/>
 		<result column="ALERT_CATE" property="alertCate"/>
@@ -37,7 +36,7 @@
 		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
 		'T',
 		'B',
-		'보물찾기 리워드를 확인하세요~'
+		'보물찾기 리워드입니다~'
 	)
 	
 	</insert>

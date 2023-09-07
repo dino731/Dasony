@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Alert {
 	
-	
 	private int alertNo;
 	private long userNo;
 	private String alertContent;
