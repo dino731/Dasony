@@ -13,6 +13,10 @@ public class TicketDao {
 	private SqlSessionTemplate session;
 	
 	public int insertTicket(Ticket ticketData) {
-		return session.insert("ticket.insertTicket",ticketData);
+	int	result = session.insert("ticket.insertTicket",ticketData);
+		
+	int	result2 = session.insert("alert.insertTicketAlert",ticketData);
+		
+		return result + result2;
 	}
 }

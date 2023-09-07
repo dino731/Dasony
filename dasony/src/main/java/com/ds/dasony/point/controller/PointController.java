@@ -30,7 +30,6 @@ public class PointController {
 	
 	@PostMapping("/insertPoint")
 	public  ResponseEntity<String> insertPoint(@RequestBody Point pointData){
-		log.info("Point={}",pointData);
 		int result = pointService.insertPoint(pointData);
 		int result2 = pointService.updateMemberTotalPoint(pointData);
 		

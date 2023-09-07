@@ -7,7 +7,13 @@
 <insert id="insertPoint" parameterType="point">
 
 	INSERT INTO POINT VALUES
-		(SEQ_PNO.NEXTVAL,#{userNo},'게임에서 얻은 포인트',#{pointAmount},ADD_MONTHS(SYSDATE, 3),SYSDATE,#{pointCate})
+		(SEQ_PNO.NEXTVAL,
+		#{userNo},
+		'게임에서 얻은 포인트',
+		#{pointAmount},
+		TO_CHAR(ADD_MONTHS(SYSDATE, 3), 'MM-DD HH24:MI'),
+		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+		#{pointCate})
 
 </insert>
 

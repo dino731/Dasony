@@ -36,8 +36,9 @@ public class gameController {
 	
 	@PostMapping("/gamefinish")
 	public  ResponseEntity<String> insertGame(@RequestBody Game gameData) {
-		log.info("Game={}",gameData);
 		int result =  gameService.insertGame(gameData);
+		
+		
 		
 		if (result > 0) {
 	        return ResponseEntity.ok("Success");

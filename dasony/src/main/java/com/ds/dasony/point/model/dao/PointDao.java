@@ -14,12 +14,17 @@ public class PointDao {
 	
 	public int insertPoint(Point pointData) {
 		int result = session.insert("point.insertPoint",pointData);
-		return result;
+		
+		int result2 = session.insert("alert.insertPointAlert",pointData);
+		
+		return result+result2;
 		
 	}
 	
 	public int updateMemberTotalPoint(Point pointData) {
 		return session.update("point.updateMemberTotalPoint",pointData);
 	}
+	
+	
 	
 }

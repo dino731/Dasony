@@ -15,7 +15,9 @@ public interface DonationService {
 
 	Donation selectAdDonaDetail(int donaNo);
 
-	String insertDona(Donation donation);
+	int insertDona(Donation donation) throws Exception;
+
+	int updateDona(Donation donation) throws Exception;
 
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ds.dasony.donation.model.service.DonationService;
 import com.ds.dasony.donation.model.vo.Donation;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,6 +47,8 @@ public class AdminDonationController {
 		
 		Donation adDonation = donationService.selectAdDonaDetail(donaNo);
 		
+		log.info(adDonation.toString());
+		
 		return adDonation;
 	}
 	
@@ -61,24 +64,50 @@ public class AdminDonationController {
 //		
 //		return insertDonation;
 //	}
+//	
+	@PostMapping("/admindonaenroll")
+    public String insertDona(@RequestBody Donation donation) {
+		
+//		selectedArea = "강남";
+//		log.info("params: " + selectedArea);
+		
+//		log.info("donation: " + donation);
+		
+//		donation.setDonaExecuteDate(selectedArea);
+		
+		try {
+    	   int result = donationService.insertDona(donation);
+    	   
+    	   log.info("result = {}", result);
+    	   
+    	   if(result > 0) return "성공적으로 등록하였습니다.";
+			else return "다시 등록해주세요.";
+		} catch (Exception e) {
+		    log.error("예외 발생: {}", e.getMessage(), e);
+		    return "예상치 못한 에러가 발생했습니다. 다시 시도해주세요.";
+		}
+	}
 	
-	@PostMapping("/admindonaenroll/")
-    public ResponseEntity<String> insertDona(@RequestBody Donation donation, @RequestParam String selectedArea) {
-        try {
-            // Donation 객체에 selectedArea와 기타 필요한 속성 설정
-            donation.setDonaExecuteDate(selectedArea);
-            // 다른 속성 설정
-            
-            // 데이터베이스에 저장하는 서비스 메서드 호출
-            String insertDonationResult = donationService.insertDona(donation);
-            
-            // 성공적인 응답 반환
-            return ResponseEntity.ok(insertDonationResult);
-        } catch (Exception e) {
-            // 에러가 발생한 경우 에러 응답 반환
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 작성 중 오류가 발생했습니다.");
-        }
-    }
-	
-
+	@PostMapping("/admindonaupdate/{donaNo}")
+	public String updateDona(
+			@RequestBody Donation donation,
+			@PathVariable int donaNo
+			) {
+		
+		donation.setDonaNo(donaNo);
+		
+		log.info("donation = {}", donation);
+		log.info("donaNo = {}", donaNo);
+		
+		try {
+			int result = donationService.updateDona(donation);
+			
+			if(result > 0) return "성공";
+			else return "다시";
+		}catch (Exception e) {
+			 log.error("예외 발생: {}", e.getMessage(), e);
+			    return "예상치 못한 에러가 발생했습니다. 다시 시도해주세요.";
+		}
+		
+	}
 }

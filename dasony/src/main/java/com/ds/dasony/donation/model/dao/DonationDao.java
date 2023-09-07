@@ -40,18 +40,11 @@ public class DonationDao {
 //		return session.insert("donationMapper.insertDona", donation);
 //	}
 	
-	public String insertDona(Donation donation) {
-		try {
-            // Donation 객체를 데이터베이스에 삽입합니다.
-			session.insert("donationMapper.insertDona", donation);
-            // 삽입 성공 메시지를 반환합니다.
-            return "게시글이 성공적으로 작성되었습니다.";
-        } catch (Exception e) {
-            // 데이터베이스 삽입 중 에러가 발생한 경우, 예외를 처리하거나 로깅할 수 있습니다.
-            // 여기서는 간단히 에러 메시지만 반환합니다.
-            return "게시글 삽입 중 에러가 발생했습니다.";
-        }
+	public int insertDona(Donation donation) throws Exception{
+		return session.insert("donationMapper.insertDona", donation);
 	}
 
-
+	public int updateDona(Donation donation) throws Exception{
+		return session.update("donationMapper.updateDona", donation);
+	}
 }

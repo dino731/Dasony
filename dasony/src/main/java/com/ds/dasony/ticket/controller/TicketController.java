@@ -35,7 +35,6 @@ public class TicketController {
 	@PostMapping("/insertTicket")
 	public  ResponseEntity<String> insertTicket(@RequestBody Ticket ticketData) {
 		int result = ticketservice.insertTicket(ticketData);
-		log.info("Ticket={}",ticketData);
 		if (result>0) {
 	        return ResponseEntity.ok("Success");
 	    } else {

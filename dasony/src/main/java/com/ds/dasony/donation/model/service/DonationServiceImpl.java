@@ -51,18 +51,23 @@ public class DonationServiceImpl implements DonationService{
 //	}
 	
 	 @Override
-	    public String insertDona(Donation donation) {
-	        try {
-	            // Donation 객체를 데이터베이스에 저장하고, 결과를 받아옵니다.
-	            String insertResult = donationDao.insertDona(donation);
-	            // 성공적으로 삽입된 경우 결과를 반환합니다.
-	            return insertResult;
-	        } catch (Exception e) {
-	            // 삽입 중 에러가 발생한 경우, 예외를 처리하거나 로깅할 수 있습니다.
-	            // 여기서는 간단히 에러 메시지만 반환합니다.
-	            return "게시글 삽입 중 에러가 발생했습니다.";
-	        }
-	    }
+	    public int insertDona(Donation donation) throws Exception{
+	       
+//		donation.setDonaTitle(donation.getDonaTitle());
+//		donation.setDonaName(donation.getDonaName());
+//		donation.setDonaTargetAmount(donation.getDonaTargetAmount());
+//		donation.setDonaContent(donation.getDonaContent());
+		
+		return donationDao.insertDona(donation);
+	 }
 
-
+	@Override
+	public int updateDona(Donation donation) throws Exception {
+		
+		donation.setDonaTitle(donation.getDonaTitle());
+		donation.setDonaName(donation.getDonaName());
+		donation.setDonaTargetAmount(donation.getDonaTargetAmount());
+		donation.setDonaContent(donation.getDonaContent());
+		return donationDao.updateDona(donation);
+	}
 }
