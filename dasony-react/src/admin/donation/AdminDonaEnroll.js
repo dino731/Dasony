@@ -15,35 +15,22 @@ const AdminDonaEnroll = () => {
     const searchParams = new URLSearchParams(location.search); // selectedArea url 정보 가져옴
     const selectedArea = searchParams.get('selectedArea');
 
-    const getDonaEnroll = () => {
-        axios.post("/dasony/admindonaenroll/", {
-            params : {
-                selectedArea : selectedArea
-            }})
-        .then((response) => console.log(response.data))
-        .catch(error => console.log(error));
-    }
-
-    useEffect(() => {
-        getDonaEnroll();
-    })
          
     const {adDonaList, setAdDonaList} = useDonaList();
     const [title, setTitle] = useState('');
     const [crdona, setCrdona] = useState('');
     const [crcontent, setCrContent] = useState('');
-
     const [crgoalmony, setCrgoalmony] = useState('');
 
-    const formatWithComma = (number) => {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    };
-
-    const handleGoalmonyChange = (e) => {
-        const goalmonyVal = e.target.value.replace(/,/g, '');
-        const formatGoalmonyVal = formatWithComma(goalmonyVal);
-        setCrgoalmony(formatGoalmonyVal);
+    const postDonaEnroll = (newDona) => {
+        axios.post("/dasony/admindonaenroll", newDona)
+        .then(() => navigate(`/admindonalist?selectedArea=?`))
+        .catch(error => console.log(error));
     }
+
+    useEffect(() => {
+        //getDonaEnroll();
+    },[])
     
     const handleaddonalist = () => {
 
@@ -66,30 +53,19 @@ const AdminDonaEnroll = () => {
 
         
         const newDona = {
-            id : adDonaList.length + 1,
-            title : title,
-            dona : crdona,
-            content : crcontent,
-            createdate : `${year}-${month}-${day}`,
-            enddate : `${endYear}-${endMonth}-${endDay}`,
-
-            mony : '0다손',
-            goalmony : crgoalmony+"다손",
-            achieve : '0%'
+            donaTitle : title,
+            donaName : crdona,
+            donaContent : crcontent,
+            donaTotalAmount : 0,
+            donaTargetAmount : crgoalmony,
+            donaAchieve : 0,
+            donaSelectArea : selectedArea
         };
 
         const updateDonaList = [...adDonaList, newDona];
 
-        // axios test
-        axios.get("/dasony/test").then((response) => alert(response.data));
-
-
         setAdDonaList(updateDonaList);
-
-        // setAdDonaList(newList => [...newList, newDona]);
-
-        navigate(`/admindonalist?selectedArea=?`);
-        //${newDona.id}`
+        postDonaEnroll(newDona);
     }
 
     return(
@@ -97,8 +73,8 @@ const AdminDonaEnroll = () => {
             <div id="enroll_form">
                 <form>
                     <label>제목</label><br/> 
-                    <input type="text" value={title} onChange={e => setTitle(e.target.value)}/>
-                    <select name='areas' id='areas' value={selectedArea}>
+                    <input type="text"  defaultValue={title} onChange={e => setTitle(e.target.value)}/>
+                    <select name='areas' id='areas'  defaultValue={selectedArea}>
                         <option value="">지역 선택</option>
                         <option value="강남">강남</option>
                         <option value="관악">관악</option>
@@ -106,12 +82,11 @@ const AdminDonaEnroll = () => {
                         <option value="강동">강동</option>
                     </select><br/> 
                     <label>모금단체</label><br/> 
-                    <input type="text" value={crdona} onChange={e => setCrdona(e.target.value)}/><br/>
+                    <input type="text"  defaultValue={crdona} onChange={e => setCrdona(e.target.value)}/><br/>
                     <label>목표 다손</label><br/>
-                    <input type="text" value={crgoalmony} onChange={handleGoalmonyChange} style={{ textAlign: 'right' }}/>&nbsp;다손<br/>
-
+                    <input type="text"  defaultValue={crgoalmony} onChange={e => setCrgoalmony(e.target.value)} style={{ textAlign: 'right' }}/>&nbsp;다손<br/>
                     <label>내용</label><br/> 
-                    <textarea rows={20} cols={80} value={crcontent} onChange={e => setCrContent(e.target.value)}></textarea><br/>
+                    <textarea rows={20} cols={80}  defaultValue={crcontent} onChange={e => setCrContent(e.target.value)}></textarea><br/>
                     <button type="button" class="btn btn-warning" onClick={handleaddonalist}>등록</button>
                 </form>
             </div>
