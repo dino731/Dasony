@@ -41,35 +41,24 @@ const DonaDetail = () => {
         window.location.href = `/donadona/${donaNo}`;
     }
 
-    const [dayDiff, setDayDiff] = useState(0);
+    // const data = new Date(donaInfo.createdate);
+    // data.setMonth(data.getMonth() + 7);
+    // data.setDate(data.getDate() - 1);
 
-    useEffect(() => {
-        const calculateDayDiff = () => {
-          const endDate = new Date(donadetail.donaEndDate);
-          const writeDate = new Date(donadetail.donaWriteDate);
-          const today = new Date();
-          endDate.setHours(0, 0, 0, 0); 
-          writeDate.setHours(0, 0, 0, 0); 
-    
-          const timeDiff = endDate - today;
-          const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-    
-          const writeDateDiff = today - writeDate;
-          const writeDateDays = Math.ceil(writeDateDiff / (1000 * 60 * 60 * 24));
+    // const dataFormat = (date) => { 
+    //   var year = date.getFullYear();
+    //   var month = date.getMonth() + 1;
+    //   month = month >= 10 ? month : '0' + month;
+    //   var day = date.getDate();
+    //   day = day >= 10 ? day : '0' + day;
+    //   return [year, month, day].join('-');
+    // };
 
-          const dDay = days - writeDateDays;
-    
-          setDayDiff(dDay);
-        };
-    
-        calculateDayDiff();
-    
-        const updateDayDiff = setInterval(() => {
-          calculateDayDiff();
-        }, 1000 * 60 * 60 * 24); 
-    
-        return () => clearInterval(updateDayDiff);
-      }, [donadetail]);
+    const writeDate = new Date(donadetail.donaWriteDate);
+    const endDate = new Date(donadetail.donaEndDate);
+
+    const timdDiff = endDate - writeDate;
+    const dayDiff = Math.ceil(timdDiff / (1000 * 3600 * 24));
 
     return(
         <div id="donadetailcontent">
@@ -131,6 +120,7 @@ const DonaDetail = () => {
                     <br/>
                     모인 금액<br/>
                     <b style={{fontSize : '25px'}}>{donadetail.donaTotalAmount}</b><span style={{fontSize : '17px'}}>다손</span><br/><br/>
+                    {/* {donationAmount ? formatWithCommas(donationAmount) : "0"} */}
                     달성률<br/>
                     <b style={{fontSize : '25px'}}>{donadetail.donaAchieve}%</b>
                 </span>
