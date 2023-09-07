@@ -52,15 +52,14 @@ public class UserController {
 	}
 	
 	
-	@PostMapping("/test")
+	@PostMapping("/signUp")
 	public Map<String, Object> signUp(
 			@RequestBody User user
 			){
 		
 		Map<String, Object> map = new HashMap<>();
+		
 		User validateUser = new User();
-		
-		
 		
 		// 응답 데이터 생성
 		log.info("user={}", user);
@@ -71,14 +70,34 @@ public class UserController {
 			
 			map.put("msg", "회원 가입이 완료되었습니다! 즐거운 다소니와 함께해요");
 			
-//			validateUser = userService.chkNo(user.getUserId());
-//			map.put("user", validateUser);
+			validateUser = userService.userForLocation(user.getUserId());
+			map.put("user", validateUser);
 			
 		} else {
 			map.put("error", "회원 가입에 실패했습니다.");
 		}
         return map;
 		
+	}
+	
+	@PostMapping("/location")
+	public Map<String, Object> location(
+			@RequestBody Map<String, Object> request
+			){
+		
+		log.error("userNo 확인 ==================>>", request.get("userNo"));
+		log.error("userNo 확인 ==================>>", request.get("location"));
+		int result = userService.location(request);
+		
+		Map<String, Object> map = new HashMap();
+		
+		if(result > 0) {
+			map.put("msg", "지역 설정에 성공했습니다.");
+		} else {
+			map.put("msg", "지역 설정에 실패했습니다. 마이페이지에서 다시 설정해주세요.");
+		}
+		
+		return map;
 	}
 	
 	@PostMapping("/login")
@@ -104,24 +123,6 @@ public class UserController {
 	}
 	
 	
-	@PostMapping("/location")
-	public Map<String, Object> location(
-			@RequestBody String location, Long userNo
-			){
-		
-		
-		int result = userService.location(location, userNo);
-		
-		Map<String, Object> map = new HashMap();
-		
-		if(result > 0) {
-			map.put("msg", "지역 설정에 성공했습니다.");
-		} else {
-			map.put("msg", "지역 설정에 실패했습니다. 마이페이지에서 다시 설정해주세요.");
-		}
-		
-		return map;
-	}
 	
 	
 	

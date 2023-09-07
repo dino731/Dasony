@@ -4,15 +4,11 @@ import './Home.css';
 import { useState } from 'react';
 import {MainBestCarousel, MainLocalCarousel, MainShortsCarousel, MainVsCarousel} from "./MainBestCarousel";
 import Weather from './Weather';
-import { useRecoilValue } from 'recoil';
-import { loginUserState } from '../atoms';
 
 const Home = () =>{
 
-    const loginUserInfo = useRecoilValue(loginUserState);
-
-    console.log("리코일에서 받아온 유저 정보-main(사용자):",loginUserInfo);
-
+    console.log("로그인에서 localStorage에 저장된 user정보 확인 -(main사용자)",localStorage.getItem("loginUserNo"));
+    console.log("로그인에서 localStorage에 저장된 user정보 확인 -(main사용자)",localStorage.getItem("loginUserRegion"));
     return (
         <div className="home-container">
             <div className="home-weather">

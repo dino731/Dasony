@@ -24,26 +24,23 @@ public class UserDao {
 	public List<User> selectUserList() {
 		return session.selectList("memberMapper.selectUserList");
 	}
-	public int insertUser(User user) {
-		return session.insert("memberMapper.insertUser", user);
-	}
 	public int chkValidateId(String userId) {
 		return session.selectOne("memberMapper.chkValidateId", userId);
 	}
 	public int chkValidateNick(String userNick) {
 		return session.selectOne("memberMapper.chkValidateNick", userNick);
 	}
+	public int insertUser(User user) {
+		return session.insert("memberMapper.insertUser", user);
+	}
+	public int location(Map<String, Object> request) {
+		return session.update("memberMapper.location", request);
+	}
+	public User userForLocation(String userId) {
+		return session.selectOne("memberMapper.userForLocation", userId);
+	}
 	public User login(Map userMap) {
 		return session.selectOne("memberMapper.login", userMap);
-	}
-	public int location(String location, Long userNo) {
-		Map<String, Object> map = new HashMap();
-		map.put("location", location);
-		map.put("userNo", userNo);
-		return session.update("memberMapper.location", location);
-	}
-	public User chkNo(String userId) {
-		return session.selectOne("memberMapper.chkNo", userId);
 	}
 
 }

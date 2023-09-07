@@ -19,18 +19,21 @@ const UserLocation = () => {
     const [city, setCity] = useState('서울시');
     const [ward, setWard] = useState('강남구');
     const [location, setLocation] = useState('서울시 강남구');
+    console.log(loginUserInfo.userNo);
     const userNo = loginUserInfo.userNo;
 
     const handleCity = (event) => setCity(event.target.value);
     const handleWard = (event) => setWard(event.target.value);
-    const handleLocation = () => {setLocation(city+" "+ward);console.log(location);}
+    const handleLocation = () => {setLocation(city+" "+ward);console.log("location:", location);}
     
     {/*지역 정보 전달 함수 */}
-    const handleLocationSubmit = () =>{
-        axios.post('/dasony/api/location', {location, userNo})
+    const handleLocationSubmit = async() =>{
+        await handleLocation();
+        console.log("서브밋때 되는지 확인할 용도:" , location);
+        axios.post('/dasony/api/location', {location:location==""?"서울시 강남구":location, userNo:userNo})
         .then(res=>{
             alert(res.data.msg);
-            navigate('/main');
+            navigate('/');
         });
     }
 
@@ -44,7 +47,7 @@ const UserLocation = () => {
                 <tr>
                     <th>시/도 선택</th>
                     <td>
-                        <select onChange={handleCity} value={city}>
+                        <select onChange={handleCity} value={city==''?'서울시':city}>
                             <option>서울시</option>
                         </select>
                     </td>
@@ -52,7 +55,7 @@ const UserLocation = () => {
                 <tr>
                     <th>구 선택</th>
                     <td>
-                        <select onChange={handleWard} onBlur={handleLocation} value={ward}>
+                        <select onChange={handleWard} onBlur={handleLocation} value={ward==''?'강남구':ward}>
                             <option>강남구</option>
                             <option>강동구</option>
                             <option>관악구</option>
