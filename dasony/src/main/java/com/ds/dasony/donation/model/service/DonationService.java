@@ -20,4 +20,6 @@ public interface DonationService {
 	int updateDona(Donation donation) throws Exception;
 
 	int deleteDona(int donaNo);
+
+//	int selectUserDason(int userNo) throws Exception;
 }

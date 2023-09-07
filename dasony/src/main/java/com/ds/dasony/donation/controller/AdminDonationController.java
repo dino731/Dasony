@@ -112,17 +112,17 @@ public class AdminDonationController {
 		
 	}
 	
-	@DeleteMapping("/admindonadelete/{donaNo}")
-	public ResponseEntity<String> deleteDona(@PathVariable int donaNo) {
-		
-			log.info("donaNo = {}", donaNo);
-		
-            int result = donationService.deleteDona(donaNo);
-            
-            if(result > 0) {
-            	return new ResponseEntity(HttpStatus.OK);
-        } else {
-        	return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
-	}
+//	@DeleteMapping("/admindonadelete/{donaNo}")
+//	public ResponseEntity<String> deleteDona(@PathVariable int donaNo) {
+//		
+//			log.info("donaNo = {}", donaNo);
+//		
+//            int result = donationService.deleteDona(donaNo);
+//            
+//            if(result > 0) {
+//            	return new ResponseEntity(HttpStatus.OK);
+//        } else {
+//        	return new ResponseEntity(HttpStatus.NOT_FOUND);
+//        }
+//	}
 }
