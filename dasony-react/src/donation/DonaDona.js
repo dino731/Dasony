@@ -2,40 +2,42 @@ import { useState, useEffect} from 'react';
 import './DonaDona.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { error } from 'jquery';
 
 const DonaDona = () => {
 
     const {donaNo} = useParams();
     // const donaAmount = localStorage.getItem('donationAmount');
 
-    const [isAllDonation, setIsAllDonation] = useState(false);
-    const [donationAmount, setDonationAmount] = useState([]); // 초기값을 빈 배열로
-    const initialAmount = 5000; // 보유 다손 초기 값
-    const [currentDason, setCurrentDason] = useState(0);
+    const [isAllDonation, setIsAllDonation] = useState(false); // 모두 기부하기
+    const [donationAmount, setDonationAmount] = useState([]); // input 입력 값
+    // const [currentDason, setCurrentDason] = useState(0);
+    const [userPoint, setUserPoint] = useState(null); // 사용자의 보유 포인트 가져옴
     // const [countDona, setCountDona] = useState(1); // 기부버튼 클릭 시 해당 기부 글 건수 카운트
     
-    // const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
-    // console.log("몇 번이니" + loginUserNo); // userNo 가져옴
+    const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
 
-    // useEffect(() => {
-
-    //         const userNo = loginUserNo;
-    
-    //         axios.post(`/dasony/api/userInfo`)
-    //         .then((response) => {
-    //             const userData = response.data;
-    //             setCurrentDason(userData)
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    //     }, []);
+    useEffect(() => { // 사용자 다손 가져오기
+        axios.post(`/dasony/api/userInfo`, {userNo : loginUserNo})
+        .then((response) => {
+            const userData = response.data;
+            if(userData.user){
+                const {totalPoint} = userData.user;
+                setUserPoint(totalPoint);
+            }else{
+                console.error("사용자 정보를 찾을 수 없습니다");
+            }
+        })
+          .catch((error) => {
+            console.log(error);
+          })  
+        }, []);
 
     const handleAllDonationChange = () => {
         setIsAllDonation((prevIsAllDonation) => !prevIsAllDonation);
         
         if (!isAllDonation) {
-            setDonationAmount(initialAmount.toString()); // 모두 기부하기 체크 시 초기값으로 기부 금액 설정
+            setDonationAmount(userPoint.toString()); // 모두 기부하기 체크 시 초기값으로 기부 금액 설정
         } else {
             setDonationAmount(''); // 체크 해제 시 기부 금액 비움
         }
@@ -47,8 +49,8 @@ const DonaDona = () => {
 
         if (isNaN(numericValue)) { // 숫자 변환이 제대로 되지 않은 경우
             setDonationAmount(''); // 기부 금액 비움
-        } else if (numericValue > initialAmount) { // 보유 금액보다 큰 액수 입력 시
-            setDonationAmount(initialAmount.toString());
+        } else if (numericValue > userPoint) { // 보유 금액보다 큰 액수 입력 시
+            setDonationAmount(userPoint.toString());
         } else {
             setDonationAmount(numericValue.toString());
         }
@@ -67,11 +69,20 @@ const DonaDona = () => {
             alert("기부가 완료되었습니다");
             
             const donationAmountInt = parseInt(donationAmount);
-            console.log(donationAmountInt);
 
             setDonationAmount(donationAmountInt); // donationAmount 업데이트
-            setCurrentDason(currentDason - donationAmountInt); // 남은 다손 업데이트
-            // setCountDona(countDona + 1);
+
+            const newDasonPoint = userPoint - donationAmountInt; // 보유 다손에서 차감
+            setUserPoint(newDasonPoint); 
+            // setCountDona(countDona + 1); 기부 건수 카운트
+
+            axios.post(`/dasony/api/updateUserPoint`, {userNo : loginUserNo, newDasonPoint})
+                .then((response) => {
+                    
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
 
             // 기부 금액을 localStorage에 저장
             localStorage.setItem(`donationAmount_${donaNo}`, donationAmountInt);
@@ -98,7 +109,7 @@ const DonaDona = () => {
                 <hr/><br/>
                 <form id="donationForm">
                     <span>
-                        보유 다손 <b>{currentDason.toLocaleString()}</b>다손
+                        보유 다손 <b>{userPoint}</b>다손
                     </span>
                     &nbsp;&nbsp;&nbsp;
                     <label style={{fontSize : '15px'}}>
@@ -122,7 +133,7 @@ const DonaDona = () => {
                             readOnly={isAllDonation} 
                             onChange={handleDonationAmountChange}
                         />
-                        다손 / <b>{currentDason.toLocaleString()}</b>다손
+                        다손 / <b>{userPoint}</b>다손
                     </label>
                 </form>
                 <br/>

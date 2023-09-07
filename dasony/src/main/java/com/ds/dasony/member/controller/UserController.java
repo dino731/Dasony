@@ -150,6 +150,7 @@ public class UserController {
 		
 		log.info(userno.get("userNo"));
 		
+		
 		Map<String, Object> map = new HashMap();
 		
 		User user = new User();
