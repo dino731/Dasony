@@ -1,16 +1,8 @@
 import $ from 'jquery';
 import './game.css';
 import axios from 'axios';
-import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { loginUserState } from '../atoms';
-
-const Gamestart = () =>{
-
-    const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
-
- const Game= ()=>{
+export function gamestart(){
     
     alert("질뻑이가 보물상자를 다 먹기전에 질뻑이들을 피해서 먼저 보물상자를 차지하세요!");
     let random = Math.floor(Math.random() * 1);
@@ -38,26 +30,24 @@ const Gamestart = () =>{
             [1,0,0,0,1,4,1,2,1,0,0,0,0,2,0,0,0,4,0,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ];
-        
-        
-        
+
         function Board() {
             let gameDiv = $("#gameDiv"); // gameDiv 선택
-            
+        
             let table = $("<table bgcolor='white' id='gameTable'></table>"); // 테이블 하나 생성
             gameDiv.append(table); // gameDiv에 테이블 추가
-            
+        
             for (let i = 0; i < 20; i++) {
                 let row = $("<tr></tr>"); // 새로운 행 생성
                 table.append(row); // 테이블에 행 추가
-                
+        
                 for (let j = 0; j < 20; j++) {
                     let cell = $("<td id='x" + i + "y" + j + "' width='30' height='30'></td>");
                     row.append(cell); // 행에 셀 추가
                 }
             }
         }
-        
+    
         Board();
         
         function ChangeColor(x, y, color) {
@@ -133,7 +123,7 @@ const Gamestart = () =>{
                         gameStatus: "N",
                         pointStatus: "N",
                         ticketStatus: "N",
-                        userNo : loginUserInfo.userNo  
+                        userNo : 20230904032  
                     };
                     axios.post("/dasony/api/gamefinish",gameData)
                     .then(response=>{
@@ -276,7 +266,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -285,14 +275,14 @@ const Gamestart = () =>{
                             });
                             const ticektData = {  
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/insertTicket",ticektData)
                             .then(response=>{
                                 console.log(response.data);
                             });
                             const pointData = {
-                                userNo : loginUserInfo.userNo,
+                                userNo : 20230904032,
                                 pointAmount : pCount*50,
                                 pointCate : "G"  
                             };
@@ -304,7 +294,7 @@ const Gamestart = () =>{
                                 alert("응모권 흭득! 마이페이지에서 확인하세요");
                             const ticketData = {
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo   
+                                userNo: 20230904032   
                             };
                             axios.post("/dasony/api/insertTicket",ticketData)
                             .then(response=>{
@@ -315,7 +305,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "N",
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -325,7 +315,7 @@ const Gamestart = () =>{
                             }else if(pCount >0){
                                 alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
                                 const pointData = {
-                                    userNo : loginUserInfo.userNo,
+                                    userNo : 20230904032,
                                     pointAmount : pCount*50,
                                     pointCate : "G"  
                                 };
@@ -336,7 +326,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "N",
-                                userNo : loginUserInfo.userNo  
+                                userNo : 20230904032  
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -474,7 +464,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -483,14 +473,14 @@ const Gamestart = () =>{
                             });
                             const ticektData = {  
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/insertTicket",ticektData)
                             .then(response=>{
                                 console.log(response.data);
                             });
                             const pointData = {
-                                userNo : loginUserInfo.userNo,
+                                userNo : 20230904032,
                                 pointAmount : pCount*50,
                                 pointCate : "G"  
                             };
@@ -502,7 +492,7 @@ const Gamestart = () =>{
                                 alert("응모권 흭득! 마이페이지에서 확인하세요");
                             const ticketData = {
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo   
+                                userNo: 20230904032   
                             };
                             axios.post("/dasony/api/insertTicket",ticketData)
                             .then(response=>{
@@ -513,7 +503,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -523,7 +513,7 @@ const Gamestart = () =>{
                             }else if(pCount >0){
                                 alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
                                 const pointData = {
-                                    userNo : loginUserInfo.userNo,
+                                    userNo : 20230904032,
                                     pointAmount : pCount*50,
                                     pointCate : "G"  
                                 };
@@ -534,7 +524,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "N",
-                                userNo : loginUserInfo.userNo  
+                                userNo : 20230904032  
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -668,7 +658,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -677,14 +667,14 @@ const Gamestart = () =>{
                             });
                             const ticektData = {  
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/insertTicket",ticektData)
                             .then(response=>{
                                 console.log(response.data);
                             });
                             const pointData = {
-                                userNo : loginUserInfo.userNo,
+                                userNo : 20230904032,
                                 pointAmount : pCount*50,
                                 pointCate : "G"  
                             };
@@ -696,7 +686,7 @@ const Gamestart = () =>{
                                 alert("응모권 흭득! 마이페이지에서 확인하세요");
                             const ticketData = {
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo   
+                                userNo: 20230904032   
                             };
                             axios.post("/dasony/api/insertTicket",ticketData)
                             .then(response=>{
@@ -707,7 +697,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -717,7 +707,7 @@ const Gamestart = () =>{
                             }else if(pCount >0){
                                 alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
                                 const pointData = {
-                                    userNo : loginUserInfo.userNo,
+                                    userNo : 20230904032,
                                     pointAmount : pCount*50,
                                     pointCate : "G"  
                                 };
@@ -728,7 +718,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "N",
-                                userNo : loginUserInfo.userNo  
+                                userNo : 20230904032  
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -862,7 +852,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -871,14 +861,14 @@ const Gamestart = () =>{
                             });
                             const ticektData = {  
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/insertTicket",ticektData)
                             .then(response=>{
                                 console.log(response.data);
                             });
                             const pointData = {
-                                userNo : loginUserInfo.userNo,
+                                userNo : 20230904032,
                                 pointAmount : pCount*50,
                                 pointCate : "G"  
                             };
@@ -890,7 +880,7 @@ const Gamestart = () =>{
                                 alert("응모권 흭득! 마이페이지에서 확인하세요");
                             const ticketData = {
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo   
+                                userNo: 20230904032   
                             };
                             axios.post("/dasony/api/insertTicket",ticketData)
                             .then(response=>{
@@ -901,7 +891,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "Y",
-                                userNo: loginUserInfo.userNo 
+                                userNo: 20230904032 
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -911,7 +901,7 @@ const Gamestart = () =>{
                             }else if(pCount >0){
                                 alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
                                 const pointData = {
-                                    userNo : loginUserInfo.userNo,
+                                    userNo : 20230904032,
                                     pointAmount : pCount*50,
                                     pointCate : "G"  
                                 };
@@ -922,7 +912,7 @@ const Gamestart = () =>{
                                 gameStatus: "Y",
                                 pointStatus: "Y",
                                 ticketStatus: "N",
-                                userNo : loginUserInfo.userNo  
+                                userNo : 20230904032  
                             };
                             axios.post("/dasony/api/gamefinish",gameData)
                             .then(response=>{
@@ -949,13 +939,6 @@ const Gamestart = () =>{
         });
     }
 }
-return(
-    <div>
-        <button onClick={Game}>시작 버튼</button>
-    </div>
-);
-}
-export default Gamestart;
 
 
 

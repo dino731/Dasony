@@ -11,8 +11,7 @@ const AdminReception = () =>{
   
   const godetail = ()=>{
       navigate(
-        `../admin/receptionDetail/`
-        // ${selectedReceptionId}`
+        "../admin/receptionDetail/${selectedReceptionId}"
       );
   };
   const [reception, setReception] = useState([]);
