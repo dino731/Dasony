@@ -1,4 +1,4 @@
-package com.ds.dasony.event.model.vo;
+package com.ds.dasony.common;
 
 import java.io.File;
 import java.io.IOException;

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ds.dasony.event.model.service.EventService;
 import com.ds.dasony.event.model.vo.Event;
 import com.ds.dasony.event.model.vo.EventForm;
-import com.ds.dasony.event.model.vo.FileUpload;
+import com.ds.dasony.common.FileUpload;
 import com.ds.dasony.event.model.vo.Reward;
 
 import lombok.extern.slf4j.Slf4j;
@@ -82,6 +82,9 @@ public class EventController {
 		}
 		
 
+		String rank = "";
+		String amount = "";
+		
 		if(eventForm.getNo()!=null && !eventForm.getNo().equals("undefined")) {
 			// update logic
 			event = Event.builder().no(eventForm.getNo())
@@ -98,11 +101,14 @@ public class EventController {
 									.thumbnail(filePath).build();
 			
 			for(int i=0; i<eventForm.getAmount().size(); i++) {
+				rank = eventForm.getRank().get(i).equals("선택") ? "1" : eventForm.getRank().get(i);
+				amount = eventForm.getAmount().get(i).length()==0 ? "0" : eventForm.getAmount().get(i);
+				
 				reward = Reward.builder().rewardNo(Integer.parseInt(eventForm.getRewardNo().get(i)))
 					.rewardName(eventForm.getRewardName().get(i))
 					.brand(eventForm.getBrand().get(i))
-					.rank(Integer.parseInt(eventForm.getRank().get(i)))
-					.amount(Integer.parseInt(eventForm.getAmount().get(i)))
+					.rank(Integer.parseInt(rank))
+					.amount(Integer.parseInt(amount))
 					.rewardRange(eventForm.getRewardRange().get(i))
 					.rewardCategory(eventForm.getRewardCategory().get(i))
 					.eventNo(eventForm.getNo()).build();
@@ -127,11 +133,14 @@ public class EventController {
 								.thumbnail(filePath).build();
 
 			for(int i=0; i<eventForm.getAmount().size(); i++) {
+				rank = eventForm.getRank().get(i).equals("선택") ? "1" : eventForm.getRank().get(i);
+				amount = eventForm.getAmount().get(i).length()==0 ? "0" : eventForm.getAmount().get(i);
+				
 				reward = Reward.builder()
 									.rewardName(eventForm.getRewardName().get(i))
 									.brand(eventForm.getBrand().get(i))
-									.rank(Integer.parseInt(eventForm.getRank().get(i)))
-									.amount(Integer.parseInt(eventForm.getAmount().get(i)))
+									.rank(Integer.parseInt(rank))
+									.amount(Integer.parseInt(amount))
 									.rewardRange(eventForm.getRewardRange().get(i))
 									.rewardCategory(eventForm.getRewardCategory().get(i))
 									.eventNo(eventForm.getNo()).build();

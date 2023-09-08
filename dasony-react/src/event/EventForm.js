@@ -155,6 +155,7 @@ export default ({editStatus}) => {
         
         for(let fill of fillList){
             let target = formData[fill];
+            console.log("target", target);
             if(target === null || target === undefined || target==="" || target.length==0 || target.innerText ==="선택"){
                 alert("필수 항목을 다 채워 주세요.");
                 return;
@@ -247,7 +248,7 @@ export default ({editStatus}) => {
                         <div className="manager-select-btn">
                             <div ref={el => clickList.current[0] = el}>
                                 <span className="manager-select-label" ref={el => paramList.current[0] = el}>
-                                    {no!=null ? eventInfo.category : "선택"}
+                                    {no!=null ? eventInfo.eventCategory : "선택"}
                                 </span>
                                 <i className="bi bi-caret-down-fill"></i>
                             </div>
@@ -270,7 +271,7 @@ export default ({editStatus}) => {
                                 <i className="bi bi-caret-down-fill"></i>
                             </div>
                             <ul className="manager-select-optionList">
-                                <li className="manager-select-optionItem">추후</li>
+                                <li className="manager-select-optionItem">일자</li>
                                 <li className="manager-select-optionItem">즉시</li>
                                 <li className="manager-select-optionItem">복합</li>
                             </ul>
@@ -355,8 +356,8 @@ export default ({editStatus}) => {
                                     <span style={{width: "50%"}}>상품 타입 <span style={{color: "red"}}>*</span></span>
                                     <div className="manager-select-btn">
                                         <div ref={el => clickList.current[3] = el}>
-                                            <span className="manager-select-label category" ref={el => paramList.current[3] = el}>
-                                                {no!=null && Array.isArray(rewardInfo) ? rewardInfo[0].category :"선택"}
+                                            <span className="manager-select-label rewardCategory" ref={el => paramList.current[3] = el}>
+                                                {no!=null && Array.isArray(rewardInfo) ? rewardInfo[0].rewardCategory :"선택"}
                                             </span>
                                             <i className="bi bi-caret-down-fill"></i>
                                         </div>
@@ -396,7 +397,8 @@ export default ({editStatus}) => {
                                     <input 
                                         type="text" 
                                         className="form-control rewardName"
-                                        defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[0].name : ""} 
+                                        placeholder='다손인 경우 숫자로 금액 표현해주세요.' 
+                                        defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[0].rewardName : ""} 
                                     />
                                 </div>
                                 <div className="mb-4 event-form-part">
@@ -432,8 +434,8 @@ export default ({editStatus}) => {
                                                         <span style={{width: "50%"}}>상품 타입</span>
                                                         <div className="manager-select-btn">
                                                             <div ref={el => clickList.current[6] = el}>
-                                                                <span className="manager-select-label category" ref={el => paramList.current[6] = el}>
-                                                                    {no!=null && Array.isArray(rewardInfo) ? rewardInfo[1].category :"선택"}
+                                                                <span className="manager-select-label rewardCategory" ref={el => paramList.current[6] = el}>
+                                                                    {no!=null && Array.isArray(rewardInfo) ? rewardInfo[1].rewardCategory :"선택"}
                                                                 </span>
                                                                 <i className="bi bi-caret-down-fill"></i>
                                                             </div>
@@ -473,7 +475,7 @@ export default ({editStatus}) => {
                                                         <input 
                                                             type="text" 
                                                             className="form-control rewardName"
-                                                            defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[1].name : ""} 
+                                                            defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[1].rewardName : ""} 
                                                         />
                                                     </div>
                                                     <div className="mb-4 event-form-part">
@@ -510,8 +512,8 @@ export default ({editStatus}) => {
                                                         <span style={{width: "50%"}}>상품 타입</span>
                                                         <div className="manager-select-btn">
                                                             <div ref={el => clickList.current[9] = el}>
-                                                                <span className="manager-select-label category" ref={el => paramList.current[9] = el}>
-                                                                    {no!=null && Array.isArray(rewardInfo) ? rewardInfo[2].category :"선택"}
+                                                                <span className="manager-select-label rewardCategory" ref={el => paramList.current[9] = el}>
+                                                                    {no!=null && Array.isArray(rewardInfo) ? rewardInfo[2].rewardCategory :"선택"}
                                                                 </span>
                                                                 <i className="bi bi-caret-down-fill"></i>
                                                             </div>
@@ -551,7 +553,7 @@ export default ({editStatus}) => {
                                                         <input 
                                                             type="text" 
                                                             className="form-control rewardName"
-                                                            defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[2].name : ""} 
+                                                            defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[2].rewardName : ""} 
                                                         />
                                                     </div>
                                                     <div className="mb-4 event-form-part">

@@ -53,7 +53,8 @@ public class EventServiceImpl implements EventService{
 			if(reward.getRewardNo()>0) {
 				result *= eDao.updateRewardInfo(reward);				
 			}else {
-				result *= eDao.insertRewardInfo(reward);
+				if(reward.getRewardName()!=null && reward.getRewardName().equals(""))
+					result *= eDao.insertRewardInfo(reward);		
 			}
 		}
 		
@@ -70,7 +71,18 @@ public class EventServiceImpl implements EventService{
 		
 		log.info(event.toString());
 		log.info(rewardList.toString());
+		
+		result *= eDao.insertEventInfo(event);
+		if(result==0) return result;
+		
+		for(Reward reward : rewardList) {
+			if(reward.getRewardName()!=null && reward.getRewardName().length()!=0) {
+				log.info("service reward : " + reward.toString());
+				log.info(reward.getRewardRange());
+				result *= eDao.insertRewardInfo(reward);
+			}
+		}
 				
-		return 0;
+		return result;
 	}
 }

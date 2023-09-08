@@ -98,10 +98,41 @@
 		where event_reward_no = #{rewardNo}
 	</update>
 	
-	<insert id="insertRewardInfo" parameterType="Reward">
-		<selectKey resultType="string" keyProperty="rewardRange" order="BEFORE">
-			select event_reward_range_code from event_range where event_reward_range_cate=#{rewardRange}
+	<insert id="insertEventInfo" parameterType="Event">
+		<selectKey resultType="string" keyProperty="no" order="BEFORE">
+			select 'E'||lpad(seq_eno.nextval, 4, 0) from dual
 		</selectKey>
+		insert into event(event_no, event_title, event_content, event_start_date, event_end_date,
+						event_winner_date, event_thumbnail, event_video_link, event_detail_link,
+						event_page, event_upload_date)
+		values(#{no}, #{title}, #{content}, #{startDate}, #{endDate}, #{winnerDate},
+				#{thumbnail}, #{videoLink}, #{detailLink}, #{pageLink}, sysdate)
+	</insert>
+	
+	<insert id="insertEventCategory" parameterType="Event">
+		<selectKey resultType="string" keyProperty="eventCategory" order="BEFORE">
+			select event_cate_code from event_code where event_category = #{eventCategory}
+		</selectKey>
+		insert into event_code_list(event_no, event_cate_code)
+		values(#{no}, #{eventCategory})
+	</insert>
+	
+	<insert id="insertEventWinCategory" parameterType="Event">
+		<selectKey resultType="string" keyProperty="winTime" order="BEFORE">
+			select event_win_time_code from event_win_category where event_win_time=#{winTime}
+		</selectKey>
+		insert into event_win_cate_list(event_no, event_win_time_code)
+		values(#{no}, #{winTime})
+	</insert>
+	
+	<select id="changeRewardRange" parameterType="string" resultType="string">
+		select event_reward_range_code from event_range where event_reward_range_cate=#{rewardRange}
+	</select>
+	
+	<insert id="insertRewardInfo" parameterType="Reward">
+		<!-- <selectKey resultType="string" keyProperty="rewardRange" order="BEFORE">
+			select event_reward_range_code from event_range where event_reward_range_cate=#{rewardRange}
+		</selectKey> -->
 		insert into event_reward (event_reward_no, event_reward_name, event_reward_brand, event_reward_range_code,
 								event_reward_category)
 		values(seq_erno.nextval, #{rewardName}, #{brand}, #{rewardRange}, #{rewardCategory})
@@ -109,6 +140,6 @@
 	
 	<insert id="insertEventRewardInfo" parameterType="Reward">
 		insert into event_reward_list (event_no, event_reward_no, event_rank, event_reward_amount)
-		values(#{eventNo}, seq_erno.currval, #{rank}, #{amount})
+		values('E'||lpad(seq_eno.currval, 4, 0), seq_erno.currval, #{rank}, #{amount})
 	</insert>
 </mapper>
