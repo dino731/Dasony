@@ -1,16 +1,16 @@
 package com.ds.dasony.Board.model.vo;
 
-import java.util.List;
+import com.ds.dasony.member.model.vo.User;
 
 import lombok.Data;
 
 @Data
-public class BoardExt extends Board {
+public class BoardExt extends Board{
 	
-	private List<BoardCare> boardCareList;
-	private List<BoardCate> boardCateList;
-	private List<BoardImg> boardImgList;
-	private List<BoardKeyword> boardKeywordList;
-	private List<BoardVideo> boardVideo;
-
+	private User user;
+	private BoardVideo boardVideo;
+	private BoardImg boardImg;
+	private BoardCate boardCate;
+	private int userViewCount;//USER_VIEW_COUNT
+	private int replyCount;//REPLY_COUNT
 }
