@@ -19,6 +19,7 @@ public class FileUpload {
 	private final String filePath = "src/main/resources/images/";
 	
 	/**
+	 * -- 지현(본인이 사용하려고 한 것으로 필요한 함수는 해당 클래스에 추가해서 사용)
 	 * @param multiFile : file for upload
 	 * @param request : to find this project absolute path
 	 * @param path : the dir to upload file
