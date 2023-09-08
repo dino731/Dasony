@@ -18,6 +18,8 @@ const BoardDailyWriter = () => {
   const location = useLocation();
   const path = location.pathname;
 
+
+
   /* 현재 경로 비교연산 밑작업용 ain 0904 */
   const dailyPath = path.includes('daily') ? path : null;
   const interestPath = path.includes('interest')? path : null;
@@ -69,40 +71,42 @@ const BoardDailyWriter = () => {
   //  console.log('보드작성 초기화 전 :',boardCateStateValue, boardCateStateValue.name);
   // console.log('보드작성boardCateState:====', boardCateState);
   // console.log('보드작성boardCateStateValue:====.name', boardCateStateValue.name);
+  console.log('BoardDailyWriter boardPost ===>',boardPost);
 
   const [newBoardPost, setNewBoardPost] = useState({
-    boardNo : nextBoardNo,
     userName : '이아인',
     boardTitle : '',
     boardWriteDate : getCurrentDateTime(),
     boardContent : content,
-    boardCateNo :  boardCateStateValue.name
+    boardCateNo :  boardCateStateValue.value,
+    boardTag : '',
+
   });
 
   //input 값을 바뀌고 초기화해줌
   const handleInputChange = (e) =>{
     const {name,value} = e.target;
-    let boardNo =newBoardPost.boardNo;
     let boardTitle =newBoardPost.boardTitle;
     let boardContent=newBoardPost.boardContent;
+    let boardTag = newBoardPost.boardTag;
     switch(name){
-      case 'boardNo' :   boardNo = value; break;
       case 'boardTitle' : boardTitle = value; break;
       case 'boardContent' : boardContent = value; break;
     }
     setNewBoardPost({[name]:value});
     let test = {
-      boardNo : boardNo,
       userName : '이아인',
       boardTitle : boardTitle,
       boardWriteDate : getCurrentDateTime(),
       boardContent : content,
-      boardCateNo :  boardCateStateValue.name
+      boardCateNo :  boardCateStateValue.value,
+      boardTag :  boardTag
     }
     setNewBoardPost(test);
     // console.log('핸들인풋', name, value, '이게 확인할 값:newBoardPost.boardCateNo=======>>',test);
   };
 
+  /* Axios 시작 */
 
   const handleBoardWriterSubmit = (e)=>{
     e.preventDefault();
@@ -112,6 +116,9 @@ const BoardDailyWriter = () => {
       alert("모든 값을 바르게 입력해주세요.");
       return;
     }
+    // 이미지 파일을 FormData로 포장
+    // const formData = new FormdData();
+    // formData.append('userNo')
     setBoardPost([...boardPost, newBoardPost]);
     setnextBoardNo(nextBoardNo + 1);
     setNewBoardPost({boardTitle : '',boardContent : '', boardCateNo : '' });
@@ -121,29 +128,33 @@ const BoardDailyWriter = () => {
     // console.log(newBoardPost.boardContent);
     // console.log(newBoardPost.userName);
     // console.log(newBoardPost.boardWriteDate);
-    // console.log(newBoardPost.boardCateNo);
+    console.log('BoardDailyWriter newBoardPost.boardTag ===>',newBoardPost.boardTag);
     // console.log('boardCate----->',boardCateStateValue.name);
   }
 
+  /* Axios 끝 */
+ 
+
   /* 태그 입력 시작 */
-  const [keyword, setKeyword] = useState([]);
+  const [boardTag, setBoardTag] = useState([]);
   const [inputContent, setInputContent] = useState('');
   const enter = (e) =>{
     if(e.key == 'Enter'){
       e.preventDefault();
-      if(keyword.includes(inputContent) || inputContent.trim() === '' ){
+      if(boardTag.includes(inputContent) || inputContent.trim() === '' ){
         console.log('enter key 눌림 : ', inputContent );
         return;
       }
-      setKeyword([...keyword, inputContent]);
+      setBoardTag([...boardTag, inputContent]);
       setInputContent('');
     }
   }
 
   const deleteKeyWord = (index)=>{
-    setKeyword(keyword.filter((item, i) => item !== keyword[index]));
+    setBoardTag(boardTag.filter((item, i) => item !== boardTag[index]));
     setInputContent('');
   }
+  console.log('BoardDailyWriter boardTag ===>',boardTag);
 
   /* 태그 입력 끝 */
 
@@ -222,7 +233,7 @@ const BoardDailyWriter = () => {
                         <div  className="BoardWriteForm-search-box-tag" >
                           <ul className="searchKeyword-ul">
                             {
-                              keyword.map( (item, index) => (
+                              boardTag.map( (item, index) => (
                                 <li className="sKeyword" key={index}>
                                   {item}
                                   <p
@@ -285,7 +296,7 @@ const BoardDailyWriter = () => {
                   <button onClick={()=> navigate('/board'+listPath)} className='board-cancel-btn'>취소 버튼</button>
                 </div>
                 <div className='board-btn-wrapper'>
-                  <button type="submit" className='board-submit-btn'>등록</button>  
+                  <button type="submit" className='board-submit-btn' onClick={handleBoardWriterSubmit}>등록</button>  
                 </div>
               </div>
             </form>
