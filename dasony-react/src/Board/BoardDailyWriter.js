@@ -12,6 +12,7 @@ import './boardcssTest.css';
 
 // import Editor from './Editor';
 
+
 const BoardDailyWriter = () => {
   const navigate = useNavigate();
   const location = useLocation();

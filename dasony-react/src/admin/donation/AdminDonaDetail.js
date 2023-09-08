@@ -1,16 +1,15 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import './AdminDonaDetail.css';
-import { useDonaList } from './AdminDonaListContext';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const AdminDonaDetail = () => {
 
     const navigate = useNavigate();
-    // const {adDonaList} = useDonaList();
     const {donaNo} = useParams();
 
     const [admindonadetail, setAdminDonaDetail] = useState('');
+    const [dayDiff, setDayDiff] = useState(0);
 
     const getAdDonaDetail = () => {
         axios.get(`/dasony/admindonadetail/${donaNo}`)
@@ -22,18 +21,48 @@ const AdminDonaDetail = () => {
 
     useEffect(() => {
         getAdDonaDetail();
-    }, [])
+    }, [donaNo]);
 
-    // const selectDona = adDonaList.find(donalist => donalist.id === parseInt(id));
+   useEffect(() => {
 
-    const writeDate = new Date(admindonadetail.donaWriteDate);
-    const endDate = new Date(admindonadetail.donaEndDate);
+    const calculateDayDiff = () => {
+        const endDate = new Date(admindonadetail.donaEndDate);
+        const writeDate = new Date(admindonadetail.donaWriteDate);
+        const today = new Date();
+        endDate.setHours(0, 0, 0, 0); 
+        writeDate.setHours(0, 0, 0, 0); 
+  
+        const timeDiff = endDate - today;
+        const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+  
+        const writeDateDiff = today - writeDate;
+        const writeDateDays = Math.ceil(writeDateDiff / (1000 * 60 * 60 * 24));
 
-    const timdDiff = endDate - writeDate;
-    const dayDiff = Math.ceil(timdDiff / (1000 * 3600 * 24));
+        const dDay = days - writeDateDays;
+    
+        setDayDiff(dDay);
+      };
+  
+      calculateDayDiff();
+  
+      const updateDayDiff = setInterval(() => {
+        calculateDayDiff();
+      }, 1000 * 60 * 60 * 24); 
+  
+      return () => clearInterval(updateDayDiff);
+    }, [admindonadetail]);
 
+   
     const handleUpdate = () => {
         navigate(`/admindonaupdate/${donaNo}`);
+    }
+
+    const handleDelete = () => {
+        axios.delete(`/dasony/admindonadelete/${donaNo}`)
+        .then(() => {
+            navigate("/admindonalist");
+        })
+        .catch(error => console.log(error));
     }
 
     return(
@@ -87,7 +116,7 @@ const AdminDonaDetail = () => {
                 <br/>
                 <div id='controlldona'>
                     <button type="button" class="btn btn-primary" onClick={handleUpdate}>수정</button>&nbsp;&nbsp;
-                    <button type="button" class="btn btn-danger">삭제</button>
+                    <button type="button" class="btn btn-danger" onClick={handleDelete}>삭제</button>
                 </div>
             </div>
             <div>
@@ -95,7 +124,7 @@ const AdminDonaDetail = () => {
                     <br/><br/><br/><br/><br/><br/>
                     <span id="addonatxt" style={{fontSize : '20px'}}>총 <b>57건</b>이<br/>
                         기부되었습니다<br/><br/>
-                        {admindonadetail.donaWriteDate}~<br/>
+                        {admindonadetail.donaWriteDate} ~<br/>
                         {admindonadetail.donaEndDate}
                         <br/><br/>
                         <div id="addday"><b>D - {dayDiff}</b></div>

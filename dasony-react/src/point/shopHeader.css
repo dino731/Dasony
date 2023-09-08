@@ -19,7 +19,7 @@
 }
 .user-info{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding: 0 0 0 5%;
 }
 .bi>span{

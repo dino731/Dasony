@@ -5,7 +5,9 @@ import './signUp.css';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'react-bootstrap';
 import DaumPostcode from 'react-daum-postcode';
 import axios from 'axios';
-import CryptoJS from 'crypto-js';
+import {SHA256} from 'crypto-js';
+import { useRecoilState } from 'recoil';
+import { loginUserState } from '../atoms';
 
 
 const SignUp = ()=>{
@@ -13,6 +15,10 @@ const SignUp = ()=>{
     let secretKey = process.env.REACT_APP_CRYPTO_SECRET_KEY;
 
     const navigate = useNavigate();
+
+    const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
+
+    console.log("리코일에서 받아온 유저 정보-사용자 지역 설정(사용자):",loginUserInfo);
     
 
     /*data 전달 값 함수 만들기 */
@@ -33,13 +39,15 @@ const SignUp = ()=>{
     const [address, setAddress] = useState('');
     const [detailAddress, setDetailAddress] = useState('');
     const [completeAddress, setCompleteAddress] = useState('');
+    const [completeDuplicateId, setCompleteDuplcateId] = useState(false);
+    const [completeDuplicateNick, setCompleteDuplcateNick] = useState(false);
     let user = {};
 
 
-    const handleId = (event)=>setId(event.target.value);
-    const handlePwd = (event)=>setPwd(event.target.value);
+    const handleId = (event)=>{console.log("idValid확인", idValid);setIdValid(false); setDisable(true);setId(event.target.value);}
+    const handlePwd = (event)=>{setPwd(event.target.value);setEncPwd(SHA256(event.target.value, secretKey).toString());}
     const handleChkPwd = (event)=>setChkPwd(event.target.value);
-    const handleNick = (event)=>setNick(event.target.value);
+    const handleNick = (event)=>{setNickValid(false); setDisable(true);setNick(event.target.value)};
     const handleName = (event)=>setName(event.target.value);
     const handlePhone = (event)=>setPhone(event.target.value);
     const handleEmailId = (event)=>setEmailId(event.target.value);
@@ -81,14 +89,38 @@ const SignUp = ()=>{
     }
     
     /*별명, 아이디, 이름에 특수문자 못 쓰게 하기 - 자동 제거 */
-    const handleValidTxt = (event)=>{
+    const handleValidTxt = async (event)=>{
+        if(event.target.id!='id'&&event.target.id!='emailId'
+            &&event.target.id!='email'&&event.target.value.length>6){
+            event.target.value = event.target.value.slice(0, 6);
+        }
         let oriTxt = event.target.value;
-        const filteredTxt = oriTxt.replace(/[^a-zA-Z0-9가-힣]/g, '');
-        event.target.value = filteredTxt;
         switch(event.target.id){
-            case'id' : setId(event.target.value); break;
-            case'nick' :setNick(event.target.value); break;
-            case'name' : setName(event.target.value); break;
+            case'id' : 
+                        const filteredId = oriTxt.replace(/[^a-zA-Z0-9]/g, '');
+                        event.target.value = filteredId;
+                        await handleId(event);
+                        break;
+            case'nick' :
+                        const filteredNick = oriTxt.replace(/[^a-zA-Z0-9ㄱ-ㅎ가-힣]/g, '');
+                        event.target.value = filteredNick;
+                        await handleNick(event); 
+                        break;
+            case'name' : 
+                        const filteredName = oriTxt.replace(/[^ㄱ-ㅎ가-힣]/g, '');
+                        event.target.value = filteredName;
+                        await handleName(event); 
+                        break;
+            case'emailId' :
+                        const filteredEmailId = oriTxt.replace(/[^a-zA-Z0-9]/g, '');
+                        event.target.value = filteredEmailId;
+                        await handleEmailId(event);
+                        break;
+            case'email':
+                        const filteredEmail = oriTxt.replace(/[^a-zA-Z.]/g, '');
+                        event.target.value = filteredEmail;
+                        await handleUserEmail(event);
+                        break;
         }
     }
 
@@ -96,7 +128,6 @@ const SignUp = ()=>{
     const handleIdLength = () => {
         if(id.length<5){
             alert("아이디는 5글자 이상이어야 합니다");
-            setDisable(true);
         }
     }
 
@@ -125,13 +156,6 @@ const SignUp = ()=>{
         /*const decrypting = CryptoJS.AES.encrypt(encPwd, secretKey).toString();
         const decPwd = decrypting.toString(CryptoJS.enc.Utf8); */
 
-        /*Encrypt */
-        const handleEncPwd = () => {
-            if(pwd&&chkPwd){
-                console.log("secretKey : ", secretKey);
-                setEncPwd(CryptoJS.AES.encrypt(pwd, secretKey).toString());
-            }
-        }
 
     /*비밀 번호 글씨 수 검사 */
     const handlePwdLength = () => {
@@ -161,47 +185,49 @@ const SignUp = ()=>{
     }
 
 
-     /*핸드폰 인증 검사 */
+    /*핸드폰 인증 검사 */
 
+    /* 아이디, 별명 중복 검사 완료 */
+    const[idValid, setIdValid] = useState(false);
+    const[nickValid, setNickValid] = useState(false);
 
     useEffect(()=>{
         handleValidatePwd();
-        if(id&&pwd&&nick&&name&&phone&&completeAddress&&completeEmail){handleDisable();}
+        if(id&&pwd&&nick&&name&&phone&&completeAddress!=',,'&&completeEmail!='@'
+            &&completeDuplicateId&&completeDuplicateNick&&idValid&&nickValid){
+                handleDisable();
+            }
         user = {userId:id, userPwd:encPwd, userName:name,
-            userRegion: '서울특별시 강남구', userLevel: 'A',
             userNick:nick, userAddress:completeAddress, userPhone:phone, userEmail:completeEmail};
-    }, [id, pwd, chkPwd, nick, name, phone, completeEmail, completeAddress])
+            console.log("유즈이펙트",user);
+    }, [id, pwd, chkPwd, nick, name, phone, completeEmail, completeAddress,completeDuplicateId,completeDuplicateNick, idValid, nickValid])
 
 
     /*회원 가입 버튼 */
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(id&&pwd&&nick&&name&&phone&&completeAddress&&completeEmail){
             /*비밀번호 암호화*/
-        handleEncPwd();
         console.log(pwd);
 
         //axios이용해서 POST 요청 보내기
-        axios.post("/dasony/api/test", user, {
+        axios.post("/dasony/api/signUp", user, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
             }
         })
             .then(response => {
                 //요청 성공했을 때 실행할 코드
-                console.log(response.data);//응답 데이터 출력
+                console.log("회원가입", user);
+                setLoginUserInfo(response.data.user);
+                console.log("서버에서 회원 정보 받아왔는지 확인:", response.data.user);//응답 데이터 출력
                 alert(response.data.msg);
-                navigate('/location', {state:user});
+                navigate('/location');
             })
             .catch(error => {
                 //요청 실패했을 때 실행될 코드
                 console.log(error);//오류 메시지 출력
+                alert('다시 시도해주세요.');
             });
-        } else {
-            alert("입력칸을 모두 채워주세요.");
-        }
-        
-        
     };
 
     return(
@@ -216,8 +242,8 @@ const SignUp = ()=>{
                 <tbody>
                     <tr>
                         <th>아이디</th>
-                        <td><input id='id' type='text' onChange={handleValidTxt} onBlur={handleIdLength} value={id}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='아이디 중복 확인' data={id} setId={setId}/></th>
+                        <td><input id='id' type='text' onChange={handleValidTxt} onBlur={handleIdLength} maxLength={20} value={id}/></td>
+                        <th style={{textAlign:'left'}}><MainChecking txt='아이디 중복 확인' data={id} setId={setId} setCompleteDuplcateId={setCompleteDuplcateId} setIdValid={setIdValid}/></th>
                     </tr>
                     <tr>
                         <th>비밀번호</th>
@@ -225,17 +251,17 @@ const SignUp = ()=>{
                     </tr>
                     <tr>
                         <th>비밀번호 확인</th>
-                        <td><input type='password' onChange={handleChkPwd} onBlur={handleEncPwd} value={chkPwd} maxLength={20}/></td>
+                        <td><input type='password' onChange={handleChkPwd} value={chkPwd} maxLength={20}/></td>
                         <td style={{fontSize:'1vw', color:pwdColor, textAlign:'left'}}>{pwdTxt}</td>
                     </tr>
                     <tr>
                         <th>별명</th>
-                        <td><input id='nick' type='text' onChange={handleValidTxt} value={nick}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='별명 중복 확인' data={nick} setNick={setNick}/></th>
+                        <td><input id='nick' type='text' onChange={handleValidTxt}  maxLength={6} value={nick}/></td>
+                        <th style={{textAlign:'left'}}><MainChecking txt='별명 중복 확인' data={nick} setNick={setNick} setCompleteDuplcateNick={setCompleteDuplcateNick} setNickValid={setNickValid}/></th>
                     </tr>
                     <tr>
                         <th>이름(실명)</th>
-                        <td><input id='name' type='text' onChange={handleValidTxt} value={name}/></td>
+                        <td><input id='name' type='text' onChange={handleValidTxt} maxLength={6} value={name}/></td>
                     </tr>
                     <tr>
                         <th>핸드폰번호</th>
@@ -245,9 +271,9 @@ const SignUp = ()=>{
                     <tr>
                         <th>이메일</th>
                         <td>
-                            <input type='text' style={{width:'38%'}} onChange={handleEmailId} onBlur={handleCompleteEmail} value={emailId}/>
+                            <input id='emailId' type='text' style={{width:'38%'}} onChange={handleValidTxt} onBlur={handleCompleteEmail} maxLength={20} value={emailId}/>
                             {" "}@{" "}
-                            <input type='text' style={{width:'36%'}} value={email==''?userEmail:email} readOnly={readOnly} onChange={handleUserEmail}  onBlur={handleCompleteEmail}/>
+                            <input id='email' type='text' style={{width:'36%'}} value={email==''?userEmail:email} readOnly={readOnly} onChange={handleValidTxt}  onBlur={handleCompleteEmail} maxLength={12}/>
                         </td>
                         <th style={{textAlign:'left'}}>
                             <select onChange={handleEmail}>

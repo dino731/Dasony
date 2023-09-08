@@ -11,6 +11,7 @@
     box-sizing: border-box;
     text-align: center;
     margin: auto;
+    color: #7A7A7A;
 }
 
 
@@ -20,7 +21,10 @@
     margin-top: 5vh;
     font-family: 'HakgyoansimWoojuR';
 }
-
+.finding-container>table th{
+    width: 30%;
+    font-size: 100%;
+}
 .finding-container>table>thead>tr{
     height: 15vh;
     font-size: 1.5vw;
@@ -47,7 +51,7 @@
     color: #CB9DE7;
     background-color: none;
     border : 3px solid #CB9DE7; 
-    color:#CB9DE7;
+    background-color: white;
     font-weight: 900;
 }
 .finding-container>table button:hover{

@@ -80,3 +80,12 @@ export const BoardLocalCategoryState = atom({
     { name: '의료', value: '2304' },
   ],
 }) 
+
+
+
+
+//로그인 정보
+export const loginUserState = atom({
+  key : 'loginUserState',
+  default : {},
+})
