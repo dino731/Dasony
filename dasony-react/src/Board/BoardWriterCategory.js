@@ -14,7 +14,7 @@ const BoardWriterCategory = () =>{
    // Recoil 상태 가져오기
    const [boardCateStateValue, setBoardCateState] = useRecoilState(boardCateState);
    const boardDetailCategory = useRecoilValue(BoardDetailcategoryState);
-   const boardVotecategory = useRecoilValue(BoardVotecategoryState);
+   const boardVotecategory = useRecoilValue(BoardVotecategoryState); 
    const boardShortscategory = useRecoilValue(BoardShortscategoryState);
    const boardInterestCategory = useRecoilValue(BoardInterestCategoryState);
    const boardJMTCategory = useRecoilValue(BoardJMTCategoryState);
