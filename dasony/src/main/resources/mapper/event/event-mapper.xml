@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="event">
+	<resultMap type="Event" id="eventMap">
+		<id column="event_no" property="no" />
+		<result column="event_title" property="title" />
+		<result column="event_content" property="content" />
+		<result column="event_start_date" property="startDate" />
+		<result column="event_end_date" property="endDate" />
+		<result column="event_winner_date" property="winnerDate" />
+		<result column="event_thumbnail" property="thumbnail" />
+		<result column="event_video_link" property="videoLink" />
+		<result column="event_detail_link" property="detailLink" />
+		<result column="event_page" property="pageLink" />
+		<result column="event_upload_date" property="uploadDate" />
+		<result column="event_category" property="eventCategory" />
+		<result column="event_win_time_code" property="winTime" />
+	</resultMap>
+	
+	<resultMap type="Reward" id="rewardMap">
+		<id column="event_reward_no" property="rewardNo" />
+		<result column="event_reward_name" property="rewardName" />
+		<result column="event_reward_brand" property="brand" />
+		<result column="event_reward_range_cate" property="rewardRange" />
+		<result column="event_reward_category" property="rewardCategory" />
+		<result column="event_rank" property="rank" />
+		<result column="event_reward_amount" property="amount" />
+		<result column="event_no" property="eventNo" />
+	</resultMap>
+
+	<select id="selectAllEvent" parameterType="hashmap" resultMap="eventMap">
+		select event_no, event_title, event_end_date, event_upload_date, event_page, event_category
+		from (select event_no, event_title, event_end_date, event_upload_date, event_page, event_category,
+				case when sysdate > event_end_date then '종료' else '진행' end status
+			  from event left join event_code_list using(event_no) 
+			  			 left join event_code using(event_cate_code))
+		where 1=1
+		<if test="category != null and category!='카테고리'">
+			and event_category = #{category}
+		</if>
+		<if test="status != null and status != '선택'">
+			and status = #{status}
+		</if>
+		order by event_no desc
+	</select>
+	
+	<select id="selectEvent" parameterType="String" resultMap="eventMap">
+		select event_no, event_title, event_content, event_start_date, event_end_date, event_end_date,
+			event_winner_date, event_thumbnail, event_video_link, event_detail_link, event_page, 
+			event_upload_date, event_category, event_win_time 
+		from event left join event_code_list using(event_no) left join event_code using(event_cate_code)
+			left join event_win_cate_list using(event_no) left join event_win_category using(event_win_time_code)
+		where event_no=#{no}
+	</select>
+	
+	<select id="selectReward" parameterType="String" resultMap="rewardMap">
+		select event_reward_no, event_reward_name, event_reward_brand, event_reward_range_cate,
+			event_reward_category, event_no, event_rank, event_reward_amount
+		from event_reward left join event_range using(event_reward_range_code)
+			left join event_reward_list using(event_reward_no)
+		where event_no=#{no}
+	</select>
+	
+	<update id="updateEventInfo" parameterType="Event">
+		update event set event_title = #{title}, event_content = #{content}, event_start_date = #{startDate},
+						event_end_date = #{endDate}, event_winner_date = #{winnerDate}, 
+						event_thumbnail = #{thumbnail}, event_video_link = #{videoLink}, 
+						event_detail_link = #{detailLink}, event_page = #{pageLink}
+		where event_no = #{no}
+	</update>
+	
+	<update id="updateEventCategory" parameterType="Event">
+		<selectKey resultType="string" keyProperty="eventCategory" order="BEFORE">
+			select event_cate_code from event_code where event_category = #{eventCategory}
+		</selectKey>
+		update event_code_list set event_cate_code = #{eventCategory} where event_no = #{no}
+	</update>
+	
+	<update id="updateEventWinCategory" parameterType="Event">
+		<selectKey resultType="string" keyProperty="winTime" order="BEFORE">
+			select event_win_time_code from event_win_cate_list where event_win_time=#{winTime}
+		</selectKey>
+		update event_win_cate_list set event_win_time_code = #{winTime} where event_no = #{no}
+	</update>
+	
+	<update id="updateRewardInfo" parameterType="Reward">
+		<selectKey resultType="String" keyProperty="rewardRange" order="BEFORE">
+			select event_reward_range_code from event_range where event_reward_range_cate = #{rewardRange}
+		</selectKey>
+		update event_reward set event_reward_name = #{rewardName},
+						event_reward_brand = #{brand}, event_reward_range_code = #{rewardRange},
+						event_reward_category = #{rewardCategory}
+		where event_reward_no = #{rewardNo}
+	</update>
+	
+	<update id="updateEventRewardInfo" parameterType="Reward">
+		update event_reward_list set event_rank = #{rank}, event_reward_amount = #{amount}
+		where event_reward_no = #{rewardNo}
+	</update>
+	
+	<insert id="insertRewardInfo" parameterType="Reward">
+		<selectKey resultType="string" keyProperty="rewardRange" order="BEFORE">
+			select event_reward_range_code from event_range where event_reward_range_cate=#{rewardRange}
+		</selectKey>
+		insert into event_reward (event_reward_no, event_reward_name, event_reward_brand, event_reward_range_code,
+								event_reward_category)
+		values(seq_erno.nextval, #{rewardName}, #{brand}, #{rewardRange}, #{rewardCategory})
+	</insert>
+	
+	<insert id="insertEventRewardInfo" parameterType="Reward">
+		insert into event_reward_list (event_no, event_reward_no, event_rank, event_reward_amount)
+		values(#{eventNo}, seq_erno.currval, #{rank}, #{amount})
+	</insert>
+</mapper>

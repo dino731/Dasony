@@ -594,7 +594,10 @@ div>.event-status-list{
             flex-wrap: wrap;
         }
 
-        >.event-reward-detail{
+        .event-reward-item{
+            margin-bottom: 5%;
+
+            .event-reward-detail{
             display: flex;
             flex-wrap: wrap;
 
@@ -604,6 +607,8 @@ div>.event-status-list{
                 &:last-child{width: 20%;}
             }
         }
+        }
+        
     }
 }
 /* 이벤트 등록폼 Fin */
