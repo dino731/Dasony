@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="board">
+
+	<!-- Board 객체 resultMap -->
+	<resultMap id="boardResultSet" type="board">
+		<id column="BOARD_NO" property="boardNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_WRITE_DATE" property="boardWriteDate"/>
+		<result column="BOARD_VIEWS" property="boardViews"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_STATUS" property="boardStatus"/>	
+		<result column="BOARD_TAG" property="boardTag"/>
+		
+		<result column="USER_VIEW_COUNT" property="userViewCount"/>
+		<result column="REPLY_COUNT" property="replyCount"/>
+	</resultMap>
+	<!-- 카테고리 객체 resultMap -->
+	<resultMap id="boardCateResultSet" type="boardCate">
+		<id column="BOARD_CATE_NO" property="boardCateNo"/>
+		<result column="BOARD_BIG_CATE" property="boardBigCate"/>
+		<result column="BOARD_MIDDLE_CATE" property="boardMiddleCate"/>
+		<result column="BOARD_SMALL_CATE" property="boardSmallCate"/>
+	</resultMap>
+	<!-- 이미지 객체 resultMap -->
+	<resultMap id="boardImgResultSet" type="boardImg">
+		<id column="BOARD_IMG_NO" property="boardImgNo"/>
+		<result column="BOARD_IMG_MOD_NAME" property="boardImgModName"/>
+		<result column="BOARD_IMG_ORI_NAME" property="boardImgOriName"/>
+		<result column="BOARD_IMG_PATH" property="boardImgPath"/>
+		<result column="BOARD_IMG_UPLOAD_DATE" property="boardImgUploadDate"/>
+		<result column="BOARD_IMG_LEVEL" property="boardImgLevel"/>
+		<result column="BOARD_IMG_STATUS" property="boardImgStatus"/>
+	</resultMap>
+	<!-- 비디오 객체 resultMap -->
+	<resultMap id="boardVideoResultSet" type="boardVideo">
+		<id column="VIDEO_NO" property="videoNo"/>
+		<result column="VIDEO_MOD_NAME" property="videoModName"/>
+		<result column="VIDEO_ORI_NAME" property="videoOriName"/>
+		<result column="VIDEO_PATH" property="videoPath"/>
+		<result column="VIDEO_UPLOAD_DATE" property="videoUploadDate"/>
+	</resultMap>
+
+	<!-- 유저 객체 resultMap -->
+	<resultMap type="user" id="userMap">
+		<id column="USER_NO" property="userNo"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_PWD" property="userPwd"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_NICKNAME" property="userNick"/>
+		<result column="USER_ADDRESS" property="userAddress"/>
+		<result column="USER_REGION" property="userRegion"/>
+		<result column="USER_PHONE" property="userPhone"/>
+		<result column="USER_EMAIL" property="userEmail"/>
+		<result column="USER_LEVEL" property="userLevel"/>
+		<result column="USER_JOIN_DATE" property="userJoinDate"/>
+		<result column="USER_MOD_DATE" property="userModDate"/>
+		<result column="USER_STATUS" property="userStatus"/>
+	</resultMap>
+	
+	<!-- BoardExt 확장자 resultMap -->
+	<resultMap type="boardExt" id="boardListResultSet">
+		<id column="BOARD_NO" property="boardNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_WRITE_DATE" property="boardWriteDate"/>
+		<result column="BOARD_VIEWS" property="boardViews"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_STATUS" property="boardStatus"/>	
+		<result column="BOARD_TAG" property="boardTag"/>
+		
+		<association property="user" resultMap="userMap"/>
+		<association property="boardCate" resultMap="boardCateResultSet"/>
+		<association property="boardImg" resultMap="boardImgResultSet"/>
+		<association property="boardVideo" resultMap="boardVideoResultSet"/>	
+	</resultMap>
+		
+	
+	<select id="boardDailyList" resultMap="boardListResultSet">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, COUNT(R.REPLY_CONTENT) AS REPLY_COUNT
+		FROM BOARD B
+		JOIN MEMBER M ON B.USER_NO = M.USER_NO
+		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+		JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
+		LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
+		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
+		WHERE M.USER_REGION = '서울특별시 강남구'
+		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME
+	</select>
+
+	
+
+
+
+
+</mapper>
