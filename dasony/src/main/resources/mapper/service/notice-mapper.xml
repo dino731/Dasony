@@ -11,8 +11,47 @@
 		<result column="notice_modify_date" property="modifyDate"/>
 	</resultMap>
 	
+	<select id="selectList" parameterType="hashmap" resultMap="noticeResultSet">
+		select * from notice
+		<if test="keyword != null and keyword != ''">
+			<choose>
+				<when test="category == '제목'">
+					where notice_title like '%${keyword}%'
+				</when>
+				<when test="category == '내용'">
+					where notice_content like '%${keyword}%'
+				</when>
+				<when test="category == '제목 및 내용'">
+					where (notice_title like '%${keyword}%') or (notice_content like '%${keyword}%')
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="selectNotice" parameterType="int" resultMap="noticeResultSet">
+		select * from notice where notice_no=#{no}
+	</select>
+	
 	<insert id="addNotice" parameterType="Notice">
 		insert into notice(notice_no, notice_category, notice_title, notice_content, notice_write_date, notice_modify_date)
 		values(seq_nno.nextval, #{category}, #{title}, #{content}, sysdate, sysdate)
 	</insert>
+	
+	<delete id="deleteNotice" parameterType="int">
+		delete from notice where notice_no=#{no}
+	</delete>
+	
+	<update id="modifyNotice" parameterType="Notice">
+		update notice set notice_category = #{category}, notice_title = #{title}, notice_content = #{content},
+							notice_modify_date = sysdate
+					where notice_no = #{no}	
+	</update>
+	
+	<select id="selectNoticeRowNum" parameterType="int" resultType="int">
+		select rnum from (select rownum rnum, a.* from (select * from notice) a) where notice_no=#{no}
+	</select>
+	
+	<select id="selectNoticeDetailList" parameterType="int" resultMap="noticeResultSet">
+		select * from (select rownum rnum, a.* from notice a) where rnum in (#{num}, ${num-1}, ${num+1})
+	</select>
 </mapper>
