@@ -16,4 +16,5 @@ private int donaAmount;//	DONA_AMOUNT 기부 금액
 private Date executeDate;//	DONA_EXECUTE_DATE 기부 실행 날짜
 private int userNo;//	USER_NO
 private int donaNo;//	DONA_NO 기부 글 번호
+private String donaName;
 }

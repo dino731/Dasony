@@ -1,9 +1,13 @@
 package com.ds.dasony.game.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ds.dasony.game.model.dao.GameDao;
 import com.ds.dasony.game.model.vo.Game;
+import com.ds.dasony.member.model.vo.User;
 
 @Service
 public class GameServiceImpl implements GameService{
@@ -14,6 +18,11 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public int insertGame(Game gameData) {
 		return gameDao.insertGame(gameData);
+	}
+	
+	@Override
+	public String gameStartYN(int userNo) {
+		return gameDao.gameStartYN(userNo);
 	}
 	
 }

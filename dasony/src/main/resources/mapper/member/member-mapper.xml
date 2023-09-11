@@ -73,5 +73,11 @@
 		SET USER_REGION = #{location}
 		WHERE USER_NO = #{userNo}
 	</update>
+	
+	<select id="gameStartYN" parameterType="int" resultType="string">
+		SELECT GAME_STATUS
+		FROM MEMBER
+		WHERE USER_NO = #{userNo}
+	</select>
 
 </mapper>

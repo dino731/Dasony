@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ds.dasony.donation.model.dao.DonationDao;
 import com.ds.dasony.donation.model.vo.Donation;
+import com.ds.dasony.donation.model.vo.DonationList;
 
 @Service
 public class DonationServiceImpl implements DonationService{
@@ -75,4 +76,11 @@ public class DonationServiceImpl implements DonationService{
 	public int deleteDona(int donaNo) {
 		return donationDao.deleteDona(donaNo);
 	}
+	
+	@Override
+	public List<DonationList> getMyDonationList(int userNo){
+		return donationDao.getMyDonationList(userNo);
+	}
+	
+	
 }
