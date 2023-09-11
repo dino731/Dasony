@@ -1,0 +1,38 @@
+/*  */
+.board-category-selectBoxList{
+  display: flex;
+}
+.board-selectBox-cate-title{
+  font-size: larger;
+  font-weight: 800;
+  margin: 2vw;
+}
+.board-admin-writer-wrapper{
+  display: flex;
+  justify-content: right;
+}
+/*  */
+
+.board-admin-boardList-wrapper{
+width: 100%;
+
+}
+.adBoard-delete-title{
+  margin-right: 35vw;
+  height: 4vh;
+  font-size: x-large;
+  font-weight: 700;
+}
+.adBoard-cancel-btn-box>button{
+  width: 8vw;
+  height: 4vh;
+  margin: 1vw;
+  border: none;
+
+}
+.adBoard-delete-btn-box>button{
+  width: 8vw;
+  height: 4vh;
+  margin: 1vw;
+  border: none;
+}

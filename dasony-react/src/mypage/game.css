@@ -1,9 +1,7 @@
-/* table{
-    margin: auto;
+ #gameTable{
     border-collapse: collapse;
-
 }
-td{
+#gameTable td{
     width: 30px;
     height: 30px;
     text-align:center;
@@ -12,10 +10,16 @@ td{
 
 
 #game{
-    position: absolute;
     display: none;
+    position: absolute;
     top: 0;
     border: 1px solid red;
     
 }
- */
+#gameDiv{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}

@@ -6,65 +6,99 @@ import { boardCateState, boardPostState } from '../atoms';
 import BoardListHeader from './BoardListHeader';
 import {BoardDetailcategoryState, BoardVotecategoryState, BoardShortscategoryState, BoardInterestCategoryState, 
   BoardJMTCategoryState, BoardFashionCategoryState, BoardLocalCategoryState } from '../atoms';
+import axios from 'axios';
 
 const BoardDailyList = ()=>{
-  const [boardPost, setBoardPost] = useRecoilState(boardPostState);
-  const boardDetailCategory = useRecoilValue(BoardDetailcategoryState);
-  const boardVotecategory = useRecoilValue(BoardVotecategoryState);
-  const boardShortscategory = useRecoilValue(BoardShortscategoryState);
+
+  const[boardData,setBoardData]=useState([]);
+  /* axios 시작 */
+  useEffect(() => {
+    // Axios를 사용하여 서버로 GET 요청을 보냅니다.
+    axios.get('http://localhost:3000/dasony/board/general/daily') // 서버의 API 엔드포인트에 맞게 수정
+      .then((response) => {
+        // 성공적으로 응답을 받았을 때 실행되는 부분
+        console.log('BoardList 응답 데이터:', response.data);
+        setBoardData(response.data); // 서버에서 받아온 데이터를 상태 변수에 저장
+      })
+      .catch((error) => {
+        // 요청 중 오류가 발생했을 때 실행되는 부분
+        console.error('서버 요청 오류:', error);
+      });
+  }, []); // 빈 배열을 두번째 인자로 전달하면 컴포넌트가 마운트될 때 한 번만 실행됩니다.
+  console.log('게시판리스트 boardData ===>',boardData);
+
+
+  /* axios 끝 */
+  /* 보드 카테고리 atom관련 시작  ain 0904*/
+  // const [boardPost, setBoardPost] = useRecoilState(boardPostState);
   const boardInterestCategory = useRecoilValue(BoardInterestCategoryState);
   const boardJMTCategory = useRecoilValue(BoardJMTCategoryState);
   const boardFashionCategory = useRecoilValue(BoardFashionCategoryState);
   const boardLocalCategory = useRecoilValue(BoardLocalCategoryState);
+  /* 보드 카테고리 atom관련 끝  */
 
+  /* 현재 경로와 비교하기 위함 ain 0904*/
   const location = useLocation();
   const path = location.pathname;
+  // console.log('보드리스트 path :',path);
 
-  const dailypath = new RegExp("daily/dwriter");
+  /* atom과 구조가 달라서 daily 카테고리 전용 따로 뽑음  ain 0904*/
+  const [listDailyCategory, setListDailyCategory] = useState([
+      { name: '일상', value: '1101' },
+      { name: '날씨', value: '1104' },
+      { name: '투표', value: '1103' },
+      { name: '쇼츠', value: '1102' },
+  ]);
 
-  const dailyOptions = path.match(dailypath) ? path : null;
-  const shortsOptions = path.includes('swriter')? path : null;
-  const voteOptions = path.includes('vwriter')? path : null;
-  const interestOptions = path.includes('interest')? path : null;
-  const jmtOptions = path.includes('jmt')? path : null;
-  const fashionOptions = path.includes('fashion')? path : null;
+  /* 현재 경로 비교연산 밑작업용 ain 0904 */
+  const listDailyOptions = path.includes('daily') ? path : null;
+  const listInterestOptions = path.includes('interest')? path : null;
+  const listJmtOptions = path.includes('jmt')? path : null;
+  const listFashionOptions = path.includes('fashion')? path : null;
+  // console.log('보드리스트 listDailyOptions :',listDailyOptions);
 
- const [boardCate, setBoardCate] = useState([]);
- // console.log('boardCate----->',boardCate);
+  /* 경로 이동을 위한 ain 0904 */
+  const [listPath, setListPath] = useState([]);
+  const pathD = "\/general\/daily\/";
+  const pathI = "\/general\/interest\/";
+  const pathJ = "\/info\/jmt\/";
+  const pathF = "\/info\/fashion\/";
+  const pathL = "\/info\/local\/";
+
+
+   /* listBoardCate 현재 경로에 맞는 카테고리 들어감 ain 0904 */
+ const [listBoardCate, setListBoardCate] = useState([]);
+//  console.log('listBoardCate----->',listBoardCate);
  useEffect(() => {
-   if (path == dailyOptions) {
-     setBoardCate(boardDetailCategory);
-     // console.log('보드카테 dailyOP',boardCate);
-   } else if (path == shortsOptions) {
-     setBoardCate(boardShortscategory);
-   } else if (path == voteOptions) {
-     setBoardCate(boardVotecategory);
-   } else if (path == interestOptions) {
-     setBoardCate(boardInterestCategory);
-   } else if (path == jmtOptions) {
-     setBoardCate(boardJMTCategory);
-   } else if (path == fashionOptions) {
-     setBoardCate(boardFashionCategory);
-   } else {
-     setBoardCate(boardLocalCategory);
-     // console.log('보드카테else:',boardCate);
-   }
- }, []);
+  if (path == listDailyOptions) {
+   setListBoardCate(listDailyCategory);
+   setListPath(pathD);
+  } else if (path == listInterestOptions) {
+   setListBoardCate(boardInterestCategory);
+   setListPath(pathI);
+  } else if (path == listJmtOptions) {
+   setListBoardCate(boardJMTCategory);
+   setListPath(pathJ);
+  } else if (path == listFashionOptions) {
+   setListBoardCate(boardFashionCategory);
+   setListPath(pathF);
+  } else {
+   setListBoardCate(boardLocalCategory);
+   setListPath(pathL);
+  }
+}, []);
+  // console.log('게시판리스트 listBoardCate ===>',listBoardCate);
 
-
-
-
-
-
-
-
+  /* 키워드 검색시 사용하는 state. ain 0904 */
   const [keyword, setKeyword] = useState([]);
   const [inputContent, setInputContent] = useState('');
 
+  /* 키워드 리셋 핸들러 ain 0904 */
   const handleReset = () => {
     setKeyword([]);
   };
 
+  /* 키워드 enter사용시 키워드 생성 ain 0904 */
   const enter = (e) =>{
     if(e.key == 'Enter'){
       e.preventDefault();
@@ -75,8 +109,9 @@ const BoardDailyList = ()=>{
       setKeyword([...keyword, inputContent]);
       setInputContent('');
     }
-  }
+  };
 
+  /* 키워드 엑스 버튼 이벤트 삭제됨 ain 0904*/
   const deleteKeyWord = (index)=>{
     setKeyword(keyword.filter((item, i) => item !== keyword[index]));
     setInputContent('');
@@ -145,39 +180,45 @@ const BoardDailyList = ()=>{
                 </div>
                 <div className="col-1 col-md-1">
                   <button type="button" className="boardList-search-reset-btn" onClick={handleReset}>
-                    <img src="/resources/common-img/boardImg/초기화아이콘.png" className="boardList-search-reset-btn-icon" />
+                    <img src="/resources/board/ricon.png" className="boardList-search-reset-btn-icon" />
                       <a style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="주기 아이콘">주기 아이콘  제작자: redempticon - Flaticon</a>
                   </button>
+                  
                 </div>
               </div>
             </form>
           </div>
         <div className="boardList-list-wrapper">
           {
-            boardPost.length > 0 && boardPost.filter((board)=> board.boardCateNo == boardCate.name )
+            //  {boardData.map((boardItem) => (
+            //   <li key={boardItem.id}>
+            //     <Link to={`/board/${boardItem.id}`}>{boardItem.title}</Link>
+            //   </li>
+            boardData.length > 0 && listBoardCate.length > 0 && boardData.filter((board) => {
+              return listBoardCate.some((category) => category.name === board?.boardCate.boardSmallCate);})
             .map( (board, index)=>( 
-            <ul key={index} className="boardList-list-ul-wrapper">
-             <li className="boardList-list-li">
-               <div className="boardList-list-wrapper">
-                 <div className="boardList-list-container">
-                     <Link to={'/board/general/daily/detail/'+board.boardNo+'/'+board.userName} style={{textDecoration:'none'}}>
-                       <div className="boardList-list-content-container">
-                           <div className="boardList-list-keyword">{board.boardCateNo}</div>
-                           <div className="boardList-list-content-title">{board.boardTitle}</div>
-                           <div className="boardList-list-content">{board.boardContent}</div>
-                           <div className="boardList-list-content-info"><span>{board.userName}</span><span>{board.boardWriteDate}</span><span>11:50</span></div>
-                           <div className="boardList-list-content-action">
-                             <span><img src="/resources/common-img/boardImg/비밀번호표시아이콘.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/-" title="비밀번호 표시 아이콘">비밀번호 표시 아이콘  제작자: exomoon design studio - Flaticon</span></span>
-                             <span><img src="/resources/common-img/boardImg/빈하트.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="심장 아이콘">심장 아이콘  제작자: Noplubery - Flaticon</span></span>
-                             <span><img src="/resources/common-img/boardImg/대화아이콘.png"/>1 <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="대화 아이콘">대화 아이콘  제작자: exomoon design studio - Flaticon</span></span></div>
-                       </div>
-                     </Link>
-                     <div className="boardList-list-img">
-                       <img src="/resources/common-img/boardImg/지현님슈퍼슈퍼지능.jpg" alt="썸네일" className="board-img"/>
-                     </div>
-                 </div>
-               </div>
-             </li>
+            <ul key={index} className="boardList-list-ul-wrapper">        
+              <li className="boardList-list-li">
+                <div className="boardList-list-wrapper">
+                  <div className="boardList-list-container">
+                        <Link to={'/board'+listPath+'detail/'+board.boardNo+'/'+board.user.userNick} style={{textDecoration:'none'}}>
+                          <div className="boardList-list-content-container">
+                              <div className="boardList-list-keyword">{board.boardCate.boardSmallCate}</div>
+                              <div className="boardList-list-content-title">{board.boardTitle}</div>
+                              <div className="boardList-list-content"dangerouslySetInnerHTML={{ __html: board.boardContent }}></div>
+                              <div className="boardList-list-content-info"><span>{board.user.userNick}</span><span>{board.boardWriteDate}</span></div>          
+                              <div className="boardList-list-content-action">
+                                <span><img src="/resources/board/eicon.png"/>{board.boardViews} <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/-" title="비밀번호 표시 아이콘">비밀번호 표시 아이콘  제작자: exomoon design studio - Flaticon</span></span>
+                                <span><img src="/resources/board/hicon.png"/>{board.userViewCount} <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="심장 아이콘">심장 아이콘  제작자: Noplubery - Flaticon</span></span>
+                                <span><img src="/resources/board/ticon.png"/>{board.replyCount} <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="대화 아이콘">대화 아이콘  제작자: exomoon design studio - Flaticon</span></span></div>
+                          </div>
+                        </Link>
+                      <div className="boardList-list-img">
+                        <img src={"http://localhost:8083/dasony"+board.boardImg.boardImgPath+board.boardImg.boardImgModName+".jpg"} alt="썸네일" className="board-img"/>
+                      </div>
+                  </div>
+                </div>
+              </li>
            </ul>
             ))
              

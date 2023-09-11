@@ -1,7 +1,42 @@
 import './UserLocation.css';
-import { Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import { useRecoilState } from 'recoil';
+import { loginUserState } from '../atoms';
+import axios from 'axios';
 
 const UserLocation = () => {
+
+    const {state} = useLocation();
+    const navigate = useNavigate();
+    const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
+
+    console.log("리코일에서 받아온 유저 정보-사용자 지역 설정(사용자):",loginUserInfo);
+    
+
+
+    {/*지역 정보 */}
+    const [city, setCity] = useState('서울시');
+    const [ward, setWard] = useState('강남구');
+    const [location, setLocation] = useState('서울시 강남구');
+    console.log(loginUserInfo.userNo);
+    const userNo = loginUserInfo.userNo;
+
+    const handleCity = (event) => setCity(event.target.value);
+    const handleWard = (event) => setWard(event.target.value);
+    const handleLocation = () => {setLocation(city+" "+ward);console.log("location:", location);}
+    
+    {/*지역 정보 전달 함수 */}
+    const handleLocationSubmit = async() =>{
+        await handleLocation();
+        console.log("서브밋때 되는지 확인할 용도:" , location);
+        axios.post('/dasony/api/location', {location:location==""?"서울시 강남구":location, userNo:userNo})
+        .then(res=>{
+            alert(res.data.msg);
+            navigate('/');
+        });
+    }
+
     return(
         <div className="userLocation-container">
             <h1>다소니님의 지역은 어디인가요?</h1>
@@ -12,26 +47,25 @@ const UserLocation = () => {
                 <tr>
                     <th>시/도 선택</th>
                     <td>
-                        <select>
-                            <option>어쩌구시1</option>
-                            <option>어쩌구시2</option>
-                            <option>어쩌구시3</option>
+                        <select onChange={handleCity} value={city==''?'서울시':city}>
+                            <option>서울시</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <th>구 선택</th>
                     <td>
-                        <select>
-                            <option>어쩌구1</option>
-                            <option>어쩌구2</option>
-                            <option>어쩌구3</option>
+                        <select onChange={handleWard} onBlur={handleLocation} value={ward==''?'강남구':ward}>
+                            <option>강남구</option>
+                            <option>강동구</option>
+                            <option>관악구</option>
+                            <option>노원구</option>
                         </select>
                     </td>
                 </tr>
                 </thead>
             </table>
-            <div><Link to='/'><button>확인</button></Link></div>
+            <div><button onClick={handleLocationSubmit}>확인</button></div>
         </div>
     );
 }

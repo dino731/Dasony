@@ -7,7 +7,8 @@ import Weather from './Weather';
 
 const Home = () =>{
 
-
+    console.log("로그인에서 localStorage에 저장된 user정보 확인 -(main사용자)",localStorage.getItem("loginUserNo"));
+    console.log("로그인에서 localStorage에 저장된 user정보 확인 -(main사용자)",localStorage.getItem("loginUserRegion"));
     return (
         <div className="home-container">
             <div className="home-weather">

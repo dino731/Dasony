@@ -5,9 +5,11 @@ import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class User {
 	
@@ -24,9 +26,6 @@ public class User {
 	private Date userJoinDate;
 	private Date userModDate;
 	private String userStatus;
-	
-	public User(){
-		
-	}
+	private int totalPoint;
 
 }

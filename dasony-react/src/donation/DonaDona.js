@@ -1,17 +1,35 @@
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 import './DonaDona.css';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const DonaDona = () => {
 
-    const {id} = useParams();
+    const {donaNo} = useParams();
     // const donaAmount = localStorage.getItem('donationAmount');
 
     const [isAllDonation, setIsAllDonation] = useState(false);
     const [donationAmount, setDonationAmount] = useState([]); // 초기값을 빈 배열로
     const initialAmount = 5000; // 보유 다손 초기 값
-    const [currentDason, setCurrentDason] = useState(initialAmount);
+    const [currentDason, setCurrentDason] = useState(0);
     // const [countDona, setCountDona] = useState(1); // 기부버튼 클릭 시 해당 기부 글 건수 카운트
+    
+    // const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
+    // console.log("몇 번이니" + loginUserNo); // userNo 가져옴
+
+    // useEffect(() => {
+
+    //         const userNo = loginUserNo;
+    
+    //         axios.post(`/dasony/api/userInfo`)
+    //         .then((response) => {
+    //             const userData = response.data;
+    //             setCurrentDason(userData)
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         });
+    //     }, []);
 
     const handleAllDonationChange = () => {
         setIsAllDonation((prevIsAllDonation) => !prevIsAllDonation);
@@ -40,8 +58,8 @@ const DonaDona = () => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
-    const handlebackmogh = (id) => {
-        window.location.href = `/donadetail/${id}`;
+    const handlebackmogh = (donaNo) => {
+        window.location.href = `/donadetail/${donaNo}`;
     }
 
     const handeldonation = () => {
@@ -56,16 +74,16 @@ const DonaDona = () => {
             // setCountDona(countDona + 1);
 
             // 기부 금액을 localStorage에 저장
-            localStorage.setItem(`donationAmount_${id}`, donationAmountInt);
+            localStorage.setItem(`donationAmount_${donaNo}`, donationAmountInt);
             // localStorage.setItem(`countDona_${id}`, countDona);
             // console.log("count : " + countDona);
 
             let idList = localStorage.getItem('id').split(", ");
             console.log("donation part ID : " + idList);
-            localStorage.setItem('id', localStorage.getItem('id') + ", " + id);
+            localStorage.setItem('id', localStorage.getItem('id') + ", " + donaNo);
             console.log(localStorage.getItem("id"));
             
-            window.location.href = '/donatotal';
+            window.location.href = '/mypage/Mydonation';
         }else{
             alert("기부 금액을 입력해주세요");
             return;
@@ -112,7 +130,7 @@ const DonaDona = () => {
                 <br/><br/>
             </div>
                 <button id="dona" onClick={handeldonation}>기부하기</button>
-                <button id="back_dona" onClick={() => handlebackmogh(id)}>모금함으로 돌아가기</button>
+                <button id="back_dona" onClick={() => handlebackmogh(donaNo)}>모금함으로 돌아가기</button>
         </div>
     );
 }

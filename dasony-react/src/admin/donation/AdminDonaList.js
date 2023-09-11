@@ -2,13 +2,25 @@ import { useState, useEffect } from 'react';
 import './AdminDonaList.css';
 import { useNavigate} from 'react-router-dom';
 import { useDonaList } from './AdminDonaListContext';
+import axios from 'axios';
 
 const AdminDonaList = () => {
 
     const navigate = useNavigate();
 
-    const {adDonaList} = useDonaList();
     const [selectedArea, setSelectedArea] = useState('');
+    const [adDonaList, setAdDonaList] = useState([]);
+
+    const getAdDonaList = () => {
+        axios.get("/dasony/admindonalist")
+        .then((response) => setAdDonaList(response.data))
+        .catch(error => console.log(error));
+    }
+
+    useEffect(() => {
+        getAdDonaList();
+    },[])
+
 
     const handleCreateDona = () => {
 
@@ -19,12 +31,13 @@ const AdminDonaList = () => {
         navigate('/admindonaenroll?selectedArea='+selectedArea);
     }
 
-    const handleAdDetail = (id) => {
-        const selectDona = adDonaList.find(number => number.id === id);
+    const handleAdDetail = (donaNo) => {
+        const selectDona = adDonaList.find(number => number.donaNo === donaNo);
 
         if(selectDona){
             localStorage.setItem("selectDona", JSON.stringify(selectDona));
-            navigate(`/admindonadetail/${id}`);
+
+            navigate(`/admindonadetail/${donaNo}`);
         }
     }
 
@@ -60,16 +73,16 @@ const AdminDonaList = () => {
                     <table id='listbody'>
                         <tbody style={{height: '100%'}}>
                             {
-                                adDonaList.map(list => (
-                                    <tr key={list.id} onClick={() => handleAdDetail(list.id)}>
-                                        <td width="150">{list.id}</td>
-                                        <td width="550">{list.title}</td>
-                                        <td width="350">{list.dona}</td>
-                                        <td width="220">{list.createdate}</td>
-                                        <td width="242">{list.enddate}</td>
-                                        <td width="250">{list.mony}</td>
-                                        <td width="250">{list.goalmony}</td>
-                                        <td width="250">{list.achieve}</td>
+                                adDonaList && adDonaList.length > 0 && adDonaList.map(list => (
+                                    <tr key={list.donaNo} onClick={() => handleAdDetail(list.donaNo)}>
+                                        <td width="150">{list.donaNo}</td>
+                                        <td width="470">{list.donaTitle}</td>
+                                        <td width="350">{list.donaName}</td>
+                                        <td width="220">{list.donaWriteDate}</td>
+                                        <td width="242">{list.donaEndDate}</td>
+                                        <td width="250">{list.donaTotalAmount}다손</td>
+                                        <td width="250">{list.donaTargetAmount}다손</td>
+                                        <td width="250">{list.donaAchieve}%</td>
                                     </tr>
                                 ))
                             }
@@ -80,4 +93,6 @@ const AdminDonaList = () => {
         </div>
     )
 }
+
 export default AdminDonaList;
+

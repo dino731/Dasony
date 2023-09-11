@@ -1,14 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {motion} from 'framer-motion';
-import { Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './PlzLogin.css';
 import {React, useState, useEffect} from 'react';
+import axios from 'axios';
+import { SHA256 } from 'crypto-js';
+import { useRecoilState } from 'recoil';
+import { loginUserState } from '../atoms';
 
 const TypingTitle = ({initialWord, fontSize, delay}) =>{
     const[word, setWord] = useState('');
     const[count, setCount] = useState(0);
     const completeWord = initialWord;
-    const exist = Math.ceil(Math.random()*500+delay);
 
     useEffect(()=>{
         if(count<completeWord.length){
@@ -41,6 +44,73 @@ const TypingTitle = ({initialWord, fontSize, delay}) =>{
 
 
 const PlzLogin = () => {
+
+    /*회원 가입, 지역 설정 중에 사용했던 데이터 파기 용도 */
+    const [user, setUser] = useRecoilState(loginUserState);
+    
+    /*암호화 키 지정 */
+    let secretKey = process.env.REACT_APP_CRYPTO_SECRET_KEY;
+
+    /*로그인 기능 */
+    const [login, setLogin] = useState({userId:"", userPwd:""});
+    const [pwd, setPwd] = useState("");
+        /*login 정보 저장 */
+    const handleLogin = (event) => {
+        if(event.target.id == 'id'){
+            const idVal = event.target.value;
+            setLogin({...login, userId:idVal});
+        } else if(event.target.id == 'pwd'){
+            const pwdVal = event.target.value;
+            setPwd(pwdVal);
+            /*Encrypt */
+            setLogin({...login, userPwd:SHA256(event.target.value, secretKey).toString()});
+            console.log(login);
+        }
+    }
+        /*login 정보 서버에 전달 */
+
+            /*로그인 버튼 disable */
+    const [disable, setDisable] = useState(true);
+    const handleDisable = ()=>{
+        /*id, pwd 공백 검사 */
+        if(login.userId!=""&& pwd !=""){
+            setDisable(false);
+        }
+        
+    }
+    useEffect(()=>{
+        handleDisable();
+        setUser({});
+        console.log("리코일에 저장된 값 확인하기-plzlogin",user);
+        console.log(localStorage.getItem("loginUserNo"));
+    }, [login.userId, pwd])
+
+        /*로그인 정보 전달 */
+    const navigate = useNavigate();
+    const handleLoginSubmit = () => {
+        axios.post('/dasony/api/login', login)
+        .then(res=>{
+            if(res.data.msg !=null){
+                /*atom에 user정보 저장 */
+                localStorage.setItem("loginUserNo", res.data.user.userNo);
+                localStorage.setItem("loginUserRegion", res.data.user.userRegion);
+                localStorage.setItem("loginUserLevel", res.data.user.userLevel);
+                localStorage.setItem("loginUserRegion", res.data.user.userRegion);
+                console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserNo"));
+                console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserRegion"));
+                console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserLevel"));
+                console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserRegion"));
+                alert(res.data.msg);
+                if(res.data.user!=null && res.data.user.userLevel == 'Z'){
+                    navigate('/admin/chart');
+                } else if(res.data.user!=null && res.data.user.userLevel !='Z'){
+                    navigate('/main');
+                }
+            } else {
+                alert(res.data.err);
+            }
+        });
+    }
    
     return(
         
@@ -67,18 +137,18 @@ const PlzLogin = () => {
                                 <tr>
                                     <th style={{letterSpacing:9}}>아이디</th>
                                     <td colSpan={2}>
-                                        <input type='text'></input>
+                                        <input id='id' type='text' onChange={handleLogin} value={login.userId}></input>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>비밀번호</th>
                                     <td colSpan={2}>
-                                        <input type='password'></input>
+                                        <input id='pwd' type='password' onChange={handleLogin} value={pwd}></input>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colSpan={3}>
-                                        <button type='submit'>로그인</button>
+                                        <button type='submit' onClick={handleLoginSubmit} disabled={disable}>로그인</button>
                                         <hr/>
                                     </td>
                                 </tr>

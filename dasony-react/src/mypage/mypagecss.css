@@ -8,6 +8,97 @@
   list-style: none;
 }
 
+.user-datail-table{
+  padding: 0;
+  margin: 0;
+  width: 90vw;
+  height: 100vh;
+  box-sizing: border-box;
+  color: #7A7A7A;
+}
+
+.user-datail-table table{
+  padding-top: 10px;
+  text-align: center;
+  width: 55%;
+  font-size: 1.5vw;
+  font-family: 'HakgyoansimWoojuR';
+}
+.user-datail-table table tbody{
+  text-align: center;
+}
+
+.user-datail-table table tbody>tr>th:first-child{
+  width: 15%;
+}
+.user-datail-table table tbody>tr>td:first-child{
+  width: 60%;
+}
+.user-datail-table table tbody>tr>th:last-child{
+  width: 25%;
+}
+
+.user-datail-table tr{
+  height: 8vh;
+}
+
+.user-datail-table thead th{
+  text-align: left;
+  font-size: 2vw;
+  padding-top: 1.5vh;
+}
+
+.user-datail-table th{
+  text-align: right;
+  width: 20%;
+}
+
+.user-datail-table input{
+  width: 80%;
+  border: 2px solid #CB9DE7;
+  border-radius: 0.5vw;
+}
+
+.user-datail-table button{
+  width: 70%;
+  height: 5.5vh;
+  border-radius: 0.5vw;
+  font-size: 1vw;
+  letter-spacing: 0.1vw;
+  border : 3px solid #CB9DE7; 
+  color:#CB9DE7; 
+  background-color:white; 
+  font-weight: 900;
+}
+
+.user-datail-table tfoot button{
+  width:50%;
+  height: 8vh;
+  font-size: 1.5vw;
+  border : 3px solid #CB9DE7; 
+  color:#CB9DE7; 
+  background-color:white; 
+  font-weight: 900;
+}
+
+.user-datail-table button:hover{
+  background-color:#CB9DE7;
+  color:#FCFA90;
+  transition-duration: 0.5s;
+}
+
+.user-datail-table table select{
+  width: 70%;
+  height: 5.5vh;
+  font-size: 1vw;
+  border : 3px solid #CB9DE7; 
+  color:#CB9DE7; 
+  background-color:white; 
+  font-weight: 900;
+  border-radius: 0.5vw;
+}
+
+
 #rabitimg{
   border-radius: 8px;
   width: 50%;
@@ -289,7 +380,9 @@ justify-content: center;
   object-fit: cover;
 
 }
-
+.afterClick{
+  background-color: lightgray;
+}
 
 
 
