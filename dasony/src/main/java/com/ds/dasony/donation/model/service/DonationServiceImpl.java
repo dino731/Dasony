@@ -39,36 +39,14 @@ public class DonationServiceImpl implements DonationService{
 	public Donation selectAdDonaDetail(int donaNo) {
 		return donationDao.selectAdDonaDetail(donaNo);
 	}
-
-//	@Override
-//	public String insertDona(Donation donation) {
-//		
-//		donation.setDonaTitle(donation.getDonaTitle());
-//		donation.setDonaName(donation.getDonaName());
-//		donation.setDonaTargetAmount(donation.getDonaTargetAmount());
-//		donation.setDonaContent(donation.getDonaContent());
-//		
-//		return donationDao.insertDona(donation);
-//	}
 	
 	 @Override
 	    public int insertDona(Donation donation) throws Exception{
-	       
-//		donation.setDonaTitle(donation.getDonaTitle());
-//		donation.setDonaName(donation.getDonaName());
-//		donation.setDonaTargetAmount(donation.getDonaTargetAmount());
-//		donation.setDonaContent(donation.getDonaContent());
-		
 		return donationDao.insertDona(donation);
 	 }
 
 	@Override
 	public int updateDona(Donation donation) throws Exception {
-		
-		donation.setDonaTitle(donation.getDonaTitle());
-		donation.setDonaName(donation.getDonaName());
-		donation.setDonaTargetAmount(donation.getDonaTargetAmount());
-		donation.setDonaContent(donation.getDonaContent());
 		return donationDao.updateDona(donation);
 	}
 	
@@ -77,10 +55,17 @@ public class DonationServiceImpl implements DonationService{
 		return donationDao.deleteDona(donaNo);
 	}
 	
+
 	@Override
 	public List<DonationList> getMyDonationList(int userNo){
 		return donationDao.getMyDonationList(userNo);
 	}
 	
 	
+
+//	@Override
+//	public int selectUserDason(int userNo) throws Exception{
+//		return donationDao.selectUserDason(userNo);
+//	}
+
 }

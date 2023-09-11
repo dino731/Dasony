@@ -22,5 +22,10 @@ public interface DonationService {
 
 	int deleteDona(int donaNo);
 
+
 	List<DonationList> getMyDonationList(int userNo);
+
+	
+//	int selectUserDason(int userNo) throws Exception;
+
 }

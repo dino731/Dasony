@@ -1,6 +1,7 @@
 import {Modal, ModalBody, ModalFooter, ModalHeader, Button} from "react-bootstrap";
 import './adminUserDetail.css';
 import { useState, useEffect } from "react";
+import axios from 'axios';
 
 export const AdminUserModal = (props) => {
 
@@ -9,15 +10,22 @@ export const AdminUserModal = (props) => {
     const handleOff = () => setShow(false);
 
     const [modifyUser, setModifyUser] = useState({
-        name : '',
-        id : '',
-        pwd : '',
-        nick:'',
-        phone:'',
-        email:'',
-        address:'',
-        level:''
+        
+        userNo: '',
+        userId: '',
+        userName: '',
+        userNick: '',
+        userPwd: '',
+        userPhone: '',
+        userEmail: '',
+        userAddress: '',
+        userStatus: '',
+        userLevel: '',
+        userModDate: '',
+        userJoinDate: ''
     });
+
+    console.log("modifyUserId좀 보자",modifyUser.userId);
 
     const handleModifyUser = (event)=>{
         const {id, value} = event.target;
@@ -25,12 +33,62 @@ export const AdminUserModal = (props) => {
             ...preveUser,
             [id]:value
         }));
+        console.log(modifyUser);
     }
 
-    useEffect(()=>{
-        
-        console.log("modifyUser",modifyUser);
-    }, [modifyUser]);
+
+    
+{/*회원 정보 수정 - 서버 */}
+const handleUserUpdateSub = () => {
+    axios.patch("/dasony/api/admin/userUpdate", modifyUser, {
+        headers : {
+            "Content-Type": "application/json; charset=utf-8"
+    }})
+    .then(res=>{
+        alert(res.data);
+        props.handleUserDetail();
+    })
+    .catch(err=>{
+        setModifyUser({
+            userNo: props.user.userNo,
+            userId: props.user.userId,
+            userName: props.user.userName,
+            userNick: props.user.userNick,
+            userPwd: props.user.userPwd,
+            userPhone: props.user.userPhone,
+            userEmail: props.user.userEmail,
+            userAddress: props.user.userAddress,
+            userStatus: props.user.userStatus,
+            userLevel: props.user.userLevel,
+            userModDate: props.user.userModDate,
+            userJoinDate: props.user.userJoinDate
+        });
+        console.log(err);
+        alert("다시 시도해주세요.");
+    })
+    handleOff();
+}
+
+
+
+    useEffect(() => {
+        if (props.user) {
+            setModifyUser({
+                userNo: props.user.userNo,
+                userId: props.user.userId,
+                userName: props.user.userName,
+                userNick: props.user.userNick,
+                userPwd: props.user.userPwd,
+                userPhone: props.user.userPhone,
+                userEmail: props.user.userEmail,
+                userAddress: props.user.userAddress,
+                userStatus: props.user.userStatus,
+                userLevel: props.user.userLevel,
+                userModDate: props.user.userModDate,
+                userJoinDate: props.user.userJoinDate
+            });
+        }
+    }, [props.user]);
 
     return(
         <>
@@ -42,58 +100,53 @@ export const AdminUserModal = (props) => {
                         <tbody>
                             <tr>
                                 <th>회원 번호</th>
-                                <td>1</td>
+                                <td>{props.user.userNo}</td>
                             </tr>
                             <tr>
                                 <th>회원 이름</th>
                                 <td>
-                                    <input id='name' type='text' value={modifyUser.name} onChange={handleModifyUser}/>
+                                    <input id='userName' type='text' value={modifyUser.userName} onChange={handleModifyUser}/>
                                 </td>
                             </tr>
                             <tr>
                                 <th>회원 아이디</th>
-                                <td>
-                                    <input id='id' type='text' value={modifyUser.id} onChange={handleModifyUser}/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>회원 비밀번호</th>
-                                <td>
-                                    <input id='pwd' type='text' value={modifyUser.pwd} onChange={handleModifyUser}/>
-                                </td>
+                                <td>{props.user.userId}</td>
                             </tr>
                             <tr>
                                 <th>회원 별명</th>
-                                <td>
-                                    <input id='nick' type='text' value={modifyUser.nick} onChange={handleModifyUser}/>
-                                </td>
+                                <td>{props.user.userNick}</td>
                             </tr>
                             <tr>
                                 <th>핸드폰 번호</th>
                                 <td>
-                                    <input id='phone' type='text' value={modifyUser.phone} onChange={handleModifyUser}/>
+                                    <input id='userPhone' type='text' value={modifyUser.userPhone} onChange={handleModifyUser}/>
                                 </td>
                             </tr>
                             <tr>
                                 <th>이메일</th>
                                 <td>
-                                    <input id='email' type='text' value={modifyUser.email} onChange={handleModifyUser}/>
+                                    <input id='userEmail' type='text' value={modifyUser.userEmail} onChange={handleModifyUser}/>
                                 </td>
                             </tr>
                             <tr>
                                 <th>주소</th>
                                 <td>
-                                    <input id='address' type='text' value={modifyUser.address} onChange={handleModifyUser}/>
+                                    <input id='userAddress' type='text' value={modifyUser.userAddress} onChange={handleModifyUser}/>
                                 </td>
                             </tr>
                             <tr>
                                 <th>상태</th>
-                                <td>Y</td>
+                                <td>
+                                    <select id='userStatus' value={modifyUser.userStatus} onChange={handleModifyUser}>
+                                        <option>Y</option>
+                                        <option>N</option>
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <th>등급</th>
                                 <td>
-                                    <select id='level' type='text' value={modifyUser.level} onChange={handleModifyUser}>
+                                    <select id='userLevel' value={modifyUser.userLevel} onChange={handleModifyUser}>
                                         <option>지역새싹</option>
                                         <option>지역루키</option>
                                         <option>지역프로</option>
@@ -104,18 +157,18 @@ export const AdminUserModal = (props) => {
                             </tr>
                             <tr>
                                 <th>수정 날짜</th>
-                                <td>date</td>
+                                <td>{props.user.userModDate}</td>
                             </tr>
                             <tr>
                                 <th>가입 날짜</th>
-                                <td>date</td>
+                                <td>{props.user.userJoinDate}</td>
                             </tr>
                         </tbody>
                     </table>
                 </ModalBody>
                 <ModalFooter>
                     <Button className='btn btn-danger'  onClick={handleOff}>취소</Button>
-                    <Button className="btn btn-primary"  onClick={handleOff}>확인</Button>
+                    <Button className="btn btn-primary"  onClick={handleUserUpdateSub}>확인</Button>
                 </ModalFooter>
             </Modal>
             </>

@@ -1,8 +1,33 @@
 import './shopHeader.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
 
 const ShopHeader = () => {
     
+    /*userPoint, userName받아오기 */
+    let userNo = localStorage.getItem("loginUserNo");
+    const [userName, setUserName] = useState('');
+    const [userPoint, setUserPoint] = useState('');
+
+    const handleUserInfo = () => {
+        axios.post('/dasony/api/userInfo', {userNo: userNo})
+        .then(res=>{
+            setUserName(res.data.user.userName);
+            setUserPoint(res.data.user.totalPoint);
+        })
+        .catch(err=> {
+            console.log(err);
+            alert("다시 시도해주세요.");
+        })
+    }
+
+    useEffect(()=>{
+        handleUserInfo();
+    })
+
+
     return(
         <>
         <div className='shop-nav'>
@@ -13,8 +38,12 @@ const ShopHeader = () => {
                 <Link to='/shop/heart'><i className="bi bi-heart"/></Link>
             </div>
             <div className='user-info'>
-                <i className="bi bi-person"><span>userName</span></i>
-                <i className="bi bi-coin"><span>1000000 다손</span></i>
+                <div>
+                    <i className="bi bi-person"/><span>{" "}{userName}</span>
+                </div>
+                <div>
+                    <i className="bi bi-coin"/><span>{" "}{userPoint}</span>
+                </div>
             </div>
             
         </div>{/*shop-nav끝*/}

@@ -47,5 +47,17 @@ public class UserServiceImpl implements UserService{
 	public User login(Map userMap) {
 		return userDao.login(userMap);
 	}
+	@Override
+	public User findingId(String subEmail) {
+		return userDao.findingId(subEmail);
+	}
+	@Override
+	public User userInfo(long userNo) {
+		return userDao.userInfo(userNo);
+	}
+	@Override
+	public int userUpdate(User user) {
+		return userDao.userUpdate(user);
+	}
 
 }

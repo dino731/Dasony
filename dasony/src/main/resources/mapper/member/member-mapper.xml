@@ -74,10 +74,38 @@
 		WHERE USER_NO = #{userNo}
 	</update>
 	
+
 	<select id="gameStartYN" parameterType="int" resultType="string">
 		SELECT GAME_STATUS
 		FROM MEMBER
 		WHERE USER_NO = #{userNo}
 	</select>
+
+	<select id="findingId" parameterType="string" resultMap="memberMap">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_EMAIL = #{subEmail}
+	</select>
+	
+	<select id="userInfo" parameterType="long" resultMap="memberMap">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<update id="userUpdate" parameterType="user">
+		UPDATE MEMBER
+		SET
+			USER_NAME=#{userName},
+			USER_PHONE = #{userPhone},
+			USER_EMAIL = #{userEmail},
+			USER_ADDRESS = #{userAddress},
+			USER_STATUS = #{userStatus},
+			USER_LEVEL = #{userLevel},
+			USER_MOD_DATE = SYSDATE
+		WHERE USER_NO = #{userNo}
+	</update>
+
+
 
 </mapper>

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +15,9 @@ import com.ds.dasony.member.model.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 
-@RequestMapping("/api")
-@RestController
 @Slf4j
+@RestController
+@RequestMapping("/api")
 public class UserController {
 
 	private final UserService userService;
@@ -122,8 +121,49 @@ public class UserController {
 		return map;
 	}
 	
+	@PostMapping("/findingId")
+	public Map<String, Object> fingdingId(
+			@RequestBody Map<String, String> email
+			){
+		String subEmail = email.get("subEmail"); 
+		log.error(subEmail);
+		Map<String, Object> map = new HashMap();
+		
+		User user = userService.findingId(subEmail);
+		String userId = user.getUserId();
+		log.error("{}=","Id는 "+userId+" 입니다.");
+		if(user != null) {
+			map.put("msg", "Id는 "+userId+" 입니다.");
+		} else {
+			map.put("err", "Id를 찾지 못했습니다.");
+		}
+		
+		return map;
+	}
 	
-	
+	@PostMapping("/userInfo")
+	public Map<String, Object> userInfo(
+			@RequestBody Map<String, String> userno
+			){
+		
+		long userNo = Long.parseLong(userno.get("userNo"));
+		
+		log.info(userno.get("userNo"));
+		
+		Map<String, Object> map = new HashMap();
+		
+		User user = new User();
+		
+		user = userService.userInfo(userNo);
+		
+		if(user != null) {
+			map.put("user", user);
+		} else {
+			map.put("err","알 수 없는 오류가 발생했습니다.");
+		}
+		
+		return map;
+	}
 	
 	
 	

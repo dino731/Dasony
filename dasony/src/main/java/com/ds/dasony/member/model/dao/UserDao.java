@@ -42,5 +42,14 @@ public class UserDao {
 	public User login(Map userMap) {
 		return session.selectOne("memberMapper.login", userMap);
 	}
+	public User findingId(String subEmail) {
+		return session.selectOne("memberMapper.findingId", subEmail);
+	}
+	public User userInfo(long userNo) {
+		return session.selectOne("memberMapper.userInfo", userNo);
+	}
+	public int userUpdate(User user) {
+		return session.update("memberMapper.userUpdate", user);
+	}
 
 }

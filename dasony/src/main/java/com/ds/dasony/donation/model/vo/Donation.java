@@ -20,5 +20,5 @@ private Date donaEndDate;//	DONA_END_DATE 마감일
 private int donaAchieve;//	DONA_ACHIEVE 달성률
 private int donaTotalAmount;//	DONA_TOTAL_AMOUNT 총 금액
 private int donaTargetAmount;//	DONA_TARGET_AMOUNT 목표 금액
-private String donaExecuteDate;//	DONA_EXECUTE_DATE 기부 글 지역
+private String donaSelectArea;//	DONA_SELECT_AREA 기부 글 지역
 }

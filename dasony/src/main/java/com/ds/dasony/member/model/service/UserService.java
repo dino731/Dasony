@@ -21,4 +21,11 @@ public interface UserService {
 
 	public int location(Map<String, Object> request);
 
+	public User findingId(String subEmail);
+
+	public User userInfo(long userNo);
+
+	public int userUpdate(User user);
+
+
 }
