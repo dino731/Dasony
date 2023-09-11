@@ -1,19 +1,17 @@
 import { useState, useEffect} from 'react';
 import './DonaDona.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { error } from 'jquery';
 
 const DonaDona = () => {
 
     const {donaNo} = useParams();
-    // const donaAmount = localStorage.getItem('donationAmount');
+
+    const navigate = useNavigate();
 
     const [isAllDonation, setIsAllDonation] = useState(false); // 모두 기부하기
     const [donationAmount, setDonationAmount] = useState([]); // input 입력 값
-    // const [currentDason, setCurrentDason] = useState(0);
-    const [userPoint, setUserPoint] = useState(null); // 사용자의 보유 포인트 가져옴
-    // const [countDona, setCountDona] = useState(1); // 기부버튼 클릭 시 해당 기부 글 건수 카운트
+    const [userPoint, setUserPoint] = useState(0); // 사용자의 보유 포인트 가져옴
     
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
 
@@ -61,12 +59,12 @@ const DonaDona = () => {
     };
 
     const handlebackmogh = (donaNo) => {
-        window.location.href = `/donadetail/${donaNo}`;
+       navigate(`/donadetail/${donaNo}`);
     }
 
     const handeldonation = () => {
-        if(isAllDonation || donationAmount !== ''){ // check버튼을 눌렀거나, 기부 금액 값을 입력했을 때
-            alert("기부가 완료되었습니다");
+        if(isAllDonation || (donationAmount !== '' && parseInt(donationAmount) > 0)){ // check버튼을 눌렀거나, 기부 금액 값을 입력했을 때
+            alert("기부가 완료되었습니다" );
             
             const donationAmountInt = parseInt(donationAmount);
 
@@ -74,27 +72,22 @@ const DonaDona = () => {
 
             const newDasonPoint = userPoint - donationAmountInt; // 보유 다손에서 차감
             setUserPoint(newDasonPoint); 
-            // setCountDona(countDona + 1); 기부 건수 카운트
 
             axios.post(`/dasony/api/updateUserPoint`, {userNo : loginUserNo, newDasonPoint})
                 .then((response) => {
-                    
+                    const updatDasonPoint = response.data.userPoint;
+                    setUserPoint(updatDasonPoint);
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-
-            // 기부 금액을 localStorage에 저장
-            localStorage.setItem(`donationAmount_${donaNo}`, donationAmountInt);
-            // localStorage.setItem(`countDona_${id}`, countDona);
-            // console.log("count : " + countDona);
 
             let idList = localStorage.getItem('id').split(", ");
             console.log("donation part ID : " + idList);
             localStorage.setItem('id', localStorage.getItem('id') + ", " + donaNo);
             console.log(localStorage.getItem("id"));
             
-            window.location.href = '/mypage/Mydonation';
+            navigate('/mypage/Mydonation');
         }else{
             alert("기부 금액을 입력해주세요");
             return;
@@ -109,7 +102,7 @@ const DonaDona = () => {
                 <hr/><br/>
                 <form id="donationForm">
                     <span>
-                        보유 다손 <b>{userPoint}</b>다손
+                        보유 다손 <b> {userPoint}</b>다손
                     </span>
                     &nbsp;&nbsp;&nbsp;
                     <label style={{fontSize : '15px'}}>

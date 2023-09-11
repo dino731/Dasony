@@ -17,17 +17,17 @@ const customStyles = {
   };
 
   const NewChatModal = ({isOpen, closeModal, onChatRoomCreate}) => {
-    const [chatRoomName, setChatRoomName] = useState('');
+    const [chatTitle, setChatTitle] = useState('');
 
     const handleCreateChatRoom = () => {
 
-      if(!chatRoomName){
+      if(!chatTitle){
         alert("채팅방 이름을 입력해주세요");
         return;
       }
 
-      onChatRoomCreate(chatRoomName);
-      setChatRoomName('');
+      onChatRoomCreate(chatTitle);
+      setChatTitle('');
       closeModal();
     }
 
@@ -43,8 +43,8 @@ const customStyles = {
             <input 
             id="inputtxt" 
             type="text"
-            value={chatRoomName}
-            onChange={e => setChatRoomName(e.target.value)}
+            value={chatTitle}
+            onChange={e => setChatTitle(e.target.value)}
             />
             <br/>
             <button id="createchat" onClick={handleCreateChatRoom}>생성하기</button>

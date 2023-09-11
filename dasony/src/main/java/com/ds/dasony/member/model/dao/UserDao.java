@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -48,5 +49,16 @@ public class UserDao {
 	public User userInfo(long userNo) {
 		return session.selectOne("memberMapper.userInfo", userNo);
 	}
+	
+	public int updateUserPoint(@Param("userNo") long userNo, @Param("newDasonPoint") int newDasonPoint) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("newDasonPoint", newDasonPoint);
+	    return session.update("memberMapper.updateUserPoint", map);
+	}
+	
+//	public List<User> getUserNames(List<Integer> userNo) {
+//		return session.selectOne("memberMapper.getUserNames", userNo);
+//	}
 
 }

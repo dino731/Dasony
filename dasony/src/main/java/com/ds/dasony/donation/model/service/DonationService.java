@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ds.dasony.donation.model.vo.Donation;
+import com.ds.dasony.donation.model.vo.DonationList;
 
 public interface DonationService {
 
@@ -21,5 +22,10 @@ public interface DonationService {
 
 	int deleteDona(int donaNo);
 	
-//	int selectUserDason(int userNo) throws Exception;
+	List<DonationList> getMyDonationList(int userNo);
+
+	List<DonationList> DonaDetails(int donaNo);
+
+	int totalAmount(List<DonationList> donaHistory);
+
 }

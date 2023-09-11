@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ds.dasony.donation.model.dao.DonationDao;
 import com.ds.dasony.donation.model.vo.Donation;
+import com.ds.dasony.donation.model.vo.DonationList;
 
 @Service
 public class DonationServiceImpl implements DonationService{
@@ -54,8 +55,24 @@ public class DonationServiceImpl implements DonationService{
 		return donationDao.deleteDona(donaNo);
 	}
 	
-//	@Override
-//	public int selectUserDason(int userNo) throws Exception{
-//		return donationDao.selectUserDason(userNo);
-//	}
+	@Override
+	   public List<DonationList> getMyDonationList(int userNo){
+	      return donationDao.getMyDonationList(userNo);
+	   }
+
+
+	@Override
+	public List<DonationList> DonaDetails(int donaNo) {
+		return donationDao.DonaDetails(donaNo);
+	}
+
+	@Override
+	public int totalAmount(List<DonationList> donaHistory) {
+		
+		int totalDonaAmount = 0;
+		for(DonationList donation : donaHistory) {
+			totalDonaAmount += donation.getDonaAmount();
+		}
+		return totalDonaAmount;
+	}
 }

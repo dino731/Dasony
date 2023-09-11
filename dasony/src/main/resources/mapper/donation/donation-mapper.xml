@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="donationMapper">
+
 <resultMap type="donation" id="donaResultSet">
   	<id column="DONA_NO" property="donaNo"/>
   	<result column="DONA_CONTENT" property="donaContent"/>
@@ -14,15 +15,20 @@
   	<result column="DONA_SELECT_AREA" property="donaSelectArea"/>
   </resultMap>
   
-  <sql id="donationDetail">
-  	DONA_TITLE,
-	DONA_NAME,
-	DONA_WRITE_DATE,
-	DONA_CONTENT,
-	DONA_END_DATE,
-	DONA_ACHIEVE,
-	DONA_TOTAL_AMOUNT
-  </sql>
+<resultMap type="donationList" id="donationListRS">
+     <id column="DONA_NO" property="donaNo"/>
+     <result column="DONA_EXECUTE_DATE" property="donaExecuteDate"/>
+     <result column="DONA_AMOUNT" property="donaAmount"/>
+     <result column="USER_NO" property="userNo"/>
+  </resultMap>
+  
+  <resultMap type="donationList" id="donationListResultSet">
+    <id column="DONA_EXECUTE_NO" property="donaExecuteNo"/>
+    <result column="DONA_AMOUNT" property="donaAmount"/>
+    <result column="DONA_EXECUTE_DATE" property="executeDate"/>
+    <result column="DONA_NO" property="donaNo"/>
+    <result column="DONA_NAME" property="donaName"/>
+</resultMap>
   
   <!-- TO_CHAR(DONA_WRITE_DATE, 'YYYY"-"MM"-"DD"-"') DONA_WRITE_DATE -->
   
@@ -103,11 +109,18 @@
 	WHERE DONA_NO = #{donaNo}
  </delete>
  
-  <!-- <select id="selectUserDason">
- 	SELECT 
- 		TOTAL_POINT
- 	FROM MEMBER
- 	WHERE USER_NO = #{userNo}
- </select>  -->
+  <select id="DonaDetails" resultMap="donationListRS" parameterType="int">
+	SELECT
+		*
+	FROM DONATION_LIST
+	WHERE DONA_NO = #{donaNo}
+  </select>
+  
+  <select id="getMyDonationList" parameterType="int" resultMap="donationListResultSet">
+    SELECT DONA_EXECUTE_DATE,DONA_AMOUNT,DONA_EXECUTE_NO,DONA_NAME
+    FROM DONATION_LIST
+    JOIN DONATION USING (DONA_NO)
+    WHERE USER_NO = #{userNo}
+ </select>
   
 </mapper>

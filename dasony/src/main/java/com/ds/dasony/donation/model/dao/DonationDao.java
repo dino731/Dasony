@@ -9,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ds.dasony.donation.model.vo.Donation;
+import com.ds.dasony.donation.model.vo.DonationList;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class DonationDao {
 	
@@ -52,7 +56,11 @@ public class DonationDao {
 		return session.delete("donationMapper.deleteDona", donaNo);
 	}
 	
-//	public int selectUserDason(int userNo) {
-//	return session.selectOne("donationMapper.selectUserDason", userNo);
-//}
+	public List<DonationList> getMyDonationList(int userNo) {
+	      return session.selectList("donationMapper.getMyDonationList",userNo);
+	   }
+
+	public List<DonationList> DonaDetails(int donaNo) {
+		return session.selectList("donationMapper.DonaDetails", donaNo);
+	}
 }

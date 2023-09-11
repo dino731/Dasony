@@ -1,15 +1,50 @@
-import { tab } from '@testing-library/user-event/dist/tab';
 import './ChatList.css';
 import NewChatModal from './NewChatModal';
 import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useChatData } from './ChatDataContext';
+import axios from 'axios';
+import { useEffect } from 'react';
 
  const ChatList  = (props) => {
 
-    const {chatData, setChatDate} = useChatData();
+     const {chatData, setChatDate} = useChatData();
+     const [userName, setUserName] = useState("");
+
+    const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        axios.post(`/dasony/api/userInfo`, {userNo : loginUserNo})
+        .then((response) => {
+            const userData = response.data;
+            if(userData.user){
+                const {userName} = userData.user;
+                setUserName(userName);
+            }else{
+                console.log("사용자 정보를 찾을 수 없음");
+            }
+        })
+        .catch((error)=> {
+            console.log(error);
+        })
+    }, []);
+
+    useEffect(() => {
+        getChatList();
+    }, [])
+
+// ----------------------------채팅 리스트-------------------------------
+    const getChatList = () => {
+        axios.get("/dasony/chatlist")
+        .then((response) => setChatDate(response.data))
+        .catch(error => console.log(error));
+    }
+
+    useEffect(() => {
+        getChatList();
+    }, [])
 
 // ----------------------------모달창------------------------------------
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -22,6 +57,55 @@ import { useChatData } from './ChatDataContext';
         setModalIsOpen(false);
     };
 
+// -----------------------------새 채팅방(채팅방 이름)-----------------------------------    
+
+    const handleChatRoomCreate = (chatTitle) => {
+
+        const titleCheck = chatData.some((chat) => chat.chatRoomTitle === chatTitle);
+        
+
+        if(titleCheck){
+            alert("이미 존재하는 채팅방이 있습니다 다른 제목을 입력해주세요")
+
+        }else{
+
+            const postNewChat = (newChat) => {
+                axios.post("/dasony/openChatRoom", {userNo : loginUserNo, newChat : newChat})
+                // {title: , content: }
+                // {no : , chat: {tilte, content}}
+                .then((response) => getChatList())
+                .catch(error => console.log(error));
+            }
+            
+            const newChat = {
+                chatRoomTitle : chatTitle,
+                userName : userName
+            };
+    
+            const updateChatList = [...chatData, newChat]
+    
+            setChatDate(updateChatList);
+            postNewChat(newChat);
+
+        }
+    
+
+        // const updateChatDate = [...chatData, newChatRoom];
+        // setChatDate(updateChatDate);
+
+        // closeModal();
+
+        // const encodedChatname = encodeURIComponent(newChatRoom.chatname);
+        
+        // // const chatId = chatData.find(chatId => chatId.id === id);
+
+        // `/chat/${chat.chatRoomNo}/${chat.chatRoomTitle}`
+        // navigate(`/chat/${newChatRoom.id}/${encodedChatname}`);
+        // // setChatRoomNames([...chatRoomNames, newChatRoom]);
+        // // console.log(newChatRoom);
+
+    }
+
 // -----------------------------검색창-----------------------------------
     const [search, setSearch] = useState('');
 
@@ -33,39 +117,9 @@ import { useChatData } from './ChatDataContext';
     }
 
     const filterChatData = chatData.filter(chat =>
-        chat.chatname.includes(search)
+        chat?.chatRoomTitle?.includes(search)
     );
 
-// -----------------------------새 채팅방(채팅방 이름)-----------------------------------    
-    // const [chatRoomNames, setChatRoomNames] = useState([]);
-
-    const handleChatRoomCreate = (chatRoomName) => {
-        
-        const newChatRoom = {
-            id : chatData.length + 1,
-            chatname : chatRoomName,
-            username : '똥꾸멍',
-            people : 0
-        };
-
-        const updateChatDate = [...chatData, newChatRoom];
-        setChatDate(updateChatDate);
-
-        closeModal();
-
-        const encodedChatname = encodeURIComponent(newChatRoom.chatname);
-        
-        // const chatId = chatData.find(chatId => chatId.id === id);
-
-        navigate(`/chat/${newChatRoom.id}/${encodedChatname}`);
-        // setChatRoomNames([...chatRoomNames, newChatRoom]);
-        // console.log(newChatRoom);
-
-    }
-
-
-    // const [chatlist, setChatList] = useState([
-    // ]);
 
     return(
             <div id="talklistcontent">
@@ -120,13 +174,13 @@ import { useChatData } from './ChatDataContext';
                             <table id="tchattable">
                                 <tbody style={{height: '100%'}}>
                                     {filterChatData.map(chat => (
-                                    <tr key={chat.id}>
-                                        <td width="110">{chat.id}</td>
-                                        <td width="470">{chat.chatname}</td>
-                                        <td width="235">{chat.username}</td>
-                                        <td width="215">{chat.people}명</td>
+                                    <tr key={chat.chatRoomNo}>
+                                        <td width="110">{chat.chatRoomNo}</td>
+                                        <td width="470">{chat.chatRoomTitle}</td>
+                                        <td width="235">{chat.userName}</td>
+                                        <td width="215">{chat.cnt}명</td>
                                         <td width="150">
-                                        <Link to={`/chat/${chat.id}/${chat.chatname}`}><button>참여하기</button></Link>
+                                        <Link to={`/chat/${chat.chatRoomTitle}`}><button>참여하기</button></Link>
                                         </td>
                                     </tr>
                                     ))}

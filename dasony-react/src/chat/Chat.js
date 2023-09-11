@@ -6,8 +6,8 @@ import UserProfile from './UserProfile';
 
 const Chat = () =>{
 
-    const {chatname} = useParams();
-    const decodeChatname = decodeURIComponent(chatname);
+    const {chatRoomTitle} = useParams();
+    const decodeChatname = decodeURIComponent(chatRoomTitle);
 
     // const navigate = useNavigate();
 

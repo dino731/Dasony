@@ -2,6 +2,7 @@ package com.ds.dasony.member.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,5 +167,33 @@ public class UserController {
 		return map;
 	}
 	
+	@PostMapping("/updateUserPoint")
+	public Map<String, Object> updateUserPoint(
+			@RequestBody Map<String, Object> pointData
+			){
+		
+		long userNo = Long.parseLong(pointData.get("userNo").toString());
+		int newDasonPoint  = (int) pointData.get("newDasonPoint");
+		
+		log.info("userNo" + userNo);
+		log.info("newDasonPoint" + newDasonPoint);
+		
+		Map<String, Object> map = new HashMap();
+		
+		int updatePoint = userService.updateUserPoint(userNo, newDasonPoint);
+		
+		if(updatePoint > 0) {
+			map.put("userNo", userNo);
+			map.put("newDasonPoint", newDasonPoint);
+		}else {
+			map.put("error", "오류 발생");
+		}
+		return map;
+	}
+	
+//	@PostMapping("/getUserName")
+//    public Map<Long, String> getUserNames(@RequestBody List<Integer> userNo) {
+//        return userService.getUserNames(userNo);
+//    }
 	
 }
