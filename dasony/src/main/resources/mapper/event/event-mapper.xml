@@ -14,7 +14,7 @@
 		<result column="event_page" property="pageLink" />
 		<result column="event_upload_date" property="uploadDate" />
 		<result column="event_category" property="eventCategory" />
-		<result column="event_win_time_code" property="winTime" />
+		<result column="event_win_time" property="winTime" />
 	</resultMap>
 	
 	<resultMap type="Reward" id="rewardMap">
@@ -27,13 +27,19 @@
 		<result column="event_reward_amount" property="amount" />
 		<result column="event_no" property="eventNo" />
 	</resultMap>
+	
+	<resultMap type="EventJoin" id="joinMap">
+		<result column="user_name" property="userName" />
+		<result column="count" property="count" />
+		<result column="check_status" property="tdyCheck" />
+	</resultMap>
 
 	<select id="selectAllEvent" parameterType="hashmap" resultMap="eventMap">
-		select event_no, event_title, event_end_date, event_upload_date, event_page, event_category
-		from (select event_no, event_title, event_end_date, event_upload_date, event_page, event_category,
+		select event_no, event_title, event_end_date, event_upload_date, event_page, event_category, event_thumbnail
+		from (select event_no, event_title, event_end_date, event_upload_date, event_page, event_category, event_thumbnail,
 				case when sysdate > event_end_date then '종료' else '진행' end status
 			  from event left join event_code_list using(event_no) 
-			  			 left join event_code using(event_cate_code))
+			  			 left join event_code using(event_cate_code) where event_deleted = 'N' )
 		where 1=1
 		<if test="category != null and category!='카테고리'">
 			and event_category = #{category}
@@ -50,7 +56,7 @@
 			event_upload_date, event_category, event_win_time 
 		from event left join event_code_list using(event_no) left join event_code using(event_cate_code)
 			left join event_win_cate_list using(event_no) left join event_win_category using(event_win_time_code)
-		where event_no=#{no}
+		where event_deleted = 'N' and event_no=#{no}
 	</select>
 	
 	<select id="selectReward" parameterType="String" resultMap="rewardMap">
@@ -78,7 +84,7 @@
 	
 	<update id="updateEventWinCategory" parameterType="Event">
 		<selectKey resultType="string" keyProperty="winTime" order="BEFORE">
-			select event_win_time_code from event_win_cate_list where event_win_time=#{winTime}
+			select event_win_time_code from event_win_category where event_win_time=#{winTime}
 		</selectKey>
 		update event_win_cate_list set event_win_time_code = #{winTime} where event_no = #{no}
 	</update>
@@ -139,7 +145,93 @@
 	</insert>
 	
 	<insert id="insertEventRewardInfo" parameterType="Reward">
+		<selectKey resultType="string" keyProperty="eventNo" order="BEFORE">
+			select 'E'||lpad(last_number-1, 4, 0) 
+			from (select last_number from user_sequences where sequence_name = 'SEQ_ENO')
+		</selectKey>
 		insert into event_reward_list (event_no, event_reward_no, event_rank, event_reward_amount)
-		values('E'||lpad(seq_eno.currval, 4, 0), seq_erno.currval, #{rank}, #{amount})
+		values(#{eventNo}, seq_erno.currval, #{rank}, #{amount})
+	</insert>
+	
+	<update id="deleteEvent" parameterType="string">
+		update event set event_deleted = 'Y' where event_no = #{no}
+	</update>
+	
+	<select id="selectMsgTarget" parameterType="string" resultType="int">
+		SELECT user_no FROM event_join
+			LEFT JOIN (
+			    SELECT event_join_no, 'win' as win_yn FROM event_join
+			    WHERE event_join_no IN (
+			        SELECT event_join_no 
+			        FROM event_winner )) a
+			ON event_join.event_join_no = a.event_join_no
+			where
+			<choose>
+				<when test="msgRange.equals('전체')">
+					1=1
+				</when>
+				<otherwise>
+					win_yn='win'
+				</otherwise>
+			</choose>
+	</select>
+	
+	<insert id="sendMsg" parameterType="hashmap" >
+		insert into alert values(seq_ano.nextval, #{target}, #{content}, TO_CHAR(SYSDATE, 'MM-DD HH24:MI'), 'E', 
+		default, '[이벤트 공지]' || '  ' || #{title})
+	</insert>
+	
+	<select id="checkEventJoin" parameterType="hashmap" resultType="int">
+		select count(*) from event_join where event_no = #{eventNo} and user_no = #{userNo}
+	</select>
+	
+	<insert id="joinEvent" parameterType="hashmap">
+		insert into event_join values(#{eventNo} || #{userNo}, #{eventNo}, #{userNo}, sysdate)
+	</insert>
+	
+	<select id="loadLogin" parameterType="hashmap" resultMap="joinMap">
+		select user_name, "check_status", count(*) count from (select e.*, user_name, 
+				case when to_char(event_join_date, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD') 
+                     then 'Y' else 'N' end "check_status"
+		from event_join e left join member m on e.user_no = m.user_no
+		where event_no = #{eventNo} and e.user_no = #{userNo})
+		group by user_name, "check_status"
+	</select>
+	
+	<select id="memberLoginInfo" parameterType="hashmap" resultMap="joinMap">
+		select user_no, user_name from member where user_no = #{userNo}
+	</select>
+	
+	<select id="findLast" parameterType="hashmap" resultType="int" >
+		<!-- select substr(event_join_no, instr(event_join_no, '_', -1)+1, 1) lastindex from (select * from event_join 
+			    where event_join_no like '%'|| #{eventNo} || #{loginUserNo} ||'%' order by event_join_no desc)
+			where rownum = 1 -->
+		select count(*) count 
+		from event_join 
+		where event_join_no like '%'|| #{eventNo} || #{loginUserNo} ||'%' order by event_join_no desc
+	</select>
+	
+	<insert id="checkTdyLogin" parameterType="hashmap">
+		<choose>
+			<!-- <when test="lastNum!=null and !lastNum.equals('')">
+				<choose>
+					<when test="'E'.equals(lastNum)">
+						insert into event_join values(#{eventNo} || #{loginUserNo} || '_2', 
+							#{eventNo}, #{loginUserNo}, sysdate)
+					</when>
+					<otherwise>
+						insert into event_join values(#{eventNo} || #{loginUserNo} || '_' || (to_number(#{lastNum})+1),
+							#{eventNo}, #{loginUserNo}, sysdate)
+					</otherwise>
+				</choose>
+			</when> -->
+			<when test="lastNum > 0">
+				insert into event_join values(#{eventNo} || #{loginUserNo} || '_' || ${lastNum +1}),
+						#{eventNo}, #{loginUserNo}, sysdate)
+			</when>
+			<otherwise>
+				insert into event_join values(#{eventNo} || #{loginUserNo}, #{eventNo}, #{loginUserNo}, sysdate)
+			</otherwise>
+		</choose>
 	</insert>
 </mapper>

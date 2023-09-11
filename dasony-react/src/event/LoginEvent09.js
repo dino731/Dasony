@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate  } from 'react-router-dom';
 // import Img1 from '../../public/resources/event/login-001.png';
@@ -8,29 +9,63 @@ import { useNavigate  } from 'react-router-dom';
     -이벤트 내용 확인하는 페이지
     (정적 페이지 / 데이터 호출해 렌더링하는 페이지로 나뉨)
 */
-const LoginEvent09 = () => {
+const LoginEvent09 = ({no}) => {
     const checkBtn = useRef(null);
+    // const userNo = localStorage.getItem("loginUserNo");
+    // 로그인한 회원 넘버
+    const userNo = 23090755;
     // 오늘 참여 여부
     const [tdyCheck, setTdyCheck] = useState(false);
     // 출석일
     const [count, setCount] = useState(1);
     // 클릭한 상태
     const [checkStatus, setCheckStatus] = useState("none");
-    const userName = "이아인";
+    const [userName, setUserName] = useState("");
 
     // 뒤로가기 버튼 
     const [hoverStatus, setHoverStatus] = useState("none");
     const navigate = useNavigate();
 
-    const checkLogin = ()=>{
-        if(!tdyCheck){
-            // db에 저장하는 로직 추가
-            setCount(count+1);
-            setCheckStatus("checked");
-            setTdyCheck("checked");
-        }else{
-            alert("이미 오늘자 출석 체크하였습니다.");
+    // 정보 불러오기
+    const loadData = () => {
+        const data = {userNo : userNo, eventNo : no};
+        console.log("tdyCheck : ", tdyCheck, "eventNo : ", no);
+        axios.post("http://localhost:3000/dasony/event/loadLogin", data)
+            .then((res)=>{
+                console.log("data load : ", res.data);
+                setUserName(res.data.userName);
+                setCount(res.data.count);
+                if(res.data.tdyCheck=='Y') setTdyCheck(true);
+
+            });
+    }
+
+    // 로그인 참여
+    const checkLogin = (e)=>{
+        e. preventDefault();
+        // const loginUserNo = (int)localStorage.getItem("loginUserNo");
+        console.log("tdyCheck : ", tdyCheck);
+        // 로그인 했는지 유무 판단
+        if(userNo === undefined || userNo.length == 0){
+            alert("로그인을 해주세요.");
+            return;
         }
+        
+        if(!tdyCheck){
+            const data = {eventNo: no, loginUserNo: userNo};
+            let url = "http://localhost:3000/dasony/event/loginCheck";
+            axios.post(url, data)
+            .then(res => {
+                const result = res.data;
+
+                if(result.num>0){
+                    setCount(count+1);
+                    setCheckStatus("checked");
+                    setTdyCheck(true);
+                }
+                alert(result.msg);
+            });
+        }        
     };
 
     useLayoutEffect(()=>{
@@ -45,7 +80,11 @@ const LoginEvent09 = () => {
                 if(btn.querySelector("i")!=null) btn.querySelector("i").style.cursor = "default";
             }
         }
-    }, [checkStatus]);
+    }, [checkStatus, tdyCheck]);
+
+    useEffect(()=>{
+        loadData()
+    }, []);
 
     useEffect(() => {
         const btn = checkBtn.current;

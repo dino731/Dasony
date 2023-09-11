@@ -7,9 +7,13 @@ import { useEffect, useState } from "react";
 
 export default () => {
     const {no} = useParams();
-    let {link} = useLocation();
-    link = link.split(".")[0];
-    console.log(no, link);
+    // console.log(useLocation());
+    let {state} = useLocation();
+    // page = page.split(".")[0];
+    if(state!=null && state.length != 0){
+        state = state.slice(0, -3);
+    }
+    
     // const [data, setData] = useState([]);
     // no로 게시글 정보 조회 로직 필요
     // let path = "";
@@ -33,12 +37,13 @@ export default () => {
     // }, []);
 
     // -> 페이지 경로가 있으면 해당 컴포넌트 호출 / 아니면 공통 양식으로
-    if(link.length == 0) {
+    if(state==null) {
+        console.log("no : " + no);
         return(
-            <EventCommonDetail data={no} />
+            <EventCommonDetail no={no} />
         );
     }else{ // 정적 페이지를 다 컴포넌트화 -> 이벤트 정보 경로에서 파일명만 가져오기 -> 컴포넌트 이름 매핑 호출
-        if(link === "LoginEvent08") return(<LoginEvent08 />);
-        else if(link === "LoginEvent09") return(<LoginEvent09 />);
+        if(state === "LoginEvent08") return(<LoginEvent08 no={no}/>);
+        else if(state === "LoginEvent09") return(<LoginEvent09 no={no} />);
     }
 }

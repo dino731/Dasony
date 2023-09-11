@@ -12,28 +12,33 @@ export default () => {
 
     const navigate = useNavigate();
     const modalBtn = useRef(null);
-    let modalCate = "선택";
+    const closeModal = useRef(null);
+    const [modalCate, setModalCate] = useState("선택");
 
-    // let category = "";
-    // let status = "";
-    const [category, setCategory] = useState("");
-    const [status, setStatus] = useState("");
+    // const [category, setCategory] = useState("");
+    const [status, setStatus] = useState(true);
+    // const [modalStatus, setModalStatus] = useState(true);
 
     // 화면에 출력할 data
     const [data, setData] = useState([]);
+    // msg 보낼 이벤트 번호
+    const [eventNo, setEventNo] = useState("");
     
     // function for loading data
     function loadData(){ // 매개변수로 page 번호 추가 필요
         let cate = $(".event-selectBox>div>div>span").eq(0).text();
         let stat = $(".event-selectBox>div>div>span").eq(1).text();
-        setCategory(cate);
-        setStatus(stat);
+        // setCategory(cate);
+        // setStatus(stat);
         const url = encodeURI(`http://localhost:3000/dasony/event/loadList?category=${cate}&status=${stat}`);
 
         // 비동기 요청
         axios.get(url).then((res)=>{
                 console.log(res.data);
                 setData(res.data);
+                if(status) setStatus(false);
+                // else setStatus(true); 
+                
             });
     }
 
@@ -42,21 +47,30 @@ export default () => {
         navigate(`/admin/event/detail/` + no);
     };
 
-    // 회원에게 쪽지 보내기 이벤트
+    // 지정 대상자에게 쪽지 보내기
     const sendMessage = () => {
         const content = document.querySelector(".message-modal-text").value;
 
         if(modalCate === "선택") alert("카테고리를 선택해주세요.");
         else if(content.length == 0) alert("보낼 내용을 입력해주세요.");
         else{
-            axios.post(`http://localhost:3000/dasony/event/sendMsg/${data.no}`, {modalCate, content})
-                .then((res)=>{
-                    // modal 닫기
-                    $("#message-modal").hide();
-                    $(".modal-backdrop").hide();
+            // 전송할 내용
+            const alertData = {msgRange : modalCate, content: content};
+            console.log("alert : ", alertData);
 
-                    const msg = res>0? "쪽지를 보냈습니다." : "다시 시도해주세요.";
-                    alert(`${modalCate}에게 ${msg}`);
+            axios.post(`http://localhost:3000/dasony/event/sendMsg/${eventNo}`, alertData)
+                .then((res)=>{
+                    alert(res.data);
+                    setEventNo("");
+                    setModalCate("선택");
+                    document.querySelector(".message-modal-text").value = "";
+
+                    // modal 닫기
+                    // $("#message-modal").hide();
+                    // $(".modal-backdrop").hide();
+
+                    closeModal.current.click();
+                    // setModalStatus(false);
                 });
         }
     }; 
@@ -65,13 +79,10 @@ export default () => {
     const handleSelect = (target, item) => {
         target.firstChild.innerHTML = item.textContent;
         target.classList.remove('active');
-      
-        // category = $(".event-selectBox span").eq(0).text();
-        // status = $(".event-selectBox span").eq(1).text();
 
         if(target.classList.contains("modal-select")) { // 모달인 경우
             console.log(target + " / " + item.textContent);
-            modalCate = item.textContent;
+            setModalCate(item.textContent);
         }
 
         loadData();
@@ -102,6 +113,7 @@ export default () => {
         }
     };
 
+    // 현재 기준 종료일까지 남은 일수
     const dDayCount = (date) => {
         // 현재 날짜 - 종료일 날짜
         // console.log("date :: ", new Date(date) instanceof Date, new Date(date));
@@ -118,7 +130,8 @@ export default () => {
 
     useEffect(()=>{
         loadData();
-    }, []);
+        // setStatus(true);
+    }, [status]);
     
     useEffect(() => {
         document.querySelectorAll(".manager-select-btn>div").forEach((el)=>{
@@ -184,14 +197,14 @@ export default () => {
                     {data!=null && data.length != 0 ? data.map((element, index) => {
                         return  <tr className="notice-item" key={index}>
                                     <th scope="row">{index+1}</th>
-                                    <td>{element.category}</td>
+                                    <td>{element.eventCategory}</td>
                                     <td className="text-cut" onClick={()=>moveToEventDetail(element.no)}>
                                         {element.title}
                                     </td>
                                     <td scope="row">{element.uploadDate}</td>
                                     <td scope="row">{dDayCount(element.endDate)}</td>
                                     <td scope="row" className="event-pm-button">
-                                        <span type="button" data-bs-toggle="modal" data-bs-target="#message-modal">작성</span>
+                                        <span type="button" data-bs-toggle="modal" data-bs-target="#message-modal" onClick={()=>setEventNo(element.no)}>작성</span>
                                     </td>
                                 </tr>
                     }) : null}
@@ -229,7 +242,7 @@ export default () => {
                             <input type='text' className='message-modal-text' placeholder='보낼 내용을 입력해주세요.' />
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" ref={closeModal} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary" ref={modalBtn} onClick={sendMessage}>Send</button>
                         </div>
                     </div>

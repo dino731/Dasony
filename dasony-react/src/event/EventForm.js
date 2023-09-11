@@ -1,7 +1,7 @@
 import axios from 'axios';
 import './event.css';
 import { useRef, useEffect, useState  } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import $ from 'jquery';
     
 /** 
@@ -9,7 +9,7 @@ import $ from 'jquery';
     -이벤트 관리에서 사용 
 */
 export default ({editStatus}) => {
-    const {no} = useParams();
+    const {no} = useParams(); // 이벤트 번호
     const [data, setData] = useState({});
     const [eventInfo, setEventInfo] = useState({});
     const [rewardInfo, setRewardInfo] = useState({});
@@ -20,10 +20,10 @@ export default ({editStatus}) => {
     const content = useRef(null);
     const navigate = useNavigate();
     const [newItem, setNewItem] = useState([false, false]);
-
-    // 새로운 상품 등록 폼 value 관리
-    const [rewardForms, setRewardForms] = useState([{rank: '', category: '', rewardRange: '', brand: '', 
-                                                        name: '', amount: ''}]);
+    // 초기화 위한 변수 선언
+    // const [form, setForm] = useState({
+    //     formChoose : "테스트"
+    // });
 
     /** dropbox 선택 이벤트 */
     const handleLabelClick = (e) => {
@@ -81,6 +81,30 @@ export default ({editStatus}) => {
         };
     };
 
+    // img loading
+    const readImageFile = (file) => {
+        const container = document.getElementById('event-image-show');
+        container.innerHTML = "";
+
+        const newImage = document.createElement("img");
+        newImage.setAttribute("class", 'event-img');
+        
+        // blob 변환인데 왜 size가 0..?
+        // const blob = new Blob(new Uint8Array( JSON.parse(file))  , { type: 'image/png' }); 
+        // console.log("blob : ", blob);
+        // newImage.src = URL.createObjectURL(blob);
+        
+        // const convertImg = atob(file);
+        // console.log(convertImg);
+        // newImage.src = `data:image/;base64,${convertImg}`;
+        
+        newImage.src = "http://localhost:3000/dasony/event/" + file;
+        newImage.style.objectFit = "contain";
+
+        container.appendChild(newImage);
+        container.onload = () => {URL.revokeObjectURL(file)};
+    };
+
     /** 아코디언 아이콘 변화 이벤트 */ 
     let eventBtnDeg = [0, 0];
             
@@ -121,10 +145,15 @@ export default ({editStatus}) => {
                     setEventInfo(res.data.event);
                     setRewardInfo(res.data.reward);
 
-                    setRewardForms(prevState => 
-                            [...prevState, {rank: rewardInfo.rank, category: rewardInfo.category, 
-                                rewardRange: rewardInfo.rewardRange, brand: rewardInfo.brand, 
-                                name: rewardInfo.name, amount: rewardInfo.amount}]);
+                    for(let i=0; i<res.data.reward.length-1; i++){
+                        if(res.data.reward.length == 1) break;
+                        let newItemCopy = [...newItem];
+                        newItemCopy[i] = true;
+                        setNewItem([...newItemCopy]);
+                    }
+
+                    // img 로드
+                    readImageFile(res.data.event.thumbnail);
                 });
         }
     }
@@ -148,7 +177,7 @@ export default ({editStatus}) => {
                         rewardName: Array.from(getInputClassData("rewardName")).map(ele => { return ele.value}), 
                         brand: Array.from(getInputClassData("brand")).map(ele => {return ele.value}), 
                         amount: Array.from(getInputClassData("amount")).map(ele => {return ele.value}), 
-                        rewardNo: rewardInfo.rewardNo?rewardInfo.rewardNo:null};
+                        rewardNo: no!=null ? rewardInfo.map(rew => {return rew.rewardNo}) : null};
 
         const fillList = ["title", "startDate", "endDate", "winnerDate", "thumbFile", "eventCategory", 
                             "winTime", "rank", "rewardCategory", "rewardRange", "rewardName", "brand", "amount"];
@@ -178,22 +207,33 @@ export default ({editStatus}) => {
             });
     };
 
-    
-
-    const readImageFile = () => {
-        const container = document.getElementById('event-image-show');
-        container.innerHTML = "";
-
-        const newImage = document.createElement("img");
-        newImage.setAttribute("class", 'event-img');
-
-        axios.get('https://www.business2community.com/wp-content/uploads/2014/04/Free.jpg')
-            .then((response) => response.blob())
-            .then((blob) => {
-                const url = URL.createObjectURL(blob);
-                newImage.src = URL.createObjectURL('/resources/event/login-002.png'); 
-            });
+    /** reset */ 
+    const resetForm = () => {
+        // setForm({
+        //     formChoose : "테스트"
+        // });
+        document.querySelectorAll(".formChoose").forEach((el)=>{
+            el.innerHTML = "선택";
+        })
+        document.querySelectorAll(".formInput").forEach((el)=>{
+            el.value = "";
+        })
+        document.querySelector(".event-img").remove();
     };
+
+    /** 이벤트 제거 */
+    const deleteEvent = () => {
+        if(window.confirm("정말 삭제하시겠습니까?")){
+            axios.get("http://localhost:3000/dasony/event/delete?no="+no)
+            .then((res)=>{
+                if(res.data>0){
+                    alert("해당 이벤트를 삭제하였습니다. 리스트 페이지로 이동합니다.");
+                    navigate("/admin/event");
+                }else{alert("다시 시도해주세요.")}
+            });
+        }
+        
+    }
 
     useEffect(()=>{
         if(no) loadData();
@@ -247,7 +287,7 @@ export default ({editStatus}) => {
                         <span>분류 <span style={{color: "red"}}>*</span></span>
                         <div className="manager-select-btn">
                             <div ref={el => clickList.current[0] = el}>
-                                <span className="manager-select-label" ref={el => paramList.current[0] = el}>
+                                <span className="manager-select-label formChoose" ref={el => paramList.current[0] = el}>
                                     {no!=null ? eventInfo.eventCategory : "선택"}
                                 </span>
                                 <i className="bi bi-caret-down-fill"></i>
@@ -265,8 +305,8 @@ export default ({editStatus}) => {
                         <span style={{width: "50%"}}>당첨 안내 방식 <span style={{color: "red"}}>*</span></span>
                         <div className="manager-select-btn">
                             <div ref={el => clickList.current[1] = el}>
-                                <span className="manager-select-label"  ref={el => paramList.current[1] = el}>
-                                    {no!=null ? eventInfo.winTime : "선택"}
+                                <span className="manager-select-label formChoose" ref={el => paramList.current[1] = el}>
+                                    {no!=null && eventInfo.winTime!=null ? eventInfo.winTime : "선택"}
                                 </span>
                                 <i className="bi bi-caret-down-fill"></i>
                             </div>
@@ -284,12 +324,12 @@ export default ({editStatus}) => {
                 <div className="event-title-content">
                     <div className="mb-4 event-title-part event-form-part">
                         <label htmlFor="event-title" className="col-form-label" >이벤트명 <span style={{color: "red"}}>*</span></label>
-                        <input type="text" id="event-title" className="form-control" defaultValue={eventInfo.title}/>
+                        <input type="text" id="event-title" className="form-control formInput" defaultValue={eventInfo.title}/>
                     </div>
                         
                     <div className="mb-4 event-content-part event-form-part">
                         <label htmlFor="event-content" className="col-form-label">소개글</label>
-                        <textarea ref={content} id="event-content" className="form-control" defaultValue={eventInfo.content}
+                        <textarea ref={content} id="event-content" className="form-control formInput" defaultValue={eventInfo.content}
                              placeholder="간략하게 이벤트 문구를 작성해주세요."></textarea>
                     </div>
                 </div>
@@ -311,13 +351,13 @@ export default ({editStatus}) => {
             <div className="mb-4 event-title-part event-form-part event-date-wrapper">
               <label className="col-form-label">기간 <span style={{color: "red"}}>*</span></label>
               <div>
-                  <input type="date" id="start-date" className="form-control event-date" defaultValue={eventInfo.startDate}/> <strong>&nbsp;-&nbsp;</strong>
-                  <input type="date" id="end-date" className="form-control event-date" defaultValue={eventInfo.endDate}/>
+                  <input type="date" id="start-date" className="form-control event-date formInput" defaultValue={eventInfo.startDate}/> <strong>&nbsp;-&nbsp;</strong>
+                  <input type="date" id="end-date" className="form-control event-date formInput" defaultValue={eventInfo.endDate}/>
               </div>
             </div>
             <div className="mb-4 event-title-part event-form-part event-date-wrapper">
                <label className="col-form-label">당첨자 발표일 <span style={{color: "red"}}>*</span></label>
-               <input type="date" id="win-date" className="form-control event-date" defaultValue={eventInfo.winnerDate}/>
+               <input type="date" id="win-date" className="form-control event-date formInput" defaultValue={eventInfo.winnerDate}/>
             </div>
             
             <div className="accordion event-accordion" id="eventAccordion1">
@@ -339,7 +379,7 @@ export default ({editStatus}) => {
                                     <span>순위 <span style={{color: "red"}}>*</span></span>
                                     <div className="manager-select-btn">
                                         <div ref={el => clickList.current[2] = el}>
-                                            <span className="manager-select-label rank" ref={el => paramList.current[2] = el}>
+                                            <span className="manager-select-label rank formChoose" ref={el => paramList.current[2] = el}>
                                                 {no!=null && Array.isArray(rewardInfo) ? rewardInfo[0].rank :"선택"}
                                             </span>
                                             <i className="bi bi-caret-down-fill"></i>
@@ -356,7 +396,7 @@ export default ({editStatus}) => {
                                     <span style={{width: "50%"}}>상품 타입 <span style={{color: "red"}}>*</span></span>
                                     <div className="manager-select-btn">
                                         <div ref={el => clickList.current[3] = el}>
-                                            <span className="manager-select-label rewardCategory" ref={el => paramList.current[3] = el}>
+                                            <span className="manager-select-label rewardCategory formChoose" ref={el => paramList.current[3] = el}>
                                                 {no!=null && Array.isArray(rewardInfo) ? rewardInfo[0].rewardCategory :"선택"}
                                             </span>
                                             <i className="bi bi-caret-down-fill"></i>
@@ -371,7 +411,7 @@ export default ({editStatus}) => {
                                     <span style={{width: "50%"}}>추첨 범위 <span style={{color: "red"}}>*</span></span>
                                     <div className="manager-select-btn">
                                         <div ref={el => clickList.current[4] = el}>
-                                            <span className="manager-select-label rewardRange" ref={el => paramList.current[4] = el}>
+                                            <span className="manager-select-label rewardRange formChoose" ref={el => paramList.current[4] = el}>
                                                 {no!=null && Array.isArray(rewardInfo) ? rewardInfo[0].rewardRange :"선택"}
                                             </span>
                                             <i className="bi bi-caret-down-fill"></i>
@@ -388,7 +428,7 @@ export default ({editStatus}) => {
                                     <label className="col-form-label">브랜드 <span style={{color: "red"}}>*</span></label>
                                     <input 
                                         type="text" 
-                                        className="form-control brand"
+                                        className="form-control brand formInput"
                                         defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[0].brand : ""}
                                     />
                                 </div>
@@ -396,7 +436,7 @@ export default ({editStatus}) => {
                                     <label className="col-form-label">상품명 <span style={{color: "red"}}>*</span></label>
                                     <input 
                                         type="text" 
-                                        className="form-control rewardName"
+                                        className="form-control rewardName formInput"
                                         placeholder='다손인 경우 숫자로 금액 표현해주세요.' 
                                         defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[0].rewardName : ""} 
                                     />
@@ -405,7 +445,7 @@ export default ({editStatus}) => {
                                     <label className="col-form-label">당첨자수 <span style={{color: "red"}}>*</span></label>
                                     <input 
                                         type="number"   onChange={()=>addRewardItem(0)}
-                                        className="form-control amount"
+                                        className="form-control amount formInput"
                                         defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[0].amount : ""}
                                     />
                                 </div>
@@ -417,8 +457,8 @@ export default ({editStatus}) => {
                                                         <span>순위</span>
                                                         <div className="manager-select-btn">
                                                             <div ref={el => clickList.current[5] = el}>
-                                                                <span className="manager-select-label rank" ref={el => paramList.current[5] = el}>
-                                                                    {no!=null && Array.isArray(rewardInfo) ? rewardInfo[1].rank :"선택"}
+                                                                <span className="manager-select-label rank formChoose" ref={el => paramList.current[5] = el}>
+                                                                    {no!=null && rewardInfo.length==2 ? rewardInfo[1].rank :"선택"}
                                                                 </span>
                                                                 <i className="bi bi-caret-down-fill"></i>
                                                             </div>
@@ -434,8 +474,8 @@ export default ({editStatus}) => {
                                                         <span style={{width: "50%"}}>상품 타입</span>
                                                         <div className="manager-select-btn">
                                                             <div ref={el => clickList.current[6] = el}>
-                                                                <span className="manager-select-label rewardCategory" ref={el => paramList.current[6] = el}>
-                                                                    {no!=null && Array.isArray(rewardInfo) ? rewardInfo[1].rewardCategory :"선택"}
+                                                                <span className="manager-select-label rewardCategory formChoose" ref={el => paramList.current[6] = el}>
+                                                                    {no!=null && rewardInfo.length==2 ? rewardInfo[1].rewardCategory :"선택"}
                                                                 </span>
                                                                 <i className="bi bi-caret-down-fill"></i>
                                                             </div>
@@ -449,8 +489,8 @@ export default ({editStatus}) => {
                                                         <span style={{width: "50%"}}>추첨 범위</span>
                                                         <div className="manager-select-btn">
                                                             <div ref={el => clickList.current[7] = el}>
-                                                                <span className="manager-select-label rewardRange" ref={el => paramList.current[7] = el}>
-                                                                    {no!=null && Array.isArray(rewardInfo) ? rewardInfo[1].rewardRange :"선택"}
+                                                                <span className="manager-select-label rewardRange formChoose" ref={el => paramList.current[7] = el}>
+                                                                    {no!=null && rewardInfo.length==2 ? rewardInfo[1].rewardRange :"선택"}
                                                                 </span>
                                                                 <i className="bi bi-caret-down-fill"></i>
                                                             </div>
@@ -466,16 +506,16 @@ export default ({editStatus}) => {
                                                         <label className="col-form-label">브랜드</label>
                                                         <input 
                                                             type="text" 
-                                                            className="form-control brand"
-                                                            defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[1].brand : ""}
+                                                            className="form-control brand formInput"
+                                                            defaultValue={no!=null && rewardInfo.length==2 ? rewardInfo[1].brand : ""}
                                                         />
                                                     </div>
                                                     <div className="mb-4 event-form-part">
                                                         <label className="col-form-label">상품명</label>
                                                         <input 
                                                             type="text" 
-                                                            className="form-control rewardName"
-                                                            defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[1].rewardName : ""} 
+                                                            className="form-control rewardName formInput"
+                                                            defaultValue={no!=null && rewardInfo.length==2 ? rewardInfo[1].rewardName : ""} 
                                                         />
                                                     </div>
                                                     <div className="mb-4 event-form-part">
@@ -483,8 +523,8 @@ export default ({editStatus}) => {
                                                         <input 
                                                             type="number" 
                                                             onChange={()=>addRewardItem(1)}
-                                                            className="form-control amount"
-                                                            defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[1].amount : ""}
+                                                            className="form-control amount formInput"
+                                                            defaultValue={no!=null && rewardInfo.length==2 ? rewardInfo[1].amount : ""}
                                                         />
                                                     </div>
                                                 </div>
@@ -495,8 +535,8 @@ export default ({editStatus}) => {
                                                         <span>순위</span>
                                                         <div className="manager-select-btn">
                                                             <div ref={el => clickList.current[8] = el}>
-                                                                <span className="manager-select-label rank" ref={el => paramList.current[8] = el}>
-                                                                    {no!=null && Array.isArray(rewardInfo) ? rewardInfo[2].rank :"선택"}
+                                                                <span className="manager-select-label rank formChoose" ref={el => paramList.current[8] = el}>
+                                                                    {no!=null && rewardInfo.length==3 ? rewardInfo[2].rank :"선택"}
                                                                 </span>
                                                                 <i className="bi bi-caret-down-fill"></i>
                                                             </div>
@@ -512,8 +552,8 @@ export default ({editStatus}) => {
                                                         <span style={{width: "50%"}}>상품 타입</span>
                                                         <div className="manager-select-btn">
                                                             <div ref={el => clickList.current[9] = el}>
-                                                                <span className="manager-select-label rewardCategory" ref={el => paramList.current[9] = el}>
-                                                                    {no!=null && Array.isArray(rewardInfo) ? rewardInfo[2].rewardCategory :"선택"}
+                                                                <span className="manager-select-label rewardCategory formChoose" ref={el => paramList.current[9] = el}>
+                                                                    {no!=null && rewardInfo.length==3 ? rewardInfo[2].rewardCategory :"선택"}
                                                                 </span>
                                                                 <i className="bi bi-caret-down-fill"></i>
                                                             </div>
@@ -527,8 +567,8 @@ export default ({editStatus}) => {
                                                         <span style={{width: "50%"}}>추첨 범위</span>
                                                         <div className="manager-select-btn">
                                                             <div ref={el => clickList.current[10] = el}>
-                                                                <span className="manager-select-label rewardRange" ref={el => paramList.current[10] = el}>
-                                                                    {no!=null && Array.isArray(rewardInfo) ? rewardInfo[2].rewardRange :"선택"}
+                                                                <span className="manager-select-label rewardRange formChoose" ref={el => paramList.current[10] = el}>
+                                                                    {no!=null && rewardInfo.length==3 ? rewardInfo[2].rewardRange :"선택"}
                                                                 </span>
                                                                 <i className="bi bi-caret-down-fill"></i>
                                                             </div>
@@ -544,24 +584,24 @@ export default ({editStatus}) => {
                                                         <label className="col-form-label">브랜드</label>
                                                         <input 
                                                             type="text" 
-                                                            className="form-control brand"
-                                                            defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[2].brand : ""}
+                                                            className="form-control brand formInput"
+                                                            defaultValue={no!=null && rewardInfo.length==3 ? rewardInfo[2].brand : ""}
                                                         />
                                                     </div>
                                                     <div className="mb-4 event-form-part">
                                                         <label className="col-form-label">상품명</label>
                                                         <input 
                                                             type="text" 
-                                                            className="form-control rewardName"
-                                                            defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[2].rewardName : ""} 
+                                                            className="form-control rewardName formInput"
+                                                            defaultValue={no!=null && rewardInfo.length==3 ? rewardInfo[2].rewardName : ""} 
                                                         />
                                                     </div>
                                                     <div className="mb-4 event-form-part">
                                                         <label className="col-form-label">당첨자수</label>
                                                         <input 
                                                             type="number" 
-                                                            className="form-control amount"
-                                                            defaultValue={no!=null && Array.isArray(rewardInfo) ? rewardInfo[2].amount : ""}
+                                                            className="form-control amount formInput"
+                                                            defaultValue={no!=null && rewardInfo.length==3 ? rewardInfo[2].amount : ""}
                                                         />
                                                     </div>
                                                 </div>
@@ -586,15 +626,15 @@ export default ({editStatus}) => {
                     <div className="accordion-body">
                         <div className="mb-4 event-form-part">
                             <label className="col-form-label">영상 링크</label>
-                            <input type="text" id="video-link" className="form-control" defaultValue={eventInfo.videoLink}/>
+                            <input type="text" id="video-link" className="form-control formInput" defaultValue={eventInfo.videoLink}/>
                         </div>
                         <div className="mb-4 event-form-part">
                             <label className="col-form-label">안내 링크</label>
-                            <input type="text" id="detail-link" className="form-control" defaultValue={eventInfo.detailLink}/>
+                            <input type="text" id="detail-link" className="form-control formInput" defaultValue={eventInfo.detailLink}/>
                         </div>
                         <div className="mb-4 event-form-part">
                             <label className="col-form-label">페이지 주소</label>
-                            <input type="text" className="form-control" placeholder="해당 이벤트 페이지 경로를 입력"
+                            <input type="text" className="form-control formInput" placeholder="해당 이벤트 페이지 경로를 입력"
                                 defaultValue={eventInfo.pageLink} id="page-link"/>
                         </div>
                     </div>
@@ -602,7 +642,7 @@ export default ({editStatus}) => {
                 </div>
             </div>
             <button type="submit" className="btn" onClick={uploadForm}>{editStatus}</button>
-            {1===1 && editStatus == '등록' ? <button type="submit" className="btn">초기화</button> : <button type="submit" className="btn">삭제</button>}
+            {1===1 && editStatus == '등록' ? <button type="submit" className="btn" onClick={resetForm}>초기화</button> : <button type="submit" className="btn" onClick={deleteEvent}>삭제</button>}
         </div>
     );
 }

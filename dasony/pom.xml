@@ -58,6 +58,13 @@
 			<version>2.3.1</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.10.1</version>
+		</dependency>
+				
 		
 		
 		<!-- jsp를 이용하기 위한 추가 dependency -->
@@ -79,12 +86,18 @@
       </dependency>
       
       <!-- jsp를 이용하기 위한 추가 dependency 끝 -->
-	
-	
+      
 	<dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
     </dependency>
+    
+    <!-- IOUtils 사용하기 위한 dependency 추가 -->
+	<dependency>
+	  <groupId>commons-io</groupId>
+	  <artifactId>commons-io</artifactId>
+	  <version>2.13.0</version>
+	</dependency>	
 		
 	</dependencies>
 
