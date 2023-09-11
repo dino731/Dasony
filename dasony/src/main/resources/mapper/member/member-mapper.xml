@@ -85,6 +85,19 @@
 		FROM MEMBER
 		WHERE USER_NO = #{userNo}
 	</select>
+	
+	<update id="userUpdate" parameterType="user">
+		UPDATE MEMBER
+		SET
+			USER_NAME=#{userName},
+			USER_PHONE = #{userPhone},
+			USER_EMAIL = #{userEmail},
+			USER_ADDRESS = #{userAddress},
+			USER_STATUS = #{userStatus},
+			USER_LEVEL = #{userLevel},
+			USER_MOD_DATE = SYSDATE
+		WHERE USER_NO = #{userNo}
+	</update>
 
 
 </mapper>

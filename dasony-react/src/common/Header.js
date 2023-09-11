@@ -95,6 +95,7 @@ const Header = () => {
                                 localStorage.removeItem("loginUserNo"); 
                                 localStorage.removeItem("loginUserLocation"); 
                                 localStorage.removeItem("loginUserLevel"); 
+                                localStorage.removeItem("loginUserRegion"); 
                                 navigate('/');
                             }}>
                             <p>
@@ -161,6 +162,7 @@ const Header = () => {
                                 localStorage.removeItem("loginUserNo"); 
                                 localStorage.removeItem("loginUserLocation"); 
                                 localStorage.removeItem("loginUserLevel"); 
+                                localStorage.removeItem("loginUserRegion"); 
                                 navigate('/');
                             }}>
                             <p>

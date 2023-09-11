@@ -204,7 +204,7 @@ function App() {
                 </Route>
 
                 <Route element = {<AdminRoute/>}>                                                       
-                  <Route path="/admin/user/detail" element={<div className=".for-main">
+                  <Route path="/admin/user/:userNo" element={<div className=".for-main">
                                                 <div className='for-normal-page'><motion.div
                                                                         initial = {{opacity:0, y:30}}
                                                                         animate = {{opacity:1, y:0}}

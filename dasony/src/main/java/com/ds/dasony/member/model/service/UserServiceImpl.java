@@ -55,5 +55,9 @@ public class UserServiceImpl implements UserService{
 	public User userInfo(long userNo) {
 		return userDao.userInfo(userNo);
 	}
+	@Override
+	public int userUpdate(User user) {
+		return userDao.userUpdate(user);
+	}
 
 }
