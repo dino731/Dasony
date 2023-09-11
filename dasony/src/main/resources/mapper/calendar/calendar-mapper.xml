@@ -9,12 +9,61 @@
 		<result column="CALENDAR_PLACE" property="calendarPlace"/>
 		<result column="CALENDAR_SPEC" property="calendarSpec"/>
 		<result column="CALENDAR_CATE" property="calendarCate"/>
+		<result column="CALENDAR_LOCATION" property="calendarLocation"/>
+		<result column="CALENDAR_STATUS" property="calendarStatus"/>
 		<result column="USER_NO" property="userNo"/>
 	</resultMap>
 	
-	<select id="calendarList" resultMap="calendarMap">
-		SELECT *
+	<select id="calendarList" parameterType="string" resultMap="calendarMap">
+		SELECT CALENDAR_NO, 
+				CALENDAR_DATE, 
+				CALENDAR_NAME, 
+				CALENDAR_PLACE, 
+				CALENDAR_LOCATION, 
+				CALENDAR_SPEC, 
+				CALENDAR_CATE, 
+				CALENDAR_STATUS,
+				USER_ID,
+				CALENDAR.USER_NO
 		FROM CALENDAR
+		JOIN MEMBER ON CALENDAR.USER_NO = MEMBER.USER_NO
+		<where>
+		    <if test="region != '관리자'">
+		      AND CALENDAR_LOCATION = #{region}
+		    </if>
+  		</where>
 	</select>
+	
+	<insert id="calendarInsert" parameterType="calendar">
+		INSERT INTO CALENDAR
+		VALUES(
+			SEQ_CAL.nextval,
+		    #{calendarName},
+		    #{calendarDate},
+		    #{calendarPlace},
+		    #{calendarSpec},
+		    CASE
+            WHEN #{calendarCate} = '축제' THEN 'F'
+            WHEN #{calendarCate} = '공연' THEN 'P'
+            WHEN #{calendarCate} = '봉사' THEN 'D'
+            WHEN #{calendarCate} = '기타' THEN 'E'
+            ELSE NULL
+        	END,
+		    #{calendarLocation},
+		    DEFAULT,
+		    #{userNo}
+		)
+	</insert>
+	
+	<update id="calendarAdmit" parameterType="map">
+		UPDATE CALENDAR
+		SET CALENDAR_STATUS = 'Y'
+		WHERE CALENDAR_NO = #{calendarNo}
+	</update>
+	
+	<delete id="calendarCancle" parameterType="int">
+		DELETE FROM CALENDAR
+		WHERE CALENDAR_NO = #{calendarNo}
+	</delete>
 
 </mapper>

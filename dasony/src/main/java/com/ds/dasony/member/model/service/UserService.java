@@ -25,4 +25,7 @@ public interface UserService {
 
 	public User userInfo(long userNo);
 
+	public int userUpdate(User user);
+
+
 }

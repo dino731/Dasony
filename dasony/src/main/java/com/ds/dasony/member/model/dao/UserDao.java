@@ -48,5 +48,8 @@ public class UserDao {
 	public User userInfo(long userNo) {
 		return session.selectOne("memberMapper.userInfo", userNo);
 	}
+	public int userUpdate(User user) {
+		return session.update("memberMapper.userUpdate", user);
+	}
 
 }
