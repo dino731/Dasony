@@ -17,8 +17,14 @@
 	    </selectKey>     -->
 		
 		INSERT INTO GAME VALUES
-		(SEQ_GNO.NEXTVAL,SYSDATE,#{gameStatus},#{pointStatus},#{ticketStatus},#{userNo})
+		(SEQ_GNO.NEXTVAL,TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),#{gameStatus},#{pointStatus},#{ticketStatus},#{userNo})
 </insert>
+
+<update id="gameEnd" parameterType ="game">
+	UPDATE  MEMBER SET
+		GAME_STATUS = 'N'
+		WHERE USER_NO = #{userNo}
+</update>
 
 
 

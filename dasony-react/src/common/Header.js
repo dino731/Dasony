@@ -1,8 +1,10 @@
 import './Header.css';
+
 import { useEffect, useState, useTransition } from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { loginUserState } from '../atoms';
+import axios from 'axios';
 
 
 const Header = () => {
@@ -11,6 +13,28 @@ const Header = () => {
     const navigate = useNavigate();
     const path = location.pathname;
     const [mainList, setMainList] = useState('');
+
+    const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
+    const [gameStartYN, setGameStartYN] = useState('');
+    useEffect(() => {
+        axios.post("/dasony/api/gameStartYN", { 
+            userNo: loginUserNo 
+        }).then((response) => {
+            setGameStartYN(response.data);
+          })
+          .catch((error) => {
+            console.error("오류남:", error);
+          });
+      }, [loginUserNo]);
+      useEffect(() => {
+        const gameDiv = document.getElementById('game');
+        if (gameStartYN === 'Y') {
+          gameDiv.style.display = 'block';
+        } 
+      }, [gameStartYN]);
+
+    
+
     
     /*경로 설정을 위한 사용자 정보 확인 */
     const [isLogin, setIsLogin] = useState(false);
@@ -22,6 +46,7 @@ const Header = () => {
             setIsLogin(false);
         }
     })
+
 
     /*관리자 헤더, 사용자 헤더 설정 */
     const HandleMainList = async function(location){

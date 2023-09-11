@@ -139,7 +139,6 @@ function App() {
     <Header/>
 
     <div id='game'> <img src='./resources/common-img/gameimg/bomul.png' style={{width:'30px' , height : '30px'}}></img>
-
       <Gamestart/>
       </div>
       <div id='gameDiv'></div>

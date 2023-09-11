@@ -4,55 +4,43 @@ import { useEffect, useState, useTransition } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
-import { useRecoilState } from 'recoil';
-import { loginUserState } from '../atoms';
 
 // import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
 const MypageAlert = () => {
 
-  const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
+    const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
+    const loginUserRegion = localStorage.getItem("loginUserRegion");
 
 
 // import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
 
   const [alert, setAlert] = useState([]);
+  // const [timer, setTimer] = useState(0);
+
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+      
+  //     const gameDiv = document.getElementById('game');
+  //     if (gameDiv) {
+  //       gameDiv.style.display = 'block  ';
+  //     }
+  //   }, 4000); 
+    
+
+    
+  //   return () => clearTimeout(timeoutId);
+  // }, []); 
 
   useEffect(() => {
-    axios.post("/dasony/api/getAlertList", {
-      userNo: loginUserInfo.userNo
+    axios.post("/dasony/api/getMyAlertList", {
+      userNo: loginUserNo
     }).then((response) => {
-      const alertData = response.data; 
-
+      
       setAlert(response.data.alertList);
     }).catch((error) => {
       console.error("오류남:", error);
     });
   }, []);
-  
-  
-  
-  
-  
-
-
-  // const [alert, setAlert] = useState([]);
-
-
-  
-  // useEffect(() => {
-  //     const newAlert = [{
-  //         number :  '1',
-  //         category : '포인트 사용',
-  //         content : '상품 구매가 완료되었습니다. (홈런볼)',
-  //         date : '2023.05.17'
-  //     },{
-  //       number :  '2',
-  //       category : '게시글 등록',
-  //       content : '게시글 등록 완료.',
-  //       date : '2023.05.01',
-  //     }];
-  //     setAlert(newAlert);
-  // },[]);
     
     return(
     <div className='Alert-table'>

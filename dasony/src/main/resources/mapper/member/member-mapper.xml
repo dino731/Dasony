@@ -74,6 +74,13 @@
 		WHERE USER_NO = #{userNo}
 	</update>
 	
+
+	<select id="gameStartYN" parameterType="int" resultType="string">
+		SELECT GAME_STATUS
+		FROM MEMBER
+		WHERE USER_NO = #{userNo}
+	</select>
+
 	<select id="findingId" parameterType="string" resultMap="memberMap">
 		SELECT *
 		FROM MEMBER
@@ -98,6 +105,7 @@
 			USER_MOD_DATE = SYSDATE
 		WHERE USER_NO = #{userNo}
 	</update>
+
 
 
 </mapper>
