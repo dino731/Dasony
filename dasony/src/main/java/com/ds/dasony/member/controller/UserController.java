@@ -165,6 +165,29 @@ public class UserController {
 		return map;
 	}
 	
+	@PostMapping("/getMyInfo")
+	public Map<String, Object> getMyInfo(
+			@RequestBody Map<String, Object> requestData
+			){
+		int userNo = (int) requestData.get("userNo");
+		Map<String,Object> myInfo = new HashMap();
+	    myInfo.put("myInfo",userService.getMyInfo(userNo));
+		
+		return myInfo;
+	}
+	
+	@PostMapping("/modifyMyInfo")
+	public int modifyMyInfo(
+			@RequestBody Map<String, Object> myInfo
+			){
+		
+		int result = userService.modifyMyInfo(myInfo);
+	    
+		
+		return result;
+	}
+	
+	
 	
 	
 }
