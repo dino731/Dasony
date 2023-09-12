@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 /**
     이벤트 상세조회 게시판
@@ -6,7 +7,9 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
     (정적 페이지 / 데이터 호출해 렌더링하는 페이지로 나뉨)
 */
 const LoginEvent08 = () => {
+    const navigate = useNavigate();
     const checkBtn = useRef(null);
+    const [hoverStatus, setHoverStatus] = useState("none");
     // 오늘 참여 여부
     const [tdyCheck, setTdyCheck] = useState(false);
     // 출석일
@@ -66,7 +69,9 @@ const LoginEvent08 = () => {
     return(
         <>
             <div className="back-to-event-list">
-                <i className="bi bi-arrow-left-circle"></i>
+                <i className={`bi ${hoverStatus==="hover" ? "bi-arrow-left-circle-fill" : "bi-arrow-left-circle"}`}
+                    onMouseEnter={() => setHoverStatus("hover")} onMouseLeave={() => setHoverStatus("none")}
+                    onClick={()=>navigate(-1)}></i>
             </div>
 
             <div className="dasony-promotion dragging">

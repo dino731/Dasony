@@ -6,9 +6,9 @@ import {useEffect, useNavigate, useOutletContext} from 'react-router-dom';
  */
 const NoticeBoard = ({context}) => {
     // const {data} = useOutletContext();
-    console.log(context);
     const data = context.data;
     const navigate = useNavigate();
+    console.log("Board : ",data);
     
     return(
         <div className="notice-content dragging">
@@ -158,10 +158,10 @@ const NoticeBoard = ({context}) => {
                         레전드패스 서비스 종료 안내
                     </div>
                 </div>
-                {data.length != 0 ? data.map((element, index) => {
+                {data!=null && data.length != 0 ? data.map((element, index) => {
                     return  <div className='row justify-content-md-center' key={index}>
                                 <div className="col col-3">
-                                    {element.cate.split(", ").map((c, index) => (
+                                    {element.category.split(",").map((c, index) => (
                                         <span key={index}>[{c}] </span>
                                     ))}
                                 </div>
