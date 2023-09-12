@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ds.dasony.donation.model.vo.Donation;
+import com.ds.dasony.donation.model.vo.DonationList;
 
 @Repository
 public class DonationDao {
@@ -51,8 +52,15 @@ public class DonationDao {
 	public int deleteDona(int donaNo) {
 		return session.delete("donationMapper.deleteDona", donaNo);
 	}
+
+
+	public List<DonationList> getMyDonationList(int userNo) {
+		return session.selectList("donationMapper.getMyDonationList",userNo);
+	}
+
 	
 //	public int selectUserDason(int userNo) {
 //	return session.selectOne("donationMapper.selectUserDason", userNo);
 //}
+
 }

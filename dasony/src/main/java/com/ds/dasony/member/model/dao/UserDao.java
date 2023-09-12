@@ -51,5 +51,12 @@ public class UserDao {
 	public int userUpdate(User user) {
 		return session.update("memberMapper.userUpdate", user);
 	}
+	public List<User> getMyInfo(int userNo) {
+		return session.selectList("memberMapper.getMyInfo",userNo);
+	}
+	public int modifyMyInfo(Map<String, Object> myInfo) {
+		int result = session.update("memberMapper.modifyMyInfo",myInfo);
+		return result;
+	}
 
 }

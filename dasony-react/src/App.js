@@ -139,7 +139,6 @@ function App() {
     <Header/>
 
     <div id='game'> <img src='./resources/common-img/gameimg/bomul.png' style={{width:'30px' , height : '30px'}}></img>
-
       <Gamestart/>
       </div>
       <div id='gameDiv'></div>
@@ -522,29 +521,6 @@ function App() {
                                                       transition={{duration : 1}}>
                                                         <EventDetailControl editStatus="등록"/>
                                                       </motion.div>}/>  
-                                                      
-                        <Route path="addNewEvent" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <EventForm editStatus="등록"/>
-                                                      </motion.div>}/>
-                        <Route path="modifyEvent/:no" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <EventForm editStatus="수정"/>
-                                                      </motion.div>}/>
-                        <Route path="managerEvent" element={<motion.div
-                                                      initial = {{opacity:0, y:30}}
-                                                      animate = {{opacity:1, y:0}}
-                                                      end = {{opacity:1, y:0}}
-                                                      transition={{duration : 1}}>
-                                                        <ManagerEventBoard/>
-                                                      </motion.div>}/>      
-                                                                                            
                     </Route>
                   </Route>
 
