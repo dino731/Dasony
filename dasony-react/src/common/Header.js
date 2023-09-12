@@ -3,14 +3,17 @@ import { useEffect, useState, useTransition } from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { loginUserState } from '../atoms';
+import axios from 'axios';
 
 
 const Header = () => {
-    const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
+    const loginUserNo = localStorage.getItem("loginUserNo");
     const location = useLocation();
     const navigate = useNavigate();
     const path = location.pathname;
     const [mainList, setMainList] = useState('');
+
+    const [gameStartYN, setGameStartYN] = useState('');
     
     /*경로 설정을 위한 사용자 정보 확인 */
     const [isLogin, setIsLogin] = useState(false);
@@ -176,9 +179,27 @@ const Header = () => {
         setMainList(mainListText);
     }
 
+
     useEffect(()=>{
         HandleMainList();
-    }, [location]);
+
+        axios.post("/dasony/api/gameStartYN", { 
+            userNo: loginUserNo 
+        }).then((response) => {
+            setGameStartYN(response.data);
+          })
+          .catch((error) => {
+            console.error("오류남:", error);
+          });
+
+    }, [location, loginUserNo]);
+
+    useEffect(() => {
+        const gameDiv = document.getElementById('game');
+        if (gameStartYN === 'Y') {
+          gameDiv.style.display = 'block';
+        } 
+      }, [gameStartYN]);
 
     /*사이드바 속성 useState */
     const [sideId, setSideId] = useState('');

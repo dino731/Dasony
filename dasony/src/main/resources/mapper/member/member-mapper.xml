@@ -17,6 +17,7 @@
 		<result column="USER_MOD_DATE" property="userModDate"/>
 		<result column="USER_STATUS" property="userStatus"/>
 		<result column="TOTAL_POINT" property="totalPoint"/>
+		<result column="GAME_STATUS" property="gameStatus"/>
 	</resultMap>
 	
 	<select id="selectUserList" resultMap="memberMap">
@@ -39,6 +40,7 @@
 	    DEFAULT,
 	    SYSDATE,
 	    SYSDATE,
+	    DEFAULT,
 	    DEFAULT,
 	    DEFAULT
     	)

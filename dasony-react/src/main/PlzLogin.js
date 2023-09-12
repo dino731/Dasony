@@ -81,8 +81,6 @@ const PlzLogin = () => {
     useEffect(()=>{
         handleDisable();
         setUser({});
-        console.log("리코일에 저장된 값 확인하기-plzlogin",user);
-        console.log(localStorage.getItem("loginUserNo"));
     }, [login.userId, pwd])
 
         /*로그인 정보 전달 */
