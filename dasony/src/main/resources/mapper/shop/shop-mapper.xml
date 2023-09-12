@@ -7,7 +7,15 @@
 		<result column="SHOP_NAME" property="shopName"/>
 		<result column="SHOP_ADDRESS" property="shopAddress"/>
 		<result column="SHOP_REGION" property="shopRegion"/>
+		<result column="SHOP_CATE" property="shopCate"/>
 	</resultMap>
+	<resultMap type="product" id="productMap">
+		<id column="PRODUCT_NO" property="productNo" />
+		<result column="SHOP_OKEY" property="shopOkey"/>
+		<result column="PRODUCT_NAME" property="productName"/>
+		<result column="PRODUCT_AMOUNT" property="productAmount"/>
+	</resultMap>
+
 	
 	<select id="shopList" parameterType="string" resultMap="shopMap">
 		SELECT *
@@ -44,4 +52,67 @@
 			SHOP_CATE = #{shopCate}
 		WHERE SHOP_OKEY = #{shopOkey}
 	</update>
+	
+	<select id="shopInfo" parameterType="string" resultMap="shopMap">
+		SELECT *
+		FROM SHOP
+		WHERE SHOP_OKEY = #{shopOkey}
+		ORDER BY SHOP_OKEY
+	</select>
+	
+	<insert id="addProduct" parameterType="product">
+		INSERT INTO PRODUCT
+		VALUES(
+			#{shopOkey}||SEQ_PRNO.nextval,
+			#{shopOkey},
+			#{productName},
+			#{productAmount}
+		)
+	</insert>
+	
+	<select id="findProductNo" parameterType="product" resultType="string">
+		SELECT PRODUCT_NO
+		FROM PRODUCT
+		WHERE PRODUCT_NAME = #{productName}
+	</select>
+	
+	<update id="addProductImg" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+        INTO PRODUCT_IMG
+        (
+            PRODUCT_IMG_NO,
+            PRODUCT_NO,
+            PRODUCT_IMG_MOD_NAME,
+            PRODUCT_IMG_ORI_NAME,
+            PRODUCT_IMG_PATH,
+            PRODUCT_IMG_UPLOAD_DATE,
+            PRODUCT_IMG_LEVEL,
+            PRODUCT_IMG_STATUS
+        )
+	        VALUES
+	        (
+	            #{item.productNo}||SEQ_PRINO.nextval||#{index},
+	            #{item.productNo},
+	            #{item.productImgModName},
+	            #{item.productImgOriName},
+	            #{item.productImgPath},
+	            SYSDATE,
+	            #{item.productImgLevel},
+	            DEFAULT
+	        )
+	    </foreach>
+	</update>
+
+	<select id="productInfo" parameterType="string" resultMap="productMap">
+		SELECT *
+		FROM PRODUCT
+		WHERE SHOP_OKEY = #{shopOkey}
+	</select>
+	
+	<select id="productInfoImg" parameterType="string" resultType="java.lang.String">
+		SELECT PRODUCT_IMG_MOD_NAME
+		FROM PRODUCT_IMG
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+
 </mapper>

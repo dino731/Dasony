@@ -27,5 +27,6 @@ public class User {
 	private Date userModDate;
 	private String userStatus;
 	private int totalPoint;
+	private String gameStatus;
 
 }

@@ -35,7 +35,6 @@ public class ShopController {
 	@PostMapping("/shopList")
 	public Map<String, Object> shopList(@RequestBody Map<String, String>region) {
 		String userRegion = region.get("userRegion");
-		log.error("userRegion = {} ===>>>>>>>>>>>>>>", userRegion);
 		
 		Map<String, Object> shopMap = new HashMap();
 		
@@ -47,7 +46,6 @@ public class ShopController {
 			shopMap.put("shopList", shops);
 		}
 		
-		log.error("ShopMap======{}", shopMap);
 		
 		return shopMap;
 
@@ -56,7 +54,6 @@ public class ShopController {
 	@DeleteMapping("/shopDelete")
 	public ResponseEntity<String> shopDelete(@RequestParam Map<String, String>shopOkey){
 		int result = shopService.shopDelete(shopOkey);
-		log.info("shopOkey={}",shopOkey);
 		try {
 			if(result > 0) {
 				return ResponseEntity.ok("삭제 성공하였습니다.");
@@ -70,7 +67,7 @@ public class ShopController {
 	
 	@PostMapping("/shopAdd")
 	public ResponseEntity<String> shopAdd(@RequestBody Shop newShop){
-		log.info("newshop={}", newShop);
+		
 		String shopRegion = newShop.getShopRegion();
 		String shopOkey = "";
 
@@ -93,7 +90,7 @@ public class ShopController {
 
 		newShop.setShopOkey(shopOkey);
 		
-		log.info("newShop 다시 확인 : ={}>>>>>>>>>>>>>>>>>>>>>>>>>>>", newShop);
+
 		int result = shopService.shopAdd(newShop);
 		try {
 			if(result > 0) {
