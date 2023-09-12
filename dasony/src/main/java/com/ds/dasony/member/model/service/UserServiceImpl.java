@@ -59,5 +59,13 @@ public class UserServiceImpl implements UserService{
 	public int userUpdate(User user) {
 		return userDao.userUpdate(user);
 	}
+	@Override
+	public List<User> getMyInfo(int userNo){
+		return userDao.getMyInfo(userNo);
+	}
+	@Override
+	public int modifyMyInfo(Map<String, Object> myInfo) {
+		return userDao.modifyMyInfo(myInfo);
+	}
 
 }

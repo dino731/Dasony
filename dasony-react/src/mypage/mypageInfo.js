@@ -220,8 +220,6 @@ const MypageInfo = () => {
         event.preventDefault();
             /*비밀번호 암호화*/
         
-
-        //axios이용해서 POST 요청 보내기
         axios.post("/dasony/api/modifyMyInfo", user, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8"

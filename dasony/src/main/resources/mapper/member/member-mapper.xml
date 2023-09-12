@@ -105,7 +105,27 @@
 			USER_MOD_DATE = SYSDATE
 		WHERE USER_NO = #{userNo}
 	</update>
+	
+	<select id="getMyInfo" parameterType="int" resultMap="memberMap">
+		
+		SELECT * FROM MEMBER
+		WHERE USER_NO = #{userNo}
+		
+	</select>
 
+<update id="modifyMyInfo" parameterType="user">
+		UPDATE MEMBER
+		SET
+			USER_NAME=#{userName},
+			USER_NICKNAME = #{userNick},
+			USER_PHONE = #{userPhone},
+			USER_EMAIL = #{userEmail},
+			USER_ADDRESS = #{userAddress},
+			USER_STATUS = #{userStatus},
+			USER_LEVEL = #{userLevel},
+			USER_MOD_DATE = SYSDATE
+		WHERE USER_NO = #{userNo}
+	</update>
 
 
 </mapper>
