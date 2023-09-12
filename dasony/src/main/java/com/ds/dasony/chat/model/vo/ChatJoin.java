@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class ChatJoin {
 
 	private int ChatRoomNo;
-	private int userNo;
+	private long userNo;
 }

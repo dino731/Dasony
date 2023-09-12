@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ds.dasony.chat.model.vo.ChatJoin;
+import com.ds.dasony.chat.model.vo.ChatMessage;
 import com.ds.dasony.chat.model.vo.ChatRoom;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +38,20 @@ public class ChatDao {
 		
 		return result;
 	}
-	
-	
+
+	public int insertChatMessage(ChatMessage chatMessage) {
+		return session.insert("chatMapper.insertChatMessage", chatMessage);
+	}
+
+	public int joinCheck(ChatJoin join) {
+		return session.selectOne("chatMapper.joinCheck", join);
+	}
+
+	public void joinChatRoom(ChatJoin join) {
+		session.insert("chatMapper.joinChatRoom", join);
+	}
+
+	public List<ChatMessage> selectChatMessage(int chatRoomNo) {
+		return session.selectList("chatMapper.selectChatMessage", chatRoomNo);
+	}
 }

@@ -14,7 +14,11 @@ public class ChatMessage {
 private int chatNo;//	CHAT_NO
 private String chatMsg;//	CHAT_MSG
 private Date chatDate;//	CHAT_DATE
-private int ChatRoomNo;//	CHATROOM_NO
-private int userNo;//	USER_NO
+private int chatRoomNo;//	CHATROOM_NO
+private long userNo;//	USER_NO
+
+private String userName;
+
+//private String chatRoomTitle;
 
 }

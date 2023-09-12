@@ -14,18 +14,18 @@
   	<result column="DONA_TARGET_AMOUNT" property="donaTargetAmount"/>
   	<result column="DONA_SELECT_AREA" property="donaSelectArea"/>
   </resultMap>
-  
-<resultMap type="donationList" id="donationListRS">
+  	
+ <!-- <resultMap type="donationList" id="donationListResultSet">
      <id column="DONA_NO" property="donaNo"/>
      <result column="DONA_EXECUTE_DATE" property="donaExecuteDate"/>
      <result column="DONA_AMOUNT" property="donaAmount"/>
      <result column="USER_NO" property="userNo"/>
-  </resultMap>
+  </resultMap>  -->
   
   <resultMap type="donationList" id="donationListResultSet">
     <id column="DONA_EXECUTE_NO" property="donaExecuteNo"/>
     <result column="DONA_AMOUNT" property="donaAmount"/>
-    <result column="DONA_EXECUTE_DATE" property="executeDate"/>
+    <result column="DONA_EXECUTE_DATE" property="donaExecuteDate"/>
     <result column="DONA_NO" property="donaNo"/>
     <result column="DONA_NAME" property="donaName"/>
 </resultMap>
@@ -100,7 +100,7 @@
 		DONA_TITLE = #{donaTitle},
 		DONA_NAME = #{donaName},
 		DONA_TARGET_AMOUNT = #{donaTargetAmount},
-		DONA_CONTENT = #{donaContent}
+		DONA_CONTENT = #{donaContent} 
 	WHERE DONA_NO = #{donaNo}
  </update>
 
@@ -109,14 +109,14 @@
 	WHERE DONA_NO = #{donaNo}
  </delete>
  
-  <select id="DonaDetails" resultMap="donationListRS" parameterType="int">
+  <select id="DonaDetails" resultMap="donationListResultSet" parameterType="int">
 	SELECT
 		*
 	FROM DONATION_LIST
 	WHERE DONA_NO = #{donaNo}
   </select>
   
-  <select id="getMyDonationList" parameterType="int" resultMap="donationListResultSet">
+ <select id="getMyDonationList" parameterType="int" resultMap="donationListResultSet">
     SELECT DONA_EXECUTE_DATE,DONA_AMOUNT,DONA_EXECUTE_NO,DONA_NAME
     FROM DONATION_LIST
     JOIN DONATION USING (DONA_NO)

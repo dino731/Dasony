@@ -21,20 +21,23 @@ function useDonaTotal(donaNo) {
         .then((response) => {
           const donaHistoryData = response.data.donaHistory;
           setDonaHistory(donaHistoryData);
-  
+          
           const totalDonaAmount = response.data.totalDonaAmount;
           setTotalDonaAmount(totalDonaAmount);
-  
+          
           const donationCount = donaHistoryData.length;
           setDonationCount(donationCount);
+          
+          // console.log(JSON.stringify(donaHistoryData));
+          
         })
         .catch((error) => console.log(error));
-    };
-  
-    useEffect(() => {
-      getDonaTotal();
-      // getUserName();
-    }, [donaNo]);
+      };
+      
+      useEffect(() => {
+        getDonaTotal();
+        // getUserName();
+      }, [donaNo]);
   
     return {
       totalDonaAmount,

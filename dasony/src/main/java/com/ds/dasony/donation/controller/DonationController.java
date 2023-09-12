@@ -48,6 +48,8 @@ public class DonationController {
 		
 		Donation donation = donationService.selectDonaDetail(donaNo);
 		
+		
+		
 		return donation;
 	}
 	
@@ -72,14 +74,16 @@ public class DonationController {
 		try {
 			List<DonationList> donaHistory = donationService.DonaDetails(donaNo);
 			int totalDonaAmount = donationService.totalAmount(donaHistory);
-			
+		
 			res.put("donaHistory", donaHistory);
+//			res.put("donaNo", donaNo);
+//			res.put("donaHistory", donaHistory);
 			res.put("totalDonaAmount", totalDonaAmount);
 			
-//			log.info("donaHistory = {}", donaHistory);
-//			log.info("totalDonaAmount = {}", totalDonaAmount);
+			log.info("donaHistory = {}", donaHistory);
+			log.info("totalDonaAmount = {}", totalDonaAmount);
 			
-			res.put("statusCode", HttpStatus.OK.value());
+//			res.put("statusCode", HttpStatus.OK.value());
 			
 		} catch(Exception e) {
 			res.put("error", "에러발생");

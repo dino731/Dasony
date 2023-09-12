@@ -8,8 +8,8 @@ import { useEffect } from 'react';
 
  const ChatList  = (props) => {
 
-     const {chatData, setChatDate} = useChatData();
-     const [userName, setUserName] = useState("");
+    const {chatData, setChatDate} = useChatData();
+    const [userName, setUserName] = useState("");
 
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
 
@@ -44,6 +44,7 @@ import { useEffect } from 'react';
 
     useEffect(() => {
         getChatList();
+        
     }, [])
 
 // ----------------------------모달창------------------------------------
@@ -66,14 +67,21 @@ import { useEffect } from 'react';
 
         if(titleCheck){
             alert("이미 존재하는 채팅방이 있습니다 다른 제목을 입력해주세요")
-
+            return;
         }else{
 
             const postNewChat = (newChat) => {
                 axios.post("/dasony/openChatRoom", {userNo : loginUserNo, newChat : newChat})
                 // {title: , content: }
                 // {no : , chat: {tilte, content}}
-                .then((response) => getChatList())
+                .then((response) => {
+                    // console.log(response.data);
+                    const createChatRoomNo = response.data.chatRoomNo;
+                    // console.log(createChatRoomNo);
+                    getChatList();
+                    // createChatRoomNo();
+                    navigate(`/chat/${createChatRoomNo}/${newChat.chatRoomTitle}`);
+                })
                 .catch(error => console.log(error));
             }
             
@@ -88,22 +96,6 @@ import { useEffect } from 'react';
             postNewChat(newChat);
 
         }
-    
-
-        // const updateChatDate = [...chatData, newChatRoom];
-        // setChatDate(updateChatDate);
-
-        // closeModal();
-
-        // const encodedChatname = encodeURIComponent(newChatRoom.chatname);
-        
-        // // const chatId = chatData.find(chatId => chatId.id === id);
-
-        // `/chat/${chat.chatRoomNo}/${chat.chatRoomTitle}`
-        // navigate(`/chat/${newChatRoom.id}/${encodedChatname}`);
-        // // setChatRoomNames([...chatRoomNames, newChatRoom]);
-        // // console.log(newChatRoom);
-
     }
 
 // -----------------------------검색창-----------------------------------
@@ -180,7 +172,7 @@ import { useEffect } from 'react';
                                         <td width="235">{chat.userName}</td>
                                         <td width="215">{chat.cnt}명</td>
                                         <td width="150">
-                                        <Link to={`/chat/${chat.chatRoomTitle}`}><button>참여하기</button></Link>
+                                        <Link to={`/chat/${chat.chatRoomNo}/${chat.chatRoomTitle}`}><button>참여하기</button></Link>
                                         </td>
                                     </tr>
                                     ))}

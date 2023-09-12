@@ -85,7 +85,14 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
     </dependency>
-		
+    
+    <!-- 웹소켓, STOMP사용 -->
+    <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-websocket</artifactId>
+	</dependency>
+
+			
 	</dependencies>
 
 	<build>

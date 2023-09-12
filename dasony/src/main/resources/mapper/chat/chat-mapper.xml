@@ -11,6 +11,15 @@
 	<result column="CNT" property="cnt"/>
 </resultMap>
 
+<resultMap type="chatMessage" id="chatMessageResultSet">
+	<id column="CHAT_NO" property="chatNo"/>
+	<result column="CHAT_MSG" property="chatMsg"/>
+	<result column="CHAT_DATE" property="chatDate"/>
+	<result column="CHATROOM_NO" property="chatRoomNo"/>
+	<result column="USER_NO" property="userNo"/>
+	<result column="USER_NAME" property="userName"/>
+</resultMap>
+
 <select id="selectChatList" resultMap="chatRoomResultSet">
 	SELECT
 		CHATROOM_NO,
@@ -40,5 +49,43 @@
 		SELECT SEQ_CRNO.CURRVAL FROM DUAL
 	</selectKey>
 </insert>
+
+<insert id="insertChatMessage" parameterType="chatMessage">
+	INSERT INTO CHAT_MESSAGE	
+		VALUES (
+			SEQ_CMNO.NEXTVAL,
+			#{chatMsg},
+			#{chatDate},
+			#{chatRoomNo},
+			#{userNo}
+		)
+</insert>
+
+<select id="joinCheck" resultType="int" parameterType="chatJoin">
+	SELECT 
+		COUNT(*)
+	FROM CHAT_JOIN
+	WHERE CHATROOM_NO = #{chatRoomNo} AND USER_NO = #{userNo}
+</select>
+
+<insert id="joinChatRoom" parameterType="chatJoin">
+	INSERT INTO CHAT_JOIN
+		VALUES (
+			#{chatRoomNo},
+			#{userNo}
+		)
+</insert>
+
+<select id="selectChatMessage" resultMap="chatMessageResultSet">
+	SELECT 
+		CHAT_MSG,
+		CHAT_DATE,
+		USER_NO,
+		USER_NAME
+	FROM CHAT_MESSAGE
+	JOIN MEMBER USING (USER_NO)
+	WHERE CHATROOM_NO = #{chatRoomNo}
+	ORDER BY CHAT_NO
+</select>
 
 </mapper>
