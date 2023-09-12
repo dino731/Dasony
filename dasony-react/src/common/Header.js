@@ -8,14 +8,13 @@ import axios from 'axios';
 
 
 const Header = () => {
-    const loginUserNo = localStorage.getItem("loginUserNo");
+    const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
     const location = useLocation();
     const navigate = useNavigate();
     const path = location.pathname;
     const [mainList, setMainList] = useState('');
 
-
-    const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
+ 
     const [gameStartYN, setGameStartYN] = useState('');
     useEffect(() => {
         axios.post("/dasony/api/gameStartYN", { 
