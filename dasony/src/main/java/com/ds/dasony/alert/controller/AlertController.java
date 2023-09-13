@@ -39,10 +39,11 @@ public class AlertController {
 	private ResourceLoader resourceLoader;
 	
 
-	@PostMapping("/getAlertList")
-	public Map<String,Object> getAlertList(@RequestBody Map<String, Object> requestData){
+	@PostMapping("/getMyAlertList")
+	public Map<String,Object> getAlertList(
+			@RequestBody Map<String, Object> requestData){
 	    int userNo = (int) requestData.get("userNo");
-	    
+
 	    Map<String,Object> alertList = new HashMap();
 	    alertList.put("alertList",alertService.getAlertList(userNo));
         

@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import HeartIcon from "../heart";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import './ShopCateProduct.css';
+import axios from 'axios';
 
 
 const ShopCateProduct = () => {
@@ -9,6 +10,33 @@ const ShopCateProduct = () => {
     const {store} = useParams();
     const [storeDisplay, setStoreDisplay] = useState('');
     const[storeTitle, setStoreTitle] = useState(store==null?'every':store);
+
+{/*상점 이름 설정 - 서버*/}
+    const handleStoreTitle = (store) => {
+        axios.post(`/dasony/api/shopTitle`, {store:store})
+        .then(res=>{
+            setStoreTitle(res.data);
+        })
+        .catch(err=>{
+            console.log(err);
+            alert("상점 정보를 불러오지 못했습니다.");
+        })
+    }
+
+{/*상품 정보 불러오기 */}
+    {/*상품 정보 설정 */}
+    const [product, setProduct] = useState([]);
+    {/*상품 정보 불러오기 - 서버*/}
+    const handleProductInfo = () => {
+        axios.post("/dasony/api/admin/productInfo", {shopOkey:store})
+        .then(res=>{
+            setProduct(res.data.product);
+        })
+        .catch(err=>{
+            console.log(err);
+            alert("다시 시도해주세요.");
+        })
+    }
 
     const navigate = useNavigate();
 
@@ -22,8 +50,11 @@ const ShopCateProduct = () => {
         if(storeTitle=='every'){
             handleNoneStoreName();
         }else {
+            handleStoreTitle(store);
             handleBlockStoreName();
         }
+
+        handleProductInfo();
     }, [storeDisplay, location.pathname, storeTitle]);
 
     
@@ -49,71 +80,26 @@ const ShopCateProduct = () => {
             </div>{/* shopCate-box-head 끝*/}
 
             <div className="shopBest-box">
-                
-                
-                    <div className="shopBest-item" onClick={handleNav}>
-                            <div className="shopBest-item-img">
-                                <img src='/resources/shop/product/1/001.png'/>
+                {product.filter(p=>{return(p.shopOkey == store)})
+                        .map((p, index)=>{
+                            return(
+                                <div key={p.productNo} className="shopBest-item" onClick={handleNav}>
+                                    <div className="shopBest-item-img">
+                                        <img src= {p.productImg}/>
+                                    </div>
+                                    <div className='shopBest-item-shop'>{storeTitle}</div>
+                                    <div className='shopBest-item-product'>{p.productName}</div>
+                                    <div className='shopBest-item-point'>
+                                        {p.productAmount} 다손{" "}
+                                        <HeartIcon productNo={p.productNo} shopOkey={p.shopOkey}/>
+                                    </div>
+                            
                             </div>
-                            <div className='shopBest-item-shop'>뜨끈 전골</div>
-                            <div className='shopBest-item-product'>몸보신 전복 장어 전골</div>
-                            <div className='shopBest-item-point'>35000 다손{" "}<HeartIcon/></div>
-                       
-                    </div>
+                            )
+                        })}
+                
+                    
 
-                    <div className="shopBest-item" onClick={handleNav}>
-                            <div className="shopBest-item-img">
-                                <img src="/resources/shop/product/5/005.png"/>
-                            </div>
-                            <div className='shopBest-item-shop'>마시리 카페</div>
-                            <div className='shopBest-item-product'>카페라떼(hot)</div>
-                            <div className='shopBest-item-point'>5000 다손{" "}<HeartIcon/></div>
-                    </div>
-
-                    <div className="shopBest-item">
-                        <div className="shopBest-item-img">
-                            <img src="/resources/shop/product/6/006.png"/>
-                        </div>
-                        <div className='shopBest-item-shop'>화산루</div>
-                        <div className='shopBest-item-product'>칠리 새우</div>
-                        <div className='shopBest-item-point'>21000 다손{" "}<HeartIcon/></div>
-                    </div>
-
-                    <div className="shopBest-item">
-                        <div className="shopBest-item-img">
-                            <img src="/resources/shop/product/2/004.png"/>
-                        </div>
-                        <div className='shopBest-item-shop'>아사기 샐러드</div>
-                        <div className='shopBest-item-product'>닭가슴살 치즈 샐러드</div>
-                        <div className='shopBest-item-point'>13000 다손{" "}<HeartIcon/></div>
-                    </div>
-
-                    <div className="shopBest-item">
-                        <div className="shopBest-item-img">
-                            <img src="/resources/shop/product/1/003.png"/>
-                        </div>
-                        <div className='shopBest-item-shop'>뜨끈 전골</div>
-                        <div className='shopBest-item-product'>만두 전골</div>
-                        <div className='shopBest-item-point'>19000 다손{" "}<HeartIcon/></div>
-                    </div>
-
-                    <div className="shopBest-item">
-                        <div className="shopBest-item-img">
-                            <img src="/resources/shop/product/2/001.png"/>
-                        </div>
-                        <div className='shopBest-item-shop'>아사기 샐러드</div>
-                        <div className='shopBest-item-product'>호밀 치즈 샐러드</div>
-                        <div className='shopBest-item-point'>12000 다손{" "}<HeartIcon/></div>
-                    </div>
-
-                    <div className="shopBest-item">
-                        <div className="shopBest-item-img">
-                            <img src="/resources/shop/product/9/001.png"/>
-                        </div>
-                        <div className='shopBest-item-shop'>토종 신토불이야 국밥</div>
-                        <div className='shopBest-item-product'>순대 국밥</div>
-                        <div className='shopBest-item-point'>9000 다손{" "}<HeartIcon/></div>
-                    </div>
             </div>{/* shopCate-best-box 끝*/}
 
         </div>

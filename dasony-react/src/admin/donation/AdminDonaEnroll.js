@@ -1,9 +1,8 @@
 import './AdminDonaEnroll.css';
 import { useNavigate, useLocation} from 'react-router-dom';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { useDonaList } from './AdminDonaListContext';
 import axios from 'axios';
-import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
 
 
 const AdminDonaEnroll = () => {
@@ -27,10 +26,6 @@ const AdminDonaEnroll = () => {
         .then(() => navigate(`/admindonalist?selectedArea=?`))
         .catch(error => console.log(error));
     }
-
-    useEffect(() => {
-        //getDonaEnroll();
-    },[])
     
     const handleaddonalist = () => {
 
@@ -39,18 +34,6 @@ const AdminDonaEnroll = () => {
             alert("값을 모두 입력해주세요");
             return
         }
-
-        const currentDate = new Date();
-        const year = currentDate.getFullYear();
-        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-        const day = currentDate.getDate().toString().padStart(2, '0');
-
-        const endDate = new Date(currentDate);
-        endDate.setMonth(endDate.getMonth() + 7);
-        const endYear = endDate.getFullYear();
-        const endMonth = (endDate.getMonth() + 1).toString().padStart(2, '0');
-        const endDay = endDate.getDate().toString().padStart(2, '0');
-
         
         const newDona = {
             donaTitle : title,

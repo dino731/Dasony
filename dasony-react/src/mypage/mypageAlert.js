@@ -3,14 +3,14 @@ import './mypagecss.css';
 import { useEffect, useState, useTransition } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import emailjs from '@emailjs/browser';
 
-import { useRecoilState } from 'recoil';
-import { loginUserState } from '../atoms';
 
 // import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
 const MypageAlert = () => {
 
-  const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
+    const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
+    const loginUserRegion = localStorage.getItem("loginUserRegion");
 
 
 // import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
@@ -18,45 +18,38 @@ const MypageAlert = () => {
   const [alert, setAlert] = useState([]);
 
   useEffect(() => {
-    axios.post("/dasony/api/getAlertList", {
-      userNo: loginUserInfo.userNo
+    axios.post("/dasony/api/getMyAlertList", {
+      userNo: loginUserNo
     }).then((response) => {
-      const alertData = response.data; 
-
+      
       setAlert(response.data.alertList);
     }).catch((error) => {
       console.error("오류남:", error);
     });
   }, []);
-  
-  
-  
-  
-  
 
-
-  // const [alert, setAlert] = useState([]);
-
-
-  
-  // useEffect(() => {
-  //     const newAlert = [{
-  //         number :  '1',
-  //         category : '포인트 사용',
-  //         content : '상품 구매가 완료되었습니다. (홈런볼)',
-  //         date : '2023.05.17'
-  //     },{
-  //       number :  '2',
-  //       category : '게시글 등록',
-  //       content : '게시글 등록 완료.',
-  //       date : '2023.05.01',
-  //     }];
-  //     setAlert(newAlert);
-  // },[]);
+  // const sendEmail = (e) => {
+  //   e.preventDefault();
+  //   const infos = {
+  //     user_name: 'wangfeng', // 이메일을 보낼 사용자의 이름
+  //     user_email: 'wangfeng@ruc.edu.com' // 사용자의 이메일 주소
+     
+  //   };
+    
+  //   emailjs.send('Dasony', 'dasonyEmail', infos,'F-MU3Q5TmMwsJT8xo')
+  //     .then((result) => {
+  //         console.log(result.text);
+  //     }, (error) => {
+  //       console.log(error.text);
+  //     });
+    
+  // };
     
     return(
     <div className='Alert-table'>
         <h2>내 알림</h2>
+
+        {/* <button onClick={sendEmail}>테스트</button> */}
         <div className="jefftable">
       <table>
         <thead>

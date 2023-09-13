@@ -10,6 +10,7 @@
 
 
 #game{
+    display: none;
     position: absolute;
     top: 0;
     border: 1px solid red;

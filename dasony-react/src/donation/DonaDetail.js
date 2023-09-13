@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import './DonaDetail.css';
 import { useParams } from 'react-router-dom';
-import { useDonaData } from './DonaDataContext';
 import axios from 'axios';
+import useDonaTotal from './useDonaTotal';
 
 
 const DonaDetail = () => {
     const {donaNo} = useParams();
 
-    const [donadetail, setDonaDetail] = useState('');
+    const [donadetail, setDonaDetail] = useState({});
+
+    const {totalDonaAmount, donaHistory, donationCount} = useDonaTotal(donaNo);
     const [dayDiff, setDayDiff] = useState(0);
 
     const getDonaDetail = () => {
@@ -22,15 +24,6 @@ const DonaDetail = () => {
     useEffect(() => {
         getDonaDetail();
     },[donaNo])
-
-    const donationAmount = localStorage.getItem(`donationAmount_${donaNo}`);
-
-
-    const formatWithCommas = (number) => {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    };
-
-    const [remainingDays, setRemainingDays] = useState('');
 
     const handlemogh = (donaNo) => {
         window.location.href = `/donadona/${donaNo}`;
@@ -61,6 +54,8 @@ const DonaDetail = () => {
           const updateDayDiff = setInterval(() => {
             calculateDayDiff();
           }, 1000 * 60 * 60 * 24); 
+
+          
       
           return () => clearInterval(updateDayDiff);
         }, [donadetail]);
@@ -89,26 +84,14 @@ const DonaDetail = () => {
                     <th width="70">참여내역</th>
                     <td colSpan="3" style={{height : '200px', textAlign : 'left'}}>
                         <div id="scrollable-td">
-                        <p>2023-03-20</p>
-                        <span>날개 없는 천사</span>
-                        <span>5,000다손 기부</span>
-                        <hr/>
-                        <p>2023-03-20</p>
-                        <span>날개 없는 천사</span>
-                        <span>5,000다손 기부</span>
-                        <hr/>
-                        <p>2023-03-20</p>
-                        <span>날개 없는 천사</span>
-                        <span>5,000다손 기부</span>
-                        <hr/>
-                        <p>2023-03-20</p>
-                        <span>날개 없는 천사</span>
-                        <span>5,000다손 기부</span>
-                        <hr/>
-                        <p>2023-03-20</p>
-                        <span>날개 없는 천사</span>
-                        <span>5,000다손 기부</span>
-                        <hr/>
+                        {donaHistory.map((donation) => (
+                            <div key={donation.donaNo}> 
+                                <p>{donation.donaExecuteDate}</p>
+                                <span>{donation.userNo}</span>&nbsp;
+                                <span>{donation.donaAmount}다손 기부</span>
+                                <hr/>
+                            </div>
+                            ))}
                         </div>
                     </td>
                 </tr>
@@ -117,15 +100,14 @@ const DonaDetail = () => {
         <div>
             <div id="db" style={{textAlign : 'center'}}>
                 <br/><br/><br/><br/>
-                <span id="donatxt" style={{fontSize : '20px'}}>총 <b>57건</b>이<br/>
+                <span id="donatxt" style={{fontSize : '20px'}}>총 <b>{donationCount}건</b>이<br/>
                     기부되었습니다<br/><br/>
                     {donadetail.donaWriteDate} ~ <br/>
                     {donadetail.donaEndDate}<br/><br/>
                     <div id="dday"><b>D - {dayDiff}</b></div>
                     <br/>
                     모인 금액<br/>
-                    <b style={{fontSize : '25px'}}>{donadetail.donaTotalAmount}</b><span style={{fontSize : '17px'}}>다손</span><br/><br/>
-                    {/* {donationAmount ? formatWithCommas(donationAmount) : "0"} */}
+                    <b style={{fontSize : '25px'}}>{totalDonaAmount}</b><span style={{fontSize : '17px'}}>다손</span><br/><br/>
                     달성률<br/>
                     <b style={{fontSize : '25px'}}>{donadetail.donaAchieve}%</b>
                 </span>

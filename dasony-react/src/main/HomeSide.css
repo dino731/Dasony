@@ -137,7 +137,7 @@
     top: 12vh;
     left: 14vw;
     padding: 2vh;
-    overflow-y:auto;
+    overflow-y: scroll;
    }
 
    .calendar-detail-box{
@@ -169,7 +169,7 @@
     }
     .calendar-detail-box table{
         width: 100%;
-        margin: 1vh 0 1vh 0;
+        margin: 1vh 0 0 0;
         font-size: 1.2vw;
     }
     .calendar-detail-box table tr{
@@ -204,15 +204,13 @@
         width: 15%;
         height: 6vh;
         position: relative;
-        top: 10vh;
+        top: 5vh;
     }
     .calendar-detail-box>div>div>button:hover{
         background-color: #CB9DE7;
         color: #FCFA90;
         transition: 0.5s;
     }
-
-
 
 
     .modalTable{

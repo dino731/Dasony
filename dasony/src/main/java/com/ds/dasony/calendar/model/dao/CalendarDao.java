@@ -2,6 +2,7 @@ package com.ds.dasony.calendar.model.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,20 @@ public class CalendarDao {
 		this.session = session;
 	}
 
-	public List<Calendar> calendarList() {
-		return session.selectList("calendarMapper.calendarList");
+	public List<Calendar> calendarList(String region) {
+		return session.selectList("calendarMapper.calendarList", region);
+	}
+
+	public int calendarInsert(Calendar localEvent) {
+		return session.insert("calendarMapper.calendarInsert", localEvent);
+	}
+
+	public int calendarAdmit(Map<String, String> request) {
+		return session.update("calendarMapper.calendarAdmit", request);
+	}
+
+	public int calendarCancle(int calendarNo) {
+		return session.delete("calendarMapper.calendarCancle", calendarNo);
 	}
 
 }

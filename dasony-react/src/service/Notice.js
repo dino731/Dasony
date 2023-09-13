@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { Outlet, useLocation} from 'react-router-dom';
+import axios from 'axios';
 import Loading from '../common/Loading';
 import './customer.css';
 import NoticeBoard from './NoticeBoard';
@@ -8,28 +9,38 @@ import ManagerNoticeBoard from './ManagerNoticeBoard';
 const Notice = () => {
     const { pathname } = useLocation();
     const subPath = pathname.split('/');
+    // scroll event 부여 대상
     const scrollTarget = useRef(null);
-    const [data, setData] = useState([{no: 1, title: "초기값", cate: "안내"}]);
+    const [data, setData] = useState([]);
     const [loadStatus, setLoadStatus] = useState(false);
+    // rowBound를 위한 변수
+    const [rowBound, setRowBound] = useState(0);
+    const [apiAvailable, setApiAvailable] = useState(true);
     
     const loadData = () => {
-        const newData = [{no: "N0001", title: "개인정보보호법 개정안에 따른 휴먼 정책 변경 안내", cate: "안내, 재수정"}, 
-                            {no: "N0002", title: "카카오페이지 원스토어 앱 출시 안내", cate: "안내"}, 
-                            {no: "N0003", title: "개인정보처리방침 통합 안내", cate: "안내"},
-                            {no: "N0004", title: "구글 인앱 결제 서비스 장애 안내", cate: '수정'},
-                            {no: "N0002", title: "카카오페이지 원스토어 앱 출시 안내", cate: "안내"}, 
-                            {no: "N0003", title: "개인정보처리방침 통합 안내", cate: "안내"},
-                            {no: "N0004", title: "구글 인앱 결제 서비스 장애 안내", cate: '수정'},
-                            {no: "N0002", title: "카카오페이지 원스토어 앱 출시 안내", cate: "안내"}, 
-                            {no: "N0003", title: "개인정보처리방침 통합 안내", cate: "안내"},
-                            {no: "N0004", title: "구글 인앱 결제 서비스 장애 안내", cate: '수정'},
-                            {no: "N0002", title: "카카오페이지 원스토어 앱 출시 안내", cate: "안내"}, 
-                            {no: "N0003", title: "개인정보처리방침 통합 안내", cate: "안내"},
-                            {no: "N0004", title: "구글 인앱 결제 서비스 장애 안내", cate: '수정'}];
+        if(apiAvailable){
+            setLoadStatus(true);
+            const url = encodeURI('http://localhost:3000/dasony/notice/loadList');
+            axios.post(url, {rowBound: rowBound})
+                .then((res) => {
+                    const response = res.data;
+                    setLoadStatus(false);
+                    // console.log("response : ",response );
 
-        setData([...data, ...newData]);
-        setLoadStatus(false);
+                    if(response.length != 0){
+                        setRowBound(rowBound + 1);
+                        setData([...data, ...response]);
+                    }else{
+                        setApiAvailable(false); // true
+                        // console.log(`load : ${loadStatus}, data : ${data}, row : ${rowBound}, api : ${apiAvailable}`);
+                    }
+                })
+        }
     };
+
+    useEffect(()=>{
+        loadData();
+    },[]);
 
     
     useEffect(()=>{
@@ -38,39 +49,40 @@ const Notice = () => {
         if(subPath[subPath.length-1]==="notice" && subPath[1]!="admin" ){
             // 관찰할 item 요소
             const items = document.querySelectorAll(".notice-content-body .row");
-
+            // console.log(items);
             const callback = (entries, observer) => {
                 entries.forEach(entry => {
                     if(entry.isIntersecting){
                         observer.unobserve(entry.target);
                         if(!loadStatus) {
-                            setLoadStatus(true);
-
+                            
+                            loadData();
                             // 비동기 구현시 setTimeout 지울 것
-                            setTimeout(() => {
-                                loadData();
-                                // observeLastItem(observer, document.querySelectorAll(".notice-content-body row"));
-                            }, 3000);
+                            // setTimeout(() => {
+                            //     loadData();
+                            //     // observeLastItem(observer, document.querySelectorAll(".notice-content-body row"));
+                            // }, 2000);
                         }
                     }
                 });
             };
-
+            
             // 관찰 영역
             const option = {
                 root : scrollTarget.current, 
                 rootMargin: "2%",
                 threshold: 0.6
             };
-
+            
             const observer = new IntersectionObserver(callback, option);
             observeLastItem(observer, items);
-
+            
             return ()=>{
                 observer.disconnect();
             };
+            
         }
-    }, [loadStatus]);
+    }, [loadStatus,rowBound, apiAvailable]);
 
     const observeLastItem = (io, items)=>{
         const lastItem = items[items.length-1];

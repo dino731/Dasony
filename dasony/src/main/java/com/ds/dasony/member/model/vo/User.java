@@ -2,18 +2,18 @@ package com.ds.dasony.member.model.vo;
 
 import java.sql.Date;
 
-import java.math.BigInteger;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class User {
 	
-	private long userNo;
+	private int userNo;
 	private String userId;
 	private String userPwd;
 	private String userName;
@@ -27,9 +27,6 @@ public class User {
 	private Date userModDate;
 	private String userStatus;
 	private int totalPoint;
-	
-	public User(){
-		
-	}
+	private String gameStatus;
 
 }

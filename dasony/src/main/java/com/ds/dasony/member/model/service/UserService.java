@@ -25,4 +25,21 @@ public interface UserService {
 
 	public User userInfo(long userNo);
 
+
+	public int updateUserPoint(long userNo, int newDasonPoint);
+
+//	public Map<Long, String> getUserNames(List<Integer> userNo);
+
+	public int userUpdate(User user);
+
+	public List<User> getMyInfo(int userNo);
+
+	public int modifyMyInfo(Map<String, Object> myInfo);
+
+	public int changeNewPwd(Map<String,Object> pwdInfo);
+
+	public List getMyLikesList(int userNo);
+
+
+
 }

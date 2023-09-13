@@ -20,5 +20,8 @@ public class Calendar {
 	private String calendarPlace;
 	private String calendarSpec;
 	private String calendarCate;
+	private String calendarLocation;
+	private String calendarStatus;
 	private long userNo;
+	private String userId;
 }

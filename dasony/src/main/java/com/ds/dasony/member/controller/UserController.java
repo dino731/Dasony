@@ -2,6 +2,7 @@ package com.ds.dasony.member.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +35,18 @@ public class UserController {
 		int validation = 0;
 		String userId = "";
 		String userNick = "";
-		log.info("map={}", map);
-		log.info("map.get('id')================================>>>>>>{}", map.get("id"));
+//		log.info("map={}", map);
+//		log.info("map.get('id')================================>>>>>>{}", map.get("id"));
 		if(map.get("id") != ""&&map.get("nick")=="") {
 			userId = String.valueOf(map.get("id"));
-			log.info("userId =============================>{},", userId);
+//			log.info("userId =============================>{},", userId);
 			validation = userService.chkValidateId(userId);
 		} else {
 			userNick = String.valueOf(map.get("nick"));
-			log.info("userNick =============================>{},", userNick);
+//			log.info("userNick =============================>{},", userNick);
 			validation = userService.chkValidateNick(userNick);
 		}
-		log.info("validation===============>>>>>>>>>>>>>>>>>{}", validation);
+//		log.info("validation===============>>>>>>>>>>>>>>>>>{}", validation);
 		
 		return validation;
 	}
@@ -61,7 +62,7 @@ public class UserController {
 		User validateUser = new User();
 		
 		// 응답 데이터 생성
-		log.info("user={}", user);
+//		log.info("user={}", user);
 		
 		int result = userService.insertUser(user);
 		
@@ -84,8 +85,8 @@ public class UserController {
 			@RequestBody Map<String, Object> request
 			){
 		
-		log.error("userNo 확인 ==================>>", request.get("userNo"));
-		log.error("userNo 확인 ==================>>", request.get("location"));
+//		log.error("userNo 확인 ==================>>", request.get("userNo"));
+//		log.error("userNo 확인 ==================>>", request.get("location"));
 		int result = userService.location(request);
 		
 		Map<String, Object> map = new HashMap();
@@ -126,12 +127,12 @@ public class UserController {
 			@RequestBody Map<String, String> email
 			){
 		String subEmail = email.get("subEmail"); 
-		log.error(subEmail);
+//		log.error(subEmail);
 		Map<String, Object> map = new HashMap();
 		
 		User user = userService.findingId(subEmail);
 		String userId = user.getUserId();
-		log.error("{}=","Id는 "+userId+" 입니다.");
+//		log.error("{}=","Id는 "+userId+" 입니다.");
 		if(user != null) {
 			map.put("msg", "Id는 "+userId+" 입니다.");
 		} else {
@@ -148,7 +149,8 @@ public class UserController {
 		
 		long userNo = Long.parseLong(userno.get("userNo"));
 		
-		log.info(userno.get("userNo"));
+//		log.info(userno.get("userNo"));
+		
 		
 		Map<String, Object> map = new HashMap();
 		
@@ -163,6 +165,74 @@ public class UserController {
 		}
 		
 		return map;
+	}
+	
+
+	@PostMapping("/updateUserPoint")
+	public Map<String, Object> updateUserPoint(
+			@RequestBody Map<String, Object> pointData
+			){
+		
+		long userNo = Long.parseLong(pointData.get("userNo").toString());
+		int newDasonPoint  = (int) pointData.get("newDasonPoint");
+		
+		log.info("userNo" + userNo);
+		log.info("newDasonPoint" + newDasonPoint);
+		
+		Map<String, Object> map = new HashMap();
+		
+		int updatePoint = userService.updateUserPoint(userNo, newDasonPoint);
+		
+		if(updatePoint > 0) {
+			map.put("userNo", userNo);
+			map.put("newDasonPoint", newDasonPoint);
+		}else {
+			map.put("error", "오류 발생");
+		}
+		return map;
+	}
+	
+//	@PostMapping("/getUserName")
+//    public Map<Long, String> getUserNames(@RequestBody List<Integer> userNo) {
+//        return userService.getUserNames(userNo);
+//    }
+
+	@PostMapping("/getMyInfo")
+	public Map<String, Object> getMyInfo(
+			@RequestBody Map<String, Object> requestData
+			){
+		int userNo = (int) requestData.get("userNo");
+		Map<String,Object> myInfo = new HashMap();
+	    myInfo.put("myInfo",userService.getMyInfo(userNo));
+		
+		return myInfo;
+	}
+	
+	@PostMapping("/modifyMyInfo")
+	public int modifyMyInfo(
+			@RequestBody Map<String, Object> myInfo
+			){
+		
+		int result = userService.modifyMyInfo(myInfo);
+	    
+		log.info("myInfo={}",myInfo);
+		return result;
+	}
+	
+	@PostMapping("/changeNewPwd")
+	public int changeNewPwd(@RequestBody Map<String,Object> pwdInfo) {
+		
+		int result = userService.changeNewPwd(pwdInfo);
+		
+		return result;
+	}
+	
+	@PostMapping("getMyLikesList")
+	public Map<String, Object> getMyLikesList(@RequestBody int userNo){
+		Map<String,Object> likesList = new HashMap();
+		likesList.put("likesList", userService.getMyLikesList(userNo));
+		
+		return likesList;
 	}
 	
 	
