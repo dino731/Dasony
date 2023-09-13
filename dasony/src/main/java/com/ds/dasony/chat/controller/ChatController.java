@@ -121,8 +121,8 @@ public class ChatController {
 			
 			List<ChatMessage> cmList = chatService.joinChatRoom(join);
 			
-			log.info("userNo = {}", userNo);
-			log.info("cmList = {}", cmList);
+//			log.info("userNo = {}", userNo);
+//			log.info("cmList = {}", cmList);
 			
 			if(cmList != null) {
 				return ResponseEntity.ok(cmList);
