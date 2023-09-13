@@ -109,10 +109,19 @@
 	    </foreach>
 	</update>
 
-	<select id="productInfo" parameterType="string" resultMap="productMap">
+	<select id="productInfo" parameterType="map" resultMap="productMap">
 		SELECT *
-		FROM PRODUCT
-		WHERE SHOP_OKEY = #{shopOkey}
+		FROM PRODUCT P
+		JOIN SHOP S 
+		ON (P.SHOP_OKEY = S.SHOP_OKEY)
+		<where>
+		    <if test="shopOkey != null">
+		        AND P.SHOP_OKEY = #{shopOkey}
+		    </if>
+		    <if test="shopCate != null">
+		    	AND S.SHOP_CATE = #{shopCate}
+		    </if>
+		 </where>
 	</select>
 	
 	<select id="productInfoImg" parameterType="string" resultType="java.lang.String">
