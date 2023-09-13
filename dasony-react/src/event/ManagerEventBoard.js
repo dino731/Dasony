@@ -2,6 +2,7 @@ import './event.css';
 import { useRef, useEffect, useState  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
+import axios from 'axios';
 
 /**
      이벤트 등록 양식
@@ -11,40 +12,128 @@ export default () => {
 
     const navigate = useNavigate();
     const modalBtn = useRef(null);
-    let modalCate = "선택";
+    const closeModal = useRef(null);
+    const [modalCate, setModalCate] = useState("선택");
 
-    let category = "";
-    let status = "";
-    let url;
+    // const [category, setCategory] = useState("");
+    const [status, setStatus] = useState(true);
+    // const [modalStatus, setModalStatus] = useState(true);
 
     // 화면에 출력할 data
     const [data, setData] = useState([]);
+    // msg 보낼 이벤트 번호
+    const [eventNo, setEventNo] = useState("");
+    
+    // function for loading data
+    function loadData(){ // 매개변수로 page 번호 추가 필요
+        let cate = $(".event-selectBox>div>div>span").eq(0).text();
+        let stat = $(".event-selectBox>div>div>span").eq(1).text();
+        // setCategory(cate);
+        // setStatus(stat);
+        const url = encodeURI(`http://localhost:3000/dasony/event/loadList?category=${cate}&status=${stat}`);
 
+        // 비동기 요청
+        axios.get(url).then((res)=>{
+                console.log(res.data);
+                setData(res.data);
+                if(status) setStatus(false);
+                // else setStatus(true); 
+                
+            });
+    }
+
+    /** 이벤트 아이템 클릭시 해당 페이지로 이동 */
+    const moveToEventDetail = (no) => {
+        navigate(`/admin/event/detail/` + no);
+    };
+
+    // 지정 대상자에게 쪽지 보내기
+    const sendMessage = () => {
+        const content = document.querySelector(".message-modal-text").value;
+
+        if(modalCate === "선택") alert("카테고리를 선택해주세요.");
+        else if(content.length == 0) alert("보낼 내용을 입력해주세요.");
+        else{
+            // 전송할 내용
+            const alertData = {msgRange : modalCate, content: content};
+            console.log("alert : ", alertData);
+
+            axios.post(`http://localhost:3000/dasony/event/sendMsg/${eventNo}`, alertData)
+                .then((res)=>{
+                    alert(res.data);
+                    setEventNo("");
+                    setModalCate("선택");
+                    document.querySelector(".message-modal-text").value = "";
+
+                    // modal 닫기
+                    // $("#message-modal").hide();
+                    // $(".modal-backdrop").hide();
+
+                    closeModal.current.click();
+                    // setModalStatus(false);
+                });
+        }
+    }; 
+
+    // 드랍다운 선택 이벤트 
+    const handleSelect = (target, item) => {
+        target.firstChild.innerHTML = item.textContent;
+        target.classList.remove('active');
+
+        if(target.classList.contains("modal-select")) { // 모달인 경우
+            console.log(target + " / " + item.textContent);
+            setModalCate(item.textContent);
+        }
+
+        loadData();
+    };
+
+    const handleLabelClick = (e) => {
+        let optionList = e.target.parentNode.nextElementSibling ? e.target.parentNode.nextElementSibling 
+                        : e.target.nextElementSibling;
+        let optionItems = optionList.querySelectorAll('.manager-select-optionItem');
+        clickLabel(e.target, optionItems);
+    };
+
+    const clickLabel = (lb, optionItems) => {
+        const target = lb.parentNode.classList.contains('manager-select-btn') ? lb : lb.parentNode;
+        if (target.classList.contains('active')) {
+            target.classList.remove('active');
+            optionItems.forEach((opt) => {
+                opt.removeEventListener('click', handleSelect);
+            });
+        } else {
+            target.classList.add('active');
+            optionItems.forEach((opt) => {
+                opt.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    handleSelect(target, opt);
+                });
+            });
+        }
+    };
+
+    // 현재 기준 종료일까지 남은 일수
+    const dDayCount = (date) => {
+        // 현재 날짜 - 종료일 날짜
+        // console.log("date :: ", new Date(date) instanceof Date, new Date(date));
+        const now = new Date().getTime();
+        const end = new Date(date).getTime();
+        if(now > end) return "종료";
+        else{
+            let diff = Math.abs(end - now);
+            diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            console.log("날짜차이 : ", diff);
+            return "D-"+diff;
+        }
+    }
+
+    useEffect(()=>{
+        loadData();
+        // setStatus(true);
+    }, [status]);
+    
     useEffect(() => {
-        const handleLabelClick = (e) => {
-            let optionList = e.target.parentNode.nextElementSibling ? e.target.parentNode.nextElementSibling : e.target.nextElementSibling;
-            let optionItems = optionList.querySelectorAll('.manager-select-optionItem');
-            clickLabel(e.target, optionItems);
-        };
-
-        const clickLabel = (lb, optionItems) => {
-            const target = lb.parentNode.classList.contains('manager-select-btn') ? lb : lb.parentNode;
-            if (target.classList.contains('active')) {
-                target.classList.remove('active');
-                optionItems.forEach((opt) => {
-                    opt.removeEventListener('click', handleSelect);
-                });
-            } else {
-                target.classList.add('active');
-                optionItems.forEach((opt) => {
-                    opt.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        handleSelect(target, opt);
-                    });
-                });
-            }
-        };
-
         document.querySelectorAll(".manager-select-btn>div").forEach((el)=>{
             el.addEventListener('click', handleLabelClick);
         });
@@ -54,56 +143,7 @@ export default () => {
                 el.removeEventListener('click', handleLabelClick);
             });
         };
-    });
-
-    const handleSelect = (target, item) => {
-        target.firstChild.innerHTML = item.textContent;
-        target.classList.remove('active');
-      
-        category = $(".event-selectBox span").eq(0).text();
-        status = $(".event-selectBox span").eq(1).text();
-
-        if(target.classList.contains("modal-select")) {
-            console.log(target + " / " + item.textContent);
-            modalCate = item.textContent;
-        }
-        // url=`manageReception?category=${category}&status=${status}`;
-		// navigate(url);
-
-        // loadData 호출할 것
-    };
-
-    // 페이징바
-    function loadData(page){
-        category = $(".event-selectBox span").eq(0).text();
-        status = $(".event-selectBox span").eq(1).text();
-
-        // 비동기 요청
-        // setData();
-
-        // url=`#`;
-        // navigate(url);
-    }
-
-    /** 이벤트 아이템 클릭시 해당 페이지로 이동 */
-    const moveToEventDetail = no => {
-        navigate(`/admin/event/detail/${no}`);
-    };
-
-    // 회원에게 쪽지 보내기 이벤트
-    const sendMessage = () => {
-        const content = document.querySelector(".message-modal-text").value;
-
-        if(modalCate === "선택") alert("카테고리를 선택해주세요.");
-        else if(content.length == 0) alert("보낼 내용을 입력해주세요.");
-        else{
-            alert(modalCate + " " + content);
-            // modal 닫기
-            $("#message-modal").hide();
-            $(".modal-backdrop").hide();
-        }
-    }; 
-    
+    }, [data]);
 
     return(
         <div className="event-manager-board dragging">
@@ -154,26 +194,20 @@ export default () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="notice-item">
-                        <th scope="row">2</th>
-                        <td>문화</td>
-                        <td className="text-cut" onClick={()=>moveToEventDetail(1)}>오펜하이머 관람표 증정 이벤트</td>
-                        <td scope="row">2023-08-17</td>
-                        <td scope="row">D-1</td>
-                        <td scope="row" className="event-pm-button">
-                            <span type="button" data-bs-toggle="modal" data-bs-target="#message-modal">작성</span>
-                        </td>
-                    </tr>
-                    <tr className="notice-item">
-                        <th scope="row">1</th>
-                        <td>기타</td>
-                        <td className="text-cut" onClick={()=>moveToEventDetail(1)}>8월 출석이벤트</td>
-                        <td scope="row">2023-08-01</td>
-                        <td scope="row">D-3</td>
-                        <td scope="row" className="event-pm-button">
-                            <span type="button" data-bs-toggle="modal" data-bs-target="#message-modal">작성</span>
-                        </td>
-                    </tr>
+                    {data!=null && data.length != 0 ? data.map((element, index) => {
+                        return  <tr className="notice-item" key={index}>
+                                    <th scope="row">{index+1}</th>
+                                    <td>{element.eventCategory}</td>
+                                    <td className="text-cut" onClick={()=>moveToEventDetail(element.no)}>
+                                        {element.title}
+                                    </td>
+                                    <td scope="row">{element.uploadDate}</td>
+                                    <td scope="row">{dDayCount(element.endDate)}</td>
+                                    <td scope="row" className="event-pm-button">
+                                        <span type="button" data-bs-toggle="modal" data-bs-target="#message-modal" onClick={()=>setEventNo(element.no)}>작성</span>
+                                    </td>
+                                </tr>
+                    }) : null}
                 </tbody>
                 <tfoot>
                 </tfoot>
@@ -208,7 +242,7 @@ export default () => {
                             <input type='text' className='message-modal-text' placeholder='보낼 내용을 입력해주세요.' />
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" ref={closeModal} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary" ref={modalBtn} onClick={sendMessage}>Send</button>
                         </div>
                     </div>

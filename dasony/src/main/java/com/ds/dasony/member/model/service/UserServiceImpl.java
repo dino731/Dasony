@@ -2,6 +2,7 @@ package com.ds.dasony.member.model.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,42 @@ public class UserServiceImpl implements UserService{
 	public User userInfo(long userNo) {
 		return userDao.userInfo(userNo);
 	}
+
+	
+	@Override
+	public int updateUserPoint(long userNo, int newDasonPoint) {
+		return userDao.updateUserPoint(userNo, newDasonPoint);
+	}
+	
+//	@Override
+//	public Map<Long, String> getUserNames(List<Integer> userNo) {
+//		
+//		 List<User> users = userDao.getUserNames(userNo);
+//
+//		return users.stream()
+//                .collect(Collectors.toMap(User::getUserNo, User::getUserName));
+//	}
+
+	@Override
+	public int userUpdate(User user) {
+		return userDao.userUpdate(user);
+	}
+	@Override
+	public List<User> getMyInfo(int userNo){
+		return userDao.getMyInfo(userNo);
+	}
+	@Override
+	public int modifyMyInfo(Map<String, Object> myInfo) {
+		return userDao.modifyMyInfo(myInfo);
+	}
+	@Override
+	public int changeNewPwd(Map<String,Object> pwdInfo) {
+		return userDao.changeNewPwd(pwdInfo);
+	}
+	@Override
+	public List getMyLikesList(int userNo){
+		return userDao.getMyLikesList(userNo);
+	}
+
 
 }

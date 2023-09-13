@@ -4,7 +4,6 @@ import './MyChatListModal.css';
 // import { Link } from 'react-router-dom';
 import { useNavigate} from 'react-router';
 import { useChatData } from "./ChatDataContext";
-import { click } from "@testing-library/user-event/dist/click";
 
 
 
@@ -23,7 +22,7 @@ const chatlistmodal = {
 
     const navigate = useNavigate();
 
-    const {chatData} = useChatData();
+    const {chatData, setChatDate} = useChatData();
     const [stars, setStars] = useState([]);
 
     const handelInchat = (chatname) => {
@@ -79,7 +78,7 @@ const chatlistmodal = {
                            {
                                 <div>
                                     {stars.map((star) => {
-                                        console.log(star.chatname);
+                                        //console.log(star.chatname);
                                         return <tr key={star.id}>
                                             <td width="150" onClick={() => handelInchat(star.chatname)}>{star.id}</td>
                                             <td width="300" onClick={() => handelInchat(star.chatname)}>{star.chatname}</td>

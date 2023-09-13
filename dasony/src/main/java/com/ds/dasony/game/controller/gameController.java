@@ -1,15 +1,16 @@
 package com.ds.dasony.game.controller;
 
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ds.dasony.game.model.dao.GameDao;
@@ -19,7 +20,7 @@ import com.ds.dasony.game.model.vo.Game;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/api") // 공통주소
 
 
@@ -38,8 +39,6 @@ public class gameController {
 	public  ResponseEntity<String> insertGame(@RequestBody Game gameData) {
 		int result =  gameService.insertGame(gameData);
 		
-		
-		
 		if (result > 0) {
 	        return ResponseEntity.ok("Success");
 	    } else {
@@ -48,6 +47,14 @@ public class gameController {
 		
 	}
 	
+	@PostMapping("/gameStartYN")
+	public String gameStartYN(@RequestBody Map<String, Integer> requestBody) {
+	    int userNo = requestBody.get("userNo");
+	    
+	    
+	    String gameStartYN = gameService.gameStartYN(userNo);
+	    return gameStartYN;
+	}
 	
 	
 	

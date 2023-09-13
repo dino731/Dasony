@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 // import LoginCheck09 from '../../public/resources/event/login-003.png';
 
 const EventBoard = () => {
 
     const item = useRef([]);
-    const hoverList = ["none", "none", "none", "none", "none"];
+    // const hoverList = ["none", "none", "none", "none", "none"];
+    let hoverList = [];
     const [hoverStatus, setHoverStatus] = useState(hoverList);
     const navigate = useNavigate();
+    const [status, setStatus] = useState(true);
+    // 화면에 출력할 data
+    const [data, setData] = useState([]);
+    const [eventStatus, setEventStatus] = useState("진행");
 
     const changeEventChoice = (e, target) => {
         const eventTarget = e.target;
@@ -16,6 +22,8 @@ const EventBoard = () => {
             if(!eventTarget.classList.contains("selected-event-status")){
                 eventTarget.classList.add("selected-event-status");
                 eventTarget.querySelector(".bi").style.display = "inline-block";
+                setEventStatus(eventTarget.querySelector("span").innerText);
+
                 e.stopPropagation();
 
                 const siblings = Array.from(eventTarget.parentNode.children).filter(sibling => sibling !== eventTarget);
@@ -26,12 +34,13 @@ const EventBoard = () => {
             }
         }else{
             let parent = eventTarget.parentNode.parentNode;
-            console.log(parent);
+            // console.log(parent);
             e.stopPropagation(); // 이벤트 전파 방지
     
             if(!parent.classList.contains("selected-event-status")){
                 parent.classList.add("selected-event-status");
                 eventTarget.previousElementSibling.style.display = "inline-block";
+                setEventStatus(parent.querySelector("span").innerText);
 
                 const siblings = Array.from(parent.parentNode.children).filter(sibling => sibling != parent);
                 siblings.forEach(sibling => {
@@ -43,9 +52,46 @@ const EventBoard = () => {
     }
 
     /** 이벤트 아이템 클릭시 해당 페이지로 이동 */
-    const moveToEventDetail = no => {
-        navigate(`/event/detail/${no}`)
+    const moveToEventDetail = (no, page) => {
+        // console.log("page : ", page);
+        navigate(`/event/detail/${no}`, {state: page});
     };
+
+    // data load
+    const loadData = () => { 
+        let eventStatus = document.querySelector(".selected-event-status span").innerText;
+        
+        const url = encodeURI(`http://localhost:3000/dasony/event/loadList?status=${eventStatus}`);
+
+        // 비동기 요청
+        axios.get(url).then((res)=>{
+                console.log(res.data);
+                // console.log(res.data[0].pageLink);
+                setData(res.data);
+                if(status) setStatus(false);
+                
+                hoverList = new Array(res.data.length).fill("none");
+                setHoverStatus(hoverList);
+            });
+    }
+
+    const dDayCount = (date) => {
+        // 현재 날짜 - 종료일 날짜
+        // console.log("date :: ", new Date(date) instanceof Date, new Date(date));
+        const now = new Date().getTime();
+        const end = new Date(date).getTime();
+        if(now > end) return "종료";
+        else{
+            let diff = Math.abs(end - now);
+            diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            // console.log("날짜차이 : ", diff);
+            return "D-"+diff;
+        }
+    }
+
+    useEffect(()=>{
+        loadData();
+    }, [status, eventStatus]);
     
     useEffect(()=>{
         /** 이벤트 유형 선택 효과 부여 및 제거 */
@@ -69,7 +115,7 @@ const EventBoard = () => {
             });
         });
 
-    },[]);
+    },[status]);
 
     return(
         <>
@@ -96,7 +142,27 @@ const EventBoard = () => {
                 */}
             <div className="event-content-part">
                 <div className="event-list">
-                    <div className="event-list-item">
+                    {data!=null && data.length != 0 && data.map((ele, i) => {
+                        return <div className="event-list-item" key={i}>
+                                    <Link to={ele.pageLink? "/event/detail/"+ele.pageLink.slice(0, -3) : "/event/detail/" + ele.no}>
+                                        <div className="event-item-wrapper event-load-page"
+                                        style={{"backgroundImage": `url(${ele.thumbnail.includes('http') ? ele.thumbnail : 'http://localhost:3000/dasony/event/' + ele.thumbnail})`}}>
+                                            {/* "url({ele.thumbnail.includes('http') ? ele.thumbnail : 'http://localhost:3000/dasony/event/' + ele.thumbnail}" 
+                                                 + ")"}}> */}
+                                            <div className="event-item-title-part">
+                                                <div className="event-item-title">{ele.title}</div>
+                                            </div>
+                                            <div className="event-item-deadline">{dDayCount(ele.endDate)}</div>
+                                        </div>
+                                    </Link>
+                                    {hoverStatus[i] === "hover"?<div className="event-item-effect" 
+                                                        onClick={()=>moveToEventDetail(ele.no, ele.pageLink)}>
+                                                                <div className="event-close">조회</div>
+                                                                </div> : null}
+                                </div>
+                    })}
+
+                    {/* <div className="event-list-item">
                         <Link to="/event/detail/1">
                             <div className="event-item-wrapper event-load-page"
                             style={{"backgroundImage" : "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb0niU5_-nJcGruRTitqp6LWLeP5Av8LnPWcJ4eUz8avZ9zpXb)"}}>
@@ -161,11 +227,30 @@ const EventBoard = () => {
                         {hoverStatus[4] === "hover"?<div className="event-item-effect" onClick={()=>moveToEventDetail(1)}>
                                                       <div className="event-close">조회</div>
                                                     </div> : null}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
     );
 };
+
+
+
+// image 컴포넌트
+// function EventImage({data}){
+//     const imgStyle = {
+//         backgroundImage: `url('https://dn-img-page.kakao.com/download/resource?kid=bpAeKz/hAd4wW3xd8/k9x3hD2NoVju7YY2QpONE1&filename=th3)' no-repeat`,
+//         backgroundSize: "cover"
+//     };
+
+//     return(
+//         <div className="event-item-wrapper event-load-page" style={imgStyle}>
+//             <div className="event-item-title-part">
+//                 <div className="event-item-title">{data.title}</div>
+//             </div>
+//             <div className="event-item-deadline">{dDayCount(data.endDate)}</div>
+//         </div>
+//     );
+// }
 
 export default EventBoard;

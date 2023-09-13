@@ -34,3 +34,9 @@
     border-bottom: 1px solid #7A7A7A;
     height: 10vh;
 }
+.admin-calendar-table>table>tbody>tr:hover{
+    cursor: pointer;
+    background-color: #e7e7e7;
+    transition-duration: 0.5s;
+
+}

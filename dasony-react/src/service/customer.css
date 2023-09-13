@@ -57,11 +57,11 @@ html, body{margin: 0; padding: 0;}
     padding: 0 5%;
     background-color: transparent;
     font-size: 0.8em;
-    font-weight: 700;
 }
 
 .notice-container .notice-detail>.notice-title{
     width: 100%;
+    font-weight: 700;
 
     >p{margin-bottom: 0.5vh;}
 }
@@ -73,7 +73,8 @@ html, body{margin: 0; padding: 0;}
     background-color: #DAD7CD;
 }
 
-.notice-container .notice-detail>.notice-content>textarea{
+.notice-container .notice-detail>.notice-content>.text-part{
+    text-align: left;
     width: 100%;
     height: 50vh;
     resize: none;
