@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DonationList {
 
+
 private int donaExecuteNo;//   DONA_EXECUTE_NO 기부 실행 번호
 private int donaAmount;//   DONA_AMOUNT 기부 금액
 private Date donaExecuteDate;//   DONA_EXECUTE_DATE 기부 실행 날짜

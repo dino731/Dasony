@@ -78,7 +78,7 @@ const chatlistmodal = {
                            {
                                 <div>
                                     {stars.map((star) => {
-                                        console.log(star.chatname);
+                                        //console.log(star.chatname);
                                         return <tr key={star.id}>
                                             <td width="150" onClick={() => handelInchat(star.chatname)}>{star.id}</td>
                                             <td width="300" onClick={() => handelInchat(star.chatname)}>{star.chatname}</td>

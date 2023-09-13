@@ -27,6 +27,31 @@
     height: 12vh;
     border-bottom: 1px solid #7A7A7A;
 }
+.admin-user-table>table>tbody>tr:hover{
+    cursor: pointer;
+    background-color: #e7e7e7;
+    transition-duration: 0.5s;
+
+}
+
+.admin-user-table th:first-child{
+    width: 15%;
+}
+.admin-user-table th:nth-child(2){
+    width: 20%;
+}
+.admin-user-table th:nth-child(3){
+    width: 15%;
+}
+.admin-user-table th:nth-child(4){
+    width: 20%;
+}
+.admin-user-table th:nth-child(5){
+    width: 20%;
+}
+.admin-user-table th:nth-child(6){
+    width: 10%;
+}
 .admin-user-table button{
     display: block;
     font-size: 85%;
@@ -51,4 +76,8 @@
 .adminUser-pagination>div{
     width: 10%;
     justify-content: center;
+}
+
+.admin-user-container .pagination-bar>div{
+    padding-left: 20%;
 }

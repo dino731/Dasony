@@ -49,6 +49,7 @@ public class UserDao {
 	public User userInfo(long userNo) {
 		return session.selectOne("memberMapper.userInfo", userNo);
 	}
+
 	
 	public int updateUserPoint(@Param("userNo") long userNo, @Param("newDasonPoint") int newDasonPoint) {
 		Map<String, Object> map = new HashMap<>();
@@ -60,5 +61,17 @@ public class UserDao {
 //	public List<User> getUserNames(List<Integer> userNo) {
 //		return session.selectOne("memberMapper.getUserNames", userNo);
 //	}
+
+	public int userUpdate(User user) {
+		return session.update("memberMapper.userUpdate", user);
+	}
+	public List<User> getMyInfo(int userNo) {
+		return session.selectList("memberMapper.getMyInfo",userNo);
+	}
+	public int modifyMyInfo(Map<String, Object> myInfo) {
+		int result = session.update("memberMapper.modifyMyInfo",myInfo);
+		return result;
+	}
+
 
 }

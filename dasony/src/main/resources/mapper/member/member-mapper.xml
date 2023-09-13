@@ -17,6 +17,7 @@
 		<result column="USER_MOD_DATE" property="userModDate"/>
 		<result column="USER_STATUS" property="userStatus"/>
 		<result column="TOTAL_POINT" property="totalPoint"/>
+		<result column="GAME_STATUS" property="gameStatus"/>
 	</resultMap>
 	
 	<select id="selectUserList" resultMap="memberMap">
@@ -39,6 +40,7 @@
 	    DEFAULT,
 	    SYSDATE,
 	    SYSDATE,
+	    DEFAULT,
 	    DEFAULT,
 	    DEFAULT
     	)
@@ -74,6 +76,13 @@
 		WHERE USER_NO = #{userNo}
 	</update>
 	
+
+	<select id="gameStartYN" parameterType="int" resultType="string">
+		SELECT GAME_STATUS
+		FROM MEMBER
+		WHERE USER_NO = #{userNo}
+	</select>
+
 	<select id="findingId" parameterType="string" resultMap="memberMap">
 		SELECT *
 		FROM MEMBER
@@ -86,10 +95,46 @@
 		WHERE USER_NO = #{userNo}
 	</select>
 	
+
 	<update id="updateUserPoint" parameterType="map">
 		UPDATE MEMBER
 			SET TOTAL_POINT = #{newDasonPoint}
 		WHERE USER_NO = #{userNo}
 	</update>
+  
+	<update id="userUpdate" parameterType="user">
+		UPDATE MEMBER
+		SET
+			USER_NAME=#{userName},
+			USER_PHONE = #{userPhone},
+			USER_EMAIL = #{userEmail},
+			USER_ADDRESS = #{userAddress},
+			USER_STATUS = #{userStatus},
+			USER_LEVEL = #{userLevel},
+			USER_MOD_DATE = SYSDATE
+		WHERE USER_NO = #{userNo}
+	</update>
+	
+	<select id="getMyInfo" parameterType="int" resultMap="memberMap">
+		
+		SELECT * FROM MEMBER
+		WHERE USER_NO = #{userNo}
+		
+	</select>
+
+<update id="modifyMyInfo" parameterType="user">
+		UPDATE MEMBER
+		SET
+			USER_NAME=#{userName},
+			USER_NICKNAME = #{userNick},
+			USER_PHONE = #{userPhone},
+			USER_EMAIL = #{userEmail},
+			USER_ADDRESS = #{userAddress},
+			USER_STATUS = #{userStatus},
+			USER_LEVEL = #{userLevel},
+			USER_MOD_DATE = SYSDATE
+		WHERE USER_NO = #{userNo}
+	</update>
+
 
 </mapper>

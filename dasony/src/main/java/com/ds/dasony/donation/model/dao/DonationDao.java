@@ -55,7 +55,14 @@ public class DonationDao {
 	public int deleteDona(int donaNo) {
 		return session.delete("donationMapper.deleteDona", donaNo);
 	}
+
+
+	public List<DonationList> getMyDonationList(int userNo) {
+		return session.selectList("donationMapper.getMyDonationList",userNo);
+	}
+
 	
+
 	public List<DonationList> getMyDonationList(int userNo) {
 	      return session.selectList("donationMapper.getMyDonationList",userNo);
 	   }
@@ -63,4 +70,10 @@ public class DonationDao {
 	public List<DonationList> DonaDetails(int donaNo) {
 		return session.selectList("donationMapper.DonaDetails", donaNo);
 	}
+
+//	public int selectUserDason(int userNo) {
+//	return session.selectOne("donationMapper.selectUserDason", userNo);
+//}
+
+
 }

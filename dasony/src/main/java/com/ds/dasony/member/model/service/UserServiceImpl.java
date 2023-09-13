@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService{
 	public User userInfo(long userNo) {
 		return userDao.userInfo(userNo);
 	}
+
 	
 	@Override
 	public int updateUserPoint(long userNo, int newDasonPoint) {
@@ -70,5 +71,19 @@ public class UserServiceImpl implements UserService{
 //		return users.stream()
 //                .collect(Collectors.toMap(User::getUserNo, User::getUserName));
 //	}
+
+	@Override
+	public int userUpdate(User user) {
+		return userDao.userUpdate(user);
+	}
+	@Override
+	public List<User> getMyInfo(int userNo){
+		return userDao.getMyInfo(userNo);
+	}
+	@Override
+	public int modifyMyInfo(Map<String, Object> myInfo) {
+		return userDao.modifyMyInfo(myInfo);
+	}
+
 
 }

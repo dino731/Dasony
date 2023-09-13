@@ -167,6 +167,7 @@ public class UserController {
 		return map;
 	}
 	
+
 	@PostMapping("/updateUserPoint")
 	public Map<String, Object> updateUserPoint(
 			@RequestBody Map<String, Object> pointData
@@ -195,5 +196,28 @@ public class UserController {
 //    public Map<Long, String> getUserNames(@RequestBody List<Integer> userNo) {
 //        return userService.getUserNames(userNo);
 //    }
+
+	@PostMapping("/getMyInfo")
+	public Map<String, Object> getMyInfo(
+			@RequestBody Map<String, Object> requestData
+			){
+		int userNo = (int) requestData.get("userNo");
+		Map<String,Object> myInfo = new HashMap();
+	    myInfo.put("myInfo",userService.getMyInfo(userNo));
+		
+		return myInfo;
+	}
+	
+	@PostMapping("/modifyMyInfo")
+	public int modifyMyInfo(
+			@RequestBody Map<String, Object> myInfo
+			){
+		
+		int result = userService.modifyMyInfo(myInfo);
+	    
+		
+		return result;
+	}
+	
 	
 }
