@@ -1,6 +1,7 @@
 package com.ds.dasony.chat.controller;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +53,9 @@ public class ChatController {
 	}
 	
 	@PostMapping("/openChatRoom")
-	public String openChatRoom(@RequestBody Map<String, Object> requestBody) {   
+	public Map<String, Object> openChatRoom(@RequestBody Map<String, Object> requestBody) {   
+		
+		Map<String, Object> response = new HashMap<>();
 		
 	    try {
 	    	
@@ -62,6 +65,7 @@ public class ChatController {
 	        String userName = (String) newChatData.get("userName");
 	        
 	        ChatRoom room = new ChatRoom();
+	        
 	        room.setUserNo(userNo);
 	        room.setUserName(userName);
 	        room.setChatRoomTitle((String) newChatData.get("chatRoomTitle"));
@@ -70,12 +74,18 @@ public class ChatController {
 	        
 	        log.info("chatRoomNo = {}", chatRoomNo);
 	        
-	        if (chatRoomNo > 0) return "채팅방 개설 성공";
-	        else return "채팅방 개설 실패";    
+	        if (chatRoomNo > 0) {
+	        	response.put("성공", "채팅방 생성 성공");
+	        	 response.put("chatRoomNo", chatRoomNo);
+	        }
+	        else {
+	        	 response.put("에러", "채팅방 개설 실패");    
+	        }
 	    } catch (Exception e) {
 	        log.error("예외 발생: {}", e.getMessage(), e);
-	        return "예상치 못한 에러가 발생했습니다. 다시 시도해주세요.";
+	        response.put("message", "예상치 못한 에러가 발생했습니다. 다시 시도해주세요.");
 	    }
+	    return response;
 	}
 	
 	@MessageMapping("/chat/{chatRoomNo}")

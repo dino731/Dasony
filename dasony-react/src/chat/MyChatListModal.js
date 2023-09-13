@@ -9,8 +9,8 @@ import { useChatData } from "./ChatDataContext";
 
 const chatlistmodal = {
     content: {
-      top: '55%',
-      left: '70%',
+      top: '65%',
+      left: '75.5%',
       transform: 'translate(-50%, -50%)',
       width: '500px',
       height: '482px',
@@ -23,6 +23,7 @@ const chatlistmodal = {
     const navigate = useNavigate();
 
     const {chatData, setChatDate} = useChatData();
+    console.log("데이터 들어있긴 하고? : " + chatData.chatRoomNo);
     const [stars, setStars] = useState([]);
 
     const handelInchat = (chatname) => {
@@ -77,12 +78,12 @@ const chatlistmodal = {
                         <tbody style={{textAlign: 'center', height: '100%'}}>
                            {
                                 <div>
-                                    {stars.map((star) => {
+                                    {chatData.map((star) => {
                                         //console.log(star.chatname);
-                                        return <tr key={star.id}>
-                                            <td width="150" onClick={() => handelInchat(star.chatname)}>{star.id}</td>
-                                            <td width="300" onClick={() => handelInchat(star.chatname)}>{star.chatname}</td>
-                                            <td width="200" onClick={() => handelInchat(star.chatname)}>{star.username}</td>
+                                        return <tr key={star.chatRoomNo}>
+                                            <td width="150" onClick={() => handelInchat(star.chatRoomNo)}>{star.chatRoomNo}</td>
+                                            <td width="300" onClick={() => handelInchat(star.chatRoomNo)}>{star.chatRoomTitle}</td>
+                                            <td width="200" onClick={() => handelInchat(star.chatRoomNo)}>{star.userName}</td>
                                             <td width="80">
                                             <i className={star.isFilled ? 'bi bi-star-fill' : 'bi bi-star'}
                                                 onClick={() => handleStarClick(star.id)}></i>

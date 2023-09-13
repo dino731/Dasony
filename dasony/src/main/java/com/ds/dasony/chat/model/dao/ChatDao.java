@@ -33,6 +33,7 @@ public class ChatDao {
 		
 		if(result > 0) {
 			result = chatRoom.getChatRoomNo();
+			log.info("chat new : " + result);
 		}
 		return result;
 	}
