@@ -93,6 +93,12 @@
     </dependency>
     
 
+    <!-- 웹소켓, STOMP사용 -->
+    <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-websocket</artifactId>
+	</dependency>
+
     
     <!-- 파일 추가를 위한 종속성 추가 -->
     <!-- IOUtils 사용하기 위한 dependency 추가 -->
@@ -108,7 +114,6 @@
 	</dependency>
 
 
-		
 	</dependencies>
 
 	<build>

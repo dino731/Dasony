@@ -95,6 +95,13 @@
 		WHERE USER_NO = #{userNo}
 	</select>
 	
+
+	<update id="updateUserPoint" parameterType="map">
+		UPDATE MEMBER
+			SET TOTAL_POINT = #{newDasonPoint}
+		WHERE USER_NO = #{userNo}
+	</update>
+  
 	<update id="userUpdate" parameterType="user">
 		UPDATE MEMBER
 		SET

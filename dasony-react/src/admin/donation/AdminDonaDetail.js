@@ -2,11 +2,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './AdminDonaDetail.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import useDonaTotal from '../../donation/useDonaTotal';
 
 const AdminDonaDetail = () => {
 
     const navigate = useNavigate();
     const {donaNo} = useParams();
+
+    const {totalDonaAmount, donaHistory, donationCount} = useDonaTotal(donaNo);
 
     const [admindonadetail, setAdminDonaDetail] = useState('');
     const [dayDiff, setDayDiff] = useState(0);
@@ -89,26 +92,14 @@ const AdminDonaDetail = () => {
                         <th width="70">참여내역</th>
                         <td colSpan="3" style={{height : '200px', textAlign : 'left'}}>
                             <div id="adscrollable-td">
-                            <p>2023-03-20</p>
-                            <span>날개 없는 천사</span>
-                            <span>5,000다손 기부</span>
-                            <hr/>
-                            <p>2023-03-20</p>
-                            <span>날개 없는 천사</span>
-                            <span>5,000다손 기부</span>
-                            <hr/>
-                            <p>2023-03-20</p>
-                            <span>날개 없는 천사</span>
-                            <span>5,000다손 기부</span>
-                            <hr/>
-                            <p>2023-03-20</p>
-                            <span>날개 없는 천사</span>
-                            <span>5,000다손 기부</span>
-                            <hr/>
-                            <p>2023-03-20</p>
-                            <span>날개 없는 천사</span>
-                            <span>5,000다손 기부</span>
-                            <hr/>
+                            {donaHistory.map((donation) => (
+                            <div key={donation.donaNo}> 
+                                <p>{donation.donaExecuteDate}</p>
+                                <span>{donation.userNo}</span>&nbsp;
+                                <span>{donation.donaAmount}다손 기부</span>
+                                <hr/>
+                            </div>
+                            ))}
                             </div>
                         </td>
                     </tr>
@@ -122,7 +113,7 @@ const AdminDonaDetail = () => {
             <div>
                 <div id="addb" style={{textAlign : 'center'}}>
                     <br/><br/><br/><br/><br/><br/>
-                    <span id="addonatxt" style={{fontSize : '20px'}}>총 <b>57건</b>이<br/>
+                    <span id="addonatxt" style={{fontSize : '20px'}}>총 <b>{donationCount}건</b>이<br/>
                         기부되었습니다<br/><br/>
                         {admindonadetail.donaWriteDate} ~<br/>
                         {admindonadetail.donaEndDate}
@@ -130,7 +121,7 @@ const AdminDonaDetail = () => {
                         <div id="addday"><b>D - {dayDiff}</b></div>
                         <br/>
                         모인 금액<br/>
-                        <b style={{fontSize : '25px'}}>{admindonadetail.donaTotalAmount}</b><span style={{fontSize : '17px'}}>다손</span><br/><br/>
+                        <b style={{fontSize : '25px'}}>{totalDonaAmount}</b><span style={{fontSize : '17px'}}>다손</span><br/><br/>
                         달성률<br/>
                         <b style={{fontSize : '25px'}}>{admindonadetail.donaAchieve}%</b>
                     </span>
