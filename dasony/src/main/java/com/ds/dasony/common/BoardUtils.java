@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class Utils {
+public class BoardUtils {
 	
 	// 변경된 이름을 돌려주면서, 원본파일을 변경된 파일이름으로 서버에 저장시키는 메소드
 		public static String saveFile(MultipartFile file, String savePath) {

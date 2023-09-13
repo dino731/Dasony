@@ -21,10 +21,6 @@ public interface DonationService {
 	int updateDona(Donation donation) throws Exception;
 
 	int deleteDona(int donaNo);
-
-
-	List<DonationList> getMyDonationList(int userNo);
-
 	
 
 	List<DonationList> getMyDonationList(int userNo);
