@@ -56,11 +56,6 @@ public class DonationDao {
 		return session.delete("donationMapper.deleteDona", donaNo);
 	}
 
-
-	public List<DonationList> getMyDonationList(int userNo) {
-		return session.selectList("donationMapper.getMyDonationList",userNo);
-	}
-
 	
 
 	public List<DonationList> getMyDonationList(int userNo) {

@@ -23,7 +23,7 @@ import com.ds.dasony.Board.model.vo.BoardExt;
 import com.ds.dasony.Board.model.vo.BoardImg;
 import com.ds.dasony.Board.model.vo.BoardTag;
 import com.ds.dasony.Board.model.vo.BoardWriterForm;
-import com.ds.dasony.common.Utils;
+import com.ds.dasony.common.BoardUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -89,7 +89,7 @@ public class BoardController {
 	            if (file.isEmpty())
 	                continue;
 
-	            String boardImgModName = Utils.saveFile(file, severFolderPath);
+	            String boardImgModName = BoardUtils.saveFile(file, severFolderPath);
 	            BoardImg bi = BoardImg.
 	            			  builder().
 	            			  boardImgModName(boardImgModName).
