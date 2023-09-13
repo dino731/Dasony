@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.ds.dasony.member.model.vo.User;
+import com.ds.dasony.shop.model.vo.Product;
+import com.ds.dasony.shop.model.vo.ProductCare;
 
 public interface UserService {
 
@@ -38,7 +40,11 @@ public interface UserService {
 
 	public int changeNewPwd(Map<String,Object> pwdInfo);
 
-	public List getMyLikesList(int userNo);
+	public List<ProductCare> getMyLikesList(int userNo);
+
+	public int deleteLikes(Map<String,Object> deletelike);
+
+	public List<User> getMyPoint(int userNo);
 
 
 

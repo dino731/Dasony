@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductImg {
+	private String productImgNo;
 	private String productNo;
+	private String productImgModName;
 	private String productImgOriName;
 	private String productImgPath;
 	private String productImgUploadDate;
