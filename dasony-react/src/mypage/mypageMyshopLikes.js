@@ -3,34 +3,25 @@ import './mypagecss.css';
 import $ from 'jquery';
 import { Link, Outlet } from 'react-router-dom';
 import HeartIcon from '../heart';
+import axios from 'axios';
 // import 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css';
 
 const MypageMyshopLikes = () => {
 
    
     const [shop, setShop] = useState([]);
-
+    const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
+    const loginUserRegion = localStorage.getItem("loginUserRegion");
     useEffect(() => {
-        const newShop = [{
-            image :  'image.jpg',
-            shopName : '도넛가게',
-            productName : '크리스피도넛'
-        },{
-            image : 'image2.jpg',
-            shopName : '과자가게',
-            productName : '홈런볼'
-        },{
-            image : 'image3.jpg',
-            shopName : '음료수가게',
-            productName : '콜라'
-        },{
-            image : 'image4.jpg',
-            shopName : '전자제품',
-            productName : '선풍기'
-        }];
-        setShop(newShop);
-    
-    },[]);
+      axios.post("/dasony/api/getMyLikesList", {
+        userNo: loginUserNo
+      }).then((response) => {
+        
+        setShop(response.data.likesList);
+      }).catch((error) => {
+        console.error("오류남:", error);
+      });
+    }, []);
 
     const rows = [];
     for (let i = 0; i < shop.length; i += 3) {
@@ -56,7 +47,7 @@ const MypageMyshopLikes = () => {
           <tbody>
             {rows.map((row, rowIndex) => (
               <tr key={rowIndex}>
-                {row.map((item, index) => (
+                {shop.map((item, index) => (
                   <td className="product" key={index}>
                     <div><img src={item.image} alt=""/></div>
                     <div>

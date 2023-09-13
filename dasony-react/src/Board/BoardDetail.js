@@ -9,12 +9,16 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Vote from './Vote';
 import Shorts from './Shorts'
 import BoardDetailReply from './BoardDetailReply';
+import axios from 'axios';
+
 
 
 const BoardDetail = () =>{
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
+  console.log('BoardDetail path ===>',path);
+  const [replyText, setReplyText] = useState([]);
 
   /* 현재 경로 비교연산 밑작업용 ain 0904 */
   const dailyPath = path.includes('daily') ? path : null;
@@ -23,11 +27,11 @@ const BoardDetail = () =>{
   const fashionPath = path.includes('fashion')? path : null;
 
 
-  const pathD = "\/general\/daily\/";
-  const pathI = "\/general\/interest\/";
-  const pathJ = "\/info\/jmt\/";
-  const pathF = "\/info\/fashion\/";
-  const pathL = "\/info\/local\/";
+  const pathD = "/general/daily/";
+  const pathI = "/general/interest/";
+  const pathJ = "/info/jmt/";
+  const pathF = "/info/fashion/";
+  const pathL = "/info/local/";
 
     /* 경로 이동을 위한 ain 0904 */
   const [listPath, setListPath] = useState([]);
@@ -59,7 +63,7 @@ const BoardDetail = () =>{
   const HandleLBackBtn = (e) => {
     const newPrevPost = boardPost[prevIndex];
     if (newPrevPost) {
-      navigate("/board" + listPath + "detail/" + newPrevPost.boardNo + "/" + newPrevPost.userName);
+      navigate("/board" + listPath + "detail/" + newPrevPost.boardNo);
       console.log('newPrevPost ===>',newPrevPost);
     };
   }
@@ -67,7 +71,7 @@ const BoardDetail = () =>{
   const HandleNextBtn = (e) => {
     const newNextPost = boardPost[nextIndex];
     if (newNextPost) {
-      navigate("/board" + listPath + "detail/" + newNextPost.boardNo + "/" + newNextPost.userName);
+      navigate("/board" + listPath + "detail/" + newNextPost.boardNo);
       console.log('newPrevPost ===>',newNextPost);
     }
   };
@@ -137,13 +141,36 @@ const BoardDetail = () =>{
     }
     /* 신고 모달 끝 */
   /* 모달 관련 끝 */
+  const[boardData,setBoardData]=useState([]);
+  // console.log('boardDetail listPath ==>',listPath);
+   /* axios 시작 */
+   useEffect(() => {
+    if (listPath.length === 0) {
+      // listPath가 비어있을 때는 호출하지 않도록 예외 처리
+      return;
+    }
+    console.log('boardDetail listPath ==>',listPath);
+
+    // Axios를 사용하여 서버로 GET 요청을 보냅니다.
+    axios.get(`http://localhost:3000/dasony/board${listPath}detail/${boardNo}`) // 서버의 API 엔드포인트에 맞게 수정
+      .then((response) => {
+        console.log('요청 주소:', response.config.url); // 요청 주소 확인
+        console.log('BoardList 응답 데이터:', response.data);
+        setBoardData(response.data);
+      })
+      .catch((error) => {
+        console.error('서버 요청 오류:', error);
+      });
+  }, [listPath, boardNo]); // 빈 배열을 두번째 인자로 전달하면 컴포넌트가 마운트될 때 한 번만 실행
+  console.log('게시판리스트 boardData ===>',boardData);
+  /* axios 끝 */
   
   return (
       <>
         <div ref={element} className='BoardDetail-wrapper'>
           {
-            filteredBoard.map((board)=>(
-              <div className='BoardDetail-side-wrapper'>   
+            boardData.map((board)=>(
+              <div key={board.boardNo} className='BoardDetail-side-wrapper'>   
                 <div className='BoardDetail-main-wrapper'>
                   <div className="BoardDetail-head-list">
                       <span className="BoardDetail-head-list-text">일반 게시판</span>
@@ -173,10 +200,10 @@ const BoardDetail = () =>{
                         <span className='BoardDetail-boardlist-title'>{board.boardTitle}</span>
                       </div>
                       <div className='BoardDetail-boardlist-userInterface'>
-                        <sapn>
+                        <span>
                           <button className='Board-reply-recoment-accused-btn'
                           onClick={handleAccusedShow}
-                          ><i class="bi bi-cone-striped"></i>
+                          ><i className="bi bi-cone-striped"></i>
                           </button>
                           <Modal show={accusedShow} onHide={handleAccusedClose}>
                             <ModalHeader>
@@ -192,7 +219,7 @@ const BoardDetail = () =>{
                                 <Button onClick={handleAccusedModalOn} style={{display:modalButton}}>신고</Button>
                             </ModalFooter>
                           </Modal>
-                        </sapn>
+                        </span>
                         <span>
                         <button
                             className='BoardDetail-boardlist-meetball-btn'
@@ -218,7 +245,7 @@ const BoardDetail = () =>{
                         <span>
                           <button
                           className='Board-reply-recoment-accused-btn'
-                          onClick={()=>navigate('/board'+listPath+'edit/'+board.boardNo+'/'+board.userName)}
+                          onClick={()=>navigate('/board'+listPath+'edit/'+board.boardNo+'/'+board?.boardCate.boardCateNo)}
                           >
                             수정
                           </button>
@@ -232,27 +259,26 @@ const BoardDetail = () =>{
                         <span className='BoardDetail-boardlist-title-userinfo-date'>{board.boardWriteDate}</span>
                       </div>
                       <div className='BoardDetail-boardlist-title-views-wrapper'>
-                        <span className='BoardDetail-boardlist-title-views'>조회 102</span>
-                        <span className='BoardDetail-boardlist-title-views'>추천 1</span>
-                        <span className='BoardDetail-boardlist-title-views'>댓글 1</span>
+                        <span className='BoardDetail-boardlist-title-views'>조회{board.boardViews}</span>
+                        <span className='BoardDetail-boardlist-title-views'>추천{board.userViewCount}</span>
+                        <span className='BoardDetail-boardlist-title-views'>답글{board.replyCount}</span>
                       </div>
                     </div>
                   </div>
                   <div>
+                  {board.bimgList.map(image => (
                     <div className='BoardDetail-userImg-views-container'>
-                        <div className='BoardDetail-userImg-views-li'>
-                        {/* {board.boardUserImg} */}
-                        <img src='/resources/board/jh.jpg'/>
+                   
+                        <div className='BoardDetail-userImg-views-li' key={image.boardImgLevel}>
+                          <img
+                            src={`http://localhost:8083/dasony${image.boardImgPath}${image.boardImgModName}`}
+                            alt={`썸네일 ${image.boardImgLevel}`}
+                            className="board-img"
+                          />
                         </div>
-                        <div className='BoardDetail-userImg-views-li'>
-                        {/* {board.boardUserImg} */}
-                        <img src='/resources/board/test1.png'/>
-                        </div>
-                        <div className='BoardDetail-userImg-views-li'>
-                        {/* {board.boardUserImg} */}
-                        <img src='/resources/shop/product/4/004.png'/>
-                        </div>
+                     
                     </div>
+                     ))}
                   </div>
                   <div className='BoardDetail-boardlist-content-wrapper'>
                     <div className='BoardDetail-boardlist-content'
@@ -260,7 +286,7 @@ const BoardDetail = () =>{
                     >
                     </div>
                   </div>
-                <BoardDetailReply/>
+                <BoardDetailReply editContent={{replyText, setReplyText}}/>
                 </div>
                 <div className='BoardDetail-side-container'>
                   <div className='BoardDetail-side-by-side'>

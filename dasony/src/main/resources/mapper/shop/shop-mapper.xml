@@ -8,6 +8,7 @@
 		<result column="SHOP_ADDRESS" property="shopAddress"/>
 		<result column="SHOP_REGION" property="shopRegion"/>
 		<result column="SHOP_CATE" property="shopCate"/>
+		<result column="SHOP_JOIN_DATE" property="shopJoinDate"/>
 	</resultMap>
 	<resultMap type="product" id="productMap">
 		<id column="PRODUCT_NO" property="productNo" />
@@ -25,6 +26,7 @@
 		        AND SHOP_REGION = #{userRegion}
 		    </if>
 		 </where>
+		 ORDER BY SHOP_JOIN_DATE
 	</select>
 	
 	<delete id="shopDelete" parameterType="map">
@@ -39,7 +41,8 @@
 	        #{shopName},
 	        #{shopAddress},
 	        #{shopRegion},
-	        #{shopCate}
+	        #{shopCate},
+	        SYSDATE
 	    )
 	</insert>
 	
@@ -53,6 +56,9 @@
 		WHERE SHOP_OKEY = #{shopOkey}
 	</update>
 	
+
+	
+
 	<select id="shopInfo" parameterType="string" resultMap="shopMap">
 		SELECT *
 		FROM SHOP
@@ -113,6 +119,7 @@
 		SELECT PRODUCT_IMG_MOD_NAME
 		FROM PRODUCT_IMG
 		WHERE PRODUCT_NO = #{productNo}
+		AND PRODUCT_IMG_STATUS = 'Y'
 	</select>
 	
 	<update id="modProduct" parameterType="product">
@@ -127,8 +134,27 @@
 	<update id="deleteProductImg" parameterType="string">
 		UPDATE PRODUCT_IMG
 		SET
-			PRODUCT_STATUS = 'N'
+			PRODUCT_IMG_STATUS = 'N'
 		WHERE PRODUCT_NO = #{productNo}
 	</update>
+	
+	<delete id="productImgDelete" parameterType="string">
+		DELETE
+		FROM PRODUCT_IMG
+		WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	
+	<delete id="productDelete" parameterType="string">
+		DELETE
+		FROM PRODUCT
+		WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	
+	<select id="shopTitle" parameterType="string" resultType = "string">
+		SELECT SHOP_NAME
+		FROM SHOP
+		WHERE SHOP_OKEY = #{store}
+	</select>
+
 
 </mapper>

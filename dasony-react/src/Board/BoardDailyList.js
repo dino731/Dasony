@@ -14,21 +14,18 @@ const BoardDailyList = ()=>{
   /* axios 시작 */
   useEffect(() => {
     // Axios를 사용하여 서버로 GET 요청을 보냅니다.
-    axios.get('http://localhost:3000/dasony/board/general/daily') // 서버의 API 엔드포인트에 맞게 수정
+    axios.get(`http://localhost:3000/dasony${path}?userRegion=${localStorage.loginUserRegion}`) // 서버의 API 엔드포인트에 맞게 수정
       .then((response) => {
-        // 성공적으로 응답을 받았을 때 실행되는 부분
         console.log('BoardList 응답 데이터:', response.data);
-        setBoardData(response.data); // 서버에서 받아온 데이터를 상태 변수에 저장
+        setBoardData(response.data);
       })
       .catch((error) => {
-        // 요청 중 오류가 발생했을 때 실행되는 부분
         console.error('서버 요청 오류:', error);
       });
-  }, []); // 빈 배열을 두번째 인자로 전달하면 컴포넌트가 마운트될 때 한 번만 실행됩니다.
+  }, []); // 빈 배열을 두번째 인자로 전달하면 컴포넌트가 마운트될 때 한 번만 실행
   console.log('게시판리스트 boardData ===>',boardData);
-
-
   /* axios 끝 */
+
   /* 보드 카테고리 atom관련 시작  ain 0904*/
   // const [boardPost, setBoardPost] = useRecoilState(boardPostState);
   const boardInterestCategory = useRecoilValue(BoardInterestCategoryState);
@@ -41,6 +38,9 @@ const BoardDailyList = ()=>{
   const location = useLocation();
   const path = location.pathname;
   // console.log('보드리스트 path :',path);
+  localStorage.getItem("loginUserNo") // 유저 번호
+  localStorage.getItem("loginUserRegion") // 유저 지역
+  
 
   /* atom과 구조가 달라서 daily 카테고리 전용 따로 뽑음  ain 0904*/
   const [listDailyCategory, setListDailyCategory] = useState([
@@ -59,14 +59,13 @@ const BoardDailyList = ()=>{
 
   /* 경로 이동을 위한 ain 0904 */
   const [listPath, setListPath] = useState([]);
-  const pathD = "\/general\/daily\/";
-  const pathI = "\/general\/interest\/";
-  const pathJ = "\/info\/jmt\/";
-  const pathF = "\/info\/fashion\/";
-  const pathL = "\/info\/local\/";
+  const pathD = "/general/daily/";
+  const pathI = "/general/interest/";
+  const pathJ = "/info/jmt/";
+  const pathF = "/info/fashion/";
+  const pathL = "/info/local/";
 
-
-   /* listBoardCate 현재 경로에 맞는 카테고리 들어감 ain 0904 */
+  /* listBoardCate 현재 경로에 맞는 카테고리 들어감 ain 0904 */
  const [listBoardCate, setListBoardCate] = useState([]);
 //  console.log('listBoardCate----->',listBoardCate);
  useEffect(() => {
@@ -201,7 +200,7 @@ const BoardDailyList = ()=>{
               <li className="boardList-list-li">
                 <div className="boardList-list-wrapper">
                   <div className="boardList-list-container">
-                        <Link to={'/board'+listPath+'detail/'+board.boardNo+'/'+board.user.userNick} style={{textDecoration:'none'}}>
+                        <Link to={'/board'+listPath+'detail/'+board.boardNo} style={{textDecoration:'none'}}>
                           <div className="boardList-list-content-container">
                               <div className="boardList-list-keyword">{board.boardCate.boardSmallCate}</div>
                               <div className="boardList-list-content-title">{board.boardTitle}</div>
@@ -214,7 +213,7 @@ const BoardDailyList = ()=>{
                           </div>
                         </Link>
                       <div className="boardList-list-img">
-                        <img src={"http://localhost:8083/dasony"+board.boardImg.boardImgPath+board.boardImg.boardImgModName+".jpg"} alt="썸네일" className="board-img"/>
+                        <img src={"http://localhost:8083/dasony"+board.boardImg.boardImgPath+board.boardImg.boardImgModName} alt="썸네일" className="board-img"/>
                       </div>
                   </div>
                 </div>
