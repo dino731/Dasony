@@ -88,4 +88,22 @@
 	ORDER BY CHAT_NO
 </select>
 
+<delete id="exitChat">
+	DELETE FROM CHAT_JOIN
+	WHERE CHATROOM_NO = #{chatRoomNo} AND USER_NO = #{userNo}
+</delete>
+
+<select id="countChatMem" resultType="int">
+	SELECT 
+		COUNT(*)
+	FROM CHAT_JOIN
+	WHERE CHATROOM_NO = #{chatRoomNo}
+</select>
+
+<update id="closeChat">
+	UPDATE CHAT_ROOM SET 
+	CHATROOM_STATUS = 'N'
+	WHERE CHATROOM_NO = #{chatRoomNo}
+</update>
+
 </mapper>

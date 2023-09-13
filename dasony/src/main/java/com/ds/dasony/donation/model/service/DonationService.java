@@ -22,11 +22,6 @@ public interface DonationService {
 
 	int deleteDona(int donaNo);
 
-
-	List<DonationList> getMyDonationList(int userNo);
-
-	
-
 	List<DonationList> getMyDonationList(int userNo);
 
 	List<DonationList> DonaDetails(int donaNo);

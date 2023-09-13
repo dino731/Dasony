@@ -34,8 +34,6 @@ public class ChatDao {
 		if(result > 0) {
 			result = chatRoom.getChatRoomNo();
 		}
-//		log.info("ggggg L " + result);
-		
 		return result;
 	}
 
@@ -54,4 +52,18 @@ public class ChatDao {
 	public List<ChatMessage> selectChatMessage(int chatRoomNo) {
 		return session.selectList("chatMapper.selectChatMessage", chatRoomNo);
 	}
+
+	public int exitChat(ChatJoin join) {
+		return session.delete("chatMapper.exitChat", join);
+	}
+
+	public int countChatMem(int chatRoomNo) {
+		return session.selectOne("chatMapper.countChatMem", chatRoomNo);
+	}
+
+	public int closeChat(int chatRoomNo) {
+		return session.update("chatMapper.closeChat", chatRoomNo);
+	}
+	
+	
 }
