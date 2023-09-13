@@ -1,17 +1,20 @@
 import './Chat.css';
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import { useParams} from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserProfile from './UserProfile';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import axios from 'axios';
+
 
 const Chat = () =>{
 
     const {chatRoomTitle} = useParams();
     const {chatRoomNo} = useParams();
     const {createChatRoomNo} = useParams();
+
+    const navigate = useNavigate();
 
     const decodeChatname = decodeURIComponent(chatRoomTitle);
 
@@ -20,6 +23,7 @@ const Chat = () =>{
     const [sendchat, setSendChat] = useState(''); // 입력되는 채팅
     const [userName, setUserName] = useState("");
     const [chatData, setChatDate] = useState([]);
+    const scrollRef = useRef();
 
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
 
@@ -78,9 +82,9 @@ const Chat = () =>{
                 userName : userName,
             }
 
-            // JSON.stringify({chatMsg : JSON.stringify(chatMsg)})
+            // JSON.stringify({chatMsg : JSON.stringify(chatMsg.message)})
 
-            stompClient.send(`/app/chat/${chatRoomNo}`, headers, JSON.stringify({chatMsg : JSON.stringify(chatMsg)}));
+            stompClient.send(`/app/chat/${chatRoomNo}`, headers, JSON.stringify({chatMsg : chatMsg.message}));
         }
         setSendChat('');
         };
@@ -134,19 +138,51 @@ const Chat = () =>{
         })
         .then((response) => {
             const chattingData = response.data;
-            setChatDate(chattingData);
-
-            // console.log("잘 받아와졌으련지;" + chattingData[1].chatMsg); 
-            // console.log("userNo : ", loginUserNo);
-            // console.log("chatData : ", chattingData);
-
-            // chattingData.map((message, index) => {
-            //     console.log(`채팅 메세지 ${index + 1} : `, message.chatMsg);
-            // })
+            setChatList(chattingData);
         })
         .catch(error => console.log(error));
-    }, [chatData]);
+    });
 
+    const sendEnter = (e) => {
+        if(e.key === 'Enter' && !e.shiftKey){
+           e.preventDefault();
+           handleSendChat();
+        }
+    }
+
+    useEffect(() => {
+        scrollBottom();
+    });
+
+    const scrollBottom = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    };
+
+
+    const handleExit = () => {
+        axios.delete(`/dasony/exitChat/${chatRoomNo}`, { 
+            headers : {
+                userNo : loginUserNo
+            }
+        })
+        .then((response) => {
+            console.log(response.data);
+            navigate('/chatlist');
+        })
+        .catch(error => console.log(error));
+    }
+
+
+    // const replaceEnter = (text) => {
+    //     return text.split('\n').map((line, index) => (
+    //         <React.Fragment key={index}>
+    //         {line}
+    //         <br />
+    //         </React.Fragment>
+    //     ))
+    // }
 
     return (
     <>
@@ -155,49 +191,27 @@ const Chat = () =>{
                 <div id="chat_name">
                     <div id='chat_head'>
                         <span>{decodeChatname}</span>
-                        <Link to="/chatlist"><button id='exitbtn'>나가기</button></Link> {/* onClick={handleExit} */}
+                        <button id='exitbtn' onClick={handleExit}>나가기</button>
                     </div>
                     <hr/>
-                    <ul id="chat_cont">
-                        {chatData.map((message, index) => (
+                    <ul id="chat_cont" ref={scrollRef}>
+                        {chatList.map((message, index) => (
                             <li key={index} className={message.userNo === loginUserNo ? "mytalk" : "othertalk"}>
                             {message.userNo === loginUserNo ? (
                                 <>
-                                <span id="chat_date">{message.chatDate}</span>
+                                <span id="chat_date">{message.chatDate}</span>&nbsp;
                                 <p id="chat">{message.chatMsg}</p>
                                 </>
                             ) : (
                                 <>
-                                <b onClick={() => openModal(message.userName)}>{message.userName}</b>
+                                <b onClick={() => openModal(message.userName)}>{message.userName}</b>&nbsp;&nbsp;
                                 <UserProfile isOpen={profileOpen} closeModal={closeModal} username={userName} />
-                                <p id="chat">{message.chatMsg}</p> 
+                                <p id="chat">{message.chatMsg}</p>&nbsp; 
                                 <span id="chat_date">{message.chatDate}</span>
                                 </>
                             )}
                             </li>
                         ))}
-
-                        {/* <li id="mytalk">
-                            <span id="chat_date">2023-08-21</span>
-                            <p id="chat">안녕하세요!</p>
-                        </li>
-                        <li id="othortalk">
-                        <b onClick={(event) => openModal(event.target.textContent)}>말미잘</b>
-                        <p id="chat">처음뵙겠습니다!</p>
-                            <span id="chat_date">2023-08-21</span>
-                        </li>
-                        <li id="mytalk">
-                            <span id="chat_date">2023-08-21</span>
-                            <p id="chat">안녕하세요!</p>
-                        </li>
-                        <li id="mytalk">
-                            <span id="chat_date">2023-08-21</span>
-                            <p id="chat">안녕하세요!</p>
-                        </li>
-                        <li id="mytalk">
-                            <span id="chat_date">2023-08-21</span>
-                            <p id="chat">안녕하세요!</p>
-                        </li> */}
                     </ul>
                     <hr/>
                     <div id="sendchat">
@@ -214,8 +228,9 @@ const Chat = () =>{
                         rows="3"
                         value={sendchat}
                         onChange={changeSendChat}
+                        onKeyDown={sendEnter}
                         ></textarea>
-                        <button id="send" onClick={(chat) => handleSendChat(chat)}>보내기</button>
+                        <button id="send" onClick={handleSendChat}>보내기</button>
                     </div>
                 </div>
             </div>

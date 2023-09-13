@@ -80,8 +80,9 @@ public class AdminShopController {
 	@PostMapping("/productInfo")
 	public ResponseEntity<Object> productInfo(@RequestBody Map<String, String>map){
 		String shopOkey = map.get("shopOkey");
+		String shopCate = map.get("shopCate");
 		List<Product> product = new ArrayList();
-		product = shopService.productInfo(shopOkey);
+		product = shopService.productInfo(shopOkey, shopCate);
 		List<String> productImg = new ArrayList();
 		Map<String, Object> productMap = new HashMap();
 		

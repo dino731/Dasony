@@ -63,22 +63,33 @@ const BoardWriterCategory = () =>{
   //   setBoardCateState(boardCateItem);
   // }, [boardCateItem]);
 
+  
    // 카테고리 목록을 저장할 배열
    const dailypath = new RegExp("daily/dwriter");
+   const dailypath2 = new RegExp("daily/edit");
 
    const dailyOptions = path.match(dailypath) ? path : null;
+   const dailyOptions2 = path.match(dailypath2) ? path : null;
    const shortsOptions = path.includes('swriter')? path : null;
    const voteOptions = path.includes('vwriter')? path : null;
    const interestOptions = path.includes('interest')? path : null;
    const jmtOptions = path.includes('jmt')? path : null;
    const fashionOptions = path.includes('fashion')? path : null;
 
+  //  const dailyOptions = null;
+
+  //  if (path.match(dailypath) || path.match(dailypath2)) {
+  //    dailyOptions = path;
+  //  }
+
   const [boardCate, setBoardCate] = useState([]);
-  // console.log('boardCate----->',boardCate);
+  console.log('boardCate----->',boardCate);
   useEffect(() => {
     if (path == dailyOptions) {
       setBoardCate(boardDetailCategory);
       // console.log('보드카테 dailyOP',boardCate);
+    }else if( path == dailyOptions2 ){
+      setBoardCate(boardDetailCategory);
     } else if (path == shortsOptions) {
       setBoardCate(boardShortscategory);
     } else if (path == voteOptions) {
@@ -102,10 +113,12 @@ const BoardWriterCategory = () =>{
      setBoardCateItem(selectedValue);
      setBoardCateState(selectedCategory);
    };
+   console.log('boardCateItem',boardCateItem);
 
  return(
   <div className="col-md-2 boardDetail-category-div">
     <select id="boardDetail-category" onChange={handleBoardDCate} value={boardCateItem}>
+      <option value="" disabled hidden>선택</option> {/* 기본 옵션 */}
       {boardCate.map((option, index) => (
         <option onClick={(e)=>{setBoardCateItem(e.target.value);}} value={option.value} key={index}>
           {option.name}

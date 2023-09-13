@@ -41,10 +41,10 @@ const ShopMain = ()=>{
             <div className="shop-cate">
                 <div className='shop-title'>상품 카테고리</div>
                 <div className='cate-box'>
-                    <Link to='/shop/cate/main'>카페<br/>베이커리</Link>
-                    <Link to='/shop/cate/main' style={{paddingTop:'6.5%'}}>외식</Link>
-                    <Link to='/shop/cate/main' style={{paddingTop:'6.5%'}}>편의점</Link>
-                    <Link to='/shop/cate/main'>문화<br/>생활</Link>
+                    <Link to='/shop/cate/main' state={{shopCate:'B'}}>카페<br/>베이커리</Link>
+                    <Link to='/shop/cate/main' state={{shopCate:'O'}} style={{paddingTop:'6.5%'}}>외식</Link>
+                    <Link to='/shop/cate/main' state={{shopCate:'C'}} style={{paddingTop:'6.5%'}}>편의점</Link>
+                    <Link to='/shop/cate/main' state={{shopCate:'L'}}>문화<br/>생활</Link>
                 </div>
             </div>{/*shop-cate끝*/}
 
@@ -94,7 +94,7 @@ const ShopMain = ()=>{
                     shopList.splice(0, 3)
                             .map(s=>{
                                 return(
-                                    <div onClick={()=>{handleShopNavi(s.shopOkey);}}>{s.shopName}</div>
+                                    <div key={s.shopOkey} onClick={()=>{handleShopNavi(s.shopOkey);}}>{s.shopName}</div>
                                 )
                             })
                 }

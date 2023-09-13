@@ -13,7 +13,6 @@ import com.ds.dasony.chat.model.vo.ChatMessage;
 import com.ds.dasony.chat.model.vo.ChatRoom;
 
 @Service
-//@Slf4j
 public class ChatServiceImpl implements ChatService{
 	
 	private final ChatDao chatDao;
@@ -52,5 +51,20 @@ public class ChatServiceImpl implements ChatService{
 			chatDao.joinChatRoom(join);
 		}
 		return chatDao.selectChatMessage(join.getChatRoomNo());
+	}
+
+	@Override
+	public int exitChat(ChatJoin join) {
+		
+		int result = chatDao.exitChat(join);
+		
+		if(result > 0) {
+			int cnt = chatDao.countChatMem(join.getChatRoomNo());
+			
+			if(cnt == 0) {
+				result = chatDao.closeChat(join.getChatRoomNo());
+			}
+		}
+		return result;
 	}
 }

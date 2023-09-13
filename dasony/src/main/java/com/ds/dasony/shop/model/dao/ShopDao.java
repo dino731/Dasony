@@ -1,16 +1,19 @@
 package com.ds.dasony.shop.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import com.ds.dasony.shop.model.vo.Product;
 import com.ds.dasony.shop.model.vo.Shop;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class ShopDao {
 	private final SqlSessionTemplate session;
@@ -52,8 +55,11 @@ public class ShopDao {
 		return session.selectOne("shopMapper.findProductNo", product);
 	}
 
-	public List<Product> productInfo(String shopOkey) {
-		return session.selectList("shopMapper.productInfo", shopOkey);
+	public List<Product> productInfo(String shopOkey, String shopCate) {
+		Map<String, String>map = new HashMap();
+		map.put("shopOkey", shopOkey);
+		map.put("shopCate", shopCate);
+		return session.selectList("shopMapper.productInfo", map);
 	}
 
 	public List<String> productInfoImg(String productNo) {

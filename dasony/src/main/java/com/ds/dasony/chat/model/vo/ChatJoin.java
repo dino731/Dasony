@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChatJoin {
 
-	private int ChatRoomNo;
+	private int chatRoomNo;
 	private long userNo;
 }

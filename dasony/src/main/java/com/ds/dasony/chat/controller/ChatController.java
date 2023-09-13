@@ -13,6 +13,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,7 +47,6 @@ public class ChatController {
 	public List<ChatRoom> selectChatList(){
 		
 		List<ChatRoom> crList = chatService.selectChatList();
-		log.info("채팅방 리스트 = {}", crList);
 		
 		return crList;
 	}
@@ -89,8 +89,6 @@ public class ChatController {
 		
 		log.info("chatMessage {}" , chatMessage);
 		
-//		Long userNo = (Long) accessor.getMessageHeaders().get("userNo");
-		
 		chatMessage.setUserNo(userNo);
 		log.info("userNo = {}", userNo);
 		chatMessage.setChatRoomNo(chatRoomNo);
@@ -107,22 +105,15 @@ public class ChatController {
 			@PathVariable int chatRoomNo,
 			@PathVariable String chatRoomTitle,
 			@RequestHeader long userNo
-//			@RequestHeader Map<String, Object> requestBody
 			) {
 		
 		try {
-			
-//			long userNo = Long.parseLong(requestBody.get("userNo").toString());
-			
 			ChatJoin join = new ChatJoin();
 			
 			join.setUserNo(userNo);
 			join.setChatRoomNo(chatRoomNo);
 			
 			List<ChatMessage> cmList = chatService.joinChatRoom(join);
-			
-//			log.info("userNo = {}", userNo);
-//			log.info("cmList = {}", cmList);
 			
 			if(cmList != null) {
 				return ResponseEntity.ok(cmList);
@@ -133,6 +124,36 @@ public class ChatController {
 			log.error("예외 발생: {}", e.getMessage(), e);
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 	                .body(Collections.emptyList());
+		}
+	}
+	
+	@DeleteMapping("/exitChat/{chatRoomNo}")
+	public int exitChat(
+			@PathVariable int chatRoomNo,
+			@RequestHeader long userNo
+			) {
+		
+		try {
+			ChatJoin join = new ChatJoin();
+			
+			join.setUserNo(userNo);
+			join.setChatRoomNo(chatRoomNo);
+			
+			log.info("userNo = {}", userNo);
+			log.info("chatRoomNo = {}", chatRoomNo);
+			
+			int result = chatService.exitChat(join);
+			
+			log.info("result == {}", result);
+			
+			if(result > 0) {
+				return result;
+			}else {
+				return 0;
+			}
+		}catch (Exception e) {
+			log.error("예외 발생: {}", e.getMessage(), e);
+			return 0;
 		}
 	}
 }
