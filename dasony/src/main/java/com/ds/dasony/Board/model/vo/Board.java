@@ -3,10 +3,12 @@ package com.ds.dasony.Board.model.vo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Board {	
 		private int boardNo;			//BOARD_NO
 		private int userNo;				//USER_NO
@@ -15,12 +17,5 @@ public class Board {
 		private int boardViews;			//BOARD_VIEWS
 		private String boardContent;	//BOARD_CONTENT
 		private String boardStatus;		//BOARD_STATUS
-				
-		private String boardTag;	//BOARD_TAG
-
-		
-		public Board() {
-			
-		}
 
 }

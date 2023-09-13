@@ -6,20 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ds.dasony.Board.model.service.BoardService;
-import com.ds.dasony.Board.model.vo.Board;
+import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardExt;
-
+import com.ds.dasony.Board.model.vo.BoardImg;
+import com.ds.dasony.Board.model.vo.BoardTag;
+import com.ds.dasony.Board.model.vo.BoardWriterForm;
+import com.ds.dasony.common.Utils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +36,7 @@ public class BoardController {
 	
 	
 	private final BoardService boardService;
-	
+
 	@Autowired
 	public BoardController (BoardService boardService) {
 		this.boardService = boardService;
@@ -45,79 +49,107 @@ public class BoardController {
 //	 private String uploadPath;
 	
 	
-	@GetMapping("/general/daily")
-	public List<BoardExt> boardDailyList() {
-//		User user = (User) session.getAttribute("user");
+	@GetMapping(value = {"/general/daily","/general/interest","/info/jmt","/info/fashion","/info/local"})
+	public List<BoardExt> boardDailyList(@RequestParam(name = "userRegion",required = false)String userRegion) {
+
 		List<BoardExt> bListMap = null; // 초기화
-//		if(user != null) {
-//			Long userNo = user.getUserNo();
-//		 	Long userNo = (long) 23090755;
-			bListMap = boardService.boardDailyList(); // 게시글 목록 가져오기
-			log.info("bListMap = {}", bListMap);
-//		}
+
+		bListMap = boardService.boardDailyList(userRegion); // 게시글 목록 가져오기
+//		log.info("bListMap = {}", bListMap);
+
 		return bListMap;
 	}
-//	@PostMapping("/general/daily/dwriter/{boardCateNo}")
-//	public String insertBoard(List<MultipartFile> upfiles
-//								, BoardExt b, @PathVariable("boardCateNo")int boardCateNo , HttpSession session
-//								) {
-//		
-//		String webPath = "/resources/images/board/";
-//		String severFolderPath = application.getRealPath(webPath);
-//		
-//		b.setUserNo(23090755);
-//		b.setBoardCateNo(boardCateNo);
-//		
-//		// 디렉토리생성 , 해당디렉토리가 존재하지 않는다면 생성
-//		File dir = new File(severFolderPath);
-//		if (!dir.exists()) {
-//			dir.mkdirs();
-//		}
-		// 첨부파일같은 경우 선택하고 안하고 상관없이 객체는 생성이 된다 단, 길이가 0일수가 있음.
-		// 전달된 파일이 있는경우 해당파일을 웹서버에 저장하고, Attachment테이블에 해당정보를 등록.
-		// 없는경우 위프로세스를 패스할것.
-		
-//		List<Board> boardList = new ArrayList();
-//		int level = -1;
-//		for (MultipartFile upfile : upfiles) {
-			// input[name=upFile]로 만들어두면 비어있는 file이 넘어올수 있음.
-//			level++;
-//			if (upfile.isEmpty())
-//				continue;
 
-			// 1. 파일명 재정의 해주는 함수.
-//			String boardImgModName = Utils.saveFile(upfile, severFolderPath);
-//			Board at = Board.
-//						builder().
-//						boardImgModName(boardImgModName).
-//						boardImgOriName(upfile.getOriginalFilename()).
-//						boardImgLevel(level).build();
-//						// DB에서 boardImgLevel number자료형으로 바꾸기 2023.09.08 ain
-//			boardList.add(at);
-//		}
-//		int result = 0;
-//
-//		try {
-//			result = boardService.insertBoard(b, boardList, severFolderPath, webPath);
-//		} catch (Exception e) {
-//			log.error("error = {}", e.getMessage());
-//			// e.printStackTrace();
-//		}
-//
-//		if (result > 0) {
-//			session.setAttribute("alertMsg", "게시글 작성에 성공하셨습니다.");
-//			return "/board/general/daily";
-//		} else {
-//			session.setAttribute("alertMsg", "게시글 작성 실패");
-//			return "/board/general/daily";
-//		}
-//		
-		
-//	}
+	@PostMapping(value = {"/general/daily/dwriter","/general/interest/dwriter","/info/jmt/dwriter","/info/fashion/dwriter","/info/local/dwriter"})	    
+	public String insertBoard(HttpServletRequest request,
+								BoardWriterForm boardWriterForm,
+								 @RequestParam("file") List<MultipartFile> boardImgFiles,
+								 @RequestParam("boardWriteDate") String boardWriteDate,
+								 @RequestParam("boardTag")String boardTag
+					         ) {
 
-	
-	
+	        String webPath = "/resources/images/board/";
+	        String severFolderPath = application.getRealPath(webPath);
+	        
+	        log.info("severFolderPath = {} ", severFolderPath);
+	        
+	        // 디렉토리 생성
+			File dir = new File(severFolderPath);
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+
+	        List<BoardImg> bImg = new ArrayList<BoardImg>();
+	        BoardTag bt = new BoardTag();
+	        bt.setBoardTag(boardTag.replace("\"", ""));
+	        
+	        int level = 0;
+	        for (MultipartFile file : boardImgFiles) {
+	    	   level++;
+	            if (file.isEmpty())
+	                continue;
+
+	            String boardImgModName = Utils.saveFile(file, severFolderPath);
+	            BoardImg bi = BoardImg.
+	            			  builder().
+	            			  boardImgModName(boardImgModName).
+	            			  boardImgOriName(file.getOriginalFilename()).
+	            			  boardImgLevel(level).
+	            			  boardImgUploadDate(boardWriterForm.getBoardWriteDate()).
+	            			  userNoRef(boardWriterForm.getUserNo()).
+	            			  boardImgStatus("Y").
+	            			  boardImgPath(webPath).build();
+	            bImg.add(bi);
+
+	            log.info("Uploaded file name = {}", file.getOriginalFilename());
+		        log.info("boardWriterForm = {}",boardWriterForm);
+		        log.info("bImg = {}",bImg);
+		        log.info("bt = {}",bt);
+		     
+//	            log.info("Content type: {}", file.getContentType());
+//	            log.info("File size: {}", file.getSize());
+//	            log.info("boardWriteDate: {}", boardWriteDate);
+	        }
+	        int result = 0;
+	        String m = "";
+	        try {
+	        	result = boardService.insertBoard(boardWriterForm, bImg, bt, severFolderPath);
+	        } catch (Exception e) {
+	            log.error("error = {}", e.getMessage());
+	        }
+	        if (result > 0) {
+	            log.info("게시글 등록 성공",result);
+	            return m ="게시글 등록 성공";
+	        } else {
+	        	log.info("게시글 등록 실패",result);
+	            return m ="게시글 등록 실패";
+			}
+
+	}
+	@GetMapping(value = {"/general/daily/detail/{boardNo}","/general/interest/detail/{boardNo}","/info/jmt/detail/{boardNo}","/info/fashion/detail/{boardNo}","/info/local/detail/{boardNo}"})	    
+	public List<BoardDetailExt> boardDetail(@PathVariable("boardNo") int boardNo) {
+		List<BoardDetailExt> bDetailListMap = null; // 초기화
+
+		bDetailListMap = boardService.boardDetail(boardNo); // 게시글 목록 가져오기
+		log.info("boardDetail bListMap = {}", bDetailListMap);
+
+		return bDetailListMap;
+		
+	}
+	@GetMapping(value = {"/general/daily/edit/{boardNo}","/general/interest/edit/{boarNo}","/info/jmt/edit/{boarNo}","/info/fashion/edit/{boarNo}","/info/local/edit/{boarNo}"})	    
+	public BoardWriterForm boardEditList(@PathVariable int boardNo) {
+		BoardWriterForm bEditListMap = null; // 초기화
+
+		bEditListMap = boardService.boardEdit(boardNo); // 게시글 목록 가져오기
+		log.info("boardDetail bEditListMap = {}", bEditListMap);
+
+		return bEditListMap;
+		
+	}
 	
 	
 	
 }
+	
+	
+

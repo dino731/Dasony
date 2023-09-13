@@ -125,6 +125,14 @@
   margin: 0 auto;
   white-space: pre-line
 }
+.BoardDetail-userImg-views-container{
+  /* border: 1px solid purple; */
+  width: 100%;
+  text-align: center;
+}
+.BoardDetail-userImg-views-li>img{
+  height: 30vh;
+}
 
 /* 답글 댓글 Reply 시작 */
 .BoardDetail-boardlist-reply-wrapper{

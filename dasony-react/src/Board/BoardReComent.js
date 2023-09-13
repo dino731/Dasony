@@ -78,7 +78,7 @@ const BoardReComent = () =>{
                         <sapn>
                           <button className='Board-reply-recoment-accused-btn'
                           onClick={handleAccusedShow}
-                          ><i class="bi bi-cone-striped"></i>
+                          ><i className="bi bi-cone-striped"></i>
                           </button>
                           <Modal show={accusedShow} onHide={handleAccusedClose}>
                             <ModalHeader>
