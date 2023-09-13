@@ -55,6 +55,7 @@ public class DonationServiceImpl implements DonationService{
 		return donationDao.deleteDona(donaNo);
 	}
 	
+
 	@Override
 	public List<DonationList> DonaDetails(int donaNo) {
 		return donationDao.DonaDetails(donaNo);

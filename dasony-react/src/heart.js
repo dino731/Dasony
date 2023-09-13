@@ -3,7 +3,7 @@ import './heart.css';
 
 const HeartIcon = () => {
     const [isFilled, setIsFilled] = useState(false);
-
+    
     const handleHeartClick = () => {
         setIsFilled(!isFilled);
     };
