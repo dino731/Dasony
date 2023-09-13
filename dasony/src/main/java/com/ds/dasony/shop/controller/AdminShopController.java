@@ -53,28 +53,25 @@ public class AdminShopController {
 		// 파일 업로드 처리
 	    List<Map<String, Object>> uploadedFileName = new ArrayList<>();
 	    try {
+	    	/*상품 정보 추가*/
 	    	int productResult = shopService.addProduct(product);
+	    	
+	    	/*request변환*/
     		String productNo = shopService.findProductNo(product);
     		log.info("productNo: {}=================>>>>>>>>>>///////////", productNo);
 	        uploadedFileName = MisunFileUpload.mulitiFileUpload(httpServletRequest, productNo, "product");
-	    } catch (IOException e) {
-	        // 파일 업로드 오류 처리
-	        e.printStackTrace();
-	        return "File upload failed";
-	    }
-	    log.info("uploadedFileName: {}=================>>>>>>>>>>///////////", uploadedFileName);
-	    // 상품 정보 업로드 성공한 경우, 상품 이미지 업데이트
-	    if (uploadedFileName != null && !uploadedFileName.isEmpty()) {
-	    	try {
-	    		int imgResult = shopService.addProductImg(uploadedFileName);
-	    		return "Product added successfully";
-	    	} catch (Exception ex) {
-	    		ex.printStackTrace();
-	    		return "Failed to add product. Please try again.";
-	    	}
+	        log.info("uploadedFileName: {}=================>>>>>>>>>>///////////", uploadedFileName);
 	        
-	    } else {
-	        return "File upload failed"; // 파일 업로드 실패 시 반환하는 메시지
+	        if (uploadedFileName != null && !uploadedFileName.isEmpty()) {
+	        	int imgResult = shopService.addProductImg(uploadedFileName);
+	        }
+	        
+	        return "상품 추가 성공";
+	        
+	    } catch (IOException e) {
+	    	
+	        e.printStackTrace();
+	        return "상품 추가 실패";
 	    }
 	}
 	
@@ -102,5 +99,36 @@ public class AdminShopController {
 		}
 		log.info("product={},==>>>>>>>>>>", product);
 			return ResponseEntity.ok(productMap);
+	}
+	
+	@PostMapping("/modProduct")
+	public String modProduct(
+			HttpServletRequest httpServletRequest,
+            @RequestPart(value = "product") Product product) {
+		log.info("product: {}=================>>>>>>>>>>///////////", product);
+		// 파일 수정 처리
+	    List<Map<String, Object>> uploadedFileName = new ArrayList<>();
+	    try {
+	    	/*상품 정보 수정*/
+	    	int result = shopService.modProduct(product);
+	    	
+	    	/*request 변환*/
+	    	String productNo = product.getProductNo();
+	    	uploadedFileName = MisunFileUpload.mulitiFileUpload(httpServletRequest, productNo, "product");
+	    	
+	        /*상품 이미지 정보 삭제 - 이미지 status = 'N'*/
+	        int imgDelete = shopService.deleteProductImg(productNo);
+	        
+	        /*상품 이미지 업로드*/
+	        if (uploadedFileName != null && !uploadedFileName.isEmpty()) {
+	        	int imgResult = shopService.addProductImg(uploadedFileName);
+	        }
+	        
+	        return "파일 수정 성공했습니다";
+	        
+    	} catch (IOException e) {
+	    
+	        return "파일 수정 실패했습니다.";
+	    }
 	}
 }

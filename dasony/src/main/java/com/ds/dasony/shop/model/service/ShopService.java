@@ -28,4 +28,8 @@ public interface ShopService {
 
 	public List<String> productInfoImg(String productNo);
 
+	public int modProduct(Product product);
+
+	public int deleteProductImg(String productNo);
+
 }

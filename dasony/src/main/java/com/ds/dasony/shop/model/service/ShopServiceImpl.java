@@ -69,4 +69,14 @@ public class ShopServiceImpl implements ShopService{
 		return shopDao.productInfoImg(productNo);
 	}
 
+	@Override
+	public int modProduct(Product product) {
+		return shopDao.modProduct(product);
+	}
+
+	@Override
+	public int deleteProductImg(String productNo) {
+		return shopDao.deleteProductImg(productNo);
+	}
+
 }
