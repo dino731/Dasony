@@ -114,5 +114,21 @@
 		FROM PRODUCT_IMG
 		WHERE PRODUCT_NO = #{productNo}
 	</select>
+	
+	<update id="modProduct" parameterType="product">
+		UPDATE PRODUCT
+		SET
+			PRODUCT_NAME=#{productName},
+			SHOP_OKEY=#{shopOkey},
+			PRODUCT_AMOUNT=#{productAmount}
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<update id="deleteProductImg" parameterType="string">
+		UPDATE PRODUCT_IMG
+		SET
+			PRODUCT_STATUS = 'N'
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
 
 </mapper>

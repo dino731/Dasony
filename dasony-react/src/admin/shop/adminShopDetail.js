@@ -44,29 +44,6 @@ export const AdminShopDetail = ()=> {
     const handleDetailOn = () => {handleProductInfo(); setDetailShow(true);}
     const handleDetailOff = () => setDetailShow(false);
 
-    const [selectedProduct, setSelectedProduct] = useState({
-                                                            name:'',
-                                                            price:''
-                                                        });
-
-    const [show, setShow] = useState(false);
-    const handleOn = ()=> setShow(true);
-    const handleOff = () => setShow(false);
-
-    const handleOnEdit = (product) => {
-        setSelectedProduct(product);
-        handleOn();
-    }
-
-    const [cancleShow, setCancleShow] = useState(false);
-    const handleCancleOn = ()=> setCancleShow(true);
-    const handleCancleOff = () => setCancleShow(false);
-
-    const handleOnEditCancle = (product)=>{
-        setSelectedProduct(product);
-        handleCancleOn();
-    }
-
 
 {/*상품 추가 */}
     const [addShow, setAddShow] = useState(false);
@@ -78,7 +55,8 @@ export const AdminShopDetail = ()=> {
     const[addProduct, setAddProduct] = useState({
         shopOkey:shopOkey,
         productName : '',
-        productAmount:''
+        productAmount:'',
+        productImg:[]
     });
     {/*상품 정보 설정 */}
     const handleAddProduct = (e) => {
@@ -122,7 +100,6 @@ export const AdminShopDetail = ()=> {
     const handleProductInfo = () => {
         axios.post("/dasony/api/admin/productInfo", {shopOkey:shopOkey})
         .then(res=>{
-            console.log(res.data.product);
             setProduct(res.data.product);
         })
         .catch(err=>{
@@ -130,6 +107,90 @@ export const AdminShopDetail = ()=> {
             alert("다시 시도해주세요.");
         })
     }
+
+{/*상품 수정 모달 */}
+    {/*상품 수정 모달창 열기 */}
+    const [show, setShow] = useState(false);
+    const handleOn = ()=> {handleImgCancle(); setShow(true);}
+    const handleOff = () => {handleImgCancle(); setShow(false);}
+
+    const handleOnEdit = (product) => {
+        setSelectedProduct(product);
+        handleOn();
+    }
+    {/*상품 수정 정보 설정 */}
+    const [selectedProduct, setSelectedProduct] = useState({ 
+        productImgNo: '',
+        shopOkey: shopOkey,
+        productNo : '',
+        productName:'',
+        productAmount:'',
+        productImg:[]
+    });
+    const handleModifyProduct = (e)=>{
+        const {id, value} = e.target
+        setSelectedProduct(prev=>({
+            ...prev,
+            [id]:value
+        }))
+        console.log(selectedProduct);
+    }
+    {/*상품 수정 이미지 정보 설정 */}
+    const inputModRef = useRef(null);
+    const modForm = new FormData();
+    const handleModifyImg = (e)=>{
+        const fileInput = inputModRef.current;
+        if (fileInput) {
+            const file = fileInput.files;
+            for(let i = 0; i < file.length; i++) {
+                modForm.append("file", file[i]);
+            }
+        }
+        handleImg(e);
+    }
+    {/*상품 수정 이미지 미리보기 설정 */}
+    const[showImages, setShowImages] = useState([]);
+    const handleImg = (e)=>{
+        const files = e.target.files;
+        let fileUrls = [];
+        for (let i = 0; i < files.length; i++) {
+            const fileUrl = URL.createObjectURL(files[i]);
+            fileUrls.push(fileUrl);
+        }
+        if (fileUrls.length > 3) {
+            fileUrls = fileUrls.slice(0, 3);
+          }
+        setShowImages(fileUrls);
+        console.log("fileUrls : ",showImages);
+    }
+    const handleImgCancle = ()=>{
+        setShowImages([]);
+    }
+    {/*상품 수정 정보 전달 - 서버 */}
+    const handleModProductSub = () => {
+        modForm.append("product", selectedProduct);
+        axios.post('/dasony/api/admin/modProduct', {product:selectedProduct})
+        .then(res=>{
+            alert(res.data);
+        })
+        .catch(err=>{
+            console.log(err);
+            alert("다시 시도해주세요.");
+        })
+        handleOff();
+    }
+
+
+{/*상품 삭제 */}
+    const [cancleShow, setCancleShow] = useState(false);
+    const handleCancleOn = ()=> setCancleShow(true);
+    const handleCancleOff = () => setCancleShow(false);
+
+    const handleOnEditCancle = (product)=>{
+        setSelectedProduct(product);
+        handleCancleOn();
+    }
+
 
 
     return (
@@ -184,16 +245,14 @@ export const AdminShopDetail = ()=> {
                                         <tbody>
                                             {
                                                 product && product.map((p, index)=>{
-                                                    console.log(p.productImg)
                                                     return(
-                                                        <tr key={p.productNo} style={{height:'25vh'}}>
+                                                        <tr key={p.productImgNo} style={{height:'25vh'}}>
                                                             <td>{index+1}</td>
                                                             <td>{p.productName}</td>
                                                             <td>{p.productAmount}</td>
                                                             <td>
                                                                 <div className="product-add-img">
                                                                     {p.productImg.map((i, index)=>{
-                                                                        console.log(p.productImg);
                                                                         return(
                                                                         <img key={index} src={i}/>
                                                                         )
@@ -202,9 +261,25 @@ export const AdminShopDetail = ()=> {
                                                             </td>
                                                             
                                                             <td>
-                                                                <Button className="btn btn-primary" style={{height:'5vh'}} onClick={()=>handleOnEdit({ name: '몰라', price: '몰라' })}>수정</Button>
+                                                                <Button className="btn btn-primary" style={{height:'5vh'}} 
+                                                                        onClick={()=>handleOnEdit({ 
+                                                                            productImgNo: p.productImgNo,
+                                                                            productNo : p.productNo,
+                                                                            productName: p.productName, 
+                                                                            productAmount: p.productAmount,
+                                                                            productImg : p.productImg 
+                                                                        })}>수정
+                                                                </Button>
+
                                                                 {" "}
-                                                                <Button className='btn btn-danger' style={{height:'5vh'}} onClick={()=>handleOnEditCancle({ name: '몰라', price: '몰라' })}>삭제</Button>
+
+                                                                <Button className='btn btn-danger' style={{height:'5vh'}} 
+                                                                        onClick={()=>handleOnEditCancle({ 
+                                                                            productName: p.productName, 
+                                                                            productAmount: p.productAmount,
+                                                                            productImg : p.productImg
+                                                                        })}>삭제
+                                                                </Button>
                                                             </td>
                                                         </tr>
                                                     )
@@ -264,20 +339,40 @@ export const AdminShopDetail = ()=> {
                     <table style={{width:'100%', textAlign:'center', marginTop:'5%'}}>
                         <tr style={{height:'10vh'}}>
                             <th>상품 이름</th>
-                            <td><input type="text" defaultValue={selectedProduct.name}/></td>
+                            <td><input id="productName" type="text" defaultValue={selectedProduct.productName}
+                                        onChange={handleModifyProduct}/></td>
                         </tr>
                         <tr>
                             <th>상품 포인트(다손)</th>
-                            <td><input type="text" defaultValue={selectedProduct.price}/></td>
+                            <td><input id="productAmount" type="text" defaultValue={selectedProduct.productAmount}
+                                        onChange={handleModifyProduct}/></td>
                         </tr>
                         <tr style={{height:'10vh'}}>
                             <th>상품 이미지</th>
-                            <td><input type="file"/></td>
+                            <td><input ref={inputModRef} type="file" multiple onChange={handleModifyImg}/></td>
+                        </tr>
+                        <tr>
+                            <td colSpan={showImages.length==0?selectedProduct.productImg.length:showImages.length}>
+                                <div style={{width:'100%', display:'flex', justifyContent:'space-around'}}>
+                                {
+                                    showImages.length==0?(selectedProduct.productImg.map((i, index)=>{
+                                        return(
+                                                <img key={index} src={i} style={{width:'10vw'}}/>
+                                                )
+                                    })):(showImages.map((image, id)=>{
+                                        return(
+                                            <img key={id} src={image} style={{width:'10vw'}}/>
+                                        )
+                                        
+                                    }))
+                                }
+                                </div>
+                            </td>
                         </tr>
                     </table>
                 </ModalBody>
                 <ModalFooter>
-                    <Button className="btn btn-primary" onClick={handleOff} >확인</Button>
+                    <Button className="btn btn-primary" onClick={handleModProductSub} >확인</Button>
                     <Button className='btn btn-danger' onClick={handleOff}>취소</Button>
                 </ModalFooter>
             </Modal>
@@ -286,7 +381,7 @@ export const AdminShopDetail = ()=> {
             <Modal show={cancleShow} onHide={handleOff}>
                 <ModalHeader>상품 삭제</ModalHeader>
                 <ModalBody style={{textAlign:'center'}}>
-                    {selectedProduct.name} : 이 상품을 삭제하시겠어요? 
+                    {selectedProduct.productName} : 이 상품을 삭제하시겠어요? 
                 </ModalBody>
                 <ModalFooter>
                     <Button className="btn btn-primary" onClick={handleCancleOff}>확인</Button>

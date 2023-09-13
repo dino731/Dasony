@@ -153,8 +153,8 @@ export default function AdvancedExample({handleOn, handleModifyOn, handleModifyi
                                 <td style={{fontSize:'80%'}}>{shop.shopAddress}</td>
                                 <td>{categoryMap[shop.shopCate]}</td>
                                 <td>   
-                                    <Button style={{width:'70%'}} id={shop.shopOkey} onClick={()=>handleModifyOn(shop)} className="btn btn-primary">수정</Button>
-                                    <Button style={{width:'70%'}} id={shop.shopOkey} onClick={handleCancle} className='btn btn-danger'>삭제</Button>
+                                    <Button style={{width:'70%'}} id={shop.shopOkey} onClick={(e)=>{e.stopPropagation(); handleModifyOn(shop);}} className="btn btn-primary">수정</Button>
+                                    <Button style={{width:'70%'}} id={shop.shopOkey} onClick={(e)=>{e.stopPropagation(); handleCancle();}} className='btn btn-danger'>삭제</Button>
                                 </td> 
                             </tr>);
                     })}

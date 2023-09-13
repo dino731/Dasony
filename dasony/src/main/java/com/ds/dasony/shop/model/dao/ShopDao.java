@@ -60,4 +60,12 @@ public class ShopDao {
 		return session.selectList("shopMapper.productInfoImg", productNo);
 	}
 
+	public int modProduct(Product product) {
+		return session.update("shopMapper.modProduct", product);
+	}
+
+	public int deleteProductImg(String productNo) {
+		return session.update("shopMapper.deleteProductImg", productNo);
+	}
+
 }
