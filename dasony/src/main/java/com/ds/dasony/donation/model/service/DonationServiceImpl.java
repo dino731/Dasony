@@ -57,6 +57,28 @@ public class DonationServiceImpl implements DonationService{
 	
 
 	@Override
+	   public List<DonationList> getMyDonationList(int userNo){
+	      return donationDao.getMyDonationList(userNo);
+	   }
+
+
+	@Override
+	public List<DonationList> DonaDetails(int donaNo) {
+		return donationDao.DonaDetails(donaNo);
+	}
+
+	@Override
+	public int totalAmount(List<DonationList> donaHistory) {
+		
+		int totalDonaAmount = 0;
+		for(DonationList donation : donaHistory) {
+			totalDonaAmount += donation.getDonaAmount();
+		}
+		return totalDonaAmount;
+	}
+
+
+	@Override
 	public List<DonationList> getMyDonationList(int userNo){
 		return donationDao.getMyDonationList(userNo);
 	}
@@ -67,5 +89,6 @@ public class DonationServiceImpl implements DonationService{
 //	public int selectUserDason(int userNo) throws Exception{
 //		return donationDao.selectUserDason(userNo);
 //	}
+
 
 }

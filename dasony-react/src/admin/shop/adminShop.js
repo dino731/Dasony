@@ -37,6 +37,12 @@ const AdminShop = () => {
             }})
         .then(res=>{
             alert(res.data);
+            setNewShop({
+                shopName : '',
+                shopRegion : '서울특별시 강남구',
+                shopCate : '카페/베이커리',
+                shopAddress: ''
+            });
             handleOff();
         })
         .catch(err=>{

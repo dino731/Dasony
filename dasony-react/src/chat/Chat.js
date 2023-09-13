@@ -1,34 +1,97 @@
 import './Chat.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { useParams} from 'react-router';
 import { Link } from 'react-router-dom';
 import UserProfile from './UserProfile';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
+import axios from 'axios';
 
 const Chat = () =>{
 
-    const {chatname} = useParams();
-    const decodeChatname = decodeURIComponent(chatname);
+    const {chatRoomTitle} = useParams();
+    const {chatRoomNo} = useParams();
+    const {createChatRoomNo} = useParams();
 
-    // const navigate = useNavigate();
+    const decodeChatname = decodeURIComponent(chatRoomTitle);
 
-    // const handleExit = () => {
-    //     navigate('/chatlist');
-    // };
+    const [stompClient, setStompClient] = useState(null);
+    const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
+    const [sendchat, setSendChat] = useState(''); // 입력되는 채팅
+    const [userName, setUserName] = useState("");
+    const [chatData, setChatDate] = useState([]);
 
-    const [sendchat, setSendChat] = useState('');
+    const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
 
-    const changeSendChat = (e) => {
-        setSendChat(e.target.value);
-    }
+    useEffect(() => {
+        axios.post(`/dasony/api/userInfo`, {userNo : loginUserNo})
+        .then((response) => {
+            const userData = response.data;
+            if(userData.user){
+                const {userName} = userData.user;
+                setUserName(userName);
+            }else{
+                console.log("사용자 정보를 찾을 수 없음");
+            }
+        })
+        .catch((error)=> {
+            console.log(error);
+        })
+    }, []);
 
-    const handleSendChat = () => {
-        console.log(sendchat);
+    useEffect(() => {
+
+        const socket = new SockJS('http://localhost:3000/dasony/chat');
+        const stompClient = Stomp.over(socket);
+        stompClient.connect({}, (frame) => {
+
+            console.log("웹소켓 연결 완료");
+
+            stompClient.subscribe(`/sub/chat/${chatRoomNo}`, (message) => {
+                const receivedMessage = JSON.parse(message.body);
+                console.log("수신 메세지 : ", receivedMessage);
+                setChatList((chatlist) => 
+                [...chatlist, receivedMessage]);
+
+            });
+
+
+            setStompClient(stompClient);
+        });
+
+        return () => { // 컴포넌트 소멸되기 전 웹소켓 연결 종료
+            if(stompClient) {
+                stompClient.disconnect();
+            }
+        };
+    }, []);
+
+     const chatMsg = () => {
+         if(stompClient) {
+
+            const chatMsg = {
+                message : sendchat,
+            };
+
+            const headers = {
+                userNo : loginUserNo,
+                userName : userName,
+            }
+
+            // JSON.stringify({chatMsg : JSON.stringify(chatMsg)})
+
+            stompClient.send(`/app/chat/${chatRoomNo}`, headers, JSON.stringify({chatMsg : JSON.stringify(chatMsg)}));
+        }
         setSendChat('');
+        };
+
+        const changeSendChat = (e) => {
+            setSendChat(e.target.value);
     }
 
-    const handleReport = (e) =>{ // 마우스 우클릭 이벤트(채팅 내용 신고 시)
-        e.preventDefault();
-        alert("해당 채팅을 신고하시겠습니까?");
+    const handleSendChat = (chat) => { // 보내기 버튼 눌렀을 때
+        setSendChat('');
+        chatMsg(chat);
     }
 
     // -----------------------파일 업로드--------------------------------
@@ -49,7 +112,6 @@ const Chat = () =>{
 
     // ---------------------------모달창------------------------------------
     const [profileOpen, setProfileOpen] = useState(false);
-    const [userName, setUserName] = useState('');
 
     const openModal = (username) => {
         setUserName(username);
@@ -59,6 +121,32 @@ const Chat = () =>{
     const closeModal = () => {
         setProfileOpen(false);
     };
+
+    // ---------------------------채팅 입장----------------------------------
+
+    // const [userName, setUserName] = useState(""); -> 모달창에서 선언함
+
+    useEffect(() => {
+        axios.get(`/dasony/chat/${chatRoomNo}/${chatRoomTitle}`, {
+            headers : {
+                userNo : loginUserNo
+            }
+        })
+        .then((response) => {
+            const chattingData = response.data;
+            setChatDate(chattingData);
+
+            // console.log("잘 받아와졌으련지;" + chattingData[1].chatMsg); 
+            // console.log("userNo : ", loginUserNo);
+            // console.log("chatData : ", chattingData);
+
+            // chattingData.map((message, index) => {
+            //     console.log(`채팅 메세지 ${index + 1} : `, message.chatMsg);
+            // })
+        })
+        .catch(error => console.log(error));
+    }, [chatData]);
+
 
     return (
     <>
@@ -71,27 +159,31 @@ const Chat = () =>{
                     </div>
                     <hr/>
                     <ul id="chat_cont">
-                        <li id="mytalk">
-                            <span id="chat_date">2023-08-21</span>
-                            <p id="chat">안녕하세요!</p>
-                        </li>
-                        <li id="othortalk">
-                            <b onClick={(event) => openModal(event.target.textContent)}>똥구멍</b> {/*username클릭 시 해당 username가져옴 */}
-                            <UserProfile
-                               isOpen={profileOpen}
-                               closeModal={closeModal} 
-                               username={userName}
-                            />
-                            <p id="chat" onContextMenu={handleReport}>처음뵙겠습니다!</p> {/*해당 채팅 내용 신고 */}
-                            <span id="chat_date">2023-08-21</span>
-                        </li>
-                        <li id="mytalk">
+                        {chatData.map((message, index) => (
+                            <li key={index} className={message.userNo === loginUserNo ? "mytalk" : "othertalk"}>
+                            {message.userNo === loginUserNo ? (
+                                <>
+                                <span id="chat_date">{message.chatDate}</span>
+                                <p id="chat">{message.chatMsg}</p>
+                                </>
+                            ) : (
+                                <>
+                                <b onClick={() => openModal(message.userName)}>{message.userName}</b>
+                                <UserProfile isOpen={profileOpen} closeModal={closeModal} username={userName} />
+                                <p id="chat">{message.chatMsg}</p> 
+                                <span id="chat_date">{message.chatDate}</span>
+                                </>
+                            )}
+                            </li>
+                        ))}
+
+                        {/* <li id="mytalk">
                             <span id="chat_date">2023-08-21</span>
                             <p id="chat">안녕하세요!</p>
                         </li>
                         <li id="othortalk">
                         <b onClick={(event) => openModal(event.target.textContent)}>말미잘</b>
-                        <p id="chat" onContextMenu={handleReport}>처음뵙겠습니다!</p>
+                        <p id="chat">처음뵙겠습니다!</p>
                             <span id="chat_date">2023-08-21</span>
                         </li>
                         <li id="mytalk">
@@ -105,7 +197,7 @@ const Chat = () =>{
                         <li id="mytalk">
                             <span id="chat_date">2023-08-21</span>
                             <p id="chat">안녕하세요!</p>
-                        </li>
+                        </li> */}
                     </ul>
                     <hr/>
                     <div id="sendchat">
@@ -123,7 +215,7 @@ const Chat = () =>{
                         value={sendchat}
                         onChange={changeSendChat}
                         ></textarea>
-                        <button id="send" onClick={handleSendChat}>보내기</button>
+                        <button id="send" onClick={(chat) => handleSendChat(chat)}>보내기</button>
                     </div>
                 </div>
             </div>

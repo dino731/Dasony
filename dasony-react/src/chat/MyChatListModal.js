@@ -4,7 +4,6 @@ import './MyChatListModal.css';
 // import { Link } from 'react-router-dom';
 import { useNavigate} from 'react-router';
 import { useChatData } from "./ChatDataContext";
-import { click } from "@testing-library/user-event/dist/click";
 
 
 
@@ -23,7 +22,7 @@ const chatlistmodal = {
 
     const navigate = useNavigate();
 
-    const {chatData} = useChatData();
+    const {chatData, setChatDate} = useChatData();
     const [stars, setStars] = useState([]);
 
     const handelInchat = (chatname) => {

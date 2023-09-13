@@ -26,6 +26,14 @@ public interface DonationService {
 	List<DonationList> getMyDonationList(int userNo);
 
 	
+
+	List<DonationList> getMyDonationList(int userNo);
+
+	List<DonationList> DonaDetails(int donaNo);
+
+	int totalAmount(List<DonationList> donaHistory);
+
 //	int selectUserDason(int userNo) throws Exception;
+
 
 }

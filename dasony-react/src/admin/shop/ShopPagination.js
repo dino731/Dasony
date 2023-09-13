@@ -3,8 +3,12 @@ import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import { Justify } from 'react-bootstrap-icons';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdvancedExample({handleOn, handleModifyOn, handleModifyingShopSub, handleNewShop, keyword}) {  
+  
+  const navigate = useNavigate();
+  
   const userRegion = '관리자';
   // 페이지네이션 관련 상태
   const [shopList, setShopList] = useState([]);
@@ -113,6 +117,13 @@ export default function AdvancedExample({handleOn, handleModifyOn, handleModifyi
       handleShopList();
   }
 
+  {/*상점 정보 detail 페이지로 이동 */}
+  const [shopOkey, setShopOkey] = useState('');
+  const handleShopOkey = (e) => {
+    const shopOkey = e.currentTarget.getAttribute('data-shopokey');
+    setShopOkey(shopOkey);
+    navigate(`/admin/shop/${shopOkey}`);
+  }
 
   return (
     <>
@@ -135,15 +146,15 @@ export default function AdvancedExample({handleOn, handleModifyOn, handleModifyi
                     .slice((currentPage - 1)*pageSize, Math.min((currentPage - 1)*pageSize + pageSize, shopLength) )
                     .map((shop, index)=>{
                     return(
-                            <tr key={shop.shopOkey}>
+                            <tr key={shop.shopOkey} data-shopokey={shop.shopOkey} onClick={handleShopOkey}>
                                 <td>{index+1}</td>
                                 <td>{shop.shopName}</td>
                                 <td>{shop.shopRegion}</td>
                                 <td style={{fontSize:'80%'}}>{shop.shopAddress}</td>
                                 <td>{categoryMap[shop.shopCate]}</td>
                                 <td>   
-                                    <Button style={{width:'70%'}} id={shop.shopOkey} onClick={()=>handleModifyOn(shop)} className="btn btn-primary">수정</Button>
-                                    <Button style={{width:'70%'}} id={shop.shopOkey} onClick={handleCancle} className='btn btn-danger'>삭제</Button>
+                                    <Button style={{width:'70%'}} id={shop.shopOkey} onClick={(e)=>{e.stopPropagation(); handleModifyOn(shop);}} className="btn btn-primary">수정</Button>
+                                    <Button style={{width:'70%'}} id={shop.shopOkey} onClick={(e)=>{e.stopPropagation(); handleCancle(e);}} className='btn btn-danger'>삭제</Button>
                                 </td> 
                             </tr>);
                     })}

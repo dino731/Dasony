@@ -81,12 +81,12 @@
     /* background: url('resources/chat-img/chat-backimg.jpg'); */
 }
 
-#mytalk{
+.mytalk{
     text-align: right;
     color: #7A7A7A;
 }
 
-#mytalk > p {
+.mytalk  #chat {
     background-color : #FCFA90;
 }
 
@@ -105,13 +105,13 @@
     margin-top: 10px;
 }
 
-#othortalk{
+.othertalk{
     text-align: left;
     left: 30%; 
     color: #7A7A7A;
 }
 
-#othortalk>b:hover{
+.othertalk>b:hover{
     cursor: pointer;
 }
 

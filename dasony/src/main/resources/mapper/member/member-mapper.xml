@@ -17,6 +17,7 @@
 		<result column="USER_MOD_DATE" property="userModDate"/>
 		<result column="USER_STATUS" property="userStatus"/>
 		<result column="TOTAL_POINT" property="totalPoint"/>
+		<result column="GAME_STATUS" property="gameStatus"/>
 	</resultMap>
 	
 	<select id="selectUserList" resultMap="memberMap">
@@ -41,8 +42,8 @@
 	    SYSDATE,
 	    DEFAULT,
 	    DEFAULT,
-	    'Y'
-	    
+	    DEFAULT
+
     	)
 	</insert>
 	
@@ -95,6 +96,13 @@
 		WHERE USER_NO = #{userNo}
 	</select>
 	
+
+	<update id="updateUserPoint" parameterType="map">
+		UPDATE MEMBER
+			SET TOTAL_POINT = #{newDasonPoint}
+		WHERE USER_NO = #{userNo}
+	</update>
+  
 	<update id="userUpdate" parameterType="user">
 		UPDATE MEMBER
 		SET
