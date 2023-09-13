@@ -13,4 +13,5 @@ public class BoardExt extends Board{
 	private BoardCate boardCate;
 	private int userViewCount;//USER_VIEW_COUNT
 	private int replyCount;//REPLY_COUNT
+	private BoardTag boardTag;
 }

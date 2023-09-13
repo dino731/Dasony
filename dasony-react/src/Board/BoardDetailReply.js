@@ -4,8 +4,28 @@ import React, { useState, useRef } from "react";
 import './BoardDetail.css';
 import '../point/ShopProductDetail.css';
 import BoardReComent from './BoardReComent';
+import { useParams } from 'react-router-dom';
 const BoardDetailReply = () =>{
   /* 답글 댓글 시작 */
+  const { boardNo } = useParams();
+
+  /* 답글 시작 */
+  const [replyText, setReplyText] = useState([]);
+  const [newReplyText, setNewReplyText] = useState({
+    boardNo : '',
+    userNo : '',
+    replyContent : '',
+    replyWriteDate : '',
+    
+});
+
+
+  const handleMainReplyChange = (e) =>{
+    setNewReplyText = e.target.value;
+
+  }
+
+  /* 답글 끝 */
 
 
   /* 모달 시작 */
@@ -112,7 +132,7 @@ const BoardDetailReply = () =>{
                       </span>
                       <sapn>
                           <button>
-                          <i class="bi bi-cone-striped"></i>
+                          <i className="bi bi-cone-striped"></i>
                           </button>
                           <Modal show={accusedShow} onHide={handleAccusedClose}>
                             <ModalHeader>
@@ -192,6 +212,8 @@ const BoardDetailReply = () =>{
               <input
                 className='BoardDetail-boardlist-reply-form-input'
                 type='text'
+                value={newReplyText.value}
+                onChange={handleMainReplyChange}
                 placeholder='답글을 등록해보세요'
                 />
             </div>

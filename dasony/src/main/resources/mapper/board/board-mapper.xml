@@ -11,7 +11,6 @@
 		<result column="BOARD_VIEWS" property="boardViews"/>
 		<result column="BOARD_CONTENT" property="boardContent"/>
 		<result column="BOARD_STATUS" property="boardStatus"/>	
-		<result column="BOARD_TAG" property="boardTag"/>
 		
 		<result column="USER_VIEW_COUNT" property="userViewCount"/>
 		<result column="REPLY_COUNT" property="replyCount"/>
@@ -32,6 +31,8 @@
 		<result column="BOARD_IMG_UPLOAD_DATE" property="boardImgUploadDate"/>
 		<result column="BOARD_IMG_LEVEL" property="boardImgLevel"/>
 		<result column="BOARD_IMG_STATUS" property="boardImgStatus"/>
+		<result column="BOARD_NO" property="boardNoRef"/>
+		<result column="USER_NO" property="userNoRef"/>
 	</resultMap>
 	<!-- 비디오 객체 resultMap -->
 	<resultMap id="boardVideoResultSet" type="boardVideo">
@@ -40,6 +41,11 @@
 		<result column="VIDEO_ORI_NAME" property="videoOriName"/>
 		<result column="VIDEO_PATH" property="videoPath"/>
 		<result column="VIDEO_UPLOAD_DATE" property="videoUploadDate"/>
+	</resultMap>
+	
+	<!-- 보드 태그 객체 resultMap -->
+	<resultMap type="boardTag" id="boardTagResultSet">
+	  <id column="BOARD_TAG" property="boardTag"/>
 	</resultMap>
 
 	<!-- 유저 객체 resultMap -->
@@ -68,14 +74,48 @@
 		<result column="BOARD_VIEWS" property="boardViews"/>
 		<result column="BOARD_CONTENT" property="boardContent"/>
 		<result column="BOARD_STATUS" property="boardStatus"/>	
-		<result column="BOARD_TAG" property="boardTag"/>
 		
 		<association property="user" resultMap="userMap"/>
 		<association property="boardCate" resultMap="boardCateResultSet"/>
 		<association property="boardImg" resultMap="boardImgResultSet"/>
-		<association property="boardVideo" resultMap="boardVideoResultSet"/>	
+		<association property="boardVideo" resultMap="boardVideoResultSet"/>
+		<association property="boardTag" resultMap="boardTagResultSet"/>	
 	</resultMap>
-		
+	
+	<resultMap id="boardWriterFormResultMap" type="BoardWriterForm">
+	    <id property="boardNo" column="BOARD_NO" />
+	    <result property="userNo" column="USER_NO" />
+	    <result property="boardTitle" column="BOARD_TITLE" />
+	    <result property="boardWriteDate" column="BOARD_WRITE_DATE" />
+	    <result property="boardViews" column="BOARD_VIEWS" />
+	    <result property="boardContent" column="BOARD_CONTENT" />
+	    <result property="boardStatus" column="BOARD_STATUS" />
+	    
+	    <!-- boardImgNo는 단일 값이므로 collection 태그 없이 직접 매핑 -->
+	    
+	    <result property="boardTag" column="BOARD_TAG" />  
+	    <result property="boardCateNo" column="BOARD_CATE_NO" />
+	    
+	    
+	     <collection property="boardImgNo" javaType="java.util.List" ofType="java.lang.String">
+	      <result property="boardImgNo" column="BOARD_IMG_NO" />      
+	     </collection>
+	     <collection property="boardImgModName" javaType="java.util.List" ofType="java.lang.String">
+	     	<result property="boardImgModName"  column="BOARD_IMG_MOD_NAME" />
+	     </collection>
+   	     <collection property="boardImgOriName" javaType="java.util.List" ofType="java.lang.String">
+	     	<result property="boardImgOriName"  column="BOARD_IMG_ORI_NAME" />
+	     </collection>
+   	     <collection property="boardImgPath" javaType="java.util.List" ofType="java.lang.String">
+	     	<result property="boardImgPath" column="BOARD_IMG_PATH" />
+	     </collection>
+   	     <collection property="boardImgUploadDate" javaType="java.util.List" ofType="java.lang.String">
+	     	<result property="boardImgUploadDate"  column="BOARD_IMG_UPLOAD_DATE" />
+	     </collection>
+   	     <collection property="boardImgLevel" javaType="java.util.List" ofType="java.lang.String">
+	     	 <result property="boardImgLevel" column="BOARD_IMG_LEVEL" />
+	     </collection>    
+	</resultMap>		
 	
 	<select id="boardDailyList" resultMap="boardListResultSet">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, COUNT(R.REPLY_CONTENT) AS REPLY_COUNT
@@ -85,10 +125,73 @@
 		JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
 		LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
 		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
-		WHERE M.USER_REGION = '서울특별시 강남구'
+		WHERE M.USER_REGION = #{userRegion}
 		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME
+		ORDER BY B.BOARD_WRITE_DATE DESC
 	</select>
+	
+	<insert id="insertBoard" parameterType="boardWriterForm">
+		<selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
+			SELECT SEQ_BNO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO BOARD (BOARD_NO, USER_NO, BOARD_TITLE, BOARD_WRITE_DATE,BOARD_VIEWS, BOARD_CONTENT,BOARD_STATUS, BOARD_CATE_NO)
+		  VALUES (#{boardNo}, #{userNo}, #{boardTitle}, #{boardWriteDate},DEFAULT, #{boardContent},'Y', #{boardCateNo})
+	</insert>
 
+	<insert id="insertBoardImg" parameterType="boardImg">
+		 INSERT INTO BOARD_IMG 
+		 (BOARD_IMG_NO, BOARD_IMG_MOD_NAME, BOARD_IMG_ORI_NAME, BOARD_IMG_PATH, BOARD_IMG_UPLOAD_DATE, BOARD_IMG_LEVEL, BOARD_IMG_STATUS, BOARD_NO, USER_NO)
+		  VALUES 
+		  	(SEQ_BINO.NEXTVAL, #{boardImgModName}, #{boardImgOriName}, #{boardImgPath}, #{boardImgUploadDate}, #{boardImgLevel}, #{boardImgStatus}, #{boardNoRef}, #{userNoRef})
+	</insert>
+	
+	<insert id="insertBoardKeyword" parameterType="boardTag">
+			INSERT INTO BOARD_KEYWORD(BOARD_TAG, BOARD_NO)
+			VALUES (#{boardTag},#{boardTagBNo})
+	</insert>
+	
+	<resultMap type="boardDetailExt" id="boardDetailListResultSet">
+		<id column="BOARD_NO" property="boardNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_WRITE_DATE" property="boardWriteDate"/>
+		<result column="BOARD_VIEWS" property="boardViews"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_STATUS" property="boardStatus"/>	
+		
+		<association property="user" resultMap="userMap"/>
+		<association property="boardCate" resultMap="boardCateResultSet"/>
+		<association property="boardVideo" resultMap="boardVideoResultSet"/>
+		<association property="boardTag" resultMap="boardTagResultSet"/>	
+		
+		<collection property="bImgList" ofType="boardImg" 
+				    javaType="java.util.List" resultMap="boardImgResultSet"/>
+	</resultMap>
+	
+	
+	
+	<select id="boardDetail" resultMap="boardDetailListResultSet">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME,C.BOARD_CATE_NO, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_LEVEL, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, COUNT(R.REPLY_CONTENT) AS REPLY_COUNT
+		FROM BOARD B
+		JOIN MEMBER M ON B.USER_NO = M.USER_NO
+		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+		JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO
+		LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
+		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
+		WHERE B.BOARD_NO = #{boardNo}
+		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME,C.BOARD_CATE_NO, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_LEVEL
+	</select>
+	
+	<select id="boardEdit" resultMap="boardWriterFormResultMap">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_WRITE_DATE, B.BOARD_VIEWS, B.BOARD_CONTENT, B.BOARD_STATUS, M.USER_NO, I.BOARD_IMG_NO,T.BOARD_TAG,C.BOARD_CATE_NO,I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_ORI_NAME,I.BOARD_IMG_PATH,I.BOARD_IMG_UPLOAD_DATE,I.BOARD_IMG_LEVEL 
+		FROM BOARD B
+		JOIN MEMBER M ON B.USER_NO = M.USER_NO
+		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+		JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO
+		JOIN BOARD_KEYWORD T ON B.BOARD_NO = T.BOARD_NO
+		WHERE B.BOARD_NO = #{boardNo}
+		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_WRITE_DATE, B.BOARD_VIEWS, B.BOARD_CONTENT, B.BOARD_STATUS, M.USER_NO, I.BOARD_IMG_NO,T.BOARD_TAG,C.BOARD_CATE_NO,I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_ORI_NAME,I.BOARD_IMG_PATH,I.BOARD_IMG_UPLOAD_DATE,I.BOARD_IMG_LEVEL
+	</select>
 	
 
 
