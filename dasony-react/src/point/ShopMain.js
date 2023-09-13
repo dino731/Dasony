@@ -1,9 +1,38 @@
 import './ShopMain.css';
 import ControlledCarousel from './shopBanner';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HeartIcon from '../heart';
+import {useState, useEffect} from 'react';
+import axios from 'axios';
 
 const ShopMain = ()=>{
+
+    const userRegion = localStorage.getItem("loginUserRegion");
+
+    {/*샵 정보 설정 */}
+    const [shopList, setShopList] = useState([]);
+    {/*샵 리스트 가져오기 - 서버 */}
+  const handleShopList = ()=> {
+    axios.post('/dasony/api/shopList/', {userRegion:userRegion})
+    .then(res => {
+        setShopList(res.data.shopList);
+    })
+    .catch(err => {
+        console.log(err);
+        alert("다시 시도해주세요.");
+    });
+    };
+
+    useEffect(()=>{
+        handleShopList();
+    })
+
+    {/*해당 매장으로 이동 */}
+    const navigate = useNavigate();
+    const handleShopNavi = (shopNo)=>{
+        navigate(`/shop/cate/${shopNo}/product`);
+    }
+
     return(
         <div className="shop-container">
 
@@ -61,9 +90,15 @@ const ShopMain = ()=>{
             <div className="shop-new">
                 <div className='shop-title'>새로 입점한 상점 </div>
                 <div className='new-box'>
-                    <div>백년 손님 고깃집</div>
-                    <div>룽바오네 마라탕</div>
-                    <div>마시리 카페</div>
+                {
+                    shopList.splice(0, 3)
+                            .map(s=>{
+                                return(
+                                    <div onClick={()=>{handleShopNavi(s.shopOkey);}}>{s.shopName}</div>
+                                )
+                            })
+                }
+                  
                 </div>
             </div>{/*shop-new끝*/}
             

@@ -109,7 +109,13 @@ const PlzLogin = () => {
             }
         });
     }
-   
+
+    /*엔터키 이벤트 추가 */
+    const handleLoginEnter=(e)=>{
+        if(e.key === 'Enter'&&login.userId&&login.userPwd){
+            handleLoginSubmit();
+        }
+    }
     return(
         
         <div className='window hero-container'>
@@ -135,13 +141,13 @@ const PlzLogin = () => {
                                 <tr>
                                     <th style={{letterSpacing:9}}>아이디</th>
                                     <td colSpan={2}>
-                                        <input id='id' type='text' onChange={handleLogin} value={login.userId}></input>
+                                        <input id='id' type='text' onChange={handleLogin} onKeyDown={handleLoginEnter} value={login.userId}/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>비밀번호</th>
                                     <td colSpan={2}>
-                                        <input id='pwd' type='password' onChange={handleLogin} value={pwd}></input>
+                                        <input id='pwd' type='password' onChange={handleLogin} onKeyDown={handleLoginEnter} value={pwd}/>
                                     </td>
                                 </tr>
                                 <tr>
