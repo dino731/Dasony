@@ -122,7 +122,7 @@ const Chat = () =>{
         setProfileOpen(false);
     };
 
-    // ---------------------------채팅 입장-----------------------------------
+    // ---------------------------채팅 입장----------------------------------
 
     // const [userName, setUserName] = useState(""); -> 모달창에서 선언함
 
@@ -134,15 +134,18 @@ const Chat = () =>{
         })
         .then((response) => {
             const chattingData = response.data;
-            setChatDate(chattingData, () => {
-                console.log("잘 받아와졌으련지;" + chatData.chatMsg);
-            });
+            setChatDate(chattingData);
+
+            // console.log("잘 받아와졌으련지;" + chattingData[1].chatMsg); 
+            // console.log("userNo : ", loginUserNo);
+            // console.log("chatData : ", chattingData);
+
+            // chattingData.map((message, index) => {
+            //     console.log(`채팅 메세지 ${index + 1} : `, message.chatMsg);
+            // })
         })
         .catch(error => console.log(error));
-    }, []);
-
-    useEffect(() => {
-    },[chatData])
+    }, [chatData]);
 
 
     return (
@@ -156,27 +159,22 @@ const Chat = () =>{
                     </div>
                     <hr/>
                     <ul id="chat_cont">
-                        {chatData.map ((message, index) => (
+                        {chatData.map((message, index) => (
                             <li key={index} className={message.userNo === loginUserNo ? "mytalk" : "othertalk"}>
                             {message.userNo === loginUserNo ? (
                                 <>
-                                    <span id="chat_date">{message.chatDate}</span>
-                                    <p id="chat">{message.chatMsg}</p>
-
+                                <span id="chat_date">{message.chatDate}</span>
+                                <p id="chat">{message.chatMsg}</p>
                                 </>
                             ) : (
                                 <>
-                                    <b onClick={(event) => openModal(event.target.textContent)}>{message.userName}</b> {/*username클릭 시 해당 username가져옴 */}
-                                    <UserProfile
-                                    isOpen={profileOpen}
-                                    closeModal={closeModal} 
-                                    username={userName}
-                                    />
-                                    <p id="chat">{message.chatMsg}</p> 
-                                    <span id="chat_date">{message.chatDate}</span>
+                                <b onClick={() => openModal(message.userName)}>{message.userName}</b>
+                                <UserProfile isOpen={profileOpen} closeModal={closeModal} username={userName} />
+                                <p id="chat">{message.chatMsg}</p> 
+                                <span id="chat_date">{message.chatDate}</span>
                                 </>
                             )}
-                        </li>
+                            </li>
                         ))}
 
                         {/* <li id="mytalk">
