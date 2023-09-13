@@ -68,4 +68,16 @@ public class ShopDao {
 		return session.update("shopMapper.deleteProductImg", productNo);
 	}
 
+	public int productDelete(String productNo) {
+		return session.delete("shopMapper.productDelete", productNo);
+	}
+
+	public int productImgDelete(String productNo) {
+		return session.delete("shopMapper.productImgDelete", productNo);
+	}
+
+	public String shopTitle(String store) {
+		return session.selectOne("shopMapper.shopTitle", store);
+	}
+
 }
