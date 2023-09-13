@@ -40,7 +40,9 @@
 	    SYSDATE,
 	    SYSDATE,
 	    DEFAULT,
-	    DEFAULT
+	    DEFAULT,
+	    'Y'
+	    
     	)
 	</insert>
 	
@@ -116,16 +118,25 @@
 <update id="modifyMyInfo" parameterType="user">
 		UPDATE MEMBER
 		SET
-			USER_NAME=#{userName},
+			USER_ID = #{userId},
+			USER_NAME = #{userName},
 			USER_NICKNAME = #{userNick},
+			USER_PWD = #{userPwd},
 			USER_PHONE = #{userPhone},
 			USER_EMAIL = #{userEmail},
 			USER_ADDRESS = #{userAddress},
-			USER_STATUS = #{userStatus},
-			USER_LEVEL = #{userLevel},
 			USER_MOD_DATE = SYSDATE
 		WHERE USER_NO = #{userNo}
 	</update>
+	
+	<update id="changeNewPwd" parameterType="user">
+		UPDATE MEMBER
+		SET
+		USER_PWD = #{newPwd}
+		WHERE USER_NO = #{userNo}		
+	</update>
+	
+	
 
 
 </mapper>

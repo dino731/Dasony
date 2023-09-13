@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User {
 	
-	private long userNo;
+	private int userNo;
 	private String userId;
 	private String userPwd;
 	private String userName;
@@ -27,5 +27,6 @@ public class User {
 	private Date userModDate;
 	private String userStatus;
 	private int totalPoint;
+	private String gameStatus;
 
 }

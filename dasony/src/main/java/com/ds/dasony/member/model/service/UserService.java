@@ -31,5 +31,9 @@ public interface UserService {
 
 	public int modifyMyInfo(Map<String, Object> myInfo);
 
+	public int changeNewPwd(Map<String,Object> pwdInfo);
+
+	public List getMyLikesList(int userNo);
+
 
 }

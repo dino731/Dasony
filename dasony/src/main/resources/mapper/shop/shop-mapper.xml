@@ -44,4 +44,6 @@
 			SHOP_CATE = #{shopCate}
 		WHERE SHOP_OKEY = #{shopOkey}
 	</update>
+	
+	
 </mapper>

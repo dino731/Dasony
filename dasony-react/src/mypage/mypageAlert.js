@@ -3,6 +3,7 @@ import './mypagecss.css';
 import { useEffect, useState, useTransition } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import emailjs from '@emailjs/browser';
 
 
 // import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
@@ -15,21 +16,6 @@ const MypageAlert = () => {
 // import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
 
   const [alert, setAlert] = useState([]);
-  // const [timer, setTimer] = useState(0);
-
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-      
-  //     const gameDiv = document.getElementById('game');
-  //     if (gameDiv) {
-  //       gameDiv.style.display = 'block  ';
-  //     }
-  //   }, 4000); 
-    
-
-    
-  //   return () => clearTimeout(timeoutId);
-  // }, []); 
 
   useEffect(() => {
     axios.post("/dasony/api/getMyAlertList", {
@@ -41,10 +27,29 @@ const MypageAlert = () => {
       console.error("오류남:", error);
     });
   }, []);
+
+  // const sendEmail = (e) => {
+  //   e.preventDefault();
+  //   const infos = {
+  //     user_name: 'wangfeng', // 이메일을 보낼 사용자의 이름
+  //     user_email: 'wangfeng@ruc.edu.com' // 사용자의 이메일 주소
+     
+  //   };
+    
+  //   emailjs.send('Dasony', 'dasonyEmail', infos,'F-MU3Q5TmMwsJT8xo')
+  //     .then((result) => {
+  //         console.log(result.text);
+  //     }, (error) => {
+  //       console.log(error.text);
+  //     });
+    
+  // };
     
     return(
     <div className='Alert-table'>
         <h2>내 알림</h2>
+
+        {/* <button onClick={sendEmail}>테스트</button> */}
         <div className="jefftable">
       <table>
         <thead>

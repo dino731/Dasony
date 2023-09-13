@@ -58,5 +58,11 @@ public class UserDao {
 		int result = session.update("memberMapper.modifyMyInfo",myInfo);
 		return result;
 	}
+	public int changeNewPwd(Map<String,Object> pwdInfo) {
+		return session.update("memberMapper.changeNewPwd",pwdInfo);
+	}
+	public List getMyLikesList(int userNo) {
+		return session.selectList("memberMapper.getMyLikesList", userNo);
+	}
 
 }

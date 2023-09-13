@@ -159,6 +159,7 @@ const SignUp = ()=>{
 
     /*비밀 번호 글씨 수 검사 */
     const handlePwdLength = () => {
+        
         if(pwd&&pwd.length<10){
             alert("비밀 번호를 10자 이상 입력해주세요");
         }

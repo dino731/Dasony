@@ -67,5 +67,13 @@ public class UserServiceImpl implements UserService{
 	public int modifyMyInfo(Map<String, Object> myInfo) {
 		return userDao.modifyMyInfo(myInfo);
 	}
+	@Override
+	public int changeNewPwd(Map<String,Object> pwdInfo) {
+		return userDao.changeNewPwd(pwdInfo);
+	}
+	@Override
+	public List getMyLikesList(int userNo){
+		return userDao.getMyLikesList(userNo);
+	}
 
 }
