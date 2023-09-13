@@ -56,6 +56,9 @@
 		WHERE SHOP_OKEY = #{shopOkey}
 	</update>
 	
+
+	
+
 	<select id="shopInfo" parameterType="string" resultMap="shopMap">
 		SELECT *
 		FROM SHOP
@@ -152,5 +155,6 @@
 		FROM SHOP
 		WHERE SHOP_OKEY = #{store}
 	</select>
+
 
 </mapper>
