@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,9 +64,9 @@ public class AdminShopController {
 	        uploadedFileName = MisunFileUpload.mulitiFileUpload(httpServletRequest, productNo, "product");
 	        log.info("uploadedFileName: {}=================>>>>>>>>>>///////////", uploadedFileName);
 	        
-	        if (uploadedFileName != null && !uploadedFileName.isEmpty()) {
-	        	int imgResult = shopService.addProductImg(uploadedFileName);
-	        }
+	       
+	        int imgResult = shopService.addProductImg(uploadedFileName);
+	        
 	        
 	        return "상품 추가 성공";
 	        
@@ -111,24 +113,33 @@ public class AdminShopController {
 	    try {
 	    	/*상품 정보 수정*/
 	    	int result = shopService.modProduct(product);
-	    	
-	    	/*request 변환*/
 	    	String productNo = product.getProductNo();
-	    	uploadedFileName = MisunFileUpload.mulitiFileUpload(httpServletRequest, productNo, "product");
-	    	
-	        /*상품 이미지 정보 삭제 - 이미지 status = 'N'*/
+	    	/*상품 이미지 정보 삭제 - 이미지 status = 'N'*/
 	        int imgDelete = shopService.deleteProductImg(productNo);
 	        
+	    	/*request 변환*/
+	    	uploadedFileName = MisunFileUpload.mulitiFileUpload(httpServletRequest, productNo, "product");
+	    	log.info("uploadedFileName: {}=================>>>>>>>>>>///////////", uploadedFileName);
 	        /*상품 이미지 업로드*/
-	        if (uploadedFileName != null && !uploadedFileName.isEmpty()) {
-	        	int imgResult = shopService.addProductImg(uploadedFileName);
-	        }
+	        int imgResult = shopService.addProductImg(uploadedFileName);
 	        
 	        return "파일 수정 성공했습니다";
 	        
     	} catch (IOException e) {
 	    
-	        return "파일 수정 실패했습니다.";
+	        return "파일 수정 실패했습니다";
 	    }
+	}
+	
+	@DeleteMapping("/productDelete/{productNo}")
+	public ResponseEntity<String> productDelete(@PathVariable String productNo ){
+		log.info("홧인:{}",productNo);
+		int imgResult = shopService.productImgDelete(productNo);
+		int result = shopService.productDelete(productNo);
+		if(imgResult*result>0) {
+			return ResponseEntity.ok("성공적으로 삭제했습니다");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("상품 삭제 실패했습니다");
+		}
 	}
 }

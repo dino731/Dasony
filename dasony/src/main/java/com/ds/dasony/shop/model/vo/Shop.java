@@ -1,5 +1,7 @@
 package com.ds.dasony.shop.model.vo;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,5 +18,6 @@ public class Shop {
 	private String shopAddress;
 	private String shopRegion;
 	private String shopCate;
+	private Date shopJoinDate;
 
 }

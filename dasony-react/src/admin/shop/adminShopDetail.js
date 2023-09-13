@@ -79,14 +79,19 @@ export const AdminShopDetail = ()=> {
         }
     }
     {/*상품 정보 전달 - 서버 */}
-    const handleProductSub = () =>{
+    const handleProductSub = async() =>{
         handleAddImg();
         form.append("product", new Blob([JSON.stringify(addProduct)], {type: "application/json" }));
         axios.post('/dasony/api/admin/addProduct', form)
         .then(res=>{
+            handleProductInfo();
             alert(res.data);
-            setAddProduct({});
-        })
+            setAddProduct({
+                shopOkey:shopOkey,
+                productName : '',
+                productAmount:'',
+                productImg:[]});
+            })
         .catch(err=>{
             console.log(err);
             alert("다시 시도해주세요.");
@@ -138,15 +143,16 @@ export const AdminShopDetail = ()=> {
     {/*상품 수정 이미지 정보 설정 */}
     const inputModRef = useRef(null);
     const modForm = new FormData();
-    const handleModifyImg = (e)=>{
+    const handleModifyImg = ()=>{
         const fileInput = inputModRef.current;
+        console.log("fileInput", fileInput);
         if (fileInput) {
             const file = fileInput.files;
             for(let i = 0; i < file.length; i++) {
                 modForm.append("file", file[i]);
+                console.log(modForm);
             }
         }
-        handleImg(e);
     }
     {/*상품 수정 이미지 미리보기 설정 */}
     const[showImages, setShowImages] = useState([]);
@@ -167,9 +173,10 @@ export const AdminShopDetail = ()=> {
         setShowImages([]);
     }
     {/*상품 수정 정보 전달 - 서버 */}
-    const handleModProductSub = () => {
-        modForm.append("product", selectedProduct);
-        axios.post('/dasony/api/admin/modProduct', {product:selectedProduct})
+    const handleModProductSub = (e) => {
+        handleModifyImg(e);
+        modForm.append("product", new Blob([JSON.stringify(selectedProduct)], {type: "application/json" }));
+        axios.post('/dasony/api/admin/modProduct', modForm)
         .then(res=>{
             alert(res.data);
         })
@@ -184,13 +191,27 @@ export const AdminShopDetail = ()=> {
 {/*상품 삭제 */}
     const [cancleShow, setCancleShow] = useState(false);
     const handleCancleOn = ()=> setCancleShow(true);
-    const handleCancleOff = () => setCancleShow(false);
+    const handleCancleOff = () => {
+        setCancleShow(false);
+    }
 
     const handleOnEditCancle = (product)=>{
         setSelectedProduct(product);
         handleCancleOn();
     }
-
+    {/*상품 삭제 - 서버 */}
+    const handleProductDelete=()=>{
+        axios.delete(`/dasony/api/admin/productDelete/${selectedProduct.productNo}`)
+        .then(res=>{
+            alert(res.data);
+        })
+        .catch(err=>{
+            console.log(err);
+            alert("다시 시도해주세요");
+        })
+        handleProductInfo();
+        handleCancleOff();
+    }
 
 
     return (
@@ -246,7 +267,7 @@ export const AdminShopDetail = ()=> {
                                             {
                                                 product && product.map((p, index)=>{
                                                     return(
-                                                        <tr key={p.productImgNo} style={{height:'25vh'}}>
+                                                        <tr key={p.productNo} style={{height:'25vh'}}>
                                                             <td>{index+1}</td>
                                                             <td>{p.productName}</td>
                                                             <td>{p.productAmount}</td>
@@ -264,6 +285,7 @@ export const AdminShopDetail = ()=> {
                                                                 <Button className="btn btn-primary" style={{height:'5vh'}} 
                                                                         onClick={()=>handleOnEdit({ 
                                                                             productImgNo: p.productImgNo,
+                                                                            shopOkey: shopOkey,
                                                                             productNo : p.productNo,
                                                                             productName: p.productName, 
                                                                             productAmount: p.productAmount,
@@ -274,10 +296,13 @@ export const AdminShopDetail = ()=> {
                                                                 {" "}
 
                                                                 <Button className='btn btn-danger' style={{height:'5vh'}} 
-                                                                        onClick={()=>handleOnEditCancle({ 
+                                                                        onClick={()=>handleOnEditCancle({
+                                                                            productImgNo: p.productImgNo,
+                                                                            shopOkey: shopOkey,
+                                                                            productNo : p.productNo,
                                                                             productName: p.productName, 
                                                                             productAmount: p.productAmount,
-                                                                            productImg : p.productImg
+                                                                            productImg : p.productImg   
                                                                         })}>삭제
                                                                 </Button>
                                                             </td>
@@ -349,7 +374,7 @@ export const AdminShopDetail = ()=> {
                         </tr>
                         <tr style={{height:'10vh'}}>
                             <th>상품 이미지</th>
-                            <td><input ref={inputModRef} type="file" multiple onChange={handleModifyImg}/></td>
+                            <td><input ref={inputModRef} type="file" onChange={handleImg} multiple /></td>
                         </tr>
                         <tr>
                             <td colSpan={showImages.length==0?selectedProduct.productImg.length:showImages.length}>
@@ -384,7 +409,7 @@ export const AdminShopDetail = ()=> {
                     {selectedProduct.productName} : 이 상품을 삭제하시겠어요? 
                 </ModalBody>
                 <ModalFooter>
-                    <Button className="btn btn-primary" onClick={handleCancleOff}>확인</Button>
+                    <Button className="btn btn-primary" onClick={handleProductDelete}>확인</Button>
                     <Button className='btn btn-danger' onClick={handleCancleOff}>취소</Button>
                 </ModalFooter>
             </Modal>

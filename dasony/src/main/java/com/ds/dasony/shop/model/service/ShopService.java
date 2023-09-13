@@ -32,4 +32,10 @@ public interface ShopService {
 
 	public int deleteProductImg(String productNo);
 
+	public int productDelete(String productNo);
+
+	public int productImgDelete(String productNo);
+
+	public String shopTitle(String store);
+
 }

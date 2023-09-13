@@ -123,5 +123,15 @@ public class ShopController {
 		
 	}
 	
+	@PostMapping("/shopTitle")
+	public ResponseEntity<String> shopTitle(@RequestBody Map<String, String>map ){
+		String store = map.get("store");
+		log.info(store);
+		String shopTitle = shopService.shopTitle(store);
+		return ResponseEntity.ok(shopTitle);
+	}
+	
+	
+	
 	
 }
