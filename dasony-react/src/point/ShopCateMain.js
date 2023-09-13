@@ -1,10 +1,12 @@
 import './ShopCateMain.css';
 import HeartIcon from "../heart";
-import { Link } from 'react-router-dom';
+import { Link,useLocation } from 'react-router-dom';
+
 
 const ShopCateMain = ()=>{
    
-   
+   const location = useLocation();
+   const shopCate = location.state.shopCate;
    
     return(
         <div className='shopCate-main-container'>

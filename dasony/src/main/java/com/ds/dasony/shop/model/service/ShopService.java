@@ -24,7 +24,7 @@ public interface ShopService {
 
 	public String findProductNo(Product product);
 
-	public List<Product> productInfo(String shopOkey);
+	public List<Product> productInfo(String shopOkey, String shopCate);
 
 	public List<String> productInfoImg(String productNo);
 

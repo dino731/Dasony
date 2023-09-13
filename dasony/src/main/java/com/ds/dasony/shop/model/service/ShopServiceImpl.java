@@ -60,8 +60,8 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public List<Product> productInfo(String shopOkey) {
-		return shopDao.productInfo(shopOkey);
+	public List<Product> productInfo(String shopOkey, String shopCate) {
+		return shopDao.productInfo(shopOkey, shopCate);
 	}
 
 	@Override
