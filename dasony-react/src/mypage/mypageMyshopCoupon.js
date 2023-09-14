@@ -2,9 +2,12 @@
 import React, { useRef,useEffect,useState } from 'react';
 import './mypagecss.css';
 import $ from 'jquery';
+import axios from 'axios';
 const MypageMyshopCoupon = () => {
 
     const [coupon, setCoupon] = useState([]);
+    const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
+    const loginUserRegion = localStorage.getItem("loginUserRegion");
 
     useEffect(() => {
         const newCoupon = [{

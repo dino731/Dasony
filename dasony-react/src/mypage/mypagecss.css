@@ -56,6 +56,7 @@
 .user-datail-table input{
   width: 80%;
   border: 2px solid #CB9DE7;
+  max-width: 450px;
   border-radius: 0.5vw;
 }
 
@@ -164,7 +165,7 @@
 }
 
 .jefftable tbody>tr{
-height: 16vh; 
+height: 12vh; 
 }
 
 .nf-history-header1{

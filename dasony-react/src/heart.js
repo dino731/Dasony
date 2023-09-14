@@ -1,12 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {useLocation} from 'react-router-dom';
 import './heart.css';
+import axios from 'axios';
 
-const HeartIcon = () => {
+const HeartIcon = (props) => {
+
+    const location = useLocation();
+
+    const userNo = localStorage.getItem("loginUserNo");
+
+    const product = props.product;
+    console.log("product 게 있느냐",product);
+
     const [isFilled, setIsFilled] = useState(false);
 
-    const handleHeartClick = () => {
+
+    const handleHeartCss = ()=>{
+        axios.post('/dasony/api/shopHeartCss', {productNo:product.productNo, userNo:userNo})
+        .then(res=>{
+            console.log(userNo, product.productNo);
+            console.log(res.data);
+            setIsFilled(res.data);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
+    useEffect(()=>{
+        if(product, location.pathname.includes('shop')){
+            handleHeartCss();
+        }
+    },[isFilled])
+
+    const handleHeartClick = (event) => {
+        event.stopPropagation();
         setIsFilled(!isFilled);
+        if(location.pathname.includes('shop')){
+            !isFilled?handleShopHeartOn():handleShopHeartOff();
+        }
     };
+
+    const handleShopHeartOn = () => {
+        axios.post('/dasony/api/shopHeartOn', {productNo:product.productNo, userNo:userNo})
+        .then(res=>{
+            alert(res.data);
+        })
+        .catch(err=>{
+            console.log(err);
+            alert("다시 시도해주세요");
+        })
+    }
+
+    const handleShopHeartOff = () => {
+        axios.post('/dasony/api/shopHeartOff', {productNo:product.productNo, userNo:userNo})
+        .then(res=>{
+            alert(res.data);
+        })
+        .catch(err=>{
+            console.log(err);
+            alert("다시 시도해주세요");
+        })
+    }
 
     return (
         <i className={isFilled ? 'bi bi-heart-fill' : 'bi bi-heart'} onClick={handleHeartClick}/>

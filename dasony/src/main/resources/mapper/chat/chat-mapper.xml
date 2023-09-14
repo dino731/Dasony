@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chatMapper">
+
+<resultMap type="chatRoom" id="chatRoomResultSet">
+   <id column="CHATROOM_NO" property="chatRoomNo"/>
+   <result column="USER_NO" property="userNo"/>
+   <result column="CHATROOM_TITLE" property="chatRoomTitle"/>
+   <result column="CHATROOM_STATUS" property="chatRoomStatus"/>
+   <result column="USER_NAME" property="userName"/>
+   <result column="CNT" property="cnt"/>
+</resultMap>
+
+<resultMap type="chatMessage" id="chatMessageResultSet">
+   <id column="CHAT_NO" property="chatNo"/>
+   <result column="CHAT_MSG" property="chatMsg"/>
+   <result column="CHAT_DATE" property="chatDate"/>
+   <result column="CHATROOM_NO" property="chatRoomNo"/>
+   <result column="USER_NO" property="userNo"/>
+   <result column="USER_NAME" property="userName"/>
+</resultMap>
+
+<resultMap type="chatCare" id="chatCareResultSet">
+	<result column="USER_NO" property="userNo"/> 
+	<result column="CHATROOM_NO" property="chatRoomNo"/>
+</resultMap>
+
+<select id="selectChatList" resultMap="chatRoomResultSet">
+	SELECT
+		CHATROOM_NO,
+		CHATROOM_TITLE,
+		USER_NAME,
+		(
+			SELECT
+				COUNT(*)
+			FROM CHAT_JOIN CJ
+			WHERE CJ.CHATROOM_NO = CR.CHATROOM_NO
+		) CNT
+		FROM CHAT_ROOM CR
+		JOIN MEMBER M USING(USER_NO)
+		WHERE CHATROOM_STATUS = 'Y'
+		ORDER BY CHATROOM_NO DESC
+</select>
+
+<insert id="openChatRoom" parameterType="chatRoom">
+   INSERT INTO CHAT_ROOM 
+      VALUES (
+         SEQ_CRNO.NEXTVAL,
+         #{userNo},
+         #{chatRoomTitle},
+         DEFAULT
+         )
+   <selectKey keyProperty="chatRoomNo" resultType="int" order="AFTER">
+      SELECT SEQ_CRNO.CURRVAL FROM DUAL
+   </selectKey>
+</insert>
+
+<insert id="insertChatMessage" parameterType="chatMessage">
+   INSERT INTO CHAT_MESSAGE   
+      VALUES (
+         SEQ_CMNO.NEXTVAL,
+         #{chatMsg},
+         #{chatDate},
+         #{chatRoomNo},
+         #{userNo}
+      )
+</insert>
+
+<select id="joinCheck" resultType="int" parameterType="chatJoin">
+   SELECT 
+      COUNT(*)
+   FROM CHAT_JOIN
+   WHERE CHATROOM_NO = #{chatRoomNo} AND USER_NO = #{userNo}
+</select>
+
+<insert id="joinChatRoom" parameterType="chatJoin">
+   INSERT INTO CHAT_JOIN
+      VALUES (
+         #{chatRoomNo},
+         #{userNo}
+      )
+</insert>
+
+<select id="selectChatMessage" resultMap="chatMessageResultSet">
+   SELECT 
+      CHAT_MSG,
+      CHAT_DATE,
+      USER_NO,
+      USER_NAME
+   FROM CHAT_MESSAGE
+   JOIN MEMBER USING (USER_NO)
+   WHERE CHATROOM_NO = #{chatRoomNo}
+   ORDER BY CHAT_NO
+</select>
+
+<delete id="exitChat">
+	DELETE FROM CHAT_JOIN
+	WHERE CHATROOM_NO = #{chatRoomNo} AND USER_NO = #{userNo}
+</delete>
+
+<select id="countChatMem" resultType="int">
+	SELECT 
+		COUNT(*)
+	FROM CHAT_JOIN
+	WHERE CHATROOM_NO = #{chatRoomNo}
+</select>
+
+<update id="closeChat">
+	UPDATE CHAT_ROOM SET 
+	CHATROOM_STATUS = 'N'
+	WHERE CHATROOM_NO = #{chatRoomNo}
+</update>
+
+<select id="selectUserChatList" resultMap="chatRoomResultSet">
+		SELECT
+	    CR.CHATROOM_NO,
+	    CR.CHATROOM_TITLE,
+	    CR.CHATROOM_STATUS,
+	    M.USER_NAME
+	FROM CHAT_ROOM CR
+	JOIN CHAT_JOIN CJ ON CR.CHATROOM_NO = CJ.CHATROOM_NO
+	JOIN MEMBER M ON CR.USER_NO = M.USER_NO
+	WHERE CJ.USER_NO = #{userNo} AND CR.CHATROOM_STATUS = 'Y'
+	ORDER BY CR.CHATROOM_NO DESC
+</select>
+
+<insert id="addStars" parameterType="chatcare">
+	INSERT INTO CHAT_CARE 
+		VALUES(
+			#{chatRoomNo},
+			#{userNo}
+		)
+</insert>
+
+<select id="getStars" resultMap="chatCareResultSet">
+	SELECT 
+		* 
+	FROM CHAT_CARE
+</select>
+
+</mapper>

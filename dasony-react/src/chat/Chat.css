@@ -2,19 +2,15 @@
 
 
 #content{
-    /* flex : 3; */
     justify-content: center;
     align-items: center;
     position: relative;
     text-align: center;
-    /* top: 25%; */
-    /* margin: 5%; */
     border-collapse: collapse;
-    /* width: 60%; */
 }
 
 #mychat{
-    width: 90%;
+    width: 70%;
     top: 30%;
     margin-left: 5%;
     height: 80.7%;
@@ -23,16 +19,14 @@
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
     margin-bottom: 2%;
-} 
+}  
 
 #chat_name{
     text-align: center;
     padding-top: 20px;
-    /* margin-left: 2%; */
 }
 
 #chat_head{
-    /* margin-left: -5%; */
     display: flex;
     justify-content: space-between; /* 요소들 간에 공간을 동일하게 분배 */
     align-items: center;
@@ -43,7 +37,7 @@
     font-weight : 500;
     color: #7A7A7A;
     font-family : 'ImcreSoojin';
-    /* margin-right: 17%; */
+    margin-left: 8px;
 }
 
 #exitbtn{
@@ -51,11 +45,11 @@
     height: 37px;
     right: 5%;
     border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
-    /* margin-left: 70%; */
     font-family: 'HakgyoansimWoojuR';
     margin-bottom: 1%;
     font-size: 17px;
-    margin-left: -19%;
+    /* margin-left: -19%; */
+    margin-right: 1%;
 }
 
 #exitbtn:hover, #send:hover{
@@ -63,31 +57,24 @@
 }
 
 #chat_cont{
-    /* width:95%; */
     height: 632px;
-    /* border : 1px solid gold; */
     overflow: auto; /*스크롤 처럼*/
     list-style:none;
     padding-left: 20px;
-    /* padding-right: 18px; */
     padding-right: 3px;
-    /* background : lightblue; */
     z-index: 1;
-    /* margin: auto; */
     background-position: center;
     font-family: 'HakgyoansimWoojuR';
-    /* background-image: "/resources/chat-img/chat-backimg.jpg"; */
-    /* background: url(./resources/chat-img/chat-backimg.jpg); */
-    /* background: url('resources/chat-img/chat-backimg.jpg'); */
 }
 
-#mytalk{
+.mytalk{
     text-align: right;
     color: #7A7A7A;
 }
 
-#mytalk > p {
+.mytalk  #chat {
     background-color : #FCFA90;
+    margin-right: 1%;
 }
 
 #chat_date{
@@ -98,20 +85,18 @@
     display : inline-block;
     border-radius : 5px;
     padding : 5px;
-    /* height: 20px; */
     background-color : #eee;
     font-size: 20px;
-    /* margin: 6px; */
     margin-top: 10px;
 }
 
-#othortalk{
+.othertalk{
     text-align: left;
     left: 30%; 
     color: #7A7A7A;
 }
 
-#othortalk>b:hover{
+.othertalk>b:hover{
     cursor: pointer;
 }
 
@@ -138,7 +123,6 @@
 #send{
     width: 7%;
     height: 37px;
-    /* right: 5%; */
     border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
     margin-left: 3%;
     margin-top: 1%;
@@ -165,8 +149,6 @@
     display: flex;
     justify-content: center;
     margin-top: 47%;
-    /* color: #CB9DE7; */
-    /* color: #FCFA90; */
     color: #7A7A7A;
 }
 

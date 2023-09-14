@@ -21,4 +21,9 @@ public class PointServiceImpl implements PointService{
 	public int updateMemberTotalPoint(Point pointData) {
 		return pointDao.updateMemberTotalPoint(pointData);
 	}
+
+	@Override
+	public int spendPoint(Point point) {
+		return pointDao.spendPoint(point);
+	}
 }

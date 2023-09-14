@@ -77,6 +77,7 @@ function AdvancedExample({keyword}) {
 
   }
 
+  {/*회원 정보 detail 페이지로 이동 */}
   const [userNo, setUserNo] = useState('');
   const handleUserNo = (e) => {
     const userNo = e.currentTarget.getAttribute('data-userno');
@@ -89,7 +90,7 @@ function AdvancedExample({keyword}) {
     getUsers();
     
       
-  }, [getUsers, userLength, currentPage ]);
+  }, [currentPage, keyword ]);
 
   return (
     <>

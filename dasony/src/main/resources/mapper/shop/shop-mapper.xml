@@ -7,16 +7,42 @@
 		<result column="SHOP_NAME" property="shopName"/>
 		<result column="SHOP_ADDRESS" property="shopAddress"/>
 		<result column="SHOP_REGION" property="shopRegion"/>
+		<result column="SHOP_CATE" property="shopCate"/>
+		<result column="SHOP_JOIN_DATE" property="shopJoinDate"/>
+	</resultMap>
+	<resultMap type="product" id="productMap">
+		<id column="PRODUCT_NO" property="productNo" />
+		<result column="SHOP_OKEY" property="shopOkey"/>
+		<result column="PRODUCT_NAME" property="productName"/>
+		<result column="PRODUCT_AMOUNT" property="productAmount"/>
 	</resultMap>
 	
-	<select id="shopList" parameterType="string" resultMap="shopMap">
+	<resultMap type="productCare" id="productCareMap">
+		<result column="USER_NO" property="userNo"/>
+		<result column="PRODUCT_NO" property="productNo"/>
+		<collection property="shop" resultMap="shopMap" />
+		<collection property="product" resultMap="productMap" />
+		<collection property="productImg" resultMap="productImgMap" />
+	</resultMap>
+	
+	<resultMap type="productImg" id="productImgMap">
+		<result column="PRODUCT_NO" property="productNo"/>
+		<result column="PRODUCT_IMG_MOD_NAME" property="productImgModName"/>
+	</resultMap>
+
+	
+	<select id="shopList" parameterType="map" resultMap="shopMap">
 		SELECT *
 		FROM SHOP
 		 <where>
 		    <if test="userRegion != '관리자'">
 		        AND SHOP_REGION = #{userRegion}
 		    </if>
+		    <if test="shopCate != null">
+		        AND SHOP_CATE = #{shopCate}
+		    </if>
 		 </where>
+		 ORDER BY SHOP_JOIN_DATE
 	</select>
 	
 	<delete id="shopDelete" parameterType="map">
@@ -31,7 +57,8 @@
 	        #{shopName},
 	        #{shopAddress},
 	        #{shopRegion},
-	        #{shopCate}
+	        #{shopCate},
+	        SYSDATE
 	    )
 	</insert>
 	
@@ -44,4 +71,168 @@
 			SHOP_CATE = #{shopCate}
 		WHERE SHOP_OKEY = #{shopOkey}
 	</update>
+	
+
+	
+
+	<select id="shopInfo" parameterType="string" resultMap="shopMap">
+		SELECT *
+		FROM SHOP
+		WHERE SHOP_OKEY = #{shopOkey}
+		ORDER BY SHOP_OKEY
+	</select>
+	
+	<insert id="addProduct" parameterType="product">
+		INSERT INTO PRODUCT
+		VALUES(
+			#{shopOkey}||SEQ_PRNO.nextval,
+			#{shopOkey},
+			#{productName},
+			#{productAmount}
+		)
+	</insert>
+	
+	<select id="findProductNo" parameterType="product" resultType="string">
+		SELECT PRODUCT_NO
+		FROM PRODUCT
+		WHERE PRODUCT_NAME = #{productName}
+	</select>
+	
+	<update id="addProductImg" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+        INTO PRODUCT_IMG
+        (
+            PRODUCT_IMG_NO,
+            PRODUCT_NO,
+            PRODUCT_IMG_MOD_NAME,
+            PRODUCT_IMG_ORI_NAME,
+            PRODUCT_IMG_PATH,
+            PRODUCT_IMG_UPLOAD_DATE,
+            PRODUCT_IMG_LEVEL,
+            PRODUCT_IMG_STATUS
+        )
+	        VALUES
+	        (
+	            #{item.productNo}||SEQ_PRINO.nextval||#{index},
+	            #{item.productNo},
+	            #{item.productImgModName},
+	            #{item.productImgOriName},
+	            #{item.productImgPath},
+	            SYSDATE,
+	            #{item.productImgLevel},
+	            DEFAULT
+	        )
+	    </foreach>
+	</update>
+
+	<select id="productInfo" parameterType="map" resultMap="productMap">
+		SELECT *
+		FROM PRODUCT P
+		JOIN SHOP S 
+		ON (P.SHOP_OKEY = S.SHOP_OKEY)
+		<where>
+		    <if test="shopOkey != null">
+		        AND P.SHOP_OKEY = #{shopOkey}
+		    </if>
+		    <if test="shopCate != null">
+		    	AND S.SHOP_CATE = #{shopCate}
+		    </if>
+		    <if test="userRegion != '관리자'">
+		    	AND S.SHOP_REGION = #{userRegion}
+		    </if>
+		 </where>
+	</select>
+	
+	<select id="productInfoImg" parameterType="string" resultType="java.lang.String">
+		SELECT PRODUCT_IMG_MOD_NAME
+		FROM PRODUCT_IMG
+		WHERE PRODUCT_NO = #{productNo}
+		AND PRODUCT_IMG_STATUS = 'Y'
+	</select>
+	
+	<update id="modProduct" parameterType="product">
+		UPDATE PRODUCT
+		SET
+			PRODUCT_NAME=#{productName},
+			SHOP_OKEY=#{shopOkey},
+			PRODUCT_AMOUNT=#{productAmount}
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<update id="deleteProductImg" parameterType="string">
+		UPDATE PRODUCT_IMG
+		SET
+			PRODUCT_IMG_STATUS = 'N'
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<delete id="productImgDelete" parameterType="string">
+		DELETE
+		FROM PRODUCT_IMG
+		WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	
+	<delete id="productDelete" parameterType="string">
+		DELETE
+		FROM PRODUCT
+		WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	
+	<select id="shopTitle" parameterType="string" resultType = "string">
+		SELECT SHOP_NAME
+		FROM SHOP
+		WHERE SHOP_OKEY = #{store}
+	</select>
+	
+
+	<insert id="shopHeartOn" parameterType="map">
+		INSERT INTO PRODUCT_CARE
+		VALUES(
+			#{userNo},
+			#{productNo}
+		)
+	</insert>
+	
+	<delete id="shopHeartOff" parameterType="map">
+		DELETE FROM PRODUCT_CARE
+		WHERE
+			USER_NO = #{userNo}
+		AND PRODUCT_NO = #{productNo}
+	</delete>
+	
+	<select id="shopHeartCss" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM PRODUCT_CARE
+		WHERE
+			USER_NO = #{userNo}
+		AND PRODUCT_NO = #{productNo}
+	</select>
+
+	<select id="getMyLikesList" parameterType="int" resultMap="productCareMap">
+		SELECT PRODUCT_IMG_MOD_NAME, PRODUCT_NAME,SHOP_NAME,PRODUCT_NO
+		FROM PRODUCT_CARE PC
+			JOIN PRODUCT P ON  P.PRODUCT_NO = PC.PRODUCT_NO
+			JOIN PRODUCT_IMG PI ON PI.PRODUCT_NO = PC.PRODUCT_NO
+			JOIN SHOP S ON S.SHOP_OKEY = P.SHOP_OKEY
+		WHERE PC.USER_NO = #{userId}
+	</select>
+	
+	<delete id="deleteLikes">
+	
+	DELETE FROM PRODUCT_CARE
+		WHERE PRODUCT_NO = #{productNo}
+		AND USER_NO = #{userNo}
+	
+	</delete>
+
+
+	<select id="productCareInfo" parameterType="long" resultMap="productMap">
+		SELECT *
+		FROM PRODUCT P
+		JOIN PRODUCT_CARE C ON P.PRODUCT_NO = C.PRODUCT_NO
+		JOIN SHOP S ON S.SHOP_OKEY = P.SHOP_OKEY
+		WHERE
+			C.USER_NO = #{userNo}
+	</select>
+
 </mapper>

@@ -22,10 +22,13 @@ public interface DonationService {
 
 	int deleteDona(int donaNo);
 
-
 	List<DonationList> getMyDonationList(int userNo);
 
-	
+	List<DonationList> DonaDetails(int donaNo);
+
+	int totalAmount(List<DonationList> donaHistory);
+
 //	int selectUserDason(int userNo) throws Exception;
+
 
 }

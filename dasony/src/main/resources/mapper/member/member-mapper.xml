@@ -17,6 +17,7 @@
 		<result column="USER_MOD_DATE" property="userModDate"/>
 		<result column="USER_STATUS" property="userStatus"/>
 		<result column="TOTAL_POINT" property="totalPoint"/>
+		<result column="GAME_STATUS" property="gameStatus"/>
 	</resultMap>
 	
 	<select id="selectUserList" resultMap="memberMap">
@@ -40,7 +41,9 @@
 	    SYSDATE,
 	    SYSDATE,
 	    DEFAULT,
+	    DEFAULT,
 	    DEFAULT
+
     	)
 	</insert>
 	
@@ -93,6 +96,13 @@
 		WHERE USER_NO = #{userNo}
 	</select>
 	
+
+	<update id="updateUserPoint" parameterType="map">
+		UPDATE MEMBER
+			SET TOTAL_POINT = #{newDasonPoint}
+		WHERE USER_NO = #{userNo}
+	</update>
+  
 	<update id="userUpdate" parameterType="user">
 		UPDATE MEMBER
 		SET
@@ -105,7 +115,45 @@
 			USER_MOD_DATE = SYSDATE
 		WHERE USER_NO = #{userNo}
 	</update>
+	
+	<select id="getMyInfo" parameterType="int" resultMap="memberMap">
+		
+		SELECT * FROM MEMBER
+		WHERE USER_NO = #{userNo}
+		
+	</select>
 
-
-
+<update id="modifyMyInfo" parameterType="user">
+		UPDATE MEMBER
+		SET
+			USER_ID = #{userId},
+			USER_NAME = #{userName},
+			USER_NICKNAME = #{userNick},
+			USER_PWD = #{userPwd},
+			USER_PHONE = #{userPhone},
+			USER_EMAIL = #{userEmail},
+			USER_ADDRESS = #{userAddress},
+			USER_MOD_DATE = SYSDATE
+		WHERE USER_NO = #{userNo}
+	</update>
+	
+	<update id="changeNewPwd" parameterType="user">
+		UPDATE MEMBER
+		SET
+		USER_PWD = #{newPwd}
+		WHERE USER_NO = #{userNo}		
+	</update>
+	
+	<select id="getMyPoint" parameterType="int" resultMap="memberMap">
+		SELECT TOTAL_POINT
+		FROM MEMBER
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="getMyTicket" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM TICKET
+		WHERE USER_NO=#{userNo} AND TICKET_STATUS = 'Y'
+	</select>
+	
 </mapper>

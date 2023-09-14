@@ -230,7 +230,7 @@
 	<select id="loadLoginCount" parameterType="hashmap" resultType="int">
 		select  count(*) count from 
 		(select user_no from event_join 
-			where event_no = 'E0002' and user_no = 23090755)
+			where event_no = #{eventNo} and user_no = #{userNo})
 	</select>
 	
 	<select id="memberLoginInfo" parameterType="hashmap" resultMap="joinMap">
@@ -273,7 +273,7 @@
 	<select id="raffleEvent" resultMap="eventMap">
 		select event_no, event_page, event_title 
 		from event left join event_win_cate_list using(event_no)
-		where to_char(event_winner_date, 'YYYY-MM-DD') = to_char(to_date('2023-10-04'), 'YYYY-MM-DD')
+		where to_char(event_winner_date, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')
 		    	and event_win_time_code not in('Y')
 	</select>
 	
@@ -332,4 +332,12 @@
 		from (select event_title from event where event_no = #{eventNo}) a 
 		cross join (select user_name, user_email from member where user_no = #{userNo}) b
 	</select>
+
+  <select id="getMyEventList" parameterType="int" resultMap="eventMap">
+      SELECT *
+      FROM EVENT E
+      JOIN EVENT_JOIN EJ ON E.EVENT_NO = EJ.EVENT_NO 
+      WHERE USER_NO = #{userNo}
+  </select>
+
 </mapper>

@@ -96,8 +96,6 @@ const PlzLogin = () => {
     useEffect(()=>{
         handleDisable();
         setUser({});
-        console.log("리코일에 저장된 값 확인하기-plzlogin",user);
-        console.log(localStorage.getItem("loginUserNo"));
     }, [login.userId, pwd])
 
         /*로그인 정보 전달 */
@@ -110,11 +108,9 @@ const PlzLogin = () => {
                 localStorage.setItem("loginUserNo", res.data.user.userNo);
                 localStorage.setItem("loginUserRegion", res.data.user.userRegion);
                 localStorage.setItem("loginUserLevel", res.data.user.userLevel);
-                localStorage.setItem("loginUserRegion", res.data.user.userRegion);
                 console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserNo"));
                 console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserRegion"));
                 console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserLevel"));
-                console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserRegion"));
                 alert(res.data.msg);
                 if(res.data.user!=null && res.data.user.userLevel == 'Z'){
                     navigate('/admin/chart');
@@ -126,7 +122,13 @@ const PlzLogin = () => {
             }
         });
     }
-   
+
+    /*엔터키 이벤트 추가 */
+    const handleLoginEnter=(e)=>{
+        if(e.key === 'Enter'&&login.userId&&login.userPwd){
+            handleLoginSubmit();
+        }
+    }
     return(
         
         <div className='window hero-container'>
@@ -152,13 +154,13 @@ const PlzLogin = () => {
                                 <tr>
                                     <th style={{letterSpacing:9}}>아이디</th>
                                     <td colSpan={2}>
-                                        <input id='id' type='text' onChange={handleLogin} value={login.userId}></input>
+                                        <input id='id' type='text' onChange={handleLogin} onKeyDown={handleLoginEnter} value={login.userId}/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>비밀번호</th>
                                     <td colSpan={2}>
-                                        <input id='pwd' type='password' onChange={handleLogin} value={pwd}></input>
+                                        <input id='pwd' type='password' onChange={handleLogin} onKeyDown={handleLoginEnter} value={pwd}/>
                                     </td>
                                 </tr>
                                 <tr>

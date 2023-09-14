@@ -1,7 +1,10 @@
 package com.ds.dasony.shop.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ds.dasony.point.controller.PointController;
+import com.ds.dasony.point.model.vo.Point;
 import com.ds.dasony.shop.model.service.ShopService;
+import com.ds.dasony.shop.model.vo.Product;
 import com.ds.dasony.shop.model.vo.Shop;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,21 +38,21 @@ public class ShopController {
 	}
 	
 	@PostMapping("/shopList")
-	public Map<String, Object> shopList(@RequestBody Map<String, String>region) {
-		String userRegion = region.get("userRegion");
-		log.error("userRegion = {} ===>>>>>>>>>>>>>>", userRegion);
+	public Map<String, Object> shopList(@RequestBody Map<String, String>map) {
+		String userRegion = map.get("userRegion");
+		String shopCate = map.get("shopCate");
+		log.info(shopCate);
 		
 		Map<String, Object> shopMap = new HashMap();
 		
 		List<Shop> shops = new ArrayList();
 		
-		shops = shopService.shopList(userRegion);
+		shops = shopService.shopList(userRegion, shopCate);
 		
 		if(shops != null) {
 			shopMap.put("shopList", shops);
 		}
 		
-		log.error("ShopMap======{}", shopMap);
 		
 		return shopMap;
 
@@ -56,7 +61,6 @@ public class ShopController {
 	@DeleteMapping("/shopDelete")
 	public ResponseEntity<String> shopDelete(@RequestParam Map<String, String>shopOkey){
 		int result = shopService.shopDelete(shopOkey);
-		log.info("shopOkey={}",shopOkey);
 		try {
 			if(result > 0) {
 				return ResponseEntity.ok("삭제 성공하였습니다.");
@@ -70,7 +74,7 @@ public class ShopController {
 	
 	@PostMapping("/shopAdd")
 	public ResponseEntity<String> shopAdd(@RequestBody Shop newShop){
-		log.info("newshop={}", newShop);
+		
 		String shopRegion = newShop.getShopRegion();
 		String shopOkey = "";
 
@@ -93,7 +97,7 @@ public class ShopController {
 
 		newShop.setShopOkey(shopOkey);
 		
-		log.info("newShop 다시 확인 : ={}>>>>>>>>>>>>>>>>>>>>>>>>>>>", newShop);
+
 		int result = shopService.shopAdd(newShop);
 		try {
 			if(result > 0) {
@@ -125,6 +129,109 @@ public class ShopController {
 		}
 		
 	}
+	
+	@PostMapping("/shopTitle")
+	public ResponseEntity<String> shopTitle(@RequestBody Map<String, String>map ){
+		String store = map.get("store");
+		log.info(store);
+		String shopTitle = shopService.shopTitle(store);
+		return ResponseEntity.ok(shopTitle);
+	}
+	@PostMapping("/shopHeartCss")
+	public boolean shopHeartCss(@RequestBody Map<String, String>map){
+		int result = shopService.shopHeartCss(map);
+		
+		if(result>0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@PostMapping("/shopHeartOn")
+	public ResponseEntity<String> shopHeartOn(@RequestBody Map<String, String>map){
+		log.info("map=>>>>>{},",map);
+		int result = shopService.shopHeartOn(map);
+		
+		if(result>0) {
+			return ResponseEntity.ok("찜한 상품은 마음함에서 확인하실 수 있어요");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("다시 시도해주세요.");
+		}
+	}
+	
+	@PostMapping("/shopHeartOff")
+	public ResponseEntity<String> shopHeartOff(@RequestBody Map<String, String>map){
+		log.info("map=>>>>>{},",map);
+		int result = shopService.shopHeartOff(map);
+		
+		if(result>0) {
+			return ResponseEntity.ok("찜한 목록에서 삭제되었습니다.");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("다시 시도해주세요.");
+		}
+	}
+	
+	@PostMapping("/productCareInfo")
+	public ResponseEntity<Object> productCareInfo(@RequestBody Map<String, String>map){
+		long userNo = Long.parseLong(map.get("userNo"));
+		log.info("userNo={}",userNo);
+		List<Product> product = new ArrayList();
+		List<String> productImg = new ArrayList();
+		product = shopService.productCareInfo(userNo);
+
+		Map<String, Object> productMap = new HashMap();
+		
+		if(product!=null) {
+			for(int i = 0; i<product.size();i++) {
+				String productNo = product.get(i).getProductNo();
+				productImg = shopService.productInfoImg(productNo);
+				
+				
+				List<String> productPath = new ArrayList();
+				for(int j = 0; j<productImg.size(); j++) {
+					log.info(productImg.get(j));
+					productPath.add("http://localhost:8083/dasony/resources/images/product/"+productImg.get(j));
+				}
+				product.get(i).setProductImg(productPath);
+				productMap.put("product", product);
+				
+			}
+			log.info("productMap{}", productMap);
+			return ResponseEntity.ok(productMap);
+			
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("다시 시도해주세요.");
+		}
+		
+	}
+	
+	@PostMapping("/couponBuy")
+	public void couponBuy(@RequestBody Map<String, Object>map) {
+		LinkedHashMap<String, Object> resultMap = (LinkedHashMap<String, Object>) map;
+		Product product = (Product) resultMap.get("product");
+		
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = today.format(formatter);
+
+		Point point = new Point();
+		point.builder()
+			.userNo(Long.parseLong((String) map.get("userNo")))
+			.pointContent(product.getProductName()+"을 구매")
+			.pointAmount(product.getProductAmount())
+			.ExpireDate("N")
+			.pointEventDate(String.valueOf(formattedDate))
+			.pointCate("S");
+		int pointResult = PointController.spendPoint(point);
+		if(pointResult!=2) {
+			log.info("므ㅜㄴ제 ㅇㅆ어..");
+		} else {
+			log.info("굿굿");
+		}
+//		int result = shopService.couponBuy(map);
+	}
+	
 	
 	
 }

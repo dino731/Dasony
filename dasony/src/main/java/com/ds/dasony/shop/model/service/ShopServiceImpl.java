@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ds.dasony.shop.model.dao.ShopDao;
+import com.ds.dasony.shop.model.vo.Product;
 import com.ds.dasony.shop.model.vo.Shop;
 
 @Service
@@ -19,8 +20,8 @@ public class ShopServiceImpl implements ShopService{
 	}
 	
 	@Override
-	public List<Shop> shopList(String userRegion) {
-		return shopDao.shopList(userRegion);
+	public List<Shop> shopList(String userRegion, String shopCate) {
+		return shopDao.shopList(userRegion, shopCate);
 	}
 
 	@Override
@@ -36,6 +37,81 @@ public class ShopServiceImpl implements ShopService{
 	@Override
 	public int modifyingShop(Shop modifyingShop) {
 		return shopDao.modifyingShop(modifyingShop);
+	}
+
+	@Override
+	public Shop shopInfo(String shopOkey) {
+		return shopDao.shopInfo(shopOkey);
+	}
+
+	@Override
+	public int addProductImg(List<Map<String, Object>> uploadedFileName) {
+		return shopDao.addProductImg(uploadedFileName);
+	}
+
+	@Override
+	public int addProduct(Product product) {
+		return shopDao.addProduct(product);
+	}
+
+	@Override
+	public String findProductNo(Product product) {
+		return shopDao.findProductNo(product);
+	}
+
+	@Override
+	public List<Product> productInfo(String shopOkey, String shopCate, String userRegion) {
+		return shopDao.productInfo(shopOkey, shopCate, userRegion);
+	}
+
+	@Override
+	public List<String> productInfoImg(String productNo) {
+		return shopDao.productInfoImg(productNo);
+	}
+
+	@Override
+	public int modProduct(Product product) {
+		return shopDao.modProduct(product);
+	}
+
+	@Override
+	public int deleteProductImg(String productNo) {
+		return shopDao.deleteProductImg(productNo);
+	}
+
+	@Override
+	public int productDelete(String productNo) {
+		return shopDao.productDelete(productNo);
+	}
+
+	@Override
+	public int productImgDelete(String productNo) {
+		return shopDao.productImgDelete(productNo);
+	}
+
+	@Override
+	public String shopTitle(String store) {
+		return shopDao.shopTitle(store);
+	}
+
+	@Override
+	public int shopHeartOn(Map<String, String> map) {
+		return shopDao.shopHeartOn(map);
+	}
+	
+	@Override
+	public int shopHeartOff(Map<String, String> map) {
+		return shopDao.shopHeartOff(map);
+	}
+
+	@Override
+	public int shopHeartCss(Map<String, String> map) {
+		return shopDao.shopHeartCss(map);
+	}
+
+	@Override
+	public List<Product> productCareInfo(long userNo) {
+		return shopDao.productCareInfo(userNo);
 	}
 
 }

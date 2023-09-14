@@ -14,15 +14,18 @@ import './mypagecss.css';
 const MypageInfo = () => {
     let secretKey = process.env.REACT_APP_CRYPTO_SECRET_KEY;
 
+    const [isEditing, setIsEditing] = useState(false); 
+
     const navigate = useNavigate();
 
-    const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
+    const [loginUserInfo, setLoginUserInfo] = useState([]);
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
     const loginUserRegion = localStorage.getItem("loginUserRegion");
 
     /*data 전달 값 함수 만들기 */
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
+    const [npwd,setNpwd] = useState('');
     const [chkPwd, setChkPwd] = useState('');
     const [encPwd, setEncPwd] = useState('');
     const [nick, setNick] = useState('');
@@ -40,11 +43,12 @@ const MypageInfo = () => {
     const [completeAddress, setCompleteAddress] = useState('');
     const [completeDuplicateId, setCompleteDuplcateId] = useState(false);
     const [completeDuplicateNick, setCompleteDuplcateNick] = useState(false);
+    const [nick2,setNick2] = useState('');
     let user = {};
 
 
     const handleId = (event)=>{setIdValid(false); setDisable(true);setId(event.target.value);}
-    const handlePwd = (event)=>{setPwd(event.target.value);setEncPwd(SHA256(event.target.value, secretKey).toString());}
+    const handlePwd = (event)=>{setEncPwd(SHA256(event.target.value, secretKey).toString());}
     const handleChkPwd = (event)=>setChkPwd(event.target.value);
     const handleNick = (event)=>{setNickValid(false); setDisable(true);setNick(event.target.value)};
     const handleName = (event)=>setName(event.target.value);
@@ -61,7 +65,7 @@ const MypageInfo = () => {
         }
     }
     const handleUserEmail = (event)=>setUserEmail(event.target.value);
-    const handleCompleteEmail = ()=>setCompleteEmail(emailId+'@'+(email==''?userEmail:email));
+    const handleCompleteEmail = ()=>setCompleteEmail(emailId+'@'+email);
     
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -78,7 +82,36 @@ const MypageInfo = () => {
         handleCompleteEmail(); 
         
         
-        }
+    }
+
+    
+    useEffect(() => {
+        axios.post("/dasony/api/getMyInfo", {
+          userNo: loginUserNo
+        }).then((response) => {         
+            const myInfoData = response.data.myInfo;
+            
+            setId(myInfoData[0].userId);
+            setPwd(myInfoData[0].userPwd);
+            setChkPwd(myInfoData[0].userPwd);
+            setNick(myInfoData[0].userNick);
+            setName(myInfoData[0].userName);
+            setPhone(myInfoData[0].userPhone);
+            setEmail(myInfoData[0].userEmail);
+            setAddress(myInfoData[0].userAddress);
+            const [emailId2, email2] = myInfoData[0].userEmail.split('@');
+            const [address1, address2,address3] = myInfoData[0].userAddress.split(',');
+            setEmail(email2);
+            setEmailId(emailId2);
+            setPostcode(address1);
+            setAddress(address2);
+            setDetailAddress(address3);
+            
+        setDisable(false);
+        }).catch((error) => {
+          console.error("오류남:getmyinfo", error);
+        });
+      }, []);
     /*유효성 검사 */
 
     /*버튼 비활성화 */
@@ -158,8 +191,13 @@ const MypageInfo = () => {
 
     /*비밀 번호 글씨 수 검사 */
     const handlePwdLength = () => {
-        if(pwd&&pwd.length<10){
-            alert("비밀 번호를 10자 이상 입력해주세요");
+        const pwd1 = document.getElementById("pwd1");
+        const pwd2 = document.getElementById("pwd2");
+        if(isEditing){
+
+            if(pwd1.value.length<10){
+                alert("비밀 번호를 10자 이상 입력해주세요");
+            }
         }
     }
     
@@ -192,55 +230,54 @@ const MypageInfo = () => {
 
     useEffect(()=>{
         handleValidatePwd();
+         
+
         if(id&&pwd&&nick&&name&&phone&&completeAddress!=',,'&&completeEmail!='@'
             &&completeDuplicateId&&completeDuplicateNick&&idValid&&nickValid){
                 handleDisable();
             }
-        user = {userId:id, userPwd:encPwd, userName:name,
-            userNick:nick, userAddress:completeAddress, userPhone:phone, userEmail:completeEmail};
-            ;
+        
+
+            user = {userNo : loginUserNo, userId:id, userPwd:encPwd, userName:name,
+                userNick:nick, userAddress:completeAddress, userPhone:phone, userEmail:completeEmail};
+                ;
+                
+                console.log(user);
+                handleCompleteAddress();
+                handleCompleteEmail(); 
+                
     }, [id, pwd, chkPwd, nick, name, phone, completeEmail, completeAddress,completeDuplicateId,completeDuplicateNick, idValid, nickValid])
 
 
-    useEffect(() => {
-        axios.post("/dasony/api/getMyInfo", {
-          userNo: loginUserNo
-        }).then((response) => {
-          
-        setLoginUserInfo(response.data.user);
-        }).catch((error) => {
-          console.error("오류남:getmyinfo", error);
-        });
-      }, []);
-
+    
         
-
     /*정보 수정 버튼 */
     const handleSubmit = (event) => {
-        event.preventDefault();
-            /*비밀번호 암호화*/
-        
 
-        //axios이용해서 POST 요청 보내기
+        
+        
+        event.preventDefault();
+        handleCompleteAddress();
+        handleCompleteEmail(); 
+
+        user = {userNo : loginUserNo, userId:id, userPwd:encPwd, userName:name,
+            userNick:nick, userAddress:completeAddress, userPhone:phone, userEmail:completeEmail};
+        
+        console.log(user);
         axios.post("/dasony/api/modifyMyInfo", user, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
             }
         })
             .then(response => {
-                setLoginUserInfo(response.data.user);
+                window.location.reload();
                 
-                alert(response.data.msg);
-                navigate('/location');
             })
             .catch(error => {
-                //요청 실패했을 때 실행될 코드
-                console.log(error);//오류 메시지 출력
-                
+                console.error("modify오류",error);
             });
     };
 
-  
 
   return (
 
@@ -250,43 +287,58 @@ const MypageInfo = () => {
             <div className='user-datail-table'>
                  <table>
                
+               
                 <tbody>
                     <tr>
                         <th>아이디</th>
-                        <td><input id='id' type='text' onChange={handleValidTxt} onBlur={handleIdLength} maxLength={20} value={id}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='아이디 중복 확인' data={id} setId={setId} setCompleteDuplcateId={setCompleteDuplcateId} setIdValid={setIdValid}/></th>
+                        <td><input id='id' type='text' onChange={handleValidTxt} onBlur={handleIdLength} maxLength={20} value={id}   readOnly/></td>
+                        {isEditing && (<th style={{textAlign:'left'}}><MainChecking txt='아이디 중복 확인' data={id} setId={setId} 
+                        setCompleteDuplcateId={setCompleteDuplcateId} setIdValid={setIdValid}/></th>)}
                     </tr>
                     <tr>
                         <th>비밀번호</th>
-                        <td><input type='password' onChange={handlePwd} onBlur={handlePwdLength} value={pwd} maxLength={20}/></td>
+                        <td><input type='password'value={pwd} maxLength={20} readOnly/></td>
                     </tr>
                     <tr>
-                        <th>비밀번호 확인</th>
-                        <td><input type='password' onChange={handleChkPwd} value={chkPwd} maxLength={20}/></td>
-                        <td style={{fontSize:'1vw', color:pwdColor, textAlign:'left'}}>{pwdTxt}</td>
+                        <th>새 비밀번호</th>
+                        <td><input type='password' id='pwd1' onChange={handlePwd} onBlur={handlePwdLength}   readOnly={!isEditing}  maxLength={20}/></td>
+                    </tr>
+                    <tr>
+                        <th>새 비밀번호 확인</th>
+                        <td><input type='password' id='pwd2' onChange={handleChkPwd}   readOnly={!isEditing} maxLength={20}/></td>
                     </tr>
                     <tr>
                         <th>별명</th>
-                        <td><input id='nick' type='text' onChange={handleValidTxt}  maxLength={6} value={nick}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='별명 중복 확인' data={nick} setNick={setNick} setCompleteDuplcateNick={setCompleteDuplcateNick} setNickValid={setNickValid}/></th>
+                        <td><input id='nick' type='text' onChange={handleValidTxt}   readOnly={!isEditing} maxLength={6} value={nick}/></td>
+                        {isEditing && (
+                <th style={{ textAlign: 'left' }}>
+                  <MainChecking
+                    txt='아이디 중복 확인'
+                    data={id}
+                    setId={setId}
+                    setCompleteDuplcateId={setCompleteDuplcateId}
+                    setIdValid={setIdValid}
+                  />
+                </th>
+              )}
                     </tr>
                     <tr>
                         <th>이름(실명)</th>
-                        <td><input id='name' type='text' onChange={handleValidTxt} maxLength={6} value={name}/></td>
+                        <td><input id='name' type='text' onChange={handleValidTxt} maxLength={6}   readOnly={!isEditing} value={name}/></td>
                     </tr>
                     <tr>
                         <th>핸드폰번호</th>
-                        <td><input type='text' onChange={handleValidPhone} maxLength={13} value={phone}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='인증하기'/></th>
+                        <td><input type='text' onChange={handleValidPhone} maxLength={13}   readOnly={!isEditing} value={phone}/></td>
+                        {isEditing && (<th style={{textAlign:'left'}}><MainChecking txt='인증하기'/></th>)}
                     </tr>
                     <tr>
                         <th>이메일</th>
                         <td>
-                            <input id='emailId' type='text' style={{width:'38%'}} onChange={handleValidTxt} onBlur={handleCompleteEmail} maxLength={20} value={emailId}/>
+                            <input id='emailId' type='text' style={{width:'38%', maxWidth:'210px'}} onChange={handleValidTxt}   readOnly={!isEditing} onBlur={handleCompleteEmail} maxLength={20} value={emailId}/>
                             {" "}@{" "}
-                            <input id='email' type='text' style={{width:'36%'}} value={email==''?userEmail:email} readOnly={readOnly} onChange={handleValidTxt}  onBlur={handleCompleteEmail} maxLength={12}/>
+                            <input id='email' type='text' style={{width:'36%',maxWidth:'207px'}} value={email} readOnly={readOnly} onChange={handleValidTxt}  onBlur={handleCompleteEmail} maxLength={12}/>
                         </td>
-                        <th style={{textAlign:'left'}}>
+                        {isEditing && (<th style={{textAlign:'left'}}>
                             <select onChange={handleEmail}>
                                 <option>naver.com</option>
                                 <option>kakao.com</option>
@@ -295,15 +347,16 @@ const MypageInfo = () => {
                                 <option>직접 입력</option>
                             </select>
                         </th>
+                        )}
                     </tr>
                            
                     <tr>
                         <th style={{verticalAlign:'top', paddingTop:'2vh'}}>주소</th>
                         <td style={{height:'20vh'}}>
-                            <input style={{marginBottom:'1vh'}} className='postcode' type='text' defaultValue={postcode} readOnly/><br/>
-                            <input style={{marginBottom:'1vh'}} className='main-address' type='text' defaultValue={address} readOnly/><br/>
-                            <input className='detail-address' type='text' onChange={handleDetailAddress} onBlur={handleCompleteAddress} defaultValue={detailAddress}/></td>
-                        <th style={{verticalAlign:'top', paddingTop:'1.5vh', textAlign:'left'}}><Button onClick={handleShow}>주소 찾기</Button></th>
+                            <input style={{marginBottom:'1vh'}} className='postcode' type='text' Value={postcode} readOnly/><br/>
+                            <input style={{marginBottom:'1vh'}} className='main-address' type='text' Value={address} readOnly/><br/>
+                            <input className='detail-address' type='text' onChange={handleDetailAddress} onBlur={handleCompleteAddress}   readOnly={!isEditing} Value={detailAddress}/></td>
+                            {isEditing && ( <th style={{verticalAlign:'top', paddingTop:'1.5vh', textAlign:'left'}}><Button onClick={handleShow}>주소 찾기</Button></th>)}
                     </tr>
                     <Modal show={show} onHide={handleClose}>
                         <ModalHeader>주소 찾기</ModalHeader>
@@ -313,11 +366,19 @@ const MypageInfo = () => {
                     </Modal>
       
                 </tbody>
+              
                 <tfoot>
                     <tr>
-                        <td></td>
-                        <td><button onClick={handleSubmit} disabled={disable}>수정 하기</button></td>
-                        <td></td>
+                    <td></td>
+              <td>
+                {/* 수정 중인지 여부에 따라 버튼 텍스트와 클릭 핸들러를 변경 */}
+                {isEditing ? (
+                  <button onClick={handleSubmit}>수정 완료</button>
+                ) : (
+                  <button onClick={() => setIsEditing(true)}>수정 하기</button>
+                )}
+              </td>
+              <td></td>
                     </tr>
                 </tfoot>
             </table>

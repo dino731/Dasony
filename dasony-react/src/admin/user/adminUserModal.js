@@ -150,7 +150,8 @@ const handleUserUpdateSub = () => {
                                         <option>지역새싹</option>
                                         <option>지역루키</option>
                                         <option>지역프로</option>
-                                        <option>지역달인</option>
+                                        <opt
+                                        ion>지역달인</opt>
                                         <option>지역장인</option>
                                     </select>
                                 </td>
