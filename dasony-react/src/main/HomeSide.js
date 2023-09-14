@@ -4,6 +4,7 @@ import './HomeSide.css';
 import { useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "react-bootstrap";
 import ChatIcon from '../chat/ChatIcon';
+import MyChstListModal from "../chat/MyChatListModal"; // 이 부분 추가
 import axios from 'axios';
 
 const HomeSide = () => {
@@ -165,6 +166,7 @@ const HomeSide = () => {
                         selectRange={false}/>
             <Button className='calendar-detail-btn' onClick={handleOpen}>일정 확인</Button>
             <div className="main-chat-icon-container"><ChatIcon/></div>
+            <div className="main-chat-list-container"><MyChstListModal/></div> {/*이 부분 추가*/}
             <div className="calendar-detail-container" style={{display:show}} >
                 <div><button onClick={handleStyle}>x</button></div>
                 <div className="calendar-detail-box">
