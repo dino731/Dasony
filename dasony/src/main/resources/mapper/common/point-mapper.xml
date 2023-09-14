@@ -31,7 +31,6 @@
 	WHERE USER_NO = #{userNo}
 
 </update>
-
 <select id="getMyPointList" parameterType="int" resultMap="pointMap">
 	SELECT *
 	FROM POINT
