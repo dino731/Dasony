@@ -32,6 +32,13 @@
 		<result column="user_name" property="userName" />
 		<result column="count" property="count" />
 		<result column="check_status" property="tdyCheck" />
+		<result column="event_end_date" property="endDate" />
+	</resultMap>
+	
+	<resultMap type="Email" id="emailMap">
+		<result column="user_email" property="receiverEmail"/>
+		<result column="user_name" property="receiverName" />
+		<result column="event_title" property="eventTitle" />
 	</resultMap>
 
 	<select id="selectAllEvent" parameterType="hashmap" resultMap="eventMap">
@@ -185,17 +192,45 @@
 		select count(*) from event_join where event_no = #{eventNo} and user_no = #{userNo}
 	</select>
 	
-	<insert id="joinEvent" parameterType="hashmap">
-		insert into event_join values(#{eventNo} || #{userNo}, #{eventNo}, #{userNo}, sysdate)
+	<select id="checkTickets" parameterType="hashmap" resultType="int">
+		select ticket_no from ticket where user_no=#{userNo} and ticket_status='Y' order by ticket_no
+	</select>
+	
+	<insert id="joinEvent" parameterType="hashmap" statementType="CALLABLE">
+		<!-- CALL DECLARE -->
+		<![CDATA[
+			BEGIN
+				insert into 
+					event_join 
+				values 
+					(#{eventNo} || #{userNo}, #{eventNo}, #{userNo}, sysdate);
+				
+				
+				update 
+					ticket 
+				set 
+					ticket_status = 'N'
+				where
+					ticket_no = #{ticket};
+					
+				#{rows, mode=OUT, jdbcType=INTEGER, javaType=int} := SQL%ROWCOUNT;
+			END;
+		]]>
 	</insert>
 	
 	<select id="loadLogin" parameterType="hashmap" resultMap="joinMap">
-		select user_name, "check_status", count(*) count from (select e.*, user_name, 
+		select user_name, "check_status", event_end_date from (select e.*, user_name, 
 				case when to_char(event_join_date, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD') 
-                     then 'Y' else 'N' end "check_status"
-		from event_join e left join member m on e.user_no = m.user_no
-		where event_no = #{eventNo} and e.user_no = #{userNo})
-		group by user_name, "check_status"
+                     then 'Y' else 'N' end "check_status", event_end_date
+		from event_join e left join member m on e.user_no = m.user_no left join event ev on e.event_no = ev.event_no
+		where e.event_no = #{eventNo} and e.user_no = #{userNo} order by event_join_date desc)
+		where rownum = 1 group by user_name, "check_status", event_end_date
+	</select>
+	
+	<select id="loadLoginCount" parameterType="hashmap" resultType="int">
+		select  count(*) count from 
+		(select user_no from event_join 
+			where event_no = 'E0002' and user_no = 23090755)
 	</select>
 	
 	<select id="memberLoginInfo" parameterType="hashmap" resultMap="joinMap">
@@ -226,7 +261,7 @@
 				</choose>
 			</when> -->
 			<when test="lastNum > 0">
-				insert into event_join values(#{eventNo} || #{loginUserNo} || '_' || ${lastNum +1}),
+				insert into event_join values(#{eventNo} || #{loginUserNo} || '_' || (${lastNum +1}),
 						#{eventNo}, #{loginUserNo}, sysdate)
 			</when>
 			<otherwise>
@@ -234,4 +269,67 @@
 			</otherwise>
 		</choose>
 	</insert>
+	
+	<select id="raffleEvent" resultMap="eventMap">
+		select event_no, event_page, event_title 
+		from event left join event_win_cate_list using(event_no)
+		where to_char(event_winner_date, 'YYYY-MM-DD') = to_char(to_date('2023-10-04'), 'YYYY-MM-DD')
+		    	and event_win_time_code not in('Y')
+	</select>
+	
+	<select id="findAllParticipants" parameterType="string" resultType="string">
+		select event_join_no from event_join where event_no = #{eventNo}
+	</select>
+	
+	<select id="findLoginCheckUsers" parameterType="hashmap" resultType="string">
+		select event_join_no from event_join where event_no=#{eventNo} and event_join_no like '%_'||#{day}
+	</select>
+	
+	<select id="findAllReward" parameterType="string" resultMap="rewardMap">
+		select event_reward_no, event_rank, event_reward_amount
+		from event_reward_list 
+		where event_no = #{eventNo}
+	</select>
+	
+	<insert id="addWinner" parameterType="hashmap">
+		
+			insert into event_winner 
+			values
+			(#{winner}, #{rewardNo})
+	</insert>
+	
+	<insert id="addPoint" parameterType="hashmap" statementType="CALLABLE">
+		<![CDATA[
+			BEGIN
+				INSERT INTO POINT VALUES
+					(SEQ_PNO.NEXTVAL, #{userNo}, #{content}, #{coin},
+					TO_CHAR(ADD_MONTHS(SYSDATE, 3), 'MM-DD HH24:MI'), TO_CHAR(SYSDATE, 'MM-DD HH24:MI'), 'E');
+					
+				UPDATE 
+					MEMBER 
+				SET
+					TOTAL_POINT = TOTAL_POINT + #{coin}
+				WHERE
+					USER_NO = #{userNo};
+					
+				#{result, mode=OUT, jdbcType=INTEGER, javaType=int} := SQL%ROWCOUNT;
+			END;
+		]]>
+	</insert>
+	
+	<select id="selectRewardType" parameterType="int" resultMap="rewardMap">
+		select event_reward_name, event_reward_category, event_reward_no 
+		from event_reward 
+		where event_reward_no = #{rewardNo}
+	</select>
+	
+	<select id="selectUserJoin" parameterType="string" resultType="int">
+		select user_no from event_join where event_join_no = #{joinNo}
+	</select>
+	
+	<select id="findEmailInfo" parameterType="hashmap" resultMap="emailMap">
+		select * 
+		from (select event_title from event where event_no = #{eventNo}) a 
+		cross join (select user_name, user_email from member where user_no = #{userNo}) b
+	</select>
 </mapper>

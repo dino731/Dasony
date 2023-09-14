@@ -1,10 +1,6 @@
 package com.ds.dasony.event.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.IOUtils;
+//import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ds.dasony.common.FileUpload;
+import com.ds.dasony.event.model.service.EmailService;
 import com.ds.dasony.event.model.service.EventService;
+import com.ds.dasony.event.model.vo.Email;
 import com.ds.dasony.event.model.vo.Event;
 import com.ds.dasony.event.model.vo.EventForm;
 import com.ds.dasony.event.model.vo.EventJoin;
@@ -40,6 +38,8 @@ public class EventController {
 
 	@Autowired
 	private EventService eService;
+	@Autowired
+	private EmailService emailService;
 	@Autowired
 	FileUpload fileUpload;
 	@Autowired
@@ -90,17 +90,17 @@ public class EventController {
 	}
 	
 	// 이미지 가져오기
-	private byte[] getImage(String fileName) throws FileNotFoundException, IOException {
-		String path = new File("").getAbsolutePath() + "\\src/main/resources/images/event/" + fileName;
-		
-		// try 1
-		// file read
-		InputStream inStream = new FileInputStream(path);
-		
-		// file -> byte[]
-		return IOUtils.toByteArray(inStream);
-		
-		// try 2
+//	private byte[] getImage(String fileName) throws FileNotFoundException, IOException {
+//		String path = new File("").getAbsolutePath() + "\\src/main/resources/images/event/" + fileName;
+//		
+//		// try 1
+//		// file read
+//		InputStream inStream = new FileInputStream(path);
+//		
+//		// file -> byte[]
+//		return IOUtils.toByteArray(inStream);
+//		
+//		// try 2
 //		File file = new File(path);
 //		byte[] bArr = new byte[(int)file.length()];
 //		InputStream inStream = new FileInputStream(file);
@@ -109,10 +109,10 @@ public class EventController {
 //		
 //		String encodeStr = Base64.encodeBase64String(bArr);
 //		return encodeStr;
-		
-		// try 3
+//		
+//		// try 3
 //		return file;
-	}
+//	}
 	
 	/*
 	 * 로직 정리 필요 (중복 코드가 많음) -> 업데이트인 경우만 따로 추가해야할 부분, 수행할 부분 구별
@@ -273,24 +273,104 @@ public class EventController {
 		}
 	}
 	
+	// 일반 이벤트 케이스
 	@Transactional
 	@PostMapping("/join")
-	public String joinEvent(@RequestBody Map<String, Object> data) { // eventNo		
-//		data.put("userNo", loginUserNo);
-//		data.put("eventNo", no.get("no"));
-		log.info("data : " + data.toString());
-		
+	public Map<String, Object> joinEvent(@RequestBody Map<String, Object> data) { // eventNo, userNo
+		log.info("join의 data : " + data.toString());
+		Map<String, Object> msgMap = new HashMap();
+		String coinText = "";
+		String resultText = "";
 		// 1. 해당 이벤트에 이미 참여한 적이 있는지 조회
 		int join = eService.checkEventJoin(data);
-		if(join>0) return "이미 응모하셨습니다.";
+		if(join>0) {
+			msgMap.put("msg", "이미 응모하셨습니다.");
+			return msgMap;
+		}
+		
+		// 2. 응모권이 있는지 조회
+		List<Integer> ticketList = eService.checkTickets(data);
+		if(!(ticketList.size() > 0)) {
+			msgMap.put("msg", "사용가능한 응모권이 없습니다.");
+			return msgMap;
+		}
 		
 		// 2. 참여한 적이 없는 경우 이벤트에 참여
-		int result = eService.joinEvent(data);
+		data.put("ticket", ticketList.get(0));
+//		int result = eService.joinEvent(data);
+		eService.joinEvent(data);
 		
-		if(result>0) return "이벤트에 응모해주셔서 감사합니다.";
-		else return "다시 시도해주세요.";
+		log.info("data total : " + data.toString());
+		// 프로시저로부터 결과값 가져오기
+		int result = (int) data.get("rows");
+		
+		if(result>0) {
+			
+			data = getCoin((String)data.get("eventNo"), data);
+			log.info("coin after" + data.toString());
+			msgMap.put("coin", data.get("coin"));
+			resultText = "이벤트에 응모해주셔서 감사합니다.";
+			
+			// 이벤트 응모한 사실 이메일로 보내기
+			Email emailData = eService.findEmailInfo(data);
+			String title = "[이벤트] '" + emailData.getEventTitle() + "' 응모하였습니다.";
+			String text = "안녕하세요. " + emailData.getReceiverName() + "님!\n" + "이벤트에 응모해주셔서 감사합니다.\n당첨자 발표일까지 기다려주세요.";
+			emailData.setTitle(title);
+			emailData.setText(text);
+			
+			emailService.sendEmail(emailData);
+		} else {
+			resultText = "다시 시도해주세요.";
+		}
+		
+		msgMap.put("msg", resultText);
+		
+		return msgMap;
 	}
 	
+	/**
+	 * @param eventNo : 이벤트 정보를 조회하기 위한 이벤트 번호
+	 * @param map : 코인 획득 결과를 담을 map
+	 * @return Map<String, Object> : 응답 map
+	 */
+	private Map<String, Object> getCoin(String eventNo, Map<String, Object> map){
+		log.info("eventNo : " + eventNo + "map : " + map.toString());
+		Event event = eService.selectEvent(eventNo);
+		String winPoint = event.getWinTime();
+		String pageLink = event.getPageLink();
+		log.info("event : " + event.toString() + "winP : " + winPoint + "page : " + pageLink);
+		// 랜덤 포인트를 갖는 이벤트인 경우
+		if(!winPoint.equals("일자")) {
+			int result;
+			int coin;
+			Map<String, Object> data = new HashMap();
+			
+			if(pageLink!=null && pageLink.contains("Login")) { // 로그인 이벤트인 경우
+				coin = (int)(Math.random()*50)+1;
+				data.put("coin", coin);
+				data.put("content", "[이벤트] 출석 랜덤 포인트");
+				
+			}else { // 일반 이벤트인 경우
+				coin = (int)(Math.random()*1000)+1;
+				data.put("coin", coin);
+				data.put("content", "[이벤트] 이벤트 응모 기념 랜덤 포인트");
+			}
+			// 획득한 포인트 db 저장
+			data.put("eventNo", eventNo);
+			data.put("userNo", map.get("userNo"));
+			eService.addPoint(data);	
+			result = (Integer)data.get("result");
+			
+			if(result>0) {
+				map.put("coin", coin);	
+				log.info("map : " + map.toString());
+			}
+		}
+		log.info("getCoin : " + map.toString());
+		return map;
+	}
+	
+	// 로그인 이벤트인 케이스
 	@PostMapping("/loadLogin")
 	public EventJoin loadLogin(@RequestBody Map<String, Object> data){
 		log.info("param : " + data.toString());
@@ -321,13 +401,19 @@ public class EventController {
 		
 		String text;
 		if(num>0) {
+			// data의 속성명 추가 (loginUserNo, userNo) 사용 위해
+			data.put("userNo", Integer.parseInt((String)data.get("loginUserNo")));
+			
+			int coin = (Integer)getCoin((String)data.get("eventNo"), data).get("coin");
+			result.put("coin", coin); // 획득한 포인트
 			text = "출석 체크하였습니다.";
+			
 		}else {
 			text = "다시 시도해주세요.";
 		}
 		
-		result.put("num", num);
-		result.put("msg", text);
+		result.put("num", num); // 출석 성공 여부
+		result.put("msg", text); // 결과 메시지
 		
 		return result;
 	}

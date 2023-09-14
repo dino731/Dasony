@@ -80,4 +80,11 @@ html, body{margin: 0; padding: 0;}
             }
         }
     }
+
+    >tfoot{
+        >tr>td{
+            padding-top: 6%;
+            text-align: right;
+        }
+    }
 }

@@ -3,9 +3,12 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { useLayoutEffect, useRef } from "react";
 
-const BarChart = ({paddingRight, data}) => {
-
+const BarChart = ({paddingRight, data, kind}) => {
+    console.log("Bar : ", data);
     const chartRef = useRef(null);
+
+    const name1 = kind[0];
+    const name2 = kind[1];
 
     useLayoutEffect(() => {
 
@@ -51,7 +54,7 @@ const BarChart = ({paddingRight, data}) => {
         columnTemplate.strokeOpacity = 1;
         columnTemplate.stroke = am4core.color("#FFFFFF");
 
-        let colorNum = name.substr(-1);
+        let colorNum = valueY.substr(-1); // name.substr(-1)
         columnTemplate.fill = chart.colors.getIndex(colorNum+1);
         columnTemplate.stroke = chart.colors.getIndex(colorNum+1);
 
@@ -79,15 +82,15 @@ const BarChart = ({paddingRight, data}) => {
 
       chart.colors.step = 2;
       
-      createSeries("bar1", "date", "value1");
-      createSeries("bar2", "date", "value2");
+      createSeries(name1, "date", "value1");
+      createSeries(name2, "date", "value2");
     
       chartRef.current = chart;
 
       return () => {
           chart.dispose();
       };
-    }, [paddingRight]);
+    }, [data]);
 
     return (
       <div id="chartdiv" style={{ width: "100%", height: "40vh", marginBottom: "6%" }}></div>

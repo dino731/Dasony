@@ -13,6 +13,21 @@ const TypingTitle = ({initialWord, fontSize, delay}) =>{
     const[count, setCount] = useState(0);
     const completeWord = initialWord;
 
+    /** 첫 로딩시 접속 체크를 위한 fun 호출 (지현 추가) */
+    const checkVisit = () => {
+        axios.get("/dasony/api/visit")
+            .then((res) => {
+                switch(res.data){
+                    case 0 : console.log("이미 방문한 사람"); break;
+                    case 1 : console.log("session 생성완");
+                }
+            })
+    };
+
+    useEffect(()=>{
+        checkVisit();
+    }, []);
+
     useEffect(()=>{
         if(count<completeWord.length){
             const typingInterval = setInterval(()=>{

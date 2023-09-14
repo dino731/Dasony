@@ -4,12 +4,16 @@ package com.ds.dasony.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ds.dasony.common.model.service.SessionService;
 import com.ds.dasony.member.model.service.UserService;
 import com.ds.dasony.member.model.vo.User;
 
@@ -21,10 +25,21 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
 	private final UserService userService;
+	// session 조회
+	@Autowired
+	private SessionService sessionService;
 	
 	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
+	}
+	
+	/*
+	 * 접속자 확인을 위한 함수 (지현 추가)
+	 * */
+	@GetMapping("/visit")
+	public void checkVisit(HttpServletRequest request) {
+		sessionService.addVisitor(request);		
 	}
 	
 	@PostMapping("/chkValidate")
