@@ -248,6 +248,41 @@ public class UserController {
 		return point;
 	}
 	
+	@PostMapping("getMyTicket")
+	public int getMyTicket(@RequestBody Map<String, Integer> requestBody) {
+	    int userNo = requestBody.get("userNo");
+	    String count2 = String.valueOf(userNo);
+	    int count = userService.getMyTicket(userNo);
+	    String count1 = String.valueOf(count);
+		return count;	
+	}
+	
+	@PostMapping("getMyPointList")
+	public Map<String, Object> getMyPointList(
+			@RequestBody int userNo){
+		
+		Map<String,Object> pList = new HashMap();
+		pList.put("pList", userService.getMyPointList(userNo));
+		return pList;
+		
+	}
+	
+	@PostMapping("getMyActList")
+	public Map<String,Object> getMyActList(
+			@RequestBody int userNo){
+		Map<String,Object> actList = new HashMap();
+		
+		actList.put("boardList", userService.getMyBoardList(userNo));
+		actList.put("donationList", userService.getMyDonationList(userNo));
+		actList.put("eventList",userService.getMyEventList(userNo));
+		actList.put("pointList",userService.getMyPointList(userNo));
+		actList.put("gameList",userService.getMyGameList(userNo));
+		
+		log.info("actList={}",actList);
+		return actList;
+	}
+	
+	
 	
 
 }

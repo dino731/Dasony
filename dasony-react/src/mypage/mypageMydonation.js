@@ -16,7 +16,6 @@ const MypageMydonation = () =>{
       userRegion : loginUserRegion
     }).then((response) => {
       setDonation(response.data.donationList);
-      console.log(donation);
     }).catch((error) => {
       console.error("오류남:", error);
     });
@@ -40,7 +39,7 @@ const MypageMydonation = () =>{
         {donation.map((item, index) => (
               <tr key={index}>
                 <td className="nf-td1">{item.donaExecuteNo}</td>
-                <td className="nf-td3">{item.executeDate}</td>
+                <td className="nf-td3">{item.donaExecuteDate}</td>
                 <td className="nf-td2">{item.donaName}</td>
                 <td className="nf-td1">{item.donaAmount}</td>
               </tr>

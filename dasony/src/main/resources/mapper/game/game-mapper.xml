@@ -8,6 +8,7 @@
 		<result column="GAME_SUCCESS_STATUS" property="gameStatus"/>
 		<result column="GAME_POINT_STATUS" property="pointStatus"/>
 		<result column="GAME_APPTICKET_STATUS" property="ticketStatus"/>
+		<result column="GAME_EXECUTE_DATE" property="gameDate"/>
 		<!-- <id column="USER_NO" property="userNo"/> -->
 	</resultMap>
 
@@ -25,6 +26,11 @@
 		GAME_STATUS = 'N'
 		WHERE USER_NO = #{userNo}
 </update>
+
+<select id="getMyGameList" parameterType="int" resultMap="gameMap">
+	SELECT * FROM GAME
+	WHERE USER_NO = #{userNo}
+</select>
 
 
 
