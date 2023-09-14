@@ -234,4 +234,12 @@
 			</otherwise>
 		</choose>
 	</insert>
+	
+	<select id="getMyEventList" parameterType="int" resultMap="eventMap">
+    SELECT *
+    FROM EVENT E
+    JOIN EVENT_JOIN EJ ON E.EVENT_NO = EJ.EVENT_NO 
+    WHERE USER_NO = #{userNo}
+</select>
+
 </mapper>

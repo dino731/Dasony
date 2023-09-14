@@ -138,7 +138,7 @@ const Chat = () =>{
         })
         .catch(error => console.log(error));
         
-    },[]);
+    },[chatData]);
 
     useEffect(()=>{
         scrollBottom();

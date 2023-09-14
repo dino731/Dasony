@@ -82,10 +82,10 @@ const DonaDona = () => {
                     console.log(error);
                 });
 
-            let idList = localStorage.getItem('id').split(", ");
-            console.log("donation part ID : " + idList);
-            localStorage.setItem('id', localStorage.getItem('id') + ", " + donaNo);
-            console.log(localStorage.getItem("id"));
+            // let idList = localStorage.getItem('id').split(",");
+            // console.log("donation part ID : " + idList);
+            // localStorage.setItem('id', localStorage.getItem('id') + ", " + donaNo);
+            // console.log(localStorage.getItem("id"));
             
             navigate('/mypage/Mydonation');
         }else{

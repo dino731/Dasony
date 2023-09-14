@@ -2,7 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="point">
 
-
+<resultMap type="Point" id="pointMap">
+		<id column="POINT_NO" property="pointNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="POINT_CONTENT" property="pointContent"/>
+		<result column="POINT_AMOUNT" property="pointAmount"/>
+		<result column="POINT_EXPIRE_DATE" property="ExpireDate"/>
+		<result column="POINT_EVENT_DATE" property="pointEventDate"/>
+		<result column="POINT_CATE" property="pointCate"/>
+	</resultMap>
 
 <insert id="insertPoint" parameterType="point">
 
@@ -23,6 +31,12 @@
 	WHERE USER_NO = #{userNo}
 
 </update>
+
+<select id="getMyPointList" parameterType="int" resultMap="pointMap">
+	SELECT *
+	FROM POINT
+	WHERE USER_NO = #{userNo}
+</select>
 
 
 </mapper>
