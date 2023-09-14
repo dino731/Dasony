@@ -451,24 +451,21 @@ function App() {
                                                     transition={{duration : 1}}>
                                                       <ShopBest/>
                                                     </motion.div>}/>
-
-
-                      {/*coupon중첩 route 시작 */}                              
+                             
                       <Route path="coupon/list/*" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <CouponList/>
-                                                      </motion.div>}>  
-                        <Route path=":id" element={<motion.div
-                                                        initial = {{opacity:0, y:30}}
-                                                        animate = {{opacity:1, y:0}}
-                                                        end = {{opacity:1, y:0}}
-                                                        transition={{duration : 1}}>
-                                                          <ShopMyCoupon/>
-                                                        </motion.div>}/>       
-                      </Route>
+                                                      </motion.div>}/>  
+                      <Route path="coupon/:id" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <ShopMyCoupon/>
+                                                      </motion.div>}/>   
                       {/*coupon중첩 route 끝 */}
 
 
@@ -487,11 +484,11 @@ function App() {
                                                         <ShopCate/>
                                                       </motion.div>}>
                         {/*shopCate 중첩 route 시작 */}
-                        <Route path="main" element={<ShopCateMain/>}/>
-                        <Route path="store" element={<ShopCateStore/>}/>
-                        <Route path=':store/product' element={<ShopCateProduct/>}/>
-                        <Route path='every/product' element={<ShopCateProduct/>}/>
-                        <Route path=":store/:product" element={<motion.div
+                        <Route path=":cate/main" element={<ShopCateMain/>}/>
+                        <Route path=":cate/store" element={<ShopCateStore/>}/>
+                        <Route path=':cate/:store/product' element={<ShopCateProduct/>}/>
+                        <Route path=':cate/every/product' element={<ShopCateProduct/>}/>
+                        <Route path=":cate/:store/:product" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
                                                       end = {{opacity:1, y:0}}

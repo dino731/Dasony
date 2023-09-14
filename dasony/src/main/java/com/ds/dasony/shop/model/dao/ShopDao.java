@@ -23,8 +23,11 @@ public class ShopDao {
 		this.session = session;
 	}
 
-	public List<Shop> shopList(String userRegion) {
-		return session.selectList("shopMapper.shopList", userRegion);
+	public List<Shop> shopList(String userRegion, String shopCate) {
+		Map<String, String> map = new HashMap();
+		map.put("userRegion", userRegion);
+		map.put("shopCate", shopCate);
+		return session.selectList("shopMapper.shopList", map);
 	}
 
 	public int shopDelete(Map<String, String> shopOkey) {
@@ -55,10 +58,11 @@ public class ShopDao {
 		return session.selectOne("shopMapper.findProductNo", product);
 	}
 
-	public List<Product> productInfo(String shopOkey, String shopCate) {
+	public List<Product> productInfo(String shopOkey, String shopCate, String userRegion) {
 		Map<String, String>map = new HashMap();
 		map.put("shopOkey", shopOkey);
 		map.put("shopCate", shopCate);
+		map.put("userRegion", userRegion);
 		return session.selectList("shopMapper.productInfo", map);
 	}
 
@@ -84,6 +88,21 @@ public class ShopDao {
 
 	public String shopTitle(String store) {
 		return session.selectOne("shopMapper.shopTitle", store);
+	}
+
+	public int shopHeartOn(Map<String, String> map) {
+		return session.insert("shopMapper.shopHeartOn", map);
+	}
+	public int shopHeartOff(Map<String, String> map) {
+		return session.delete("shopMapper.shopHeartOff", map);
+	}
+
+	public int shopHeartCss(Map<String, String> map) {
+		return session.selectOne("shopMapper.shopHeartCss", map);
+	}
+
+	public List<Product> productCareInfo(long userNo) {
+		return session.selectList("shopMapper.productCareInfo", userNo);
 	}
 
 }

@@ -20,8 +20,8 @@ public class ShopServiceImpl implements ShopService{
 	}
 	
 	@Override
-	public List<Shop> shopList(String userRegion) {
-		return shopDao.shopList(userRegion);
+	public List<Shop> shopList(String userRegion, String shopCate) {
+		return shopDao.shopList(userRegion, shopCate);
 	}
 
 	@Override
@@ -60,8 +60,8 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public List<Product> productInfo(String shopOkey, String shopCate) {
-		return shopDao.productInfo(shopOkey, shopCate);
+	public List<Product> productInfo(String shopOkey, String shopCate, String userRegion) {
+		return shopDao.productInfo(shopOkey, shopCate, userRegion);
 	}
 
 	@Override
@@ -92,6 +92,26 @@ public class ShopServiceImpl implements ShopService{
 	@Override
 	public String shopTitle(String store) {
 		return shopDao.shopTitle(store);
+	}
+
+	@Override
+	public int shopHeartOn(Map<String, String> map) {
+		return shopDao.shopHeartOn(map);
+	}
+	
+	@Override
+	public int shopHeartOff(Map<String, String> map) {
+		return shopDao.shopHeartOff(map);
+	}
+
+	@Override
+	public int shopHeartCss(Map<String, String> map) {
+		return shopDao.shopHeartCss(map);
+	}
+
+	@Override
+	public List<Product> productCareInfo(long userNo) {
+		return shopDao.productCareInfo(userNo);
 	}
 
 }

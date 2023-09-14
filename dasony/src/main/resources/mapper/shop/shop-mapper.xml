@@ -18,12 +18,15 @@
 	</resultMap>
 
 	
-	<select id="shopList" parameterType="string" resultMap="shopMap">
+	<select id="shopList" parameterType="map" resultMap="shopMap">
 		SELECT *
 		FROM SHOP
 		 <where>
 		    <if test="userRegion != '관리자'">
 		        AND SHOP_REGION = #{userRegion}
+		    </if>
+		    <if test="shopCate != null">
+		        AND SHOP_CATE = #{shopCate}
 		    </if>
 		 </where>
 		 ORDER BY SHOP_JOIN_DATE
@@ -121,6 +124,9 @@
 		    <if test="shopCate != null">
 		    	AND S.SHOP_CATE = #{shopCate}
 		    </if>
+		    <if test="userRegion != '관리자'">
+		    	AND S.SHOP_REGION = #{userRegion}
+		    </if>
 		 </where>
 	</select>
 	
@@ -164,6 +170,37 @@
 		FROM SHOP
 		WHERE SHOP_OKEY = #{store}
 	</select>
+	
+	<insert id="shopHeartOn" parameterType="map">
+		INSERT INTO PRODUCT_CARE
+		VALUES(
+			#{userNo},
+			#{productNo}
+		)
+	</insert>
+	
+	<delete id="shopHeartOff" parameterType="map">
+		DELETE FROM PRODUCT_CARE
+		WHERE
+			USER_NO = #{userNo}
+		AND PRODUCT_NO = #{productNo}
+	</delete>
+	
+	<select id="shopHeartCss" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM PRODUCT_CARE
+		WHERE
+			USER_NO = #{userNo}
+		AND PRODUCT_NO = #{productNo}
+	</select>
 
+	<select id="productCareInfo" parameterType="long" resultMap="productMap">
+		SELECT *
+		FROM PRODUCT P
+		JOIN PRODUCT_CARE C ON P.PRODUCT_NO = C.PRODUCT_NO
+		JOIN SHOP S ON S.SHOP_OKEY = P.SHOP_OKEY
+		WHERE
+			C.USER_NO = #{userNo}
+	</select>
 
 </mapper>

@@ -7,4 +7,6 @@ public interface PointService {
 	public int insertPoint(Point pointData);
 	
 	public int updateMemberTotalPoint(Point pointData);
+
+	public int spendPoint(Point point);
 }
