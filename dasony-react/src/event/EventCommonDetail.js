@@ -61,7 +61,16 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
         day = day >= 10 ? day : '0' + day;
 
         return month + '월 ' + day + '일';
-    }
+    };
+
+    const moreEndDate = (date1) => {
+        date1 = new Date(date1);
+        const date2 = new Date();
+        return date1.getFullYear() >= date2.getFullYear()
+           && date1.getMonth() >= date2.getMonth()
+           && date1.getDate() >= date2.getDate();
+    };
+      
 
     const changeDateFormat = (sDate, eDate, type) => {
         sDate = new Date(sDate);
@@ -80,13 +89,16 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
 
     // 이벤트 참여
     const joinEvent = () => {
-        // const loginUserNo = (int)localStorage.getItem("loginUserNo");
-        const loginUserNo = 23090757;
+        const loginUserNo = localStorage.getItem("loginUserNo");
+        // const loginUserNo = 23090754;
         const data = {eventNo: no, userNo: loginUserNo};
+        console.log("param : ", data);
         axios.post("http://localhost:3000/dasony/event/join", data)
             .then(res => {
-                // console.log("result : ", res.data);
-                alert(res.data);
+                const result = res.data;
+                console.log("res : ", result);
+                if(result.coin != null) alert(`${result.coin} 다손을 얻었습니다!`);
+                alert(result.msg);
             }); 
     };
 
@@ -161,11 +173,12 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
                                                 </div> : null}
                     
                 </div>
-                <div className="event-join-btn-part">
-                    <div className="event-join-btn" ref={checkBtn} style={{border: "2px solid #BF926B"}} onClick={joinEvent}>
-                        <strong style={{ color: "cba597"}}>응모</strong>
-                    </div>
-                </div>
+                {eventInfo.endDate != null && moreEndDate(eventInfo.endDate)? <div className="event-join-btn-part">
+                                                                                    <div className="event-join-btn" ref={checkBtn} style={{border: "2px solid #BF926B"}} onClick={joinEvent}>
+                                                                                        <strong style={{ color: "cba597"}}>응모</strong>
+                                                                                    </div>
+                                                                               </div> : null}
+                
             </div>
             
         </>
