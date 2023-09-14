@@ -1,71 +1,132 @@
 import './ShopCateMain.css';
 import HeartIcon from "../heart";
-import { Link,useLocation } from 'react-router-dom';
+import { Link, useOutletContext, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {useState, useEffect} from 'react';
 
 
 const ShopCateMain = ()=>{
    
-   const location = useLocation();
-   const shopCate = location.state.shopCate;
+    const navigate = useNavigate();
+
+   const {shopCate, keyword} = useOutletContext();
+
+   const pathMap = {
+    'B' : 'cafebakery',
+    'L' : 'culture',
+    'O' : 'eatout',
+    'C' : 'convenient'
+    }
+
+   console.log("shopCate",shopCate);
+
+   const userRegion = localStorage.getItem("loginUserRegion");
+
+    {/*샵 정보 설정 */}
+    const [shopList, setShopList] = useState([]);
+    {/*샵 리스트 가져오기 - 서버 */}
+    const handleShopList = ()=> {
+        if(shopCate){
+            axios.post('/dasony/api/shopList/', {userRegion:userRegion, shopCate:shopCate})
+            .then(res => {
+                setShopList(res.data.shopList);
+            })
+            .catch(err => {
+                console.log(err);
+                alert("다시 시도해주세요.");
+            });
+        }
+    
+    };
+
+    
+    {/*상품 정보 불러오기 */}
+    {/*상품 정보 설정 */}
+    const [product, setProduct] = useState([]);
+    {/*상품 정보 불러오기 - 서버*/}
+    const handleProductInfo = async () => {
+        if(shopCate){
+            axios.post("/dasony/api/admin/productInfo",
+             {shopOkey:null, shopCate:shopCate, userRegion:userRegion})
+            .then(res=>{
+                setProduct(res.data.product);
+            })
+            .catch(err=>{
+                console.log(err);
+                alert("다시 시도해주세요.");
+            })
+        }
+        
+    }
+
+    
+
+    useEffect(()=>{
+        handleShopList();
+        handleProductInfo();
+    }, [shopCate, userRegion])
    
+
     return(
         <div className='shopCate-main-container'>
 
             <div className="shopCate-box-head">
                 <div>상점</div>
-                <div>더 보기</div>
+                <Link to={`/shop/cate/${pathMap[shopCate]}/store`}><div>더 보기</div></Link>
             </div>{/* shopCate-box-head 끝*/}
 
             <div className="shopCate-store-box">
-                <div><Link to='/shop/cate/store'>백년 손님 고깃집</Link></div>
-                <div>룽바오네 마라탕</div>
-                <div>마시리 카페</div>
-                <div>마시리 카페</div>
+                
+            {
+                (shopList==''?
+                <span style={{width:'300px',textAlign:'left', fontWeight:900, fontSize:'30px', letterSpacing:'0.2vw'}}>
+                    아직 준비중입니다.
+                </span>
+                :shopList.filter(s=>{return(s.shopName.includes(keyword))})
+                        .map(s=>{return(
+                            <div key={s.shopOkey}>
+                                <Link to={`/shop/cate/${pathMap[s.shopCate]}/${s.shopName}/product`} state={{shopOkey:s.shopOkey}}>{s.shopName}</Link></div>
+                        )})
+                        .splice(0,4))
+            }
+                
             </div>{/* shopCate-store-box 끝*/}
 
             <div className="shopCate-box-head">
                 <div>상품</div>
-                <div>더 보기</div>
+                <Link to={`/shop/cate/${pathMap[shopCate]}/every/product`}><div>더 보기</div></Link>
             </div>{/* shopCate-box-head 끝*/}
             <div className="shopBest-box">
-                
-                    <div className="shopBest-item">
-                        <Link to='/shop/cate/every/product'>
-                        <div className="shopBest-item-img">
-                            <img src='/resources/shop/product/1/001.png'/>
-                        </div>
-                        <div className='shopBest-item-shop'>뜨끈 전골</div>
-                        <div className='shopBest-item-product'>몸보신 전복 장어 전골</div>
-                        <div className='shopBest-item-point'>35000 다손{" "}<HeartIcon/></div>
-                        </Link>
-                    </div>
-
-                    <div className="shopBest-item">
-                        <div className="shopBest-item-img">
-                            <img src="/resources/shop/product/5/005.png"/>
-                        </div>
-                        <div className='shopBest-item-shop'>마시리 카페</div>
-                        <div className='shopBest-item-product'>카페라떼(hot)</div>
-                        <div className='shopBest-item-point'>5000 다손{" "}<HeartIcon/></div>
-                    </div>
-
-                    <div className="shopBest-item">
-                        <div className="shopBest-item-img">
-                            <img src="/resources/shop/product/6/006.png"/>
-                        </div>
-                        <div className='shopBest-item-shop'>화산루</div>
-                        <div className='shopBest-item-product'>칠리 새우</div>
-                        <div className='shopBest-item-point'>21000 다손{" "}<HeartIcon/></div>
-                    </div>
-
-                    <div className="shopBest-item">
-                        <div className="shopBest-item-img">
-                            <img src="/resources/shop/product/2/004.png"/>
-                        </div>
-                        <div className='shopBest-item-shop'>아사기 샐러드</div>
-                        <div className='shopBest-item-product'>닭가슴살 치즈 샐러드</div>
-                        <div className='shopBest-item-point'>13000 다손{" "}<HeartIcon/></div>
-                    </div>
+                {
+                    product==null?
+                    <span style={{width:'300px',textAlign:'left', fontWeight:900, fontSize:'30px', letterSpacing:'0.2vw'}}>
+                        아직 준비중입니다.
+                    </span>
+                    :product.filter(p=>{return (p.productName.includes(keyword)||
+                                                p.shopName.includes(keyword))})
+                            .map(p=>{return(
+                                <div key={p.productNo} className="shopBest-item">
+                                    <Link
+                                        to={`/shop/cate/${pathMap[shopCate]}/${p.shopName}/${p.productName}`} 
+                                        state= {{ product: p} }
+                                    >
+                                        <div className="shopBest-item-img">
+                                            {p.productImg.map(pro=>{return(
+                                                <img src={pro}/>
+                                            )})}
+                                        </div>
+                                        <div className='shopBest-item-shop'>{p.shopName}</div>
+                                        <div className='shopBest-item-product'>{p.productName}</div>
+                                    </Link>
+                                    <div className='shopBest-item-point'>
+                                        {p.productAmount} 다손{" "}
+                                        <span style={{color:'#CB9DE7'}}><HeartIcon product={p}/></span>
+                                    </div>
+                                </div>
+                            )})
+                            .splice(0,4)
+                }
+                    
             </div>{/* shopCate-best-box 끝*/}
         </div>
     );

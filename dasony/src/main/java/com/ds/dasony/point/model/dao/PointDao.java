@@ -24,6 +24,12 @@ public class PointDao {
 	public int updateMemberTotalPoint(Point pointData) {
 		return session.update("point.updateMemberTotalPoint",pointData);
 	}
+
+	public int spendPoint(Point point) {
+		int result = session.insert("point.spendPoint",point);
+		int result2 = session.insert("alert.insertPointAlert",point);
+		return result + result2;
+	}
 	
 	
 	

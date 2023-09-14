@@ -27,7 +27,12 @@
 
 <update id="updateMemberTotalPoint" parameterType="point">
 
-	UPDATE MEMBER SET TOTAL_POINT = TOTAL_POINT + #{pointAmount}
+	UPDATE MEMBER 
+	SET TOTAL_POINT = 
+		CASE 
+		WHEN #{pointCate} IS NOT NULL AND #{pointCate} = 'S'
+		THEN TOTAL_POINT = TOTAL_POINT - #{pointAmount}
+		ELSE TOTAL_POINT = TOTAL_POINT + #{pointAmount}
 	WHERE USER_NO = #{userNo}
 
 </update>
@@ -36,6 +41,19 @@
 	FROM POINT
 	WHERE USER_NO = #{userNo}
 </select>
+
+<insert id="spendPoint" parameterType="point">
+	INSERT INTO POINT
+	VALUES(
+		SEQ_PNO.NEXTVAL,
+		#{userNo},
+		#{pointContent},
+		#{pointAmount},
+		#{ExpireDate},
+		#{pointEventDate},
+		#{pointCate}
+	)
+</insert>
 
 
 </mapper>

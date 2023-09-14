@@ -9,6 +9,7 @@ import { useEffect } from 'react';
  const ChatList  = (props) => {
 
     const {chatData, setChatDate} = useChatData();
+
     const [userName, setUserName] = useState("");
 
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
@@ -49,7 +50,7 @@ import { useEffect } from 'react';
         
     }, [])
 
-// ----------------------------모달창------------------------------------
+// ----------------------------모달창-----------------------------------
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const openModal = () => {

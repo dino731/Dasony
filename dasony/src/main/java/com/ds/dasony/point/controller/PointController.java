@@ -1,6 +1,7 @@
 package com.ds.dasony.point.controller;
 
 import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ds.dasony.point.model.service.PointService;
 import com.ds.dasony.point.model.vo.Point;
+import com.ds.dasony.shop.model.vo.Product;
+
 import lombok.extern.slf4j.Slf4j;
 
 	
@@ -20,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PointController {
 	
 	@Autowired
-	private PointService pointService;
+	private static PointService pointService;
 		
 	@Autowired
 	private ServletContext application;
@@ -40,6 +43,11 @@ public class PointController {
 	    }
 		
 	}
+	
+	public static int spendPoint(Point point) {
+		return pointService.spendPoint(point);
+	}
+	
 
 
 

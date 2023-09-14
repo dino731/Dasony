@@ -115,6 +115,7 @@
     font-weight: 900;
     letter-spacing: 0.1vw;
     font-size: 1.5vw;
+    color: #7A7A7A;
 }
 .modalButton-yes:hover{
     background-color:#CB9DE7; 

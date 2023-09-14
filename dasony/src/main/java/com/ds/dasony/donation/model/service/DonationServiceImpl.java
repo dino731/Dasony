@@ -45,35 +45,39 @@ public class DonationServiceImpl implements DonationService{
       return donationDao.insertDona(donation);
     }
 
-   @Override
-   public int updateDona(Donation donation) throws Exception {
-      return donationDao.updateDona(donation);
-   }
-   
-   @Override
-   public int deleteDona(int donaNo) {
-      return donationDao.deleteDona(donaNo);
-   }
-   
-   @Override
-   public List<DonationList> getMyDonationList(int userNo){
-      return donationDao.getMyDonationList(userNo);
-   }
+
+	@Override
+	public int updateDona(Donation donation) throws Exception {
+		return donationDao.updateDona(donation);
+	}
+	
+	@Override
+	public int deleteDona(int donaNo) {
+		return donationDao.deleteDona(donaNo);
+	}
+	
+	@Override
+	public List<DonationList> getMyDonationList(int userNo){
+		return donationDao.getMyDonationList(userNo);
+	}
+
 
    @Override
    public List<DonationList> DonaDetails(int donaNo) {
       return donationDao.DonaDetails(donaNo);
    }
 
-   @Override
-   public int totalAmount(List<DonationList> donaHistory) {
-      
-      int totalDonaAmount = 0;
-      for(DonationList donation : donaHistory) {
-         totalDonaAmount += donation.getDonaAmount();
-      }
-      return totalDonaAmount;
-   }
+
+	@Override
+	public int totalAmount(List<DonationList> donaHistory) {
+		
+		int totalDonaAmount = 0;
+		for(DonationList donation : donaHistory) {
+			totalDonaAmount += donation.getDonaAmount();
+		}
+		return totalDonaAmount;
+	}
+
 
    
 //   @Override

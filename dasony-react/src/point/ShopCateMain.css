@@ -2,7 +2,7 @@
 /*제목 영역*/
 .shopCate-main-container a{
     font-size: 1.5vw;
-    color: #CB9DE7;
+    color: #7A7A7A;
 }
 .shopCate-box-head{
     display: flex;
@@ -15,10 +15,14 @@
     font-size: 2vw;
 }
 
+
 /*상점 영역*/
 .shopCate-store-box{
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
+}
+.shopCate-store-box a{
+    color: #CB9DE7;
 }
 .shopCate-store-box>div{
     width: 20%;
@@ -29,4 +33,7 @@
     border-radius: 0.5vw;
     border : 3px solid #CB9DE7;
     font-weight: 900;
+}
+.shopCate-store-box>div:hover{
+    cursor: pointer;
 }
