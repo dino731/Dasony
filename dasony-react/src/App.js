@@ -56,11 +56,9 @@ import MypageAlert from './mypage/mypageAlert';
 import MypageMydonation from './mypage/mypageMydonation';
 import MypageMyshopUsedPoint from './mypage/mypageMyshopUsedPoint';
 import Gamestart from './mypage/realgame';
-
 import { RecoilEnv } from 'recoil';
 import ChatList from './chat/ChatList';
-import ChatIcon from './chat/ChatIcon';
-import MyChstListModal from './chat/MyChatListModal';
+import MyChatListModal from './chat/MyChatListModal';
 import NewChatModal from './chat/NewChatModal';
 import AdminDonaDetail from './admin/donation/AdminDonaDetail';
 import AdminDonaEnroll from './admin/donation/AdminDonaEnroll';
@@ -132,7 +130,7 @@ function App() {
     //loading ? (<Loading/>) : ''
     //전체 창 영역
     <>
-        <ChatDataProvider>
+    <ChatDataProvider>
     <DonaDataProvider>
     <DonationProvider>
     <AdminDonaListContext>

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.ds.dasony.member.model.dao.UserDao;
 import com.ds.dasony.member.model.vo.User;
+import com.ds.dasony.shop.model.vo.Product;
+import com.ds.dasony.shop.model.vo.ProductCare;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -89,8 +91,16 @@ public class UserServiceImpl implements UserService{
 		return userDao.changeNewPwd(pwdInfo);
 	}
 	@Override
-	public List getMyLikesList(int userNo){
+	public List<ProductCare> getMyLikesList(int userNo){
 		return userDao.getMyLikesList(userNo);
+	}
+	@Override
+	public int deleteLikes(Map<String,Object> deletelike) {
+		return userDao.deleteLikes(deletelike);
+	}
+	@Override
+	public List<User>getMyPoint(int userNo) {
+		return userDao.getMypoint(userNo);
 	}
 
 

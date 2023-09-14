@@ -231,9 +231,23 @@ public class UserController {
 	public Map<String, Object> getMyLikesList(@RequestBody int userNo){
 		Map<String,Object> likesList = new HashMap();
 		likesList.put("likesList", userService.getMyLikesList(userNo));
-		
 		return likesList;
 	}
 	
+	@PostMapping("deleteLikes")
+	public int delteLikes(@RequestBody Map<String,Object> deletelike){
+		int result = userService.deleteLikes(deletelike);
+		return result;
+	}
 	
+	@PostMapping("getMyPoint")
+	public Map<String,Object> getMyPoint(@RequestBody int userNo){
+		Map<String,Object> point = new HashMap();
+		point.put("point",userService.getMyPoint(userNo));
+		
+		return point;
+	}
+	
+	
+
 }

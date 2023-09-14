@@ -28,22 +28,7 @@ const MypageAlert = () => {
     });
   }, []);
 
-  // const sendEmail = (e) => {
-  //   e.preventDefault();
-  //   const infos = {
-  //     user_name: 'wangfeng', // 이메일을 보낼 사용자의 이름
-  //     user_email: 'wangfeng@ruc.edu.com' // 사용자의 이메일 주소
-     
-  //   };
-    
-  //   emailjs.send('Dasony', 'dasonyEmail', infos,'F-MU3Q5TmMwsJT8xo')
-  //     .then((result) => {
-  //         console.log(result.text);
-  //     }, (error) => {
-  //       console.log(error.text);
-  //     });
-    
-  // };
+
     
     return(
     <div className='Alert-table'>

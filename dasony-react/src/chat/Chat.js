@@ -12,7 +12,6 @@ const Chat = () =>{
 
     const {chatRoomTitle} = useParams();
     const {chatRoomNo} = useParams();
-    const {createChatRoomNo} = useParams();
 
     const navigate = useNavigate();
 
@@ -56,10 +55,8 @@ const Chat = () =>{
                 console.log("수신 메세지 : ", receivedMessage);
                 setChatList((chatlist) => 
                 [...chatlist, receivedMessage]);
-
+                
             });
-
-
             setStompClient(stompClient);
         });
 
@@ -81,8 +78,6 @@ const Chat = () =>{
                 userNo : loginUserNo,
                 userName : userName,
             }
-
-            // JSON.stringify({chatMsg : JSON.stringify(chatMsg.message)})
 
             stompClient.send(`/app/chat/${chatRoomNo}`, headers, JSON.stringify({chatMsg : chatMsg.message}));
         }
@@ -131,6 +126,7 @@ const Chat = () =>{
     // const [userName, setUserName] = useState(""); -> 모달창에서 선언함
 
     useEffect(() => {
+
         axios.get(`/dasony/chat/${chatRoomNo}/${chatRoomTitle}`, {
             headers : {
                 userNo : loginUserNo
@@ -141,7 +137,12 @@ const Chat = () =>{
             setChatList(chattingData);
         })
         .catch(error => console.log(error));
-    });
+        
+    },[]);
+
+    useEffect(()=>{
+        scrollBottom();
+    })
 
     const sendEnter = (e) => {
         if(e.key === 'Enter' && !e.shiftKey){
@@ -150,16 +151,11 @@ const Chat = () =>{
         }
     }
 
-    useEffect(() => {
-        scrollBottom();
-    });
-
     const scrollBottom = () => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
     };
-
 
     const handleExit = () => {
         axios.delete(`/dasony/exitChat/${chatRoomNo}`, { 
@@ -173,16 +169,6 @@ const Chat = () =>{
         })
         .catch(error => console.log(error));
     }
-
-
-    // const replaceEnter = (text) => {
-    //     return text.split('\n').map((line, index) => (
-    //         <React.Fragment key={index}>
-    //         {line}
-    //         <br />
-    //         </React.Fragment>
-    //     ))
-    // }
 
     return (
     <>
@@ -205,7 +191,7 @@ const Chat = () =>{
                             ) : (
                                 <>
                                 <b onClick={() => openModal(message.userName)}>{message.userName}</b>&nbsp;&nbsp;
-                                <UserProfile isOpen={profileOpen} closeModal={closeModal} username={userName} />
+                                {/* <UserProfile isOpen={profileOpen} closeModal={closeModal} username={userName} /> */}
                                 <p id="chat">{message.chatMsg}</p>&nbsp; 
                                 <span id="chat_date">{message.chatDate}</span>
                                 </>

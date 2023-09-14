@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ds.dasony.member.model.vo.User;
+import com.ds.dasony.shop.model.vo.Product;
+import com.ds.dasony.shop.model.vo.ProductCare;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -75,9 +77,19 @@ public class UserDao {
 	public int changeNewPwd(Map<String,Object> pwdInfo) {
 		return session.update("memberMapper.changeNewPwd",pwdInfo);
 	}
-	public List getMyLikesList(int userNo) {
-		return session.selectList("memberMapper.getMyLikesList", userNo);
+	public List<ProductCare> getMyLikesList(int userNo) {
+		List<ProductCare> result =  session.selectList("shopMapper.getMyLikesList", userNo);
+		return result;
 	}
+	public int deleteLikes(Map<String,Object> deletelike) {
+		return session.delete("shopMapper.deleteLikes",deletelike);
+	}
+	public List<User> getMypoint(int userNo) {
+		List<User> result =  session.selectList("memberMapper.getMyPoint",userNo);
+		return result;
+	}
+	
+	
 
 
 }

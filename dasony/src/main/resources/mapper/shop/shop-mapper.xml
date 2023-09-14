@@ -16,6 +16,19 @@
 		<result column="PRODUCT_NAME" property="productName"/>
 		<result column="PRODUCT_AMOUNT" property="productAmount"/>
 	</resultMap>
+	
+	<resultMap type="productCare" id="productCareMap">
+		<result column="USER_NO" property="userNo"/>
+		<result column="PRODUCT_NO" property="productNo"/>
+		<collection property="shop" resultMap="shopMap" />
+		<collection property="product" resultMap="productMap" />
+		<collection property="productImg" resultMap="productImgMap" />
+	</resultMap>
+	
+	<resultMap type="productImg" id="productImgMap">
+		<result column="PRODUCT_NO" property="productNo"/>
+		<result column="PRODUCT_IMG_MOD_NAME" property="productImgModName"/>
+	</resultMap>
 
 	
 	<select id="shopList" parameterType="map" resultMap="shopMap">
@@ -171,6 +184,7 @@
 		WHERE SHOP_OKEY = #{store}
 	</select>
 	
+
 	<insert id="shopHeartOn" parameterType="map">
 		INSERT INTO PRODUCT_CARE
 		VALUES(
@@ -193,6 +207,24 @@
 			USER_NO = #{userNo}
 		AND PRODUCT_NO = #{productNo}
 	</select>
+
+	<select id="getMyLikesList" parameterType="int" resultMap="productCareMap">
+		SELECT PRODUCT_IMG_MOD_NAME, PRODUCT_NAME,SHOP_NAME,PRODUCT_NO
+		FROM PRODUCT_CARE PC
+			JOIN PRODUCT P ON  P.PRODUCT_NO = PC.PRODUCT_NO
+			JOIN PRODUCT_IMG PI ON PI.PRODUCT_NO = PC.PRODUCT_NO
+			JOIN SHOP S ON S.SHOP_OKEY = P.SHOP_OKEY
+		WHERE PC.USER_NO = #{userId}
+	</select>
+	
+	<delete id="deleteLikes">
+	
+	DELETE FROM PRODUCT_CARE
+		WHERE PRODUCT_NO = #{productNo}
+		AND USER_NO = #{userNo}
+	
+	</delete>
+
 
 	<select id="productCareInfo" parameterType="long" resultMap="productMap">
 		SELECT *

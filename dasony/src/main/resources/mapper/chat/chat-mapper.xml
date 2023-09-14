@@ -21,20 +21,20 @@
 </resultMap>
 
 <select id="selectChatList" resultMap="chatRoomResultSet">
-   SELECT
-      CHATROOM_NO,
-      CHATROOM_TITLE,
-      USER_NAME,
-      (
-         SELECT
-            COUNT(*)
-         FROM CHAT_JOIN CJ
-         WHERE CJ.CHATROOM_NO = CR.CHATROOM_NO
-      ) CNT
-      FROM CHAT_ROOM CR
-      JOIN MEMBER M USING(USER_NO)
-      WHERE CHATROOM_STATUS = 'Y'
-      ORDER BY CHATROOM_NO DESC
+	SELECT
+		CHATROOM_NO,
+		CHATROOM_TITLE,
+		USER_NAME,
+		(
+			SELECT
+				COUNT(*)
+			FROM CHAT_JOIN CJ
+			WHERE CJ.CHATROOM_NO = CR.CHATROOM_NO
+		) CNT
+		FROM CHAT_ROOM CR
+		JOIN MEMBER M USING(USER_NO)
+		WHERE CHATROOM_STATUS = 'Y'
+		ORDER BY CHATROOM_NO DESC
 </select>
 
 <insert id="openChatRoom" parameterType="chatRoom">
