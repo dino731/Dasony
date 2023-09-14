@@ -93,11 +93,9 @@ const PlzLogin = () => {
                 localStorage.setItem("loginUserNo", res.data.user.userNo);
                 localStorage.setItem("loginUserRegion", res.data.user.userRegion);
                 localStorage.setItem("loginUserLevel", res.data.user.userLevel);
-                localStorage.setItem("loginUserRegion", res.data.user.userRegion);
                 console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserNo"));
                 console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserRegion"));
                 console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserLevel"));
-                console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserRegion"));
                 alert(res.data.msg);
                 if(res.data.user!=null && res.data.user.userLevel == 'Z'){
                     navigate('/admin/chart');

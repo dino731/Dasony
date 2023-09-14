@@ -1,6 +1,5 @@
 import Carousel from 'react-bootstrap/Carousel';
 import { useState } from 'react';
-import HeartIcon from "../heart";
 import './MainBestCarousel.css';
 const MainBestCarousel = () =>{
 
