@@ -44,7 +44,7 @@ const Chat = () =>{
 
     useEffect(() => {
 
-        const socket = new SockJS('http://localhost:3000/dasony/chat');
+        const socket = new SockJS('http://192.168.30.170:8083/dasony/chat');
         const stompClient = Stomp.over(socket);
         stompClient.connect({}, (frame) => {
 
@@ -138,7 +138,7 @@ const Chat = () =>{
         })
         .catch(error => console.log(error));
         
-    },[chatData]);
+    },[]);
 
     useEffect(()=>{
         scrollBottom();
