@@ -4,8 +4,12 @@ import HeartIcon from "../heart";
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import Loading from "../common/Loading";
 
 const ShopBest = ()=>{
+
+    const [loading, setLoading] = useState(true);
+
     const userRegion = localStorage.getItem("loginUserRegion");
 
     const pathMap = {
@@ -32,10 +36,13 @@ const ShopBest = ()=>{
     }
     useEffect(()=>{
         handleProductBestInfo();
+        setLoading(false);
     }, [userRegion])
 
     return(
-        <div className="shopBest-container">
+        <>
+            {loading?<Loading/>:
+            <div className="shopBest-container">
             <div className="shopBest-title">실시간 Best</div>
             <div className="shopBest-box">
                 {
@@ -61,7 +68,8 @@ const ShopBest = ()=>{
                     
                 }
             </div>
-        </div>
+        </div>}
+    </>
     );
 }
 export default ShopBest;
