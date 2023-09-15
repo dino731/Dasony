@@ -1,11 +1,31 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 
-export default function KakaoShare(props) {
+export default function KakaoMsg() {
     const userNo = localStorage.getItem("loginUserNo");
-    const coupon = props.coupon;
-    const product = props.product;
-
+    
+    const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 
+                    'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 
+                    'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    let secretKey = '';
+    
+    const handleSecretKey = () => {
+        secretKey = '';
+        for(let i=0; i<3; i++){
+            if((Math.floor(Math.random() * 90) + 10)%2!=0){
+                secretKey += alphabet[Math.floor(Math.random() * 26)]
+                            += alphabet[Math.floor(Math.random() * 26)];
+            } else {
+                secretKey += (Math.floor(Math.random() * 90) + 10).toString();
+            }
+        }
+        if(secretKey.length>6){
+            secretKey = secretKey.substring(0,6);
+        }
+        console.log(secretKey);
+    }
+    
+    
     let kakao = '';
     let kakaoKey = process.env.REACT_APP_KAKAO_KEY;
 
@@ -39,7 +59,9 @@ export default function KakaoShare(props) {
 
       }, []);
 
-  const kakaoButton = () => {
+  const kakaoButton = async() => {
+    await handleSecretKey();
+
     if (window.Kakao) {
       kakao = window.Kakao;
         
@@ -49,18 +71,16 @@ export default function KakaoShare(props) {
       }
 
       kakao.Share.sendCustom({
-        templateId:98483,
+        templateId:98523,
         templateArgs: {
-          'couponExpireDate': coupon.couponExpireDate,
-          'shopName': product.shopName,
-          'productName': product.productName,
-          'code': 'shop/coupon/'+coupon.couponOkey+'/img',
+          'secretKey':secretKey 
         },
       });
     }
   }
+    
 	
 	return (
-        <span id='kakaotalk-sharing-btn' onClick={kakaoButton}>카카오톡으로 공유하기 <i className="bi bi-wechat"/></span>
+        <button id='kakaotalk-sharing-btn' onClick={kakaoButton}>정보 이용 동의</button>
 	)
 }

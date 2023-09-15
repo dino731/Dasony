@@ -171,27 +171,63 @@
         width: 100%;
         margin: 1vh 0 0 0;
         font-size: 1.2vw;
+        table-layout: fixed;
     }
     .calendar-detail-box table tr{
+        border-top: 1px solid #7A7A7A;
         border-bottom: 1px solid #7A7A7A;
         color: #7A7A7A;
     }
-    .calendar-detail-box table td{
+    .calendar-detail-box table th{
         
+        background-color: #efefef;
+    }
+    .calendar-detail-box table td{
+        word-wrap: break-word;
         padding: 0.5vw;
     }
     .calendar-detail-box table th:first-child{
-        width: 30%;
+        width: 25%;
     }
     .calendar-detail-box table th:nth-child(2){
         width: 25%;
     }
     .calendar-detail-box table th:nth-child(3){
-        width: 15%;
+        width: 20%;
+    }
+    .calendar-detail-box table th:nth-child(4){
+        width: 20%;
+    }
+    .calendar-detail-box table th:nth-child(5){
+        width: 10%;
     }
     .calendar-detail-box table td{
         padding: 0.5vw;
     }
+    .calendar-detail-box table td:first-child{
+        width: 25%;
+    }
+    .calendar-detail-box table td:nth-child(2){
+        width: 25%;
+    }
+    .calendar-detail-box table td:nth-child(3){
+        width: 20%;
+    }
+    .calendar-detail-box table td:nth-child(4){
+        width: 20%;
+    }
+    .calendar-detail-box table td:nth-child(5){
+        width: 10%;
+    }
+
+
+    .calendar-detail-box table tr>td:first-child{
+        font-size: 80%;
+    }
+    .calendar-detail-box table tr>td:nth-child(3){
+        font-size: 80%;
+    }
+
     .calendar-detail-box>div>div>button{
         box-sizing: border-box;
         border: 2px solid #CB9DE7;

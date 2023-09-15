@@ -99,33 +99,32 @@ import { ShopMyCouponImg } from './point/ShopMyCouponImg';
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
 //로그인 확인 - PrivateRoute
-const isLogin = localStorage.getItem("loginUserNo")?true:false;
+export let isLogin = localStorage.getItem("loginUserNo")?true:false;
+console.log("APP확인", isLogin);
   export const PrivateRoute =() =>{
-    return isLogin?<Outlet/> : <Navigate to="/"/>;
+    const location = useLocation();
+    if(isLogin&&!isAdmin){
+      return <Outlet/>;
+    } else if(isLogin&&isAdmin){
+      return <Navigate to="/admin/chart"/>;
+    }else {
+      return <Navigate to="/"/>;
+    }
   }
 
 //관리자 확인 - AdminRoute
-const isAdmin = localStorage.getItem("loginUserLevel")=='Z'?true:false;
-export const AdminRoute = () => {
-  return isAdmin?<Outlet/> : <Navigate to="/"/>;
-}
+  const isAdmin = localStorage.getItem("loginUserLevel")=='Z'?true:false;
+
+  export const AdminRoute = () => {
+    return isAdmin?<Outlet/> : <Navigate to="/"/>;
+  }
 
 function App() {
-  
-  const [loading, setLoading] = useState(true);
-  const getPage = async()=>{
-    setLoading(false);
-  };
-  useEffect(()=>{
-    getPage();
-  }, []);
-
 
   const location = useLocation();
   
   return (
-    //loading ? (<Loading/>) : ''
-    //전체 창 영역
+
     <>
     <ChatDataProvider>
     <DonaDataProvider>
@@ -144,11 +143,14 @@ function App() {
 
                   {/* 로그인 안 된 경우 */}
                   {/* 메인페이지 부분 */}
+              
                   <Route path="/" element={
                                             <div className="main-container">
                                               <PlzLogin/>
+                                              <PrivateRoute/>
                                             </div>
                                           }/>
+                
                   
 
                   {/* 로그인 된 경우 */}
