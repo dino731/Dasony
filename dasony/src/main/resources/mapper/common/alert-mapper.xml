@@ -21,7 +21,7 @@
 		#{userNo},
 		'게임 성공으로 얻은 포인트는 : ' || TO_CHAR(#{pointAmount}) || '다소니 입니다.',
 		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
-		'P',
+		'G',
 		'B',
 		'보물찾기 리워드를 확인하세요~'
 	)
@@ -35,9 +35,9 @@
 		#{userNo},
 		'게임 성공으로 얻은 응모권입니다. 이벤트 페이지에서 사용하실 수 있습니다.  ',
 		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
-		'T',
+		'G',
 		'B',
-		'보물찾기 리워드를 입니다~'
+		'보물찾기 리워드 입니다~'
 	)
 	
 	</insert>
@@ -50,5 +50,23 @@
 	
 	</select>	
 	
+
+	<insert id="insertShopAlert" parameterType="point">
+		INSERT INTO ALERT VALUES(
+		SEQ_ANO.NEXTVAL,
+		#{userNo},
+		#{pointAmount}||' 다손으로 '||#{pointContent}||'(을/를) 구매',
+		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+		'P',
+		'B',
+		'상점 쿠폰 구매 알림'
+		)
+	</insert>
+	
+	<delete id="deleteMyAlertList" parameterType="int">
+		DELETE FROM ALERT 
+		WHERE USER_NO = #{userNo} AND ALERT_NO = #{alertNo}
+	</delete>
+
 	
 </mapper>

@@ -84,7 +84,7 @@ public class DonationController {
 			log.info("donaHistory = {}", donaHistory);
 			log.info("totalDonaAmount = {}", totalDonaAmount);
 			
-//			res.put("statusCode", HttpStatus.OK.value());
+			res.put("statusCode", HttpStatus.OK.value());
 			
 		} catch(Exception e) {
 			res.put("error", "에러발생");

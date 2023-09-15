@@ -1,6 +1,5 @@
 package com.ds.dasony.event.model.service;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ds.dasony.event.model.dao.EventDao;
+import com.ds.dasony.event.model.vo.Email;
 import com.ds.dasony.event.model.vo.Event;
 import com.ds.dasony.event.model.vo.EventJoin;
 import com.ds.dasony.event.model.vo.Reward;
+import com.ds.dasony.member.model.dao.UserDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +23,8 @@ public class EventServiceImpl implements EventService{
 
 	@Autowired
 	private EventDao eDao;
+	@Autowired
+	private UserDao uDao;
 
 	@Override
 	public List<Event> selectAllEvent(Map<String, Object> param) {
@@ -73,17 +76,12 @@ public class EventServiceImpl implements EventService{
 		// 최종 결과값
 		int result = 1;
 		
-//		log.info(event.toString());
-//		log.info(rewardList.toString());
-		
 		result *= eDao.insertEventInfo(event);
 //		log.info("insert result : " + result);
 		if(result==0) return result;
 		
 		for(Reward reward : rewardList) {
 			if(reward.getRewardName()!=null && reward.getRewardName().length()!=0) {
-//				log.info("service reward : " + reward.toString());
-//				log.info(reward.getRewardRange());
 				result *= eDao.insertRewardInfo(reward);
 			}
 		}
@@ -106,6 +104,7 @@ public class EventServiceImpl implements EventService{
 		return eDao.checkEventJoin(data);
 	}
 
+	@Transactional
 	@Override
 	public int joinEvent(Map<String, Object> data) {
 		return eDao.joinEvent(data);
@@ -113,12 +112,30 @@ public class EventServiceImpl implements EventService{
 	
 	@Override
 	public EventJoin loadLogin(Map<String, Object> data) {
-		return eDao.loadLogin(data);
+		EventJoin ej = eDao.loadLogin(data);
+		int count = eDao.loadLoginCount(data);
+		ej.setCount(count);
+		return ej;
 	}
 
 	@Override
 	public int checkTdyLogin(Map<String, Object> data) {
 		return eDao.checkTdyLogin(data);
+	}
+
+	@Override
+	public List<Integer> checkTickets(Map<String, Object> data) {
+		return eDao.checkTickets(data);
+	}
+
+	@Override
+	public int addPoint(Map<String, Object> data) {
+		return eDao.addPoint(data);
+	}
+
+	@Override
+	public Email findEmailInfo(Map<String, Object> data) {
+		return eDao.findEmailInfo(data);
 	}
 
 }

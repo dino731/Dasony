@@ -1,16 +1,20 @@
 package com.ds.dasony.shop.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
 
+import com.ds.dasony.shop.model.vo.Coupon;
 import com.ds.dasony.shop.model.vo.Product;
 import com.ds.dasony.shop.model.vo.Shop;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class ShopDao {
 	private final SqlSessionTemplate session;
@@ -20,8 +24,11 @@ public class ShopDao {
 		this.session = session;
 	}
 
-	public List<Shop> shopList(String userRegion) {
-		return session.selectList("shopMapper.shopList", userRegion);
+	public List<Shop> shopList(String userRegion, String shopCate) {
+		Map<String, String> map = new HashMap();
+		map.put("userRegion", userRegion);
+		map.put("shopCate", shopCate);
+		return session.selectList("shopMapper.shopList", map);
 	}
 
 	public int shopDelete(Map<String, String> shopOkey) {
@@ -52,8 +59,12 @@ public class ShopDao {
 		return session.selectOne("shopMapper.findProductNo", product);
 	}
 
-	public List<Product> productInfo(String shopOkey) {
-		return session.selectList("shopMapper.productInfo", shopOkey);
+	public List<Product> productInfo(String shopOkey, String shopCate, String userRegion) {
+		Map<String, String>map = new HashMap();
+		map.put("shopOkey", shopOkey);
+		map.put("shopCate", shopCate);
+		map.put("userRegion", userRegion);
+		return session.selectList("shopMapper.productInfo", map);
 	}
 
 	public List<String> productInfoImg(String productNo) {
@@ -79,5 +90,33 @@ public class ShopDao {
 	public String shopTitle(String store) {
 		return session.selectOne("shopMapper.shopTitle", store);
 	}
+
+	public int shopHeartOn(Map<String, String> map) {
+		return session.insert("shopMapper.shopHeartOn", map);
+	}
+	public int shopHeartOff(Map<String, String> map) {
+		return session.delete("shopMapper.shopHeartOff", map);
+	}
+
+	public int shopHeartCss(Map<String, String> map) {
+		return session.selectOne("shopMapper.shopHeartCss", map);
+	}
+
+	public List<Product> productCareInfo(long userNo) {
+		return session.selectList("shopMapper.productCareInfo", userNo);
+	}
+
+	public int couponBuy(Coupon coupon) {
+		return session.insert("shopMapper.couponBuy", coupon);
+	}
+
+	public List<Coupon> couponList(Map<String, String> map) {
+		return session.selectList("shopMapper.couponList", map);
+	}
+
+	public List<Product> productBestInfo(String userRegion) {
+		return session.selectList("shopMapper.productBestInfo", userRegion);
+	}
+
 
 }

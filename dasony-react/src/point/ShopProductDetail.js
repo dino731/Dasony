@@ -1,15 +1,23 @@
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'react-bootstrap';
 import './ShopProductDetail.css';
 import HeartIcon from '../heart';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+
 const ShopProductDetail = () => {
 
-    const {store, product} = useParams();
-    console.log(product);
+    const {store} = useParams();
+    const location = useLocation();
+    let product ='';
+    product = location.state.product;
+    console.log("product",product);
+
+    const userNo = localStorage.getItem("loginUserNo");
 
     const [show, setShow] = useState(false);
-    const [modalText, setModalText] = useState(`상품 이름을 5000포인트로 구매하시겠습니까?
+    const [modalText, setModalText] = useState(`${product.productName}(을/를) ${product.productAmount} 다손으로 구매하시겠습니까?
 
 
                                                 *구매 이후 환불은 불가능합니다.*`);
@@ -30,7 +38,7 @@ const ShopProductDetail = () => {
                                     setModalClass('modalButton-yes');
                                 }
     const handleModalOff = ()=>{
-                                    setModalText(<div textalign='center'>상품 이름을<br/>5000포인트로 구매하시겠습니까?<br/><br/>
+                                    setModalText(<div textalign='center'>{product.productName}(을/를) <br/>{product.productAmount}포인트로 구매하시겠습니까?<br/><br/>
                                                     *구매 이후 환불은 불가능합니다.*</div>);
                                     setModalButton('inline-block');
                                     setModalButtonText('취소');
@@ -43,25 +51,61 @@ const ShopProductDetail = () => {
         handleClose();
     }
 
+    {/*userPoint, userName받아오기 */}
+    const [userPoint, setUserPoint] = useState('');
+
+    const handleUserInfo = () => {
+        axios.post('/dasony/api/userInfo', {userNo: userNo})
+        .then(res=>{
+            setUserPoint(res.data.user.totalPoint);
+        })
+        .catch(err=> {
+            console.log(err);
+            alert("다시 시도해주세요.");
+        })
+    }
+
+    {/*쿠폰 구매 - 서버 */}
+    const handleCouponBuy = ()=>{
+        if(userPoint >= product.productAmount){
+            axios.post('/dasony/api/couponBuy', {product:product, userNo:userNo})
+            .then(res=>{
+                handleModalOn();
+            })
+            .catch(err=>{
+                alert("다시 시도해주세요");
+            })
+        } else {
+            alert("잔액이 부족합니다.");
+        }
+        handleClose();
+        window.location.reload();
+    }
+
+
+    useEffect(()=>{
+        handleUserInfo();
+    }, [userNo])
+
     return(
         <div className="shopProductDetail-container">
             <div className="product-info">
                 <div className='product-info-img'>
-                    <img src='/resources/shop/product/4/004.png'/>
+                    <img src={product.productImg}/>
                 </div>
                 <div className='product-info-head'>
                     <div className='product-info-store'>
                         {store}
                     </div>
                     <div>
-                        <HeartIcon/>
+                        <HeartIcon  product={product}/>
                     </div>
                 </div>
                 
                 <div className='product-info-middle'>
                     <div className='product-info-middle-left'>
-                        <div>{product}</div>
-                        <div>5000 다손</div>
+                        <div>{product.productName}</div>
+                        <div>{product.productAmount} 다손</div>
                     </div>
                     <div className='product-info-middle-right'>
                         <button onClick={handleShow}>구매</button>
@@ -76,7 +120,7 @@ const ShopProductDetail = () => {
                             </ModalBody>
                             <ModalFooter>
                                 <button className={modalClass} onClick={handleModalOffAndClose}>{modalButtonText}</button>
-                                <button className='modalButton-yes' onClick={handleModalOn} style={{display:modalButton}}>구매</button>
+                                <button className='modalButton-yes' onClick={handleCouponBuy} style={{display:modalButton}}>구매</button>
                             </ModalFooter>
                         </Modal>
                     </div>

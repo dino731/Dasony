@@ -13,6 +13,21 @@ const TypingTitle = ({initialWord, fontSize, delay}) =>{
     const[count, setCount] = useState(0);
     const completeWord = initialWord;
 
+    /** 첫 로딩시 접속 체크를 위한 fun 호출 (지현 추가) */
+    const checkVisit = () => {
+        axios.get("/dasony/api/visit")
+            .then((res) => {
+                switch(res.data){
+                    case 0 : console.log("이미 방문한 사람"); break;
+                    case 1 : console.log("session 생성완");
+                }
+            })
+    };
+
+    useEffect(()=>{
+        checkVisit();
+    }, []);
+
     useEffect(()=>{
         if(count<completeWord.length){
             const typingInterval = setInterval(()=>{
@@ -64,7 +79,7 @@ const PlzLogin = () => {
             setPwd(pwdVal);
             /*Encrypt */
             setLogin({...login, userPwd:SHA256(event.target.value, secretKey).toString()});
-            console.log(login);
+            //console.log(login);
         }
     }
         /*login 정보 서버에 전달 */
@@ -93,11 +108,9 @@ const PlzLogin = () => {
                 localStorage.setItem("loginUserNo", res.data.user.userNo);
                 localStorage.setItem("loginUserRegion", res.data.user.userRegion);
                 localStorage.setItem("loginUserLevel", res.data.user.userLevel);
-                localStorage.setItem("loginUserRegion", res.data.user.userRegion);
                 console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserNo"));
                 console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserRegion"));
                 console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserLevel"));
-                console.log("로컬스토리지에 값이 제대로 담겼는지 확인", localStorage.getItem("loginUserRegion"));
                 alert(res.data.msg);
                 if(res.data.user!=null && res.data.user.userLevel == 'Z'){
                     navigate('/admin/chart');

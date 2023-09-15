@@ -98,7 +98,14 @@ export default ({editStatus}) => {
         // console.log(convertImg);
         // newImage.src = `data:image/;base64,${convertImg}`;
         
-        newImage.src = "http://localhost:3000/dasony/event/" + file;
+        let url;
+        if(file.includes("http")){
+            url = file;
+        }else{
+            url = "http://localhost:3000/dasony/resources/images/event/" + file;
+            // utl = "http://localhost:3000/dasony/event/" + file;
+        }
+        newImage.src = url;
         newImage.style.objectFit = "contain";
 
         container.appendChild(newImage);

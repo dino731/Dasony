@@ -28,6 +28,9 @@
     border : 3px solid #CB9DE7;
     font-weight: 900;
 }
+.shopCate-title-box>div:hover{
+    cursor: pointer;
+}
 
 
 /*검색 영역*/

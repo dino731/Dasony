@@ -11,6 +11,7 @@
     font-size: 2vw;
     letter-spacing: 0.2vw;
     padding: 5vh 0 2vh 0;
+    color: #7A7A7A;
 }
 .shopBest-box{
     display: grid;
@@ -21,6 +22,7 @@
     font-weight: 900;
     font-size: 1.2vw;
     letter-spacing: 0.2vw;
+    color: #7A7A7A;
 }
 .shopBest-item-img{
     width: 90%;

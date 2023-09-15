@@ -25,7 +25,7 @@ const ShopHeader = () => {
 
     useEffect(()=>{
         handleUserInfo();
-    })
+    }, [userPoint])
 
 
     return(
