@@ -254,10 +254,6 @@
 	    DELETE FROM BOARD_CARE
 	    WHERE BOARD_NO = #{bCareBoardNo} AND USER_NO = #{bCareUserNo}
 	</delete>
-	
-	
-	
-
 
 
 

@@ -63,11 +63,10 @@ public class DonationServiceImpl implements DonationService{
     public List<DonationList> getMyDonationList(int userNo){
        return donationDao.getMyDonationList(userNo);
     }
-
-   @Override
-   public List<DonationList> DonaDetails(int donaNo) {
-      return donationDao.DonaDetails(donaNo);
-   }
+	
+	@Override
+	public List<DonationList> DonaDetails(int donaNo) {
+		return donationDao.DonaDetails(donaNo);
 
 
 	@Override
