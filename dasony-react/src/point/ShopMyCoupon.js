@@ -1,28 +1,43 @@
 import './ShopMyCoupon.css';
+import {useState, useEffect} from 'react';
+import axios from 'axios';
+import {useLocation} from 'react-router-dom';
+import KakaoShare from '../common/KakaoShare';
+
+
 
 const ShopMyCoupon = () => {
+
+    const location = useLocation();
+    const coupon = location.state.coupon;
+    const product = location.state.product;
+    console.log(coupon, product);
+
     return(
         <>
         <div className="shopMyCoupon-container">
             <div className="myCoupon-info">
                 <div className='myCoupon-img'>
-                    <img src='/resources/shop/product/4/004.png'/>
+                    <img src={product.productImg}/>
                 </div>
                 <div className='myCoupon-info-head'>
-                    상점 이름
+                    {product.shopName}
                 </div>
                 
                 <div className='myCoupon-info-middle'>
-                    상품 이름
+                    {product.productName}
                 </div>
                 
             </div>
             <div className="myCoupon-code"> 
                 <div>
-                    <img src='http://bwipjs-api.metafloor.com/?bcid=code128&text=AB1234567890&scale=3&includetext&backgroundcolor=ffffff'/>
+                    <img src={`http://bwipjs-api.metafloor.com/?bcid=code128&text=${coupon.couponOkey}&scale=3&includetext&backgroundcolor=ffffff`}/>
                 </div>
-                <span>유효 기간 2023-10-05까지</span>
-                <div>카카오톡으로 공유하기 <i className="bi bi-wechat"/></div>
+                <span>유효 기간 {coupon.couponExpireDate}까지</span>
+                <div>
+                    카카오톡으로 공유하기 <i className="bi bi-wechat"/>
+                    <KakaoShare/>
+                </div>
             </div>
             
         </div>

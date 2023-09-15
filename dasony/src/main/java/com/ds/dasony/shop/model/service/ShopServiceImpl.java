@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ds.dasony.shop.model.dao.ShopDao;
+import com.ds.dasony.shop.model.vo.Coupon;
 import com.ds.dasony.shop.model.vo.Product;
 import com.ds.dasony.shop.model.vo.Shop;
 
@@ -113,5 +114,21 @@ public class ShopServiceImpl implements ShopService{
 	public List<Product> productCareInfo(long userNo) {
 		return shopDao.productCareInfo(userNo);
 	}
+
+	@Override
+	public int couponBuy(Coupon coupon) {
+		return shopDao.couponBuy(coupon);
+	}
+
+	@Override
+	public List<Coupon> couponList(Map<String, String> map) {
+		return shopDao.couponList(map);
+	}
+
+	@Override
+	public List<Product> productBestInfo(String userRegion) {
+		return shopDao.productBestInfo(userRegion);
+	}
+
 
 }

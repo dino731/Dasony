@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import './heart.css';
 import axios from 'axios';
 
@@ -8,6 +8,8 @@ const HeartIcon = (props) => {
     const location = useLocation();
 
     const userNo = localStorage.getItem("loginUserNo");
+
+    const navigate = useNavigate();
 
     const product = props.product;
     console.log("product 게 있느냐",product);
@@ -30,13 +32,16 @@ const HeartIcon = (props) => {
         if(product, location.pathname.includes('shop')){
             handleHeartCss();
         }
-    },[isFilled])
+    },[])
 
     const handleHeartClick = (event) => {
         event.stopPropagation();
         setIsFilled(!isFilled);
         if(location.pathname.includes('shop')){
             !isFilled?handleShopHeartOn():handleShopHeartOff();
+        }
+        if(location.pathname.includes('heart')){
+            window.location.reload();
         }
     };
 

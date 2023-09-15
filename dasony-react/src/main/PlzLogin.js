@@ -79,7 +79,7 @@ const PlzLogin = () => {
             setPwd(pwdVal);
             /*Encrypt */
             setLogin({...login, userPwd:SHA256(event.target.value, secretKey).toString()});
-            console.log(login);
+            //console.log(login);
         }
     }
         /*login 정보 서버에 전달 */

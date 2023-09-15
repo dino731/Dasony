@@ -16,9 +16,9 @@ const UserLocation = () => {
 
 
     {/*지역 정보 */}
-    const [city, setCity] = useState('서울시');
+    const [city, setCity] = useState('서울특별시');
     const [ward, setWard] = useState('강남구');
-    const [location, setLocation] = useState('서울시 강남구');
+    const [location, setLocation] = useState('서울특별시 강남구');
     console.log(loginUserInfo.userNo);
     const userNo = loginUserInfo.userNo;
 
@@ -30,7 +30,7 @@ const UserLocation = () => {
     const handleLocationSubmit = async() =>{
         await handleLocation();
         console.log("서브밋때 되는지 확인할 용도:" , location);
-        axios.post('/dasony/api/location', {location:location==""?"서울시 강남구":location, userNo:userNo})
+        axios.post('/dasony/api/location', {location:location==""?"서울특별시 강남구":location, userNo:userNo})
         .then(res=>{
             alert(res.data.msg);
             navigate('/');
@@ -47,8 +47,8 @@ const UserLocation = () => {
                 <tr>
                     <th>시/도 선택</th>
                     <td>
-                        <select onChange={handleCity} value={city==''?'서울시':city}>
-                            <option>서울시</option>
+                        <select onChange={handleCity} value={city==''?'서울특별시':city}>
+                            <option>서울특별시</option>
                         </select>
                     </td>
                 </tr>
