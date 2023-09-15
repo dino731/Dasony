@@ -1,5 +1,8 @@
 package com.ds.dasony.common.model.service;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,11 @@ public class SessionService {
 	@Transactional
 	public void addVisitor(HttpServletRequest request) {
 		// IP 가져오기 
-		session.setVisitorIp(getVisitorIp(request)); // req.getRemoteAddr()
+		try {
+			session.setVisitorIp(getVisitorIp(request));
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} // req.getRemoteAddr()
 		// browser 가져오기
 		session.setVisitorAgent(request.getHeader("User-Agent"));
 		// 접속 이전 사이트 가져오기
@@ -46,7 +53,11 @@ public class SessionService {
 	
 	private SessionModel getSession(HttpServletRequest request) {
 		// IP 가져오기 
-		session.setVisitorIp(getVisitorIp(request)); // req.getRemoteAddr()
+		try {
+			session.setVisitorIp(getVisitorIp(request)); // req.getRemoteAddr()
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} 
 		// browser 가져오기
 		session.setVisitorAgent(request.getHeader("User-Agent"));
 		// 접속 이전 사이트 가져오기
@@ -55,7 +66,7 @@ public class SessionService {
 		return session;
 	}
 	
-	private static String getVisitorIp (HttpServletRequest request) {
+	private static String getVisitorIp (HttpServletRequest request) throws UnknownHostException {
 	    String ip = request.getHeader("X-Forwarded-For");
 	 
 	    if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -70,8 +81,19 @@ public class SessionService {
 	    if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 	        ip = request.getHeader("HTTP_X_FORWARDED_FOR");
 	    }
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+            ip = request.getHeader("X-RealIP"); 
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+            ip = request.getHeader("REMOTE_ADDR");
+        }
 	    if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 	        ip = request.getRemoteAddr();
+	    }
+	    
+	    if(ip.equals("0:0:0:0:0:0:0:1") || ip.equals("127.0.0.1")) {
+	    	InetAddress address = InetAddress.getLocalHost();
+	    	ip = address.getHostName() + "/" + address.getHostAddress();
 	    }
 	 
 	    return ip;
