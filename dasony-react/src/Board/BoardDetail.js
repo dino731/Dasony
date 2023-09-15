@@ -10,6 +10,7 @@ import Vote from './Vote';
 import Shorts from './Shorts'
 import BoardDetailReply from './BoardDetailReply';
 import axios from 'axios';
+import BoardHeart from './BoardHeart';
 
 
 
@@ -17,8 +18,9 @@ const BoardDetail = () =>{
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
-  console.log('BoardDetail path ===>',path);
+  // console.log('BoardDetail path ===>',path);
   const [replyText, setReplyText] = useState([]);
+  localStorage.getItem("loginUserNo") // 유저 번호 
 
   /* 현재 경로 비교연산 밑작업용 ain 0904 */
   const dailyPath = path.includes('daily') ? path : null;
@@ -142,6 +144,8 @@ const BoardDetail = () =>{
     /* 신고 모달 끝 */
   /* 모달 관련 끝 */
   const[boardData,setBoardData]=useState([]);
+  const [newReplyText, setNewReplyText] = useState([]);
+  const [isFilled, setIsFilled] = useState(null);
   // console.log('boardDetail listPath ==>',listPath);
    /* axios 시작 */
    useEffect(() => {
@@ -157,12 +161,27 @@ const BoardDetail = () =>{
         console.log('요청 주소:', response.config.url); // 요청 주소 확인
         console.log('BoardList 응답 데이터:', response.data);
         setBoardData(response.data);
+        // setReplyText(response.data.replyList);
       })
       .catch((error) => {
         console.error('서버 요청 오류:', error);
       });
-  }, [listPath, boardNo]); // 빈 배열을 두번째 인자로 전달하면 컴포넌트가 마운트될 때 한 번만 실행
-  console.log('게시판리스트 boardData ===>',boardData);
+
+     axios.get(`http://localhost:3000/dasony/board/serchHeart?boardNo=${boardNo}&userNo=${localStorage.loginUserNo}`)
+    .then(response => {
+      const result = response.data;
+      console.log('result',result);
+      setIsFilled(result);
+
+    })
+    .catch(error => {
+      console.error('좋아요 정보를 가져오는 중 오류 발생:', error);
+    });
+
+
+  }, [listPath, boardNo,isFilled]); // 빈 배열을 두번째 인자로 전달하면 컴포넌트가 마운트될 때 한 번만 실행
+  // console.log('게시판리스트 boardData ===>',boardData);
+  // console.log('게시판 디테일 받아온 replyText ====>',replyText);
   /* axios 끝 */
   
   return (
@@ -255,7 +274,7 @@ const BoardDetail = () =>{
                     <div className='BoardDetail-boardlist-title-userinfo-container'>
                       <div className='BoardDetail-boardlist-title-userinfo'>
                         <span className='BoardDetail-boardlist-title-userinfo-img'><img src="/resources/board/jh.jpg"/></span>
-                        <span className='BoardDetail-boardlist-title-userinfo-nikname'>{board.userName}</span>
+                        <span className='BoardDetail-boardlist-title-userinfo-nikname'>{board?.user.userNick}</span>
                         <span className='BoardDetail-boardlist-title-userinfo-date'>{board.boardWriteDate}</span>
                       </div>
                       <div className='BoardDetail-boardlist-title-views-wrapper'>
@@ -286,11 +305,11 @@ const BoardDetail = () =>{
                     >
                     </div>
                   </div>
-                <BoardDetailReply editContent={{replyText, setReplyText}}/>
+                <BoardDetailReply editContent={{newReplyText, setNewReplyText}} boardData={boardData} listPath={listPath}/>
                 </div>
                 <div className='BoardDetail-side-container'>
                   <div className='BoardDetail-side-by-side'>
-                    <div className='BoardDetail-side-haert'><Heart/></div>
+                    <div className='BoardDetail-side-haert'><BoardHeart boardNo={boardNo} isFilled={isFilled} setIsFilled={setIsFilled}/></div>
                     <div className="">
                       <button
                       onClick={onMoveBox}
