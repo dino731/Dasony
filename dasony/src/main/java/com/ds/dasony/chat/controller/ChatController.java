@@ -95,7 +95,8 @@ public class ChatController {
 			@DestinationVariable("chatRoomNo") int chatRoomNo, 
 			ChatMessage chatMessage,
 			SimpMessageHeaderAccessor accessor,
-			@Header ("userNo") long userNo
+			@Header ("userNo") long userNo,
+			@Header ("userName") String userName
 			) {
 		
 		log.info("chatMessage {}" , chatMessage);
@@ -103,7 +104,7 @@ public class ChatController {
 		chatMessage.setUserNo(userNo);
 		log.info("userNo = {}", userNo);
 		chatMessage.setChatRoomNo(chatRoomNo);
-		chatMessage.setUserNo(userNo);
+		chatMessage.setUserName(userName);
 		
 		 int sesult = chatService.insertChatMessage(chatMessage);
 		

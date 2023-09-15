@@ -89,7 +89,11 @@ import AdminBoardDelete from './admin/board/adminBoardDelete';
 import BoardEdit from './Board/BoardEdit';
 import ChartManager from './admin/chart/ChartManager';
 import { Share } from './share/share';
+
 import MypageReception from './mypage/mypageReception';
+
+import { ShopMyCouponImg } from './point/ShopMyCouponImg';
+
 
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
@@ -116,15 +120,7 @@ function App() {
     getPage();
   }, []);
 
-  const [mainPage, setMainPage] = '';
 
-  const HandleMainPage = () => {
-    if(1){
-      setMainPage((<PlzLogin/>));
-    } else {
-      setMainPage((<Home/>));
-    }
-  }
   const location = useLocation();
   
   return (
@@ -476,7 +472,14 @@ function App() {
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <ShopMyCoupon/>
-                                                      </motion.div>}/>   
+                                                      </motion.div>}/> 
+                      <Route path="coupon/:id/img" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <ShopMyCouponImg/>
+                                                      </motion.div>}/>
                       {/*coupon중첩 route 끝 */}
 
 
@@ -956,7 +959,9 @@ function App() {
                                                                       </motion.div></div></div>}/> 
               </Route>
               <Route element={<PrivateRoute/>}>
-                <Route path='*' element={<PlzLogin/>}/>  
+                <Route path='*' element={<div className="main-container">
+                                              <PlzLogin/>
+                                        </div>}/>  
               </Route>                                                                                                                                                                           
           </Routes>
         </AnimatePresence>

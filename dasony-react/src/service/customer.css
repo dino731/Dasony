@@ -38,8 +38,6 @@ html, body{margin: 0; padding: 0;}
         margin-bottom: 2%;
 
         .notice-board-title{cursor: pointer;}
-
-        &:first-child{padding: 0 0 2% 0;}
     }
 }
 
@@ -55,7 +53,7 @@ html, body{margin: 0; padding: 0;}
     >.row:first-child{
         border-bottom: 1px solid black;
         font-weight: 600;
-        padding: 2% 0;
+        padding: 0 0 2% 0;;
     }
 }
 

@@ -1,10 +1,13 @@
 package com.ds.dasony.donation.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ds.dasony.donation.model.dao.DonationDao;
 import com.ds.dasony.donation.model.vo.Donation;
@@ -57,15 +60,14 @@ public class DonationServiceImpl implements DonationService{
 	}
 	
 	@Override
-	public List<DonationList> getMyDonationList(int userNo){
-		return donationDao.getMyDonationList(userNo);
+    public List<DonationList> getMyDonationList(int userNo){
+       return donationDao.getMyDonationList(userNo);
+    }
+	
+	@Override
+	public List<DonationList> DonaDetails(int donaNo) {
+		return donationDao.DonaDetails(donaNo);
 	}
-
-
-   @Override
-   public List<DonationList> DonaDetails(int donaNo) {
-      return donationDao.DonaDetails(donaNo);
-   }
 
 
 	@Override
@@ -77,8 +79,6 @@ public class DonationServiceImpl implements DonationService{
 		}
 		return totalDonaAmount;
 	}
-
-
    
 //   @Override
 //   public int selectUserDason(int userNo) throws Exception{
