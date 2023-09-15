@@ -89,7 +89,11 @@ import AdminBoardDelete from './admin/board/adminBoardDelete';
 import BoardEdit from './Board/BoardEdit';
 import ChartManager from './admin/chart/ChartManager';
 import { Share } from './share/share';
+
+import MypageReception from './mypage/mypageReception';
+
 import { ShopMyCouponImg } from './point/ShopMyCouponImg';
+
 
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
@@ -147,6 +151,18 @@ function App() {
                                           }/>
                   
 
+                  {/* 로그인 된 경우 */}
+                  {/*관리자로 로그인 한 경우 */}
+                <Route element = {<AdminRoute/>}>
+                  <Route path="/admin/chart" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                        <ChartManager/>
+                                                                        </motion.div></div></div>}/>
+                </Route>
                   {/* 로그인 된 경우 */}
                   {/*관리자로 로그인 한 경우 */}
                 <Route element = {<AdminRoute/>}>
@@ -814,6 +830,8 @@ function App() {
                     {/* notice 중첩 route 시작 */}
                     <Route path="notice" element={<Notice/>}>
                         <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
+                    <Route path="mypageReception" element={<MypageReception/>}/>                                                                       
+                    
                     </Route>
                 </Route>
               </Route>
