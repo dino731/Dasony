@@ -109,7 +109,7 @@ const Header = () => {
                             onClick={(event)=>{HandleOpacity(event.target.id);}}
                             style={{fontSize:'1.5vw'}}
                         >
-                            <i className="bi bi-exclamation-triangle-fill"></i> 문의/신고
+                            <i className="bi bi-exclamation-triangle-fill"></i> 고객센터
                         </li>
                     
                     
@@ -216,11 +216,14 @@ const Header = () => {
     }, [location, loginUserNo]);
 
     useEffect(() => {
-        const gameDiv = document.getElementById('game');
-        if (gameStartYN === 'Y') {
-          gameDiv.style.display = 'block';
-        } 
-      }, [gameStartYN]);
+        if (loginUserNo !== null) {
+            const gameDiv = document.getElementById('game');
+    
+            // if (gameStartYN === 'Y') {
+                gameDiv.style.display = 'block';
+            // }
+        }
+    }, [gameStartYN]);
 
     /*사이드바 속성 useState */
     const [sideId, setSideId] = useState('');
@@ -272,10 +275,10 @@ const Header = () => {
                                                     <li></li>
                                                     <li></li>
                                                     <li></li>
-                                                    <li></li>
+                                                    <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/report'>공지</Link></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/alert'>알람</Link></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/reception'>문의</Link></li>
-                                                    <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/report'>신고</Link></li>
+                                                    <li></li>
                                                 </ul>
                                             ); break;
             }

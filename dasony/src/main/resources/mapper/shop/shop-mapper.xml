@@ -29,6 +29,17 @@
 		<result column="PRODUCT_NO" property="productNo"/>
 		<result column="PRODUCT_IMG_MOD_NAME" property="productImgModName"/>
 	</resultMap>
+	
+	<resultMap type="coupon" id="couponMap">
+		<id column="COUPON_NO" property="couponNo" />
+		<result column="COUPON_OKEY" property="couponOkey"/>
+		<result column="COUPON_SWAP_DATE" property="couponSwapDate"/>
+		<result column="COUPON_EXPIRE_DATE" property="couponExpireDate"/>
+		<result column="COUPON_USE_STATUS" property="couponUseStatus"/>
+		<result column="COUPON_NAME" property="couponName"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="PRODUCT_NO" property="productNo"/>
+	</resultMap>
 
 	
 	<select id="shopList" parameterType="map" resultMap="shopMap">
@@ -137,7 +148,7 @@
 		    <if test="shopCate != null">
 		    	AND S.SHOP_CATE = #{shopCate}
 		    </if>
-		    <if test="userRegion != '관리자'">
+		    <if test="userRegion != '관리자' and userRegion != null">
 		    	AND S.SHOP_REGION = #{userRegion}
 		    </if>
 		 </where>
@@ -234,5 +245,41 @@
 		WHERE
 			C.USER_NO = #{userNo}
 	</select>
+
+	<insert id="couponBuy" parameterType="coupon">
+		INSERT INTO COUPON
+		VALUES(     
+			SEQ_CPNO.nextval,
+			#{userNo}||TO_CHAR(SYSDATE, 'MMDDHH24')||#{productNo},
+			SYSDATE,
+			SYSDATE+365,
+			DEFAULT,
+			#{couponName},
+			#{userNo},
+			#{productNo}
+		)
+	</insert>
+	
+	<select id="couponList" parameterType="map" resultMap="couponMap">
+		SELECT *
+		FROM COUPON C
+		JOIN PRODUCT P  ON P.PRODUCT_NO = C.PRODUCT_NO
+		WHERE
+			USER_NO = #{userNo}
+		ORDER BY COUPON_SWAP_DATE
+	</select>
+	
+	<select id="productBestInfo" parameterType="string" resultMap="productMap">
+	    SELECT P.PRODUCT_NO, S.SHOP_OKEY, P.PRODUCT_NAME, P.PRODUCT_AMOUNT, S.SHOP_NAME, S.SHOP_ADDRESS, S.SHOP_REGION,
+	            S.SHOP_CATE, S.SHOP_JOIN_DATE, COUNT(C.USER_NO) AS CARE_COUNT
+	    FROM PRODUCT P
+	    LEFT JOIN PRODUCT_CARE C ON P.PRODUCT_NO = C.PRODUCT_NO
+	    JOIN SHOP S ON P.SHOP_OKEY = S.SHOP_OKEY
+	    WHERE SHOP_REGION = #{userRegion}
+	    GROUP BY P.PRODUCT_NO, S.SHOP_OKEY, P.PRODUCT_NAME, P.PRODUCT_AMOUNT, S.SHOP_NAME, S.SHOP_ADDRESS, S.SHOP_REGION,
+	            S.SHOP_CATE, S.SHOP_JOIN_DATE
+	    ORDER BY CARE_COUNT DESC
+	</select>
+	
 
 </mapper>
