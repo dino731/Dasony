@@ -68,6 +68,7 @@ public class DonationServiceImpl implements DonationService{
 	public List<DonationList> DonaDetails(int donaNo) {
 		return donationDao.DonaDetails(donaNo);
 
+
 	@Override
 	public int totalAmount(List<DonationList> donaHistory) {
 		
