@@ -37,5 +37,12 @@ public class BoardWriterForm {
 	//private String boardSmallCate;	//BOARD_SMALL_CATE
 	
 	private List<MultipartFile> boardImgFiles = new ArrayList<MultipartFile>();
+	
+//	private List<String> replyNo; 		//REPLY_NO
+//	private List<String> replyContent; 	//REPLY_CONTENT
+//	private List<String> replyStatus; 	//REPLY_STATUS
+//	private List<String> replyWriteDate; //REPLY_WRITE_DATE
+
+	
 
 }
