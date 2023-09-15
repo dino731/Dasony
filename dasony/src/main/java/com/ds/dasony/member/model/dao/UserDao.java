@@ -117,6 +117,10 @@ public class UserDao {
 		List<Game>result = session.selectList("game.getMyGameList",userNo);
 		return result;
 	}
+	public int delteMyAlertList(Map<String, Integer> requestBody) {
+		int result = session.delete("alert.deleteMyAlertList", requestBody);
+		return result;
+	}
 	
 	
 

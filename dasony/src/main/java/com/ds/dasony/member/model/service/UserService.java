@@ -64,6 +64,8 @@ public interface UserService {
 
 	public List<Game> getMyGameList(int userNo);
 
+	public int deleteMyAlertList(Map<String, Integer> requestBody);
+
 
 
 }

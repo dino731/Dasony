@@ -132,6 +132,10 @@ public class UserServiceImpl implements UserService{
 	public List<Game> getMyGameList(int userNo){
 		return userDao.getMyGameList(userNo);
 	}
+	@Override
+	public int deleteMyAlertList(Map<String, Integer> requestBody) {
+		return userDao.delteMyAlertList(requestBody);
+	}
 
 
 }

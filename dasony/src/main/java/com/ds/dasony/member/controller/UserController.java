@@ -297,6 +297,13 @@ public class UserController {
 		return actList;
 	}
 	
+	@PostMapping("deleteMyAlertList")
+	public int deleteMyAlertList(
+			@RequestBody Map<String, Integer> requestBody ) {
+		int result = userService.deleteMyAlertList(requestBody);
+		return result;
+	}
+	
 	
 	
 
