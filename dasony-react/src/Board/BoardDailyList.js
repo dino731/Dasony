@@ -117,6 +117,19 @@ const BoardDailyList = ()=>{
   }
   // console.log('BoardDailyList : 'boardPost.boardCateNo, boardCateStateValue.name);
 
+  const handleLinkClick = (e) =>{
+    const boardNo = e;
+    console.log('조회수 구하기 위한 boardNo 확인 ===>',boardNo);
+
+    axios.get(`http://localhost:3000/dasony/board/boardViewsCount?boardNo=${boardNo}`)
+    .then((res)=>{
+      console.log('Axios 요청 성공:', res.data);
+    })
+    .catch((error)=>{
+      console.log('Axios 요청 오류',error);
+    })
+  };
+
   return(
     <>
       <div className="BoardList-head-title-wrapper">
@@ -200,7 +213,7 @@ const BoardDailyList = ()=>{
               <li className="boardList-list-li">
                 <div className="boardList-list-wrapper">
                   <div className="boardList-list-container">
-                        <Link to={'/board'+listPath+'detail/'+board.boardNo} style={{textDecoration:'none'}}>
+                        <Link to={'/board'+listPath+'detail/'+board.boardNo} onClick={()=>handleLinkClick(board.boardNo)} style={{textDecoration:'none'}}>
                           <div className="boardList-list-content-container">
                               <div className="boardList-list-keyword">{board.boardCate.boardSmallCate}</div>
                               <div className="boardList-list-content-title">{board.boardTitle}</div>
@@ -222,6 +235,11 @@ const BoardDailyList = ()=>{
             ))
              
           }
+          <ul>
+            <li>
+              
+            </li>
+          </ul>
         </div>
       </div>
     </>

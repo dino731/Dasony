@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ds.dasony.Board.model.dao.BoardDao;
+import com.ds.dasony.Board.model.vo.BoardCare;
 import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardExt;
 import com.ds.dasony.Board.model.vo.BoardImg;
 import com.ds.dasony.Board.model.vo.BoardTag;
 import com.ds.dasony.Board.model.vo.BoardWriterForm;
+import com.ds.dasony.Board.model.vo.Reply;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,13 +57,50 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return result;
 	}
+	
 	@Override
-	public List<BoardDetailExt> boardDetail(int BoardNo){
-		return boardDao.boardDetail(BoardNo);
+	public int insertBordViews(int boardNo) {
+		return boardDao.insertBordViews(boardNo);
 	}
+	@Override
+	public List<BoardDetailExt> boardDetail(int boardNo){
+		return boardDao.boardDetail(boardNo);
+	}
+//	@Override
+//	public List<Reply> replySelect(List<Reply> rUserNoList){
+//		return boardDao.replySelect(rUserNoList);
+//	}
+	
+	
 	@Override
 	public BoardWriterForm boardEdit (int BoardNo){
 		return boardDao.boardEdit(BoardNo);
 	}
+	@Override
+	public int insertReply(Reply r, int userNo) {	
+		int result = boardDao.insertReply(r,userNo);
+		return result;
+	}
+	
+	@Override
+	public int serchHeart(BoardCare bc) {
+		return boardDao.serchHeart(bc);
+		  
+	}
+
+	@Override
+	public int insertHeart(BoardCare bc) {
+		int result = boardDao.insertHeart(bc);
+		return result;
+	}
+	@Override
+	public int deleteHeart(BoardCare bc) {
+		int result = boardDao.deleteHeart(bc);
+		return result;
+	}
+
+
+
+
 
 }

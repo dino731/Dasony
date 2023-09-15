@@ -162,12 +162,21 @@
   width: 100%;
   padding-left: 1vw;
 }
+.BoardDetail-boardlist-reply-btn{
+  margin: 0 1vw 0;;
+}
 .BoardDetail-boardlist-reply-btn>button{
   border: none;
   border-radius: .5vh;
   padding: 5px;
   background-color: #CB9DE7;
   color:#FCFA90;
+}
+.Board-reply-recoment-accused-span{
+  margin: 0 0.5vw 0 0;
+}
+.Board-reply-recoment-accused-btn{
+  border: none;
 }
 .BoardDetail-boardlist-meetball-btn{
   border: none;
