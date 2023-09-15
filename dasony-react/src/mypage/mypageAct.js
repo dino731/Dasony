@@ -8,6 +8,12 @@ const MypageAct = () => {
      pointList:[] , gameList : []
     });
 
+    const handleDelete = (index, type) => {
+      const updatedList = [...actList[type]];
+      updatedList.splice(index, 1); 
+      setActList({ ...actList, [type]: updatedList }); 
+    };
+
   useEffect(() => {
     axios.post("/dasony/api/getMyActList", loginUserNo, {
       headers: {
@@ -65,7 +71,7 @@ const MypageAct = () => {
                 <td className="nf-td2">{item.boardTitle}</td>
                 <td className="nf-td1">게시글</td>
                 <td className="nf-td1">
-                  <button className="delete-button">삭제</button>
+                  <button className="delete-button" onClick={() => handleDelete(index, 'boardList')}>삭제</button>
                 </td>
               </tr>
             ))}
@@ -77,7 +83,7 @@ const MypageAct = () => {
                 <td className="nf-td2">{item.donation.donaTitle}</td>
                 <td className="nf-td1">기부</td>
                 <td className="nf-td1">
-                  <button className="delete-button">삭제</button>
+                  <button className="delete-button" onClick={() => handleDelete(index, 'donationList')}>삭제</button>
                 </td>
               </tr>
             ))}
@@ -88,7 +94,7 @@ const MypageAct = () => {
                 <td className="nf-td2">{item.title}</td>
                 <td className="nf-td1">이벤트</td>
                 <td className="nf-td1">
-                  <button className="delete-button">삭제</button>
+                  <button className="delete-button" onClick={() => handleDelete(index, 'eventList')}>삭제</button>
                 </td>
               </tr>
             ))}
@@ -99,7 +105,7 @@ const MypageAct = () => {
                 <td className="nf-td2">{item.pointContent}</td>
                 <td className="nf-td1">포인트</td>
                 <td className="nf-td1">
-                  <button className="delete-button">삭제</button>
+                  <button className="delete-button" onClick={() => handleDelete(index, 'pointList')}>삭제</button>
                 </td>
               </tr>
             ))}
@@ -126,7 +132,7 @@ const MypageAct = () => {
                   </td>
                 <td className="nf-td1">게임</td>
                 <td className="nf-td1">
-                  <button className="delete-button">삭제</button>
+                  <button className="delete-button" onClick={() => handleDelete(index, 'gameList')}>삭제</button>
                 </td>
               </tr>
             ))}

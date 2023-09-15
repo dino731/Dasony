@@ -216,11 +216,14 @@ const Header = () => {
     }, [location, loginUserNo]);
 
     useEffect(() => {
-        const gameDiv = document.getElementById('game');
-        if (gameStartYN === 'Y') {
-          gameDiv.style.display = 'block';
-        } 
-      }, [gameStartYN]);
+        if (loginUserNo !== null) {
+            const gameDiv = document.getElementById('game');
+    
+            // if (gameStartYN === 'Y') {
+                gameDiv.style.display = 'block';
+            // }
+        }
+    }, [gameStartYN]);
 
     /*사이드바 속성 useState */
     const [sideId, setSideId] = useState('');
