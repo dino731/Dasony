@@ -285,6 +285,31 @@ public class ShopController {
 		return ResponseEntity.ok(resultMap);
 	}
 	
+	@PostMapping("/productBestInfo")
+	public ResponseEntity<Object> productBestInfo(@RequestBody Map<String, String>map){
+		String userRegion = map.get("userRegion");
+		List<Product> product = new ArrayList();
+		product = shopService.productBestInfo(userRegion);
+		List<String> productImg = new ArrayList();
+		Map<String, Object> productMap = new HashMap();
+		log.info("userRegion:",userRegion);
+		for(int i = 0; i<product.size();i++) {
+			String productNo = product.get(i).getProductNo();
+			productImg = shopService.productInfoImg(productNo);
+			
+			
+			List<String> productPath = new ArrayList();
+			for(int j = 0; j<productImg.size(); j++) {
+				log.info(productImg.get(j));
+				productPath.add("http://localhost:8083/dasony/resources/images/product/"+productImg.get(j));
+			}
+			product.get(i).setProductImg(productPath);
+			productMap.put("product", product);
+			
+		}
+		log.info("product={},==>>>>>>>>>>", product);
+			return ResponseEntity.ok(productMap);
+	}
 
 	
 

@@ -2,6 +2,7 @@ import './ShopMyCoupon.css';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import {useLocation} from 'react-router-dom';
+import KakaoShare from '../common/KakaoShare';
 
 
 
@@ -33,7 +34,10 @@ const ShopMyCoupon = () => {
                     <img src={`http://bwipjs-api.metafloor.com/?bcid=code128&text=${coupon.couponOkey}&scale=3&includetext&backgroundcolor=ffffff`}/>
                 </div>
                 <span>유효 기간 {coupon.couponExpireDate}까지</span>
-                <div>카카오톡으로 공유하기 <i className="bi bi-wechat"/></div>
+                <div>
+                    카카오톡으로 공유하기 <i className="bi bi-wechat"/>
+                    <KakaoShare/>
+                </div>
             </div>
             
         </div>

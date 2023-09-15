@@ -33,14 +33,13 @@
 .coupon-img{
     border: 1.5px solid #CB9DE7; 
     border-radius: 0.5vw;
-    width: 8vw;
-    height: 8vw;
+    height: 90%;
     overflow: hidden;
     position: relative;
 }
 
 .coupon-img>img{
-    width: 8vw;
+    width: 100%;
 }
 .coupon-container a{
     display: block;
@@ -50,4 +49,17 @@
 .coupon-list:hover{
     background-color: #f2f2f2;
     transition-duration: 0.5s;
+}
+
+.coupon-item>div:first-child{
+    width: 15%;
+}
+.coupon-item>div:nth-child(2){
+    width: 30%;
+}
+.coupon-item>div:nth-child(3){
+    width: 20%;
+}
+.coupon-item>div:nth-child(4){
+    width: 15%;
 }

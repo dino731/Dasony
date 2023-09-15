@@ -18,7 +18,7 @@ const SignUp = ()=>{
 
     const [loginUserInfo, setLoginUserInfo] = useRecoilState(loginUserState);
 
-    console.log("리코일에서 받아온 유저 정보-사용자 지역 설정(사용자):",loginUserInfo);
+    //console.log("리코일에서 받아온 유저 정보-사용자 지역 설정(사용자):",loginUserInfo);
     
 
     /*data 전달 값 함수 만들기 */
@@ -77,7 +77,7 @@ const SignUp = ()=>{
     const handleCompleteChk = ()=>{
         handleCompleteAddress();
         handleCompleteEmail(); 
-        console.log(completeAddress, completeEmail, id, pwd, name);
+        //console.log(completeAddress, completeEmail, id, pwd, name);
         
         }
     /*유효성 검사 */
@@ -200,7 +200,6 @@ const SignUp = ()=>{
             }
         user = {userId:id, userPwd:encPwd, userName:name,
             userNick:nick, userAddress:completeAddress, userPhone:phone, userEmail:completeEmail};
-            console.log("유즈이펙트",user);
     }, [id, pwd, chkPwd, nick, name, phone, completeEmail, completeAddress,completeDuplicateId,completeDuplicateNick, idValid, nickValid])
 
 
@@ -208,7 +207,6 @@ const SignUp = ()=>{
     const handleSubmit = (event) => {
         event.preventDefault();
             /*비밀번호 암호화*/
-        console.log(pwd);
 
         //axios이용해서 POST 요청 보내기
         axios.post("/dasony/api/signUp", user, {
@@ -218,9 +216,9 @@ const SignUp = ()=>{
         })
             .then(response => {
                 //요청 성공했을 때 실행할 코드
-                console.log("회원가입", user);
+                //console.log("회원가입", user);
                 setLoginUserInfo(response.data.user);
-                console.log("서버에서 회원 정보 받아왔는지 확인:", response.data.user);//응답 데이터 출력
+                //console.log("서버에서 회원 정보 받아왔는지 확인:", response.data.user);//응답 데이터 출력
                 alert(response.data.msg);
                 navigate('/location');
             })

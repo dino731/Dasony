@@ -114,5 +114,9 @@ public class ShopDao {
 		return session.selectList("shopMapper.couponList", map);
 	}
 
+	public List<Product> productBestInfo(String userRegion) {
+		return session.selectList("shopMapper.productBestInfo", userRegion);
+	}
+
 
 }

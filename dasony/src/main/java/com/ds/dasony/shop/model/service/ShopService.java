@@ -51,5 +51,7 @@ public interface ShopService {
 
 	public List<Coupon> couponList(Map<String, String> map);
 
+	public List<Product> productBestInfo(String userRegion);
+
 
 }
