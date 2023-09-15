@@ -126,6 +126,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+				    <!-- <addResources>true</addResources> -->
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -134,7 +135,14 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<!-- 
+			<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-resources-plugin</artifactId>
+	            다른 설정들
+	        </plugin> -->
 		</plugins>
+		 
 	</build>
 
 </project>

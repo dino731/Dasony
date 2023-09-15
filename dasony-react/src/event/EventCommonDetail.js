@@ -121,7 +121,7 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
                 onClick={()=>navigate(-1)}></i>
             </div>
             <div className="dasony-promotion dragging">
-                <div className="promo-form-header" style={{ "backgroundImage": eventInfo.thumbnail != null ? `url('http://localhost:3000/dasony/event/${eventInfo.thumbnail}')` : null }}>
+                <div className="promo-form-header" style={{ "backgroundImage": eventInfo.thumbnail != null ? `url('http://localhost:3000/dasony/resources/images/event/${eventInfo.thumbnail}')` : null }}>
                 {/* 'https://dn-img-page.kakao.com/download/resource?kid=bpAeKz/hAd4wW3xd8/k9x3hD2NoVju7YY2QpONE1&filename=th3' */}
                     <div className="promo-form-info">
                         <h3>{eventInfo.title!=null ? eventInfo.title : null}</h3>
