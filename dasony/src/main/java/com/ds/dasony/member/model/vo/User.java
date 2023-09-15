@@ -28,5 +28,6 @@ public class User {
 	private String userStatus;
 	private int totalPoint;
 	private String gameStatus;
+	private int userExp;
 
 }
