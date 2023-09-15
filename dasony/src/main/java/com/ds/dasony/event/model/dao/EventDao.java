@@ -1,6 +1,8 @@
 package com.ds.dasony.event.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -8,9 +10,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ds.dasony.event.model.vo.Email;
 import com.ds.dasony.event.model.vo.Event;
 import com.ds.dasony.event.model.vo.EventJoin;
 import com.ds.dasony.event.model.vo.Reward;
+import com.ds.dasony.ticket.model.vo.Ticket;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -93,6 +97,7 @@ public class EventDao {
 	}
 
 	public int checkEventJoin(Map<String, Object> data) {
+		log.info("dao-check : " + data.toString());
 		return session.selectOne("event.checkEventJoin", data);
 	}
 
@@ -107,17 +112,79 @@ public class EventDao {
 			result.setCount(session.selectOne("event.findLast", data));
 			result.setTdyCheck("N");
 		}
+		log.info("result : " + result.toString());
 		return result;
 	}
 
 	public int checkTdyLogin(Map<String, Object> data) {
 		int lastNum = session.selectOne("event.findLast", data);
 		data.put("lastNum", lastNum);
-		log.info("str  : " + lastNum);
+//		log.info("str  : " + lastNum);
 		int result = session.insert("event.checkTdyLogin", data);
-		log.info("Result : " + result);
+//		log.info("Result : " + result);
 		
 		return result;
+	}
+
+	public List<Integer> checkTickets(Map<String, Object> data) {
+		return session.selectList("event.checkTickets", data);
+	}
+
+	public List<Event> raffleEvent() {
+		return session.selectList("event.raffleEvent");
+	}
+
+	public List<String> findAllParticipants(String eventNo) {
+		return session.selectList("event.findAllParticipants", eventNo);
+	}
+
+	public List<Reward> findAllReward(String eventNo) {
+		return session.selectList("event.findAllReward", eventNo);
+	}
+
+	public int addWinner(Map<Integer, Object> winnerMap) {
+		int result = 1;
+		for(int reward : winnerMap.keySet()) { // {상품번호: [당첨자]}
+			HashSet<String> winnerSet = (HashSet<String>) winnerMap.get(reward);
+	        List<String> winnerList = new ArrayList<>(winnerSet);
+	        
+			for(String winner : winnerSet) {
+				Map<String, Object> rewardWinner = new HashMap();
+				rewardWinner.put("rewardNo", reward);
+				rewardWinner.put("winner", winner);
+				
+				log.info("rewardWinner : " + rewardWinner.toString());
+				result *= session.insert("event.addWinner", rewardWinner);
+			}
+		}
+		return result;
+	}
+
+	public List<String> findLoginCheckUsers(String eventNo, int day) {
+		Map<String, Object> param = new HashMap();	
+		param.put("eventNo", eventNo);
+		param.put("day", day);
+		return session.selectList("event.findLoginCheckUsers", param);
+	}
+
+	public int addPoint(Map<String, Object> data) {
+		return session.insert("event.addPoint", data);
+	}
+
+	public int loadLoginCount(Map<String, Object> data) {
+		return session.selectOne("event.loadLoginCount", data);
+	}
+
+	public Reward selectRewardType(int rewardNo) {
+		return session.selectOne("event.selectRewardType", rewardNo);
+	}
+
+	public int selectUserJoin(String joinNo) {
+		return session.selectOne("event.selectUserJoin", joinNo);
+	}
+
+	public Email findEmailInfo(Map<String, Object> data) {
+		return session.selectOne("event.findEmailInfo", data);
 	}
 	
 }

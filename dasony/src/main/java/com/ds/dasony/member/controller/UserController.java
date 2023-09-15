@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ds.dasony.common.model.service.SessionService;
 import com.ds.dasony.member.model.service.UserService;
 import com.ds.dasony.member.model.vo.User;
 
@@ -22,10 +26,21 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
 	private final UserService userService;
+	// session 조회
+	@Autowired
+	private SessionService sessionService;
 	
 	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
+	}
+	
+	/*
+	 * 접속자 확인을 위한 함수 (지현 추가)
+	 * */
+	@GetMapping("/visit")
+	public void checkVisit(HttpServletRequest request) {
+		sessionService.addVisitor(request);		
 	}
 	
 	@PostMapping("/chkValidate")
@@ -247,6 +262,41 @@ public class UserController {
 		
 		return point;
 	}
+	
+	@PostMapping("getMyTicket")
+	public int getMyTicket(@RequestBody Map<String, Integer> requestBody) {
+	    int userNo = requestBody.get("userNo");
+	    String count2 = String.valueOf(userNo);
+	    int count = userService.getMyTicket(userNo);
+	    String count1 = String.valueOf(count);
+		return count;	
+	}
+	
+	@PostMapping("getMyPointList")
+	public Map<String, Object> getMyPointList(
+			@RequestBody int userNo){
+		
+		Map<String,Object> pList = new HashMap();
+		pList.put("pList", userService.getMyPointList(userNo));
+		return pList;
+		
+	}
+	
+	@PostMapping("getMyActList")
+	public Map<String,Object> getMyActList(
+			@RequestBody int userNo){
+		Map<String,Object> actList = new HashMap();
+		
+		actList.put("boardList", userService.getMyBoardList(userNo));
+		actList.put("donationList", userService.getMyDonationList(userNo));
+		actList.put("eventList",userService.getMyEventList(userNo));
+		actList.put("pointList",userService.getMyPointList(userNo));
+		actList.put("gameList",userService.getMyGameList(userNo));
+		
+		log.info("actList={}",actList);
+		return actList;
+	}
+	
 	
 	
 

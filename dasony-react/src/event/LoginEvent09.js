@@ -11,13 +11,15 @@ import { useNavigate  } from 'react-router-dom';
 */
 const LoginEvent09 = ({no}) => {
     const checkBtn = useRef(null);
-    // const userNo = localStorage.getItem("loginUserNo");
+    const userNo = localStorage.getItem("loginUserNo");
     // 로그인한 회원 넘버
-    const userNo = 23090755;
+    // const userNo = 23090755;
     // 오늘 참여 여부
     const [tdyCheck, setTdyCheck] = useState(false);
     // 출석일
     const [count, setCount] = useState(1);
+    // 종료일
+    const [endDate, setEndDate] = useState(null);
     // 클릭한 상태
     const [checkStatus, setCheckStatus] = useState("none");
     const [userName, setUserName] = useState("");
@@ -35,8 +37,8 @@ const LoginEvent09 = ({no}) => {
                 console.log("data load : ", res.data);
                 setUserName(res.data.userName);
                 setCount(res.data.count);
+                setEndDate(res.data.endDate);
                 if(res.data.tdyCheck=='Y') setTdyCheck(true);
-
             });
     }
 
@@ -62,13 +64,26 @@ const LoginEvent09 = ({no}) => {
                     setCount(count+1);
                     setCheckStatus("checked");
                     setTdyCheck(true);
+                    if(result.coin!=null) alert(`${result.coin} 다손을 얻었습니다!`);
                 }
                 alert(result.msg);
             });
         }        
     };
 
-    useLayoutEffect(()=>{
+    const moreEndDate = (date1) => {
+        date1 = new Date(date1);
+        const date2 = new Date();
+        return date1.getFullYear() >= date2.getFullYear()
+           && date1.getMonth() >= date2.getMonth()
+           && date1.getDate() >= date2.getDate();
+    };
+
+    useEffect(()=>{
+        loadData()
+    }, []);
+
+    useEffect(()=>{
         const btn = checkBtn.current;
         console.log(btn);
 
@@ -80,11 +95,7 @@ const LoginEvent09 = ({no}) => {
                 if(btn.querySelector("i")!=null) btn.querySelector("i").style.cursor = "default";
             }
         }
-    }, [checkStatus, tdyCheck]);
-
-    useEffect(()=>{
-        loadData()
-    }, []);
+    }, [count, endDate, checkStatus, tdyCheck]);
 
     useEffect(() => {
         const btn = checkBtn.current;
@@ -94,7 +105,7 @@ const LoginEvent09 = ({no}) => {
 
             return () => btn.removeEventListener('click', checkLogin);
         }
-    }, [count, tdyCheck, checkStatus]);
+    }, [count, endDate, tdyCheck, checkStatus]);
 
     useEffect(()=>{
         // checkStatus가 "checked"로 변경될 때 타이머를 설정하여 다시 "none"으로 변경
@@ -132,14 +143,14 @@ const LoginEvent09 = ({no}) => {
                     </div>
                 </div>
                 {/* 출석하기 버튼 만들것 */}
-                <div className="promo-body" style={{backgroundColor: "#401E12", width: "100%"}}>
-                    <div className="login-check-btn-part">
-                        <div className="login-check-btn" ref={checkBtn} style={{border: "2px solid #BF926B"}}>
-                            {checkStatus === "checked" ? <i className="bi bi-check-lg"></i> : <strong style={{ color: "cba597"}}>출석하기</strong>}
-                        </div>
-                    </div>
-                    <img src='/resources/event/login-002.png' alt="출석 상품" style={{width: "100%"}}/>
-                </div>
+                {endDate!=null && moreEndDate(endDate)? <div className="promo-body" style={{backgroundColor: "#401E12", width: "100%"}}>
+                                                            <div className="login-check-btn-part">
+                                                                <div className="login-check-btn" ref={checkBtn} style={{border: "2px solid #BF926B"}}>
+                                                                    {checkStatus === "checked" ? <i className="bi bi-check-lg"></i> : <strong style={{ color: "cba597"}}>출석하기</strong>}
+                                                                </div>
+                                                            </div>
+                                                            <img src='/resources/event/login-002.png' alt="출석 상품" style={{width: "100%"}}/>
+                                                        </div> : null}
                 <div className="promo-footer">
                     <div className="promo-notice" style={{padding: "10% 5%"}}>
                         <h3>알려드려요</h3>

@@ -20,6 +20,11 @@
    <result column="USER_NAME" property="userName"/>
 </resultMap>
 
+<resultMap type="chatCare" id="chatCareResultSet">
+	<result column="USER_NO" property="userNo"/> 
+	<result column="CHATROOM_NO" property="chatRoomNo"/>
+</resultMap>
+
 <select id="selectChatList" resultMap="chatRoomResultSet">
 	SELECT
 		CHATROOM_NO,
@@ -105,5 +110,32 @@
 	CHATROOM_STATUS = 'N'
 	WHERE CHATROOM_NO = #{chatRoomNo}
 </update>
+
+<select id="selectUserChatList" resultMap="chatRoomResultSet">
+		SELECT
+	    CR.CHATROOM_NO,
+	    CR.CHATROOM_TITLE,
+	    CR.CHATROOM_STATUS,
+	    M.USER_NAME
+	FROM CHAT_ROOM CR
+	JOIN CHAT_JOIN CJ ON CR.CHATROOM_NO = CJ.CHATROOM_NO
+	JOIN MEMBER M ON CR.USER_NO = M.USER_NO
+	WHERE CJ.USER_NO = #{userNo} AND CR.CHATROOM_STATUS = 'Y'
+	ORDER BY CR.CHATROOM_NO DESC
+</select>
+
+<insert id="addStars" parameterType="chatcare">
+	INSERT INTO CHAT_CARE 
+		VALUES(
+			#{chatRoomNo},
+			#{userNo}
+		)
+</insert>
+
+<select id="getStars" resultMap="chatCareResultSet">
+	SELECT 
+		* 
+	FROM CHAT_CARE
+</select>
 
 </mapper>

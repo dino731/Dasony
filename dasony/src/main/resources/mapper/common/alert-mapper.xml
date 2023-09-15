@@ -50,6 +50,7 @@
 	
 	</select>	
 	
+
 	<insert id="insertShopAlert" parameterType="point">
 		INSERT INTO ALERT VALUES(
 		SEQ_ANO.NEXTVAL,
@@ -61,5 +62,6 @@
 		'상점 쿠폰 구매 알림'
 		)
 	</insert>
+
 	
 </mapper>
