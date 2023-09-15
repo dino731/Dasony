@@ -28,6 +28,7 @@
     <result column="DONA_EXECUTE_DATE" property="donaExecuteDate"/>
     <result column="DONA_NO" property="donaNo"/>
     <result column="DONA_NAME" property="donaName"/>
+    <collection property="donation" resultMap="donaResultSet" />
 </resultMap>
   
   <!-- TO_CHAR(DONA_WRITE_DATE, 'YYYY"-"MM"-"DD"-"') DONA_WRITE_DATE -->
@@ -117,7 +118,7 @@
   </select>
   
  <select id="getMyDonationList" parameterType="int" resultMap="donationListResultSet">
-    SELECT DONA_EXECUTE_DATE,DONA_AMOUNT,DONA_EXECUTE_NO,DONA_NAME
+    SELECT DONA_EXECUTE_DATE,DONA_AMOUNT,DONA_EXECUTE_NO,DONA_NAME,DONA_TITLE
     FROM DONATION_LIST
     JOIN DONATION USING (DONA_NO)
     WHERE USER_NO = #{userNo}

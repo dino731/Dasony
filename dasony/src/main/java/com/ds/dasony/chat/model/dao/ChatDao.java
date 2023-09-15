@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ds.dasony.chat.model.vo.ChatCare;
 import com.ds.dasony.chat.model.vo.ChatJoin;
 import com.ds.dasony.chat.model.vo.ChatMessage;
 import com.ds.dasony.chat.model.vo.ChatRoom;
@@ -33,6 +34,7 @@ public class ChatDao {
 		
 		if(result > 0) {
 			result = chatRoom.getChatRoomNo();
+			log.info("chat new : " + result);
 		}
 		return result;
 	}
@@ -63,6 +65,18 @@ public class ChatDao {
 
 	public int closeChat(int chatRoomNo) {
 		return session.update("chatMapper.closeChat", chatRoomNo);
+	}
+
+	public List<ChatRoom> selectUserChatList(long userNo) {
+		return session.selectList("chatMapper.selectUserChatList", userNo);
+	}
+
+	public int addStars(ChatCare care) {
+		return session.insert("chatMapper.addStars", care);
+	}
+
+	public List<ChatCare> getStars() {
+		return session.selectList("chatMapper.getStars");
 	}
 	
 	

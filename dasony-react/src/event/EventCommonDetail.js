@@ -61,7 +61,16 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
         day = day >= 10 ? day : '0' + day;
 
         return month + '월 ' + day + '일';
-    }
+    };
+
+    const moreEndDate = (date1) => {
+        date1 = new Date(date1);
+        const date2 = new Date();
+        return date1.getFullYear() >= date2.getFullYear()
+           && date1.getMonth() >= date2.getMonth()
+           && date1.getDate() >= date2.getDate();
+    };
+      
 
     const changeDateFormat = (sDate, eDate, type) => {
         sDate = new Date(sDate);
@@ -80,13 +89,16 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
 
     // 이벤트 참여
     const joinEvent = () => {
-        // const loginUserNo = (int)localStorage.getItem("loginUserNo");
-        const loginUserNo = 23090757;
+        const loginUserNo = localStorage.getItem("loginUserNo");
+        // const loginUserNo = 23090754;
         const data = {eventNo: no, userNo: loginUserNo};
+        console.log("param : ", data);
         axios.post("http://localhost:3000/dasony/event/join", data)
             .then(res => {
-                // console.log("result : ", res.data);
-                alert(res.data);
+                const result = res.data;
+                console.log("res : ", result);
+                if(result.coin != null) alert(`${result.coin} 다손을 얻었습니다!`);
+                alert(result.msg);
             }); 
     };
 
@@ -109,7 +121,7 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
                 onClick={()=>navigate(-1)}></i>
             </div>
             <div className="dasony-promotion dragging">
-                <div className="promo-form-header" style={{ "backgroundImage": eventInfo.thumbnail != null ? `url('http://localhost:3000/dasony/event/${eventInfo.thumbnail}')` : null }}>
+                <div className="promo-form-header" style={{ "backgroundImage": eventInfo.thumbnail != null ? `url('http://localhost:3000/dasony/resources/images/event/${eventInfo.thumbnail}')` : null }}>
                 {/* 'https://dn-img-page.kakao.com/download/resource?kid=bpAeKz/hAd4wW3xd8/k9x3hD2NoVju7YY2QpONE1&filename=th3' */}
                     <div className="promo-form-info">
                         <h3>{eventInfo.title!=null ? eventInfo.title : null}</h3>
@@ -161,11 +173,12 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
                                                 </div> : null}
                     
                 </div>
-                <div className="event-join-btn-part">
-                    <div className="event-join-btn" ref={checkBtn} style={{border: "2px solid #BF926B"}} onClick={joinEvent}>
-                        <strong style={{ color: "cba597"}}>응모</strong>
-                    </div>
-                </div>
+                {eventInfo.endDate != null && moreEndDate(eventInfo.endDate)? <div className="event-join-btn-part">
+                                                                                    <div className="event-join-btn" ref={checkBtn} style={{border: "2px solid #BF926B"}} onClick={joinEvent}>
+                                                                                        <strong style={{ color: "cba597"}}>응모</strong>
+                                                                                    </div>
+                                                                               </div> : null}
+                
             </div>
             
         </>

@@ -108,7 +108,7 @@ const Game= ()=>{
         let pikas = [
            
         ];
-        let boxcount = 3;
+        let boxcount = 1;
 
         for (let i = 0; i < map.length; i++) {
             for (let j = 0; j < map[i].length; j++) {
@@ -260,19 +260,24 @@ const Game= ()=>{
                     else if(map[nowX][nowY]==4){
                         let pointorticket= Math.floor(Math.random() * 2);
                         boxcount --;
-                        if(pointorticket == 0){
-                            alert("50포인트 획득!");
-                            count++; 
+                        if(tCount>0){
+                            alert("100포인트 획득!");
                             pCount++;
                         }else{
-                            alert("응모권 당첨! ")
-                            tCount++;
+                            if(pointorticket == 0){
+                                alert("100포인트 획득!");
+                                count++; 
+                                pCount++;
+                            }else{
+                                alert("응모권 당첨! ")
+                                tCount++;
+                            }
                         }
                        
                         if (boxcount == 0) {
                             
                             if(tCount > 0 && pCount >0){
-                                alert("성공! 획득한 포인트 : "+pCount*50+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                                alert("성공! 획득한 포인트 : "+pCount*100+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
@@ -294,7 +299,7 @@ const Game= ()=>{
                             });
                             const pointData = {
                                 userNo : loginUserNo,
-                                pointAmount : pCount*50,
+                                pointAmount : pCount*100,
                                 pointCate : "G"  
                             };
                             axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -324,10 +329,10 @@ const Game= ()=>{
                                 window.location.reload();
                             });
                             }else if(pCount >0){
-                                alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                                alert("성공! 획득한 총 포인트 : "+pCount*100+ "포인트");
                                 const pointData = {
                                     userNo : loginUserNo,
-                                    pointAmount : pCount*50,
+                                    pointAmount : pCount*100,
                                     pointCate : "G"  
                                 };
                                 axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -459,18 +464,23 @@ const Game= ()=>{
                     else if(map[nowX][nowY]==4){
                         let pointorticket= Math.floor(Math.random() * 2);
                         boxcount --;
+                        if(tCount>0){
+                            alert("100포인트 획득!");
+                            pCount++;
+                        }else{
                         if(pointorticket == 0){
-                            alert("50포인트 획득!");
+                            alert("100포인트 획득!");
                             count++; 
                             pCount++;
                         }else{
                             alert("응모권 당첨! 어떤 응모권인지는 마이페이지에서 확인해주세요~")
                             tCount++;
                         }
+                    }
                         if (boxcount == 0) {
                             
                             if(tCount > 0 && pCount >0){
-                                alert("성공! 획득한 포인트 : "+pCount*50+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                                alert("성공! 획득한 포인트 : "+pCount*100+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
@@ -492,7 +502,7 @@ const Game= ()=>{
                             });
                             const pointData = {
                                 userNo : loginUserNo,
-                                pointAmount : pCount*50,
+                                pointAmount : pCount*100,
                                 pointCate : "G"  
                             };
                             axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -522,10 +532,10 @@ const Game= ()=>{
                                 window.location.reload();
                             });
                             }else if(pCount >0){
-                                alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                                alert("성공! 획득한 총 포인트 : "+pCount*100+ "포인트");
                                 const pointData = {
                                     userNo : loginUserNo,
-                                    pointAmount : pCount*50,
+                                    pointAmount : pCount*100,
                                     pointCate : "G"  
                                 };
                                 axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -653,18 +663,23 @@ const Game= ()=>{
                     else if(map[nowX][nowY]==4){
                         let pointorticket= Math.floor(Math.random() * 2);
                         boxcount --;
+                        if(tCount>0){
+                            alert("100포인트 획득!");
+                            pCount++;
+                        }else{
                         if(pointorticket == 0){
-                            alert("50포인트 획득!");
+                            alert("100포인트 획득!");
                             count++; 
                             pCount++;
                         }else{
                             alert("응모권 당첨! 어떤 응모권인지는 마이페이지에서 확인해주세요~")
                             tCount++;
                         }
+                    }
                         if (boxcount == 0) {
                             
                             if(tCount > 0 && pCount >0){
-                                alert("성공! 획득한 포인트 : "+pCount*50+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                                alert("성공! 획득한 포인트 : "+pCount*100+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
@@ -686,7 +701,7 @@ const Game= ()=>{
                             });
                             const pointData = {
                                 userNo : loginUserNo,
-                                pointAmount : pCount*50,
+                                pointAmount : pCount*100,
                                 pointCate : "G"  
                             };
                             axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -716,10 +731,10 @@ const Game= ()=>{
                                 window.location.reload();
                             });
                             }else if(pCount >0){
-                                alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                                alert("성공! 획득한 총 포인트 : "+pCount*100+ "포인트");
                                 const pointData = {
                                     userNo : loginUserNo,
-                                    pointAmount : pCount*50,
+                                    pointAmount : pCount*100,
                                     pointCate : "G"  
                                 };
                                 axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -847,18 +862,23 @@ const Game= ()=>{
                     else if(map[nowX][nowY]==4){
                         let pointorticket= Math.floor(Math.random() * 2);
                         boxcount --;
+                        if(tCount>0){
+                            alert("100포인트 획득!");
+                            pCount++;
+                        }else{
                         if(pointorticket == 0){
-                            alert("50포인트 획득!");
+                            alert("100포인트 획득!");
                             count++; 
                             pCount++;
                         }else{
                             alert("응모권 당첨! 어떤 응모권인지는 마이페이지에서 확인해주세요~")
                             tCount++;
                         }
+                    }
                         if (boxcount == 0) {
                             
                             if(tCount > 0 && pCount >0){
-                                alert("성공! 획득한 포인트 : "+pCount*50+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                                alert("성공! 획득한 포인트 : "+pCount*100+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
@@ -880,7 +900,7 @@ const Game= ()=>{
                             });
                             const pointData = {
                                 userNo : loginUserNo,
-                                pointAmount : pCount*50,
+                                pointAmount : pCount*100,
                                 pointCate : "G"  
                             };
                             axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -910,10 +930,10 @@ const Game= ()=>{
                                 window.location.reload();
                             });
                             }else if(pCount >0){
-                                alert("성공! 획득한 총 포인트 : "+pCount*50+ "포인트");
+                                alert("성공! 획득한 총 포인트 : "+pCount*100+ "포인트");
                                 const pointData = {
                                     userNo : loginUserNo,
-                                    pointAmount : pCount*50,
+                                    pointAmount : pCount*100,
                                     pointCate : "G"  
                                 };
                                 axios.post("/dasony/api/insertPoint",pointData).then(response=>{

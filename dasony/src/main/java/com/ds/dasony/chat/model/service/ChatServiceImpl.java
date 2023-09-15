@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ds.dasony.Utils;
 import com.ds.dasony.chat.model.dao.ChatDao;
+import com.ds.dasony.chat.model.vo.ChatCare;
 import com.ds.dasony.chat.model.vo.ChatJoin;
 import com.ds.dasony.chat.model.vo.ChatMessage;
 import com.ds.dasony.chat.model.vo.ChatRoom;
@@ -66,5 +67,20 @@ public class ChatServiceImpl implements ChatService{
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public List<ChatRoom> selectUserChatList(long userNo) {
+		return chatDao.selectUserChatList(userNo);
+	}
+
+	@Override
+	public int addStars(ChatCare care) {
+		return chatDao.addStars(care);
+	}
+
+	@Override
+	public List<ChatCare> getStars() {
+		return chatDao.getStars();
 	}
 }

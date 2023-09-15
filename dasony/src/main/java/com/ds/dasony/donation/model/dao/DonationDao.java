@@ -60,7 +60,6 @@ public class DonationDao {
 		return session.selectList("donationMapper.getMyDonationList",userNo);
 	}
 
-
 	public List<DonationList> DonaDetails(int donaNo) {
 		return session.selectList("donationMapper.DonaDetails", donaNo);
 	}

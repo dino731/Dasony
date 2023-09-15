@@ -144,7 +144,16 @@
 		WHERE USER_NO = #{userNo}		
 	</update>
 	
+	<select id="getMyPoint" parameterType="int" resultMap="memberMap">
+		SELECT TOTAL_POINT
+		FROM MEMBER
+		WHERE USER_NO = #{userNo}
+	</select>
 	
-
-
+	<select id="getMyTicket" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM TICKET
+		WHERE USER_NO=#{userNo} AND TICKET_STATUS = 'Y'
+	</select>
+	
 </mapper>

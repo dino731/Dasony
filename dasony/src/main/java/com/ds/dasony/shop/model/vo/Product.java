@@ -17,5 +17,7 @@ public class Product {
 	private String  productName;
 	private int productAmount;
 	private List productImg;
+	private String shopName;
+	private String shopCate;
 
 }

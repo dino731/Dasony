@@ -9,6 +9,7 @@ import { useEffect } from 'react';
  const ChatList  = (props) => {
 
     const {chatData, setChatDate} = useChatData();
+
     const [userName, setUserName] = useState("");
 
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
@@ -38,7 +39,9 @@ import { useEffect } from 'react';
 // ----------------------------채팅 리스트-------------------------------
     const getChatList = () => {
         axios.get("/dasony/chatlist")
-        .then((response) => setChatDate(response.data))
+        .then((response) => {
+            setChatDate(response.data)
+        })
         .catch(error => console.log(error));
     }
 
@@ -47,7 +50,7 @@ import { useEffect } from 'react';
         
     }, [])
 
-// ----------------------------모달창------------------------------------
+// ----------------------------모달창-----------------------------------
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const openModal = () => {
@@ -75,12 +78,8 @@ import { useEffect } from 'react';
                 // {title: , content: }
                 // {no : , chat: {tilte, content}}
                 .then((response) => {
-                    // console.log(response.data);
-                    const createChatRoomNo = response.data.chatRoomNo;
-                    // console.log(createChatRoomNo);
-                    getChatList();
-                    // createChatRoomNo();
-                    navigate(`/chat/${createChatRoomNo}/${newChat.chatRoomTitle}`);
+                    const chatData = response.data;
+                    navigate(`/chat/${chatData.chatRoomNo}/${newChat.chatRoomTitle}`, {replace : true});
                 })
                 .catch(error => console.log(error));
             }
