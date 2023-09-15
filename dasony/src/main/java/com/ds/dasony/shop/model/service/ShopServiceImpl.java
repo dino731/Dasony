@@ -125,5 +125,10 @@ public class ShopServiceImpl implements ShopService{
 		return shopDao.couponList(map);
 	}
 
+	@Override
+	public List<Product> productBestInfo(String userRegion) {
+		return shopDao.productBestInfo(userRegion);
+	}
+
 
 }

@@ -2,7 +2,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'react-bootst
 import './ShopProductDetail.css';
 import HeartIcon from '../heart';
 import { useParams, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
@@ -51,16 +51,41 @@ const ShopProductDetail = () => {
         handleClose();
     }
 
-    {/*쿠폰 구매 - 서버 */}
-    const handleCouponBuy = ()=>{
-        axios.post('/dasony/api/couponBuy', {product:product, userNo:userNo})
+    {/*userPoint, userName받아오기 */}
+    const [userPoint, setUserPoint] = useState('');
+
+    const handleUserInfo = () => {
+        axios.post('/dasony/api/userInfo', {userNo: userNo})
         .then(res=>{
-            handleModalOn();
+            setUserPoint(res.data.user.totalPoint);
         })
-        .catch(err=>{
-            alert("다시 시도해주세요");
+        .catch(err=> {
+            console.log(err);
+            alert("다시 시도해주세요.");
         })
     }
+
+    {/*쿠폰 구매 - 서버 */}
+    const handleCouponBuy = ()=>{
+        if(userPoint >= product.productAmount){
+            axios.post('/dasony/api/couponBuy', {product:product, userNo:userNo})
+            .then(res=>{
+                handleModalOn();
+            })
+            .catch(err=>{
+                alert("다시 시도해주세요");
+            })
+        } else {
+            alert("잔액이 부족합니다.");
+        }
+        handleClose();
+        window.location.reload();
+    }
+
+
+    useEffect(()=>{
+        handleUserInfo();
+    }, [userNo])
 
     return(
         <div className="shopProductDetail-container">
