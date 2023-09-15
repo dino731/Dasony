@@ -3,6 +3,7 @@ package com.ds.dasony.shop.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ds.dasony.shop.model.vo.Coupon;
 import com.ds.dasony.shop.model.vo.Product;
 import com.ds.dasony.shop.model.vo.Shop;
 
@@ -45,5 +46,10 @@ public interface ShopService {
 	public int shopHeartCss(Map<String, String> map);
 
 	public List<Product> productCareInfo(long userNo);
+
+	public int couponBuy(Coupon coupon);
+
+	public List<Coupon> couponList(Map<String, String> map);
+
 
 }

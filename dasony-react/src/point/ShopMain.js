@@ -98,12 +98,11 @@ const ShopMain = ()=>{
                 <div className='shop-title'>새로 입점한 상점 </div>
                 <div className='new-box'>
                 {
-                    shopList.splice(0, 3)
-                            .map(s=>{
+                    shopList.map(s=>{
                                 return(
                                     <div key={s.shopOkey} onClick={()=>{handleShopNavi(s);}}>{s.shopName}</div>
                                 )
-                            })
+                            }).splice(0, 3)
                 }
                   
                 </div>
