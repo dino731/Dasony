@@ -50,5 +50,16 @@
 	
 	</select>	
 	
+	<insert id="insertShopAlert" parameterType="point">
+		INSERT INTO ALERT VALUES(
+		SEQ_ANO.NEXTVAL,
+		#{userNo},
+		#{pointAmount}||' 다손으로 '||#{pointContent}||'(을/를) 구매',
+		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+		'P',
+		'B',
+		'상점 쿠폰 구매 알림'
+		)
+	</insert>
 	
 </mapper>

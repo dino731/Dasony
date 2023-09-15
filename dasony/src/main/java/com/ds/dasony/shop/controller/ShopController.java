@@ -1,5 +1,6 @@
 package com.ds.dasony.shop.controller;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ds.dasony.point.controller.PointController;
 import com.ds.dasony.point.model.vo.Point;
 import com.ds.dasony.shop.model.service.ShopService;
+import com.ds.dasony.shop.model.vo.Coupon;
 import com.ds.dasony.shop.model.vo.Product;
 import com.ds.dasony.shop.model.vo.Shop;
 
@@ -208,30 +210,83 @@ public class ShopController {
 	
 	@PostMapping("/couponBuy")
 	public void couponBuy(@RequestBody Map<String, Object>map) {
-		LinkedHashMap<String, Object> resultMap = (LinkedHashMap<String, Object>) map;
-		Product product = (Product) resultMap.get("product");
+		Map<String, Object> productData = (Map<String, Object>) map.get("product");
+
+		Product product = new Product();
+		product.setProductNo((String) productData.get("productNo"));
+		product.setShopOkey((String) productData.get("shopOkey"));
+		product.setProductName((String) productData.get("productName"));
+		product.setProductAmount((Integer) productData.get("productAmount"));
+		product.setProductImg((List) productData.get("productImg"));
+		product.setShopCate((String) productData.get("shopCate"));
+		product.setShopName((String) productData.get("shopName"));
 		
 		LocalDate today = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = today.format(formatter);
 
-		Point point = new Point();
-		point.builder()
+		Point point = Point.builder()
 			.userNo(Long.parseLong((String) map.get("userNo")))
 			.pointContent(product.getProductName()+"을 구매")
 			.pointAmount(product.getProductAmount())
 			.ExpireDate("N")
 			.pointEventDate(String.valueOf(formattedDate))
-			.pointCate("S");
+			.pointCate("S")
+			.build();
+
 		int pointResult = PointController.spendPoint(point);
-		if(pointResult!=2) {
+		
+		
+		Coupon coupon = Coupon.builder()
+								.couponName(product.getProductName())
+								.userNo((String)map.get("userNo"))
+								.productNo(product.getProductNo())
+								.build();
+		int result = shopService.couponBuy(coupon);
+		
+		if(pointResult+result!=4) {
 			log.info("므ㅜㄴ제 ㅇㅆ어..");
 		} else {
 			log.info("굿굿");
 		}
-//		int result = shopService.couponBuy(map);
 	}
 	
+	@PostMapping("/couponList")
+	public ResponseEntity<Map<String, Object>> couponList(@RequestBody Map<String, String>map){
+		List<Coupon> couponList = new ArrayList();
+		couponList = shopService.couponList(map);
+		
+		List<Product> product = new ArrayList();
+		
+		product = shopService.productInfo(null, null, null);
+		
+		List<String> productImg = new ArrayList();
+		
+		Map<String, Object> productMap = new HashMap();
+		
+		for(int i = 0; i<product.size();i++) {
+			String productNo = product.get(i).getProductNo();
+			productImg = shopService.productInfoImg(productNo);
+			
+			List<String> productPath = new ArrayList();
+			
+			for(int j = 0; j<productImg.size(); j++) {
+				productPath.add("http://localhost:8083/dasony/resources/images/product/"+productImg.get(j));
+			}
+			product.get(i).setProductImg(productPath);
+			productMap.put("product", product);
+			
+		}
+		Map<String, Object> resultMap = new HashMap();
+		resultMap.put("productMap", productMap);
+		resultMap.put("couponList", couponList);
+		log.info("couponList={}", couponList);
+		log.info("productMap={},==>>>>>>>>>>", productMap);
+		return ResponseEntity.ok(resultMap);
+	}
 	
+
+	
+
 	
 }

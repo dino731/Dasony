@@ -22,8 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api")
 public class PointController {
 	
-	@Autowired
 	private static PointService pointService;
+	@Autowired
+	public PointController(PointService pointService) {
+		this.pointService = pointService;
+	}
 		
 	@Autowired
 	private ServletContext application;
@@ -45,7 +48,10 @@ public class PointController {
 	}
 	
 	public static int spendPoint(Point point) {
-		return pointService.spendPoint(point);
+		log.info("point====={}", point);
+		int result = pointService.spendPoint(point);
+		log.info("result====={}", result);
+		return result;
 	}
 	
 

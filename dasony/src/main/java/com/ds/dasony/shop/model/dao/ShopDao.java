@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ds.dasony.shop.model.vo.Coupon;
 import com.ds.dasony.shop.model.vo.Product;
 import com.ds.dasony.shop.model.vo.Shop;
 
@@ -104,5 +105,14 @@ public class ShopDao {
 	public List<Product> productCareInfo(long userNo) {
 		return session.selectList("shopMapper.productCareInfo", userNo);
 	}
+
+	public int couponBuy(Coupon coupon) {
+		return session.insert("shopMapper.couponBuy", coupon);
+	}
+
+	public List<Coupon> couponList(Map<String, String> map) {
+		return session.selectList("shopMapper.couponList", map);
+	}
+
 
 }

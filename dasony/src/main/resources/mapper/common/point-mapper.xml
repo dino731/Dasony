@@ -22,9 +22,10 @@
 	UPDATE MEMBER 
 	SET TOTAL_POINT = 
 		CASE 
-		WHEN #{pointCate} IS NOT NULL AND #{pointCate} = 'S'
-		THEN TOTAL_POINT = TOTAL_POINT - #{pointAmount}
-		ELSE TOTAL_POINT = TOTAL_POINT + #{pointAmount}
+		WHEN #{pointCate} IS NOT NULL AND #{pointCate} = 'S' OR #{pointCate} = 'D'
+		THEN TOTAL_POINT - #{pointAmount}
+		ELSE TOTAL_POINT + #{pointAmount}
+	END
 	WHERE USER_NO = #{userNo}
 
 </update>
@@ -41,6 +42,7 @@
 		#{pointCate}
 	)
 </insert>
+
 
 
 </mapper>

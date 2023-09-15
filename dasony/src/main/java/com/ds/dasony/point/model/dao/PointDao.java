@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import com.ds.dasony.point.model.vo.Point;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class PointDao {
 
@@ -27,8 +30,10 @@ public class PointDao {
 
 	public int spendPoint(Point point) {
 		int result = session.insert("point.spendPoint",point);
-		int result2 = session.insert("alert.insertPointAlert",point);
-		return result + result2;
+		int result2 = session.insert("alert.insertShopAlert",point);
+		int result3 = session.update("point.updateMemberTotalPoint", point);
+		log.info("result====={}",result, "result2======={}",result2, "result3======={}", result3);
+		return result + result2 + result3;
 	}
 	
 	

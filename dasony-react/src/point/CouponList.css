@@ -10,6 +10,7 @@
     font-size: 2vw;
     letter-spacing: 0.2vw;
     padding: 5vh 0 2vh 0;
+    color: #7A7A7A;
 }
 
 .coupon-item{
@@ -23,7 +24,10 @@
     letter-spacing: 0.2vw;
     text-align: center;
 }
-.coupon-img, .coupon-info, .coupon-date{
+.coupon-item:hover{
+    color:#7A7A7A;
+}
+.coupon-img, .coupon-info, .coupon-date, .coupon-use{
     margin: auto;
 }
 .coupon-img{
@@ -41,4 +45,9 @@
 .coupon-container a{
     display: block;
     width: 100%;
+}
+
+.coupon-list:hover{
+    background-color: #f2f2f2;
+    transition-duration: 0.5s;
 }
