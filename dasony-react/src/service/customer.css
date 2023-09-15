@@ -23,10 +23,23 @@ html, body{margin: 0; padding: 0;}
     height: 100vh;
     font-size: 1.2em;
 
+    .goToReception{
+        text-align: right;
+        padding-right: 7%;
+        
+        >button{
+            font-size: 1.2rem;
+            font-weight: 600;
+
+        }
+    }
+
     .row{
         margin-bottom: 2%;
 
         .notice-board-title{cursor: pointer;}
+
+        &:first-child{padding: 0 0 2% 0;}
     }
 }
 

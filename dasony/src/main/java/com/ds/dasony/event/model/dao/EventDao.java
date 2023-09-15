@@ -109,6 +109,7 @@ public class EventDao {
 		EventJoin result = session.selectOne("event.loadLogin", data);
 		if(result==null) {
 			result = session.selectOne("event.memberLoginInfo", data);
+			result.setEndDate(session.selectOne("event.selectEndDate", data));
 			result.setCount(session.selectOne("event.findLast", data));
 			result.setTdyCheck("N");
 		}

@@ -11,7 +11,7 @@ const BarChart = ({paddingRight, data, kind}) => {
     const name2 = kind[1];
 
     useLayoutEffect(() => {
-
+      const chartdiv = document.querySelector("#chartdiv");
       am4core.useTheme(am4themes_animated);
     
       let chart = am4core.create("chartdiv", am4charts.XYChart3D);
@@ -86,14 +86,14 @@ const BarChart = ({paddingRight, data, kind}) => {
       createSeries(name2, "date", "value2");
     
       chartRef.current = chart;
-
+      chartdiv.style.opacity = 1;
       return () => {
           chart.dispose();
       };
     }, [data]);
 
     return (
-      <div id="chartdiv" style={{ width: "100%", height: "40vh", marginBottom: "6%" }}></div>
+      <div id="chartdiv" style={{ width: "100%", height: "40vh", marginBottom: "6%" , opacity:"0"}}></div>
     );
 };
 

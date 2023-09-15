@@ -16,7 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FileUpload {
 	String absolutePath = new File("").getAbsolutePath() + "\\";
-	private final String filePath = "src/main/resources/images/";
+//	private final String filePath = "src/main/resources/images/";
+	private final String filePath = "src/main/webapp/resources/images/";
 	
 	/**
 	 * -- 지현(본인이 사용하려고 한 것으로 필요한 함수는 해당 클래스에 추가해서 사용)

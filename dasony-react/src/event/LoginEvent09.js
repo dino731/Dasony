@@ -61,6 +61,7 @@ const LoginEvent09 = ({no}) => {
                 const result = res.data;
 
                 if(result.num>0){
+                    setEndDate(result.endDate);
                     setCount(count+1);
                     setCheckStatus("checked");
                     setTdyCheck(true);

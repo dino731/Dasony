@@ -146,7 +146,7 @@ const EventBoard = () => {
                         return <div className="event-list-item" key={i}>
                                     <Link to={ele.pageLink? "/event/detail/"+ele.pageLink.slice(0, -3) : "/event/detail/" + ele.no}>
                                         <div className="event-item-wrapper event-load-page"
-                                        style={{"backgroundImage": `url(${ele.thumbnail.includes('http') ? ele.thumbnail : 'http://localhost:3000/dasony/event/' + ele.thumbnail})`}}>
+                                        style={{"backgroundImage": `url(${ele.thumbnail.includes('http') ? ele.thumbnail : 'http://localhost:3000/dasony/resources/images/event/' + ele.thumbnail})`}}>
                                             {/* "url({ele.thumbnail.includes('http') ? ele.thumbnail : 'http://localhost:3000/dasony/event/' + ele.thumbnail}" 
                                                  + ")"}}> */}
                                             <div className="event-item-title-part">
