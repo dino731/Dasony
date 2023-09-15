@@ -1,5 +1,5 @@
 import {useEffect, useNavigate, useOutletContext} from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 /** 
     공지사항 목록 게시판
     - 스크롤 감지하여 다음 내용 출력 이벤트 부여되어 있음
@@ -13,7 +13,7 @@ const NoticeBoard = ({context}) => {
     return(
         <>
             <div className='goToReception'>
-                <button className='btn'>문의하기</button>
+                <Link to={'./mypageReception'}><button className='btn'>문의하기</button></Link>
             </div>
             <div className="notice-content dragging">
                 <div className="row justify-content-md-center">
