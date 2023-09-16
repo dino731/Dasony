@@ -94,6 +94,9 @@ import MypageReception from './mypage/mypageReception';
 
 import { ShopMyCouponImg } from './point/ShopMyCouponImg';
 
+import {VoteWrite} from './Board/VoteWrite';
+import { AnotherHeader } from './Board/AnotherHeader';
+
 
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
@@ -572,20 +575,29 @@ function App() {
                                                               transition={{duration : 1}}>
                                                                 <BoardDailyWriter/>
                                                               </motion.div>}/>
-                                <Route path="daily/vwriter" element={<motion.div
+                                <Route path="daily/*" element={<motion.div
                                                               initial = {{opacity:0, y:30}}
                                                               animate = {{opacity:1, y:0}}
                                                               end = {{opacity:1, y:0}}
                                                               transition={{duration : 1}}>
-                                                                <BoardVoteUploader/>
+                                                                <AnotherHeader/>
+                                                              </motion.div>}>
+                                  <Route path="vwriter" element={<motion.div
+                                                              initial = {{opacity:0, y:30}}
+                                                              animate = {{opacity:1, y:0}}
+                                                              end = {{opacity:1, y:0}}
+                                                              transition={{duration : 1}}>
+                                                                <VoteWrite/>
                                                               </motion.div>}/>
-                                <Route path="daily/swriter" element={<motion.div
+                                  <Route path="swriter" element={<motion.div
                                                               initial = {{opacity:0, y:30}}
                                                               animate = {{opacity:1, y:0}}
                                                               end = {{opacity:1, y:0}}
                                                               transition={{duration : 1}}>
                                                                 <BoardShortsUploader/>
                                                               </motion.div>}/>
+                                </Route>
+                                
                                 <Route path="daily/detail/:boardNo" element={<motion.div
                                                                               initial = {{opacity:0, y:30}}
                                                                               animate = {{opacity:1, y:0}}

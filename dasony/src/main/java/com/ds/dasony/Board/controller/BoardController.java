@@ -55,7 +55,7 @@ public class BoardController {
 	
 	@GetMapping(value = {"/general/daily","/general/interest","/info/jmt","/info/fashion","/info/local"})
 	public List<BoardExt> boardDailyList(@RequestParam(name = "userRegion",required = false)String userRegion) {
-
+		
 		List<BoardExt> bListMap = null; // 초기화
 
 		bListMap = boardService.boardDailyList(userRegion); // 게시글 목록 가져오기
@@ -175,6 +175,7 @@ public class BoardController {
 	            }
 	        }
 	    }
+	    log.info("맵 확인.{}",bDetailListMap);
 		return bDetailListMap;
 		
 	}

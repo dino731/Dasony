@@ -258,3 +258,14 @@
 }
 
 /* 리댓 답답글 Reply 끝 */
+
+
+
+
+/*boardVS Css*/
+.vote-content-box>div{
+  text-align: center;
+  font-size: 150%;
+  word-wrap: break-word;
+  overflow: hidden;
+}
