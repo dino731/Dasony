@@ -289,21 +289,35 @@ const BoardDetail = () =>{
                     <div className='BoardDetail-userImg-views-container'>
                    
                         <div className='BoardDetail-userImg-views-li' key={image.boardImgLevel}>
-                          <img
+                          {image.boardImgModName
+                            ?(<img
                             src={`http://localhost:8083/dasony${image.boardImgPath}${image.boardImgModName}`}
                             alt={`썸네일 ${image.boardImgLevel}`}
-                            className="board-img"
-                          />
+                            className="board-img"/>) 
+                            : ('')}
                         </div>
                      
                     </div>
                      ))}
                   </div>
                   <div className='BoardDetail-boardlist-content-wrapper'>
-                    <div className='BoardDetail-boardlist-content'
+                    {(board.boardCate.boardCateNo!=1103?
+                    (<div className='BoardDetail-boardlist-content'
                     dangerouslySetInnerHTML={{ __html: board.boardContent }}
                     >
-                    </div>
+                    </div>)
+                    :(
+                      <>
+                      <br/>
+                      <div className='vote-content-box'>
+                        <div>{board.boardVs.boardOptionLeft}</div>
+                        <div style={{textAlign:'center'}}>vs</div>
+                        <div>{board.boardVs.boardOptionRight}</div>
+                      </div>
+                      <div className='vote-content-txt'>{board.boardVs.boardContent}</div>
+                      <br/>
+                      </>))}
+
                   </div>
                 <BoardDetailReply editContent={{newReplyText, setNewReplyText}} boardData={boardData} listPath={listPath}/>
                 </div>

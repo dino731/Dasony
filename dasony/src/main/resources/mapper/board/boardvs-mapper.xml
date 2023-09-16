@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardVsMapper">
+
+	<resultMap type="boardVs" id="boardVsMap">
+		<id column="BOARD_NO" property="boardNo" />
+		<result column="USER_NO" property="userNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_TAG" property="boardTag"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_OPTION_LEFT" property="boardOptionLeft"/>
+		<result column="BOARD_OPTION_RIGHT" property="boardOptionRight"/>
+		<result column="BOARD_CATE_NO" property="boardCateNo"/>
+		<result column="BOARD_EXPIRE_DATE" property="boardExpireDate"/>
+		<result column="CHOICE_LEFT" property="choiceLeft"/>
+		<result column="CHOICE_RIGHT" property="choiceRight"/>
+	</resultMap>
+	
+	<insert id="boardVsInsert" parameterType="boardvs">
+		INSERT ALL
+		INTO BOARD
+		VALUES (
+		    SEQ_BNO.nextval,
+		    #{userNo},
+		    #{boardTitle},
+		    TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+		    DEFAULT,
+		    #{boardContent},
+		    'Y',
+		    #{boardCateNo}
+		)
+		INTO BOARD_VS
+		VALUES (
+		    SEQ_BNO.currval,
+		    #{boardOptionLeft},
+		    #{boardOptionRight},
+		    DEFAULT,
+		    DEFAULT,
+		    #{boardExpireDate}
+		)
+		INTO BOARD_KEYWORD
+		VALUES (
+		    #{boardTag},
+		    SEQ_BNO.currval
+		)
+		SELECT * FROM DUAL
+		
+	</insert>
+	
+	<!-- <insert id="boardVsInsert" parameterType="map">
+		INSERT INTO BOARD_VS
+		VALUES(
+			#{boardNo},
+			#{boardOptionLeft},
+			#{boardOptionRight},
+			DEFAULT,
+			DEFAULT,
+			#{boardExpireDate}
+			
+		)
+	</insert> -->
+
+</mapper>

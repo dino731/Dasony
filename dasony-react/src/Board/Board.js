@@ -6,7 +6,7 @@ const Board = ()=>{
 
     return(
         <div className='Board-origin-container'>
-        <Outlet/>
+            <Outlet/>
         </div>
     );
 }

@@ -89,3 +89,19 @@ export const loginUserState = atom({
   key : 'loginUserState',
   default : {},
 })
+//boardVs 정보
+export const boardVsState = atom({
+  key: 'boardVs',
+  default : {
+    userNo : '',
+    boardTitle : '',
+    boardTag : '',
+    boardContent:'',
+    boardOptionLeft : '',
+    boardOptionRight: '',
+    boardCateNo : '',
+    boardExpireDate : '',
+    choiceLeft:0,
+    choiceRight:0
+  }
+})

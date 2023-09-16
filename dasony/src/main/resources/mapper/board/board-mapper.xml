@@ -77,6 +77,20 @@
 		<id column="BOARD_NO" property="bCareBoardNo"/>
 		<result column="USER_NO" property="bCareUserNo"/>
 	</resultMap>
+	<!-- BoardVs resultMap -->
+	<resultMap type="boardVs" id="boardVsResultSet">
+		<id column="BOARD_NO" property="boardNo" />
+		<result column="USER_NO" property="userNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_TAG" property="boardTag"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_OPTION_LEFT" property="boardOptionLeft"/>
+		<result column="BOARD_OPTION_RIGHT" property="boardOptionRight"/>
+		<result column="BOARD_CATE_NO" property="boardCateNo"/>
+		<result column="BOARD_EXPIRE_DATE" property="boardExpireDate"/>
+		<result column="CHOICE_LEFT" property="choiceLeft"/>
+		<result column="CHOICE_RIGHT" property="choiceRight"/>
+	</resultMap>
 	
 	<!-- BoardExt 확장자 resultMap -->
 	<resultMap type="boardExt" id="boardListResultSet">
@@ -92,7 +106,7 @@
 		<association property="boardCate" resultMap="boardCateResultSet"/>
 		<association property="boardImg" resultMap="boardImgResultSet"/>
 		<association property="boardVideo" resultMap="boardVideoResultSet"/>
-		<association property="boardTag" resultMap="boardTagResultSet"/>	
+		<association property="boardTag" resultMap="boardTagResultSet"/>
 	</resultMap>
 	
 	<resultMap id="boardWriterFormResultMap" type="BoardWriterForm">
@@ -135,7 +149,7 @@
 		FROM BOARD B
 		JOIN MEMBER M ON B.USER_NO = M.USER_NO
 		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
-		JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
+		LEFT JOIN BOARD_IMG I ON (B.BOARD_CATE_NO NOT IN (1102, 1103) OR (B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1))
 		LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
 		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
 		WHERE M.USER_REGION = #{userRegion}
@@ -179,6 +193,7 @@
 		<association property="boardCate" resultMap="boardCateResultSet"/>
 		<association property="boardVideo" resultMap="boardVideoResultSet"/>
 		<association property="boardTag" resultMap="boardTagResultSet"/>
+		<association property="boardVs" resultMap="boardVsResultSet"/>	
 		
 		<collection property="bImgList" ofType="boardImg" 
 				    javaType="java.util.List" resultMap="boardImgResultSet"/>
@@ -197,17 +212,20 @@
 		        I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_LEVEL, 
 		        (SELECT COUNT(*) FROM BOARD_CARE A WHERE B.BOARD_NO = A.BOARD_NO) AS USER_VIEW_COUNT,   
 		        (SELECT COUNT(*) FROM REPLY R WHERE B.BOARD_NO = R.BOARD_NO AND R.REPLY_STATUS = 'Y') AS REPLY_COUNT,
-		        R.REPLY_NO, R.REPLY_CONTENT, R.REPLY_WRITE_DATE, R.REPLY_STATUS, R.BOARD_NO,R.USER_NO, K.BOARD_TAG, K.BOARD_NO
+		        R.REPLY_NO, R.REPLY_CONTENT, R.REPLY_WRITE_DATE, R.REPLY_STATUS, R.BOARD_NO,R.USER_NO, K.BOARD_TAG, K.BOARD_NO,
+		        V.BOARD_OPTION_LEFT, V.BOARD_OPTION_RIGHT, V.CHOICE_LEFT, V.CHOICE_RIGHT, V.BOARD_EXPIRE_DATE
 		FROM BOARD B
 		JOIN MEMBER M ON B.USER_NO = M.USER_NO
 		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
-		JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO
+		LEFT JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO
 		JOIN BOARD_KEYWORD K ON B.BOARD_NO = K.BOARD_NO
 		LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
 		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO AND R.REPLY_STATUS = 'Y'
+		LEFT JOIN BOARD_VS V ON B.BOARD_NO = V.BOARD_NO
 		WHERE B.BOARD_NO = #{boardNo}
 		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME,C.BOARD_CATE_NO, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_LEVEL, 
-		         R.REPLY_NO, R.REPLY_CONTENT, R.REPLY_WRITE_DATE, R.REPLY_STATUS, R.BOARD_NO, R.USER_NO, K.BOARD_TAG, K.BOARD_NO , I.BOARD_IMG_NO
+		         R.REPLY_NO, R.REPLY_CONTENT, R.REPLY_WRITE_DATE, R.REPLY_STATUS, R.BOARD_NO, R.USER_NO, K.BOARD_TAG, K.BOARD_NO , I.BOARD_IMG_NO,
+		         V.BOARD_NO, V.BOARD_OPTION_LEFT, V.BOARD_OPTION_RIGHT, V.CHOICE_LEFT, V.CHOICE_RIGHT, V.BOARD_EXPIRE_DATE
 	</select>
 	
 	<select id="replySelect" resultMap="replyResultSet">

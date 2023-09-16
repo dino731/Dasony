@@ -16,6 +16,7 @@ public class BoardDetailExt extends Board{
 	private int replyCount;//REPLY_COUNT
 	private BoardTag boardTag;
 	private List<Reply> replyList;
+	private BoardVs boardVs;
 
 
 }

@@ -226,7 +226,9 @@ const BoardDailyList = ()=>{
                           </div>
                         </Link>
                       <div className="boardList-list-img">
-                        <img src={"http://localhost:8083/dasony"+board.boardImg.boardImgPath+board.boardImg.boardImgModName} alt="썸네일" className="board-img"/>
+                        <img src={board.boardImg.boardImgModName?
+                                  "http://localhost:8083/dasony"+board.boardImg.boardImgPath+board.boardImg.boardImgModName
+                                  : "https://i.postimg.cc/rmRJRyvp/dasony-logo.png"} alt="썸네일" className="board-img"/>
                       </div>
                   </div>
                 </div>
