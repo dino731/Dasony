@@ -2,7 +2,7 @@ import React from 'react';
 import {ColorRing} from "react-loader-spinner";
 
 // 지현 추가 (색상 변경 고민ing)
-const LoadingEmoji = () => {
+const Loading = () => {
     return(
         <ColorRing
             visible={true}
@@ -16,4 +16,4 @@ const LoadingEmoji = () => {
     );
 };
 
-export default LoadingEmoji;
+export default Loading;
