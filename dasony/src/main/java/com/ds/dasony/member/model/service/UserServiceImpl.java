@@ -136,6 +136,10 @@ public class UserServiceImpl implements UserService{
 	public int deleteMyAlertList(Map<String, Integer> requestBody) {
 		return userDao.delteMyAlertList(requestBody);
 	}
+	@Override
+	public int modifyNewPwd(Map<String, Object> myInfo) {
+		return userDao.modifyNewPwd(myInfo);
+	}
 
 
 }
