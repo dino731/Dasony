@@ -3,12 +3,14 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { useLayoutEffect, useRef } from "react";
 
-const BarChart = ({paddingRight, data, kind}) => {
+const BarChart = ({paddingRight, data, kind, loading}) => {
     console.log("Bar : ", data);
     const chartRef = useRef(null);
 
     const name1 = kind[0];
     const name2 = kind[1];
+
+    const {loadStatus, setLoadStatus} = loading;
 
     useLayoutEffect(() => {
       const chartdiv = document.querySelector("#chartdiv");
@@ -87,6 +89,8 @@ const BarChart = ({paddingRight, data, kind}) => {
     
       chartRef.current = chart;
       chartdiv.style.opacity = 1;
+      setLoadStatus(false);
+      
       return () => {
           chart.dispose();
       };

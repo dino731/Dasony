@@ -95,7 +95,7 @@ export const boardVsState = atom({
   default : {
     userNo : '',
     boardTitle : '',
-    boardTag : '',
+    boardKeyword : '',
     boardContent:'',
     boardOptionLeft : '',
     boardOptionRight: '',
@@ -105,3 +105,25 @@ export const boardVsState = atom({
     choiceRight:0
   }
 })
+//boardVs 정보
+export const boardShState = atom({
+  key: 'boardSh',
+  default : {
+    userNo : '',
+    boardTitle : '',
+    boardKeyword : '',
+    boardContent:'',
+    boardWriteDate:''
+  }
+})
+//share 정보
+export const shareState = atom({
+  key: 'share',
+  default : {
+    userNo : '',
+    boardTitle : '',
+    boardKeyword : '',
+    boardContent:'',
+    boardWriteDate:''
+  }
+

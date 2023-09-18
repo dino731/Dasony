@@ -3,6 +3,7 @@ import { useRef, useEffect, useState  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
 import axios from 'axios';
+import Loading from '../common/Loading';
 
 /**
      이벤트 등록 양식
@@ -23,9 +24,14 @@ export default () => {
     const [data, setData] = useState([]);
     // msg 보낼 이벤트 번호
     const [eventNo, setEventNo] = useState("");
+
+    // data loading
+    const [loadStatus, setLoadStatus] = useState(false);
     
     // function for loading data
     function loadData(){ // 매개변수로 page 번호 추가 필요
+        setLoadStatus(true);
+
         let cate = $(".event-selectBox>div>div>span").eq(0).text();
         let stat = $(".event-selectBox>div>div>span").eq(1).text();
         // setCategory(cate);
@@ -39,6 +45,7 @@ export default () => {
                 if(status) setStatus(false);
                 // else setStatus(true); 
                 
+                setLoadStatus(false);
             });
     }
 
@@ -146,108 +153,115 @@ export default () => {
     }, [data]);
 
     return(
-        <div className="event-manager-board dragging">
-            <div className="mb-3 row">
-                <div className="event-category-selectBoxList">
-                    <div className="event-selectBox">
-                        <span>분류</span>
-                        <div className="manager-select-btn">
-                            <div> 
-                                <span className="manager-select-label">카테고리</span>
-                                <i className="bi bi-caret-down-fill"></i>
+        <>
+            {loadStatus ? <div className="loadingContainer">
+                            <Loading />
+                        </div> : null}
+            <div className="event-manager-board dragging">
+                <div className="mb-3 row">
+                    <div className="event-category-selectBoxList">
+                        <div className="event-selectBox">
+                            <span>분류</span>
+                            <div className="manager-select-btn">
+                                <div> 
+                                    <span className="manager-select-label">카테고리</span>
+                                    <i className="bi bi-caret-down-fill"></i>
+                                </div>
+                                <ul className="manager-select-optionList">
+                                    <li className="manager-select-optionItem">문화</li>
+                                    <li className="manager-select-optionItem">스토어</li>
+                                    <li className="manager-select-optionItem">포인트</li>
+                                    <li className="manager-select-optionItem">기타</li>
+                                </ul>
                             </div>
-                            <ul className="manager-select-optionList">
-                                <li className="manager-select-optionItem">문화</li>
-                                <li className="manager-select-optionItem">스토어</li>
-                                <li className="manager-select-optionItem">포인트</li>
-                                <li className="manager-select-optionItem">기타</li>
-                            </ul>
                         </div>
-                    </div>
-                    
-                    <div className="event-selectBox">
-                        <span style={{width: "50%"}}>진행상태</span>
-                        <div className="manager-select-btn">
-                            <div>
-                                <span className="manager-select-label">선택</span>
-                                <i className="bi bi-caret-down-fill"></i>
+                        
+                        <div className="event-selectBox">
+                            <span style={{width: "50%"}}>진행상태</span>
+                            <div className="manager-select-btn">
+                                <div>
+                                    <span className="manager-select-label">선택</span>
+                                    <i className="bi bi-caret-down-fill"></i>
+                                </div>
+                                <ul className="manager-select-optionList">
+                                    <li className="manager-select-optionItem">진행</li>
+                                    <li className="manager-select-optionItem">종료</li>
+                                </ul>
                             </div>
-                            <ul className="manager-select-optionList">
-                                <li className="manager-select-optionItem">진행</li>
-                                <li className="manager-select-optionItem">종료</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* * 이벤트 리스트에 필요한 것 : 이벤트 번호, 분류, 제목, 등록일, 남은일, 쪽지 발송 */}
-            <table className="table" style={{"tableLayout":"fixed"}}>
-                <thead>
-                    <tr>
-                        <th scope="col" width="5%;">No</th>
-                        <th scope="col" width="10%;">카테고리</th>
-                        <th scope="col" width="25%;">제목</th>
-                        <th scope="col" width="10%;">등록일</th>
-                        <th scope="col" width="7%;">종료일</th>
-                        <th scope="col" width="8%;">쪽지</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data!=null && data.length != 0 ? data.map((element, index) => {
-                        return  <tr className="notice-item" key={index}>
-                                    <th scope="row">{index+1}</th>
-                                    <td>{element.eventCategory}</td>
-                                    <td className="text-cut" onClick={()=>moveToEventDetail(element.no)}>
-                                        {element.title}
-                                    </td>
-                                    <td scope="row">{element.uploadDate}</td>
-                                    <td scope="row">{dDayCount(element.endDate)}</td>
-                                    <td scope="row" className="event-pm-button">
-                                        <span type="button" data-bs-toggle="modal" data-bs-target="#message-modal" onClick={()=>setEventNo(element.no)}>작성</span>
-                                    </td>
-                                </tr>
-                    }) : null}
-                </tbody>
-                <tfoot>
-                </tfoot>
-            </table>
-            <button className="btn" onClick={()=>navigate("/admin/event/new")}>등록하기</button>
+                {/* * 이벤트 리스트에 필요한 것 : 이벤트 번호, 분류, 제목, 등록일, 남은일, 쪽지 발송 */}
+                <table className="table" style={{"tableLayout":"fixed"}}>
+                    <thead>
+                        <tr>
+                            <th scope="col" width="5%;">No</th>
+                            <th scope="col" width="10%;">카테고리</th>
+                            <th scope="col" width="25%;">제목</th>
+                            <th scope="col" width="10%;">등록일</th>
+                            <th scope="col" width="7%;">종료일</th>
+                            <th scope="col" width="8%;">쪽지</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data!=null && data.length != 0 ? data.map((element, index) => {
+                            return  <tr className="notice-item" key={index}>
+                                        <th scope="row">{index+1}</th>
+                                        <td>{element.eventCategory}</td>
+                                        <td className="text-cut" onClick={()=>moveToEventDetail(element.no)}>
+                                            {element.title}
+                                        </td>
+                                        <td scope="row">{element.uploadDate}</td>
+                                        <td scope="row">{dDayCount(element.endDate)}</td>
+                                        <td scope="row" className="event-pm-button">
+                                            <span type="button" data-bs-toggle="modal" data-bs-target="#message-modal" onClick={()=>setEventNo(element.no)}>작성</span>
+                                        </td>
+                                    </tr>
+                        }) : null}
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
+                <button className="btn" onClick={()=>navigate("/admin/event/new")}>등록하기</button>
 
-            {/* Modal */}
-            <div className="modal fade" id="message-modal" data-bs-backdrop="static" data-bs-keyboard="false" 
-                tabIndex="-1" aria-labelledby="messageBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="messageBackdropLabel">쪽지 작성</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
-                        </div>
-                        <div className="modal-body">
-                            <div className="event-category-selectBoxList">
-                                <div className="event-selectBox">
-                                    <span>대상자</span>
-                                    <div className="manager-select-btn">
-                                        <div className='modal-select'> 
-                                            <span className="manager-select-label">{modalCate}</span>
-                                            <i className="bi bi-caret-down-fill"></i>
+                {/* Modal */}
+                <div className="modal fade" id="message-modal" data-bs-backdrop="static" data-bs-keyboard="false" 
+                    tabIndex="-1" aria-labelledby="messageBackdropLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="messageBackdropLabel">쪽지 작성</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                            </div>
+                            <div className="modal-body">
+                                <div className="event-category-selectBoxList">
+                                    <div className="event-selectBox">
+                                        <span>대상자</span>
+                                        <div className="manager-select-btn">
+                                            <div className='modal-select'> 
+                                                <span className="manager-select-label">{modalCate}</span>
+                                                <i className="bi bi-caret-down-fill"></i>
+                                            </div>
+                                            <ul className="manager-select-optionList">
+                                                <li className="manager-select-optionItem">전체</li>
+                                                <li className="manager-select-optionItem">당첨자</li>
+                                            </ul>
                                         </div>
-                                        <ul className="manager-select-optionList">
-                                            <li className="manager-select-optionItem">전체</li>
-                                            <li className="manager-select-optionItem">당첨자</li>
-                                        </ul>
                                     </div>
                                 </div>
+                                {/* <input type='text' className='message-modal-text' placeholder='보낼 내용을 입력해주세요.' /> */}
+                                <textarea className='message-modal-text' placeholder='보낼 내용을 입력해주세요.' />
                             </div>
-                            <input type='text' className='message-modal-text' placeholder='보낼 내용을 입력해주세요.' />
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" ref={closeModal} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" ref={modalBtn} onClick={sendMessage}>Send</button>
+                            <div className="modal-footer">
+                                <button type="button" ref={closeModal} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-primary" ref={modalBtn} onClick={sendMessage}>Send</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
+        
     );
 }

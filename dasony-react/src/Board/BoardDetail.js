@@ -15,11 +15,13 @@ import BoardHeart from './BoardHeart';
 
 
 const BoardDetail = () =>{
+  
+  const userNo = parseInt(localStorage.getItem("loginUserNo"));
+  const userRegion = localStorage.getItem("loginUserRegion");
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
   // console.log('BoardDetail path ===>',path);
-  const [replyText, setReplyText] = useState([]);
   localStorage.getItem("loginUserNo") // 유저 번호 
 
   /* 현재 경로 비교연산 밑작업용 ain 0904 */
@@ -61,24 +63,6 @@ const BoardDetail = () =>{
   const prevIndex = (currentIndex - 1 + boardPost.length) % boardPost.length;
   const nextIndex = (currentIndex + 1) % boardPost.length;
 
-
-  const HandleLBackBtn = (e) => {
-    const newPrevPost = boardPost[prevIndex];
-    if (newPrevPost) {
-      navigate("/board" + listPath + "detail/" + newPrevPost.boardNo);
-      console.log('newPrevPost ===>',newPrevPost);
-    };
-  }
-  
-  const HandleNextBtn = (e) => {
-    const newNextPost = boardPost[nextIndex];
-    if (newNextPost) {
-      navigate("/board" + listPath + "detail/" + newNextPost.boardNo);
-      console.log('newPrevPost ===>',newNextPost);
-    }
-  };
-
-
   const element = useRef(null);
 
   const onMoveBox = ()=>{
@@ -86,10 +70,10 @@ const BoardDetail = () =>{
   };
 
 
-  /* 모달 관련 시작 */
+   /* 모달 관련 시작 */
     /* 모달 시작 */
     const [show, setShow] = useState(false);
-    const [modalText, setModalText] = useState(`답글을 삭제하시겠습니까?`);
+    const [modalText, setModalText] = useState(`게시글을 삭제하시겠습니까?`);
     const [modalButton, setModalButton] = useState('inline-block');
     const [modalButtonText, setModalButtonText] = useState('취소');
   
@@ -99,20 +83,29 @@ const BoardDetail = () =>{
         setShow(true);
     }
     const handleModalOn = ()=>{
-                                    setModalText(`정상적으로 삭제되었습니다.`);
-                                    setModalButton('none');
-                                    setModalButtonText('확인');
-                                }
+
+      axios.get(`http://localhost:3000/dasony/board/boardDelete/${boardNo}`)
+      .then(res =>{
+        console.log('게시글 삭제 완료',res);
+        setModalText(`정상적으로 삭제되었습니다.`);
+        setModalButton('none');
+        setModalButtonText('확인');
+      })
+      .catch(error =>{
+        console.log('error ', error);
+      });                          }
     const handleModalOff = ()=>{
-                                    setModalText(<div textalign='center'>답글을 삭제하시겠습니까?<br/><br/></div>);
+                                    setModalText(<div textalign='center'>게시글을 삭제하시겠습니까?<br/><br/></div>);
                                     setModalButton('inline-block');
                                     setModalButtonText('취소');
+   
                                 }
     const handleModalOffAndClose = () => {
         if(modalButtonText == '확인' && modalButton == 'inline-block' && show){
             handleModalOff();
         }
-        handleClose();
+        window.location.href =`/board${listPath}`;
+        handleClose(true);
     }
     /* 모달 끝 */
     /* 신고 모달 ain 0905 */
@@ -143,31 +136,45 @@ const BoardDetail = () =>{
     }
     /* 신고 모달 끝 */
   /* 모달 관련 끝 */
+
+
+
   const[boardData,setBoardData]=useState([]);
+  const[reply, setReply] = useState([]);
   const [newReplyText, setNewReplyText] = useState([]);
   const [isFilled, setIsFilled] = useState(null);
+  /*boardVs */
+  const [voteList, setVoteList] = useState([]);
+  /*share */
+ const [share, setShare] = useState(null);
+  
+  const [img, setImg] = useState(null);
+  const [video, setVideo] = useState(null);
   // console.log('boardDetail listPath ==>',listPath);
    /* axios 시작 */
    useEffect(() => {
+    
     if (listPath.length === 0) {
       // listPath가 비어있을 때는 호출하지 않도록 예외 처리
       return;
     }
     console.log('boardDetail listPath ==>',listPath);
 
-    // Axios를 사용하여 서버로 GET 요청을 보냅니다.
-    axios.get(`http://localhost:3000/dasony/board${listPath}detail/${boardNo}`) // 서버의 API 엔드포인트에 맞게 수정
+    const fetchData = async() => {
+      // Axios를 사용하여 서버로 GET 요청을 보냅니다.
+      await axios.get(`http://localhost:3000/dasony/board${listPath}detail/${boardNo}`) // 서버의 API 엔드포인트에 맞게 수정
       .then((response) => {
         console.log('요청 주소:', response.config.url); // 요청 주소 확인
         console.log('BoardList 응답 데이터:', response.data);
-        setBoardData(response.data);
+        setBoardData(response.data.boardData);
+        setReply(response.data.replyList);
         // setReplyText(response.data.replyList);
       })
       .catch((error) => {
         console.error('서버 요청 오류:', error);
       });
 
-     axios.get(`http://localhost:3000/dasony/board/serchHeart?boardNo=${boardNo}&userNo=${localStorage.loginUserNo}`)
+    await axios.get(`http://localhost:3000/dasony/board/serchHeart?boardNo=${boardNo}&userNo=${localStorage.loginUserNo}`)
     .then(response => {
       const result = response.data;
       console.log('result',result);
@@ -178,12 +185,260 @@ const BoardDetail = () =>{
       console.error('좋아요 정보를 가져오는 중 오류 발생:', error);
     });
 
+  /*보드 이미지 불러오기 - 서버 */
+    await axios.post("/dasony/board/boardImg", boardNo, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then(res=>{
+      setImg(res.data);
+      console.log("sdfasdfasfsadfsadfasdf", res.data);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
 
-  }, [listPath, boardNo,isFilled]); // 빈 배열을 두번째 인자로 전달하면 컴포넌트가 마운트될 때 한 번만 실행
+    /*share 부르기 */
+    if(path.includes('share')){
+      const boardCateNo = 3101;
+      await axios.post("/dasony/api/share", {userRegion:userRegion, boardCateNo:boardCateNo})
+            .then(res=>{
+                setShare(res.data);
+                console.log(res.data);
+            })
+            .catch(err=>{
+                console.log(err);
+            });
+    }
+
+    /*보드 비디오 불러오기 - 서버 */
+    await axios.post("/dasony/board/boardVideo", boardNo, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then(res=>{
+      setVideo(res.data);
+      console.log(res.data);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  
+
+  /*투표 기록 불러오기 - 서버 */
+    await axios.post("/dasony/api/voteList", boardNo, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(res=>{
+        setVoteList(res.data);
+        console.log("voteList:",res.data);
+      })
+      .catch(err=>{
+        console.log(err);
+      });
+
+      
+    }
+    fetchData();
+    
+    
+  }, [listPath, boardNo,isFilled, userNo]); // 빈 배열을 두번째 인자로 전달하면 컴포넌트가 마운트될 때 한 번만 실행
   // console.log('게시판리스트 boardData ===>',boardData);
   // console.log('게시판 디테일 받아온 replyText ====>',replyText);
   /* axios 끝 */
+
+//================================================================
+
+  /*boardVS part */
   
+  const [clickedLeft, setClickedLeft] = useState('nonClicked');
+  const [clickedRight, setClickedRight] = useState('nonClicked');
+  const handleClickedLeft = () => {
+    if(clickedRight ==='nonClicked'){
+      //오른쪽 선택x
+      if(clickedLeft === 'nonClicked'){ 
+        // 왼쪽 선택x => 초기 상태
+        setClickedLeft('clicked');
+        handleOption('left', 'plus');
+        handleVsOption('left');
+      } else {                          
+        // 왼쪽 선택o => 왼쪽 한 번 더 클릭
+        alert("이미 선택한 항목입니다.");
+      }
+    } else {
+      //오른쪽 선택o
+      if(clickedLeft === 'nonClicked'){
+        //왼쪽 선택x => 오른쪽 선택된 상황에서 왼쪽 선택
+        setClickedRight('nonClicked');
+        setClickedLeft('clicked');
+        handleOption('right', 'minus');
+        handleOption('left', 'plus'); 
+        handleVsOption('left');
+      } else {
+        //왼쪽 선택o => 있을 수 없는 경우
+          //확인용 메시지
+        alert("불가능한 경우입니다.");
+      }
+    }
+    
+  }
+  const handleClickedRight = () => {
+    if(clickedLeft ==='nonClicked'){
+      //왼쪽 선택x
+      if(clickedRight === 'nonClicked'){
+        //오른쪽 선택x ==> 초기 상황
+        setClickedRight('clicked');
+        handleOption('right', 'plus');
+        handleVsOption('right');
+      } else {
+        //오른쪽 선택o ==> 오른쪽 한 번 더 클릭
+        alert("이미 선택한 항목입니다.");
+      }
+    } else {
+      //왼쪽 선택o
+      if(clickedRight === 'nonClicked'){
+        //오른쪽 선택x ==> 왼쪽 선택된 상황에서 오른쪽 선택
+        setClickedLeft('nonClicked');
+        setClickedRight('clicked');
+        handleOption('left', 'minus');
+        handleOption('right', 'plus');
+        handleVsOption('right');
+      } else {
+        //오른쪽 선택o ==> 있을 수 없는 상황
+          //확인용 메시지
+        alert("불가능한 경우입니다.");
+      }
+    }
+    
+  }
+
+  /*옵션 투표 수 플마 - 서버 */
+  const handleOption = (option, pm) => {
+    axios.post("/dasony/api/optionPm", {option:option, pm:pm})
+    .then(res=>{
+    })
+    .catch(err=>{
+      console.log(err);
+      alert("다시 시도해주세요");
+    })
+  }
+  /*투표 기록 남기기 - 서버 */
+  const handleVsOption = (option)=>{
+    axios.post("/dasony/api/vsOption", 
+                {userNo:userNo, boardNo:boardNo, vsOption:option})
+    .then(res=>{
+      alert("투표 완료");
+      window.location.reload();
+    })
+    .catch(err=>{
+      console.log(err);
+      alert("다시 시도해주세요");
+    })
+  }
+
+    /*투표 기록으로 css 설정하기 */
+    const handleVoteCss = () => {
+      for(const vote of voteList){
+        if(vote.userNo == userNo && vote.vsOption == 'left'){
+          setClickedLeft('clicked');
+          setClickedRight('nonClicked');
+        } else if(vote.userNo == userNo && vote.vsOption == 'right'){
+          setClickedRight('clicked');
+          setClickedLeft('nonClicked');
+        }
+      }
+    }
+
+    useEffect(()=>{
+      handleVoteCss();
+    })
+
+    /* 게시글 이동 axios 사용 시작 */
+
+
+  const HandleLBackBtn = (e) =>{
+    const boardMiddleCate = e;
+    const boardNoBack = newReplyText.boardNo;
+    console.log('boardNoBack =====>',boardNoBack);
+    console.log('boardMiddleCate =====>',boardMiddleCate);
+
+    axios.post(`http://localhost:3000/dasony/board/backBtn/${boardNoBack}/${boardMiddleCate}`)
+    .then(response => {
+      console.log('응답확인',response.data);
+      const backBtn = response.data;
+      console.log('반환받은 값 확인 backBtn =====>',backBtn)
+      const backNo = backBtn[0].boardNo;
+      console.log('이게 진짜 반환받은 값 확인 backNo =====>',backNo)
+      navigate("/board" + listPath + "detail/" + backNo);
+    })
+    .catch(error => {
+      console.error('좋아요 정보를 가져오는 중 오류 발생:', error);
+    });
+  };
+
+  const HandleNextBtn = (e) =>{
+    const boardMiddleCate = e;
+    const boardNoBack = newReplyText.boardNo;
+    console.log('boardNoBack =====>',boardNoBack);
+    console.log('boardMiddleCate =====>',boardMiddleCate);
+  axios.post(`http://localhost:3000/dasony/board/nextBtn/${boardNo}/${boardMiddleCate}`)
+  .then(response => {
+    console.log('응답확인',response.data);
+    const nextBtn = response.data;
+    console.log('반환받은 값 확인 nextBtn =====>',nextBtn)
+    const nextNo = nextBtn[0].boardNo;
+    console.log('이게 진짜 반환받은 값 확인 nextNo =====>',nextNo)
+    navigate("/board" + listPath + "detail/" + nextNo);
+  })
+  .catch(error => {
+    console.error('좋아요 정보를 가져오는 중 오류 발생:', error);
+  });
+};
+
+/* 답글 모달 시작 */
+const [reshow, setReShow] = useState(false);
+const [reModalText, setReModalText] = useState(`답글을 삭제하시겠습니까?`);
+const [reModalButton, setReModalButton] = useState('inline-block');
+const [reModalButtonText, setReModalButtonText] = useState('취소');
+
+const handleReClose = () => setReShow(false);
+const handleReShow = () => {
+    handleReModalOff();
+    setReShow(true);
+}
+const handleReModalOn = (e)=>{
+   const replyNo = e;
+   axios.get(`http://localhost:3000/dasony/board/boardReplyDelete/${replyNo}`)
+   .then(res =>{
+     console.log('답글 삭제 완료',res);
+     setReModalText(`정상적으로 삭제되었습니다.`);
+     setReModalButton('none');
+     setReModalButtonText('확인');
+   })
+   .catch(error =>{
+     console.log('error ', error);
+   });       
+                         }
+const handleReModalOff = ()=>{
+
+                           setReModalText(<div textalign='center'>답글을 삭제하시겠습니까?<br/><br/></div>);
+                           setReModalButton('inline-block');
+                           setReModalButtonText('취소');
+ }
+const handleReModalOffAndClose = () => {
+    if(reModalButtonText == '확인' && reModalButton == 'inline-block' && reshow){
+     handleReModalOff();
+    }
+    navigator()
+    handleReClose();
+}
+/* 모달 끝 */
+
+   
   return (
       <>
         <div ref={element} className='BoardDetail-wrapper'>
@@ -202,12 +457,12 @@ const BoardDetail = () =>{
                         <button
                           type="button" 
                           className="BoardDetail-boardlist-back-btn board-submit-btn"
-                          onClick={HandleLBackBtn}
+                          onClick={()=>HandleLBackBtn(board.boardCate?.boardMiddleCate)}
                         >이전글</button>
                         <button
                           type="button" 
                           className="BoardDetail-boardlist-next-btn board-submit-btn"
-                          onClick={HandleNextBtn}
+                          onClick={()=>HandleNextBtn(board.boardCate?.boardMiddleCate)}
                         >다음글</button>
                       </span>
                   </div>
@@ -215,8 +470,8 @@ const BoardDetail = () =>{
                   <div className='BoardDetail-boardlist-title-wrapper'>
                     <div className='BoardDetail-boardlist-title-flexdiv'>
                       <div className='BoardDetail-boardlist-title-container'>
-                        <span className='BoardDetail-boardlist-title-keyword'>{board.boardCateNo}</span>
-                        <span className='BoardDetail-boardlist-title'>{board.boardTitle}</span>
+                        <span className='BoardDetail-boardlist-title-keyword'>{board?.board.boardCateNo}</span>
+                        <span className='BoardDetail-boardlist-title'>{board?.board.boardTitle}</span>
                       </div>
                       <div className='BoardDetail-boardlist-userInterface'>
                         <span>
@@ -224,42 +479,42 @@ const BoardDetail = () =>{
                           onClick={handleAccusedShow}
                           ><i className="bi bi-cone-striped"></i>
                           </button>
-                          <Modal show={accusedShow} onHide={handleAccusedClose}>
+                          <Modal reshow={accusedShow} onHide={handleAccusedClose}>
+                          <ModalHeader>
+                              유저 신고
+                          </ModalHeader>
+                          <ModalBody>
+                              <div style={{textAlign:'center'}}>
+                              {acuusedText}
+                              </div>
+                          </ModalBody>
+                          <ModalFooter>
+                              <Button onClick={handleAccusedModalOffAndClose}>{reModalButtonText}</Button>
+                              <Button onClick={handleAccusedModalOn} style={{display:reModalButton}}>신고</Button>
+                          </ModalFooter>
+                        </Modal>
+                      </span>
+                      <span>
+                      <button
+                            className='BoardDetail-boardlist-meetball-btn'
+                            type='button'
+                            onClick={handleReShow}
+                            ><i className="bi bi-three-dots-vertical"></i>
+                        </button>
+                          <Modal show={reshow} onHide={handleReClose}>
                             <ModalHeader>
-                                유저 신고
+                                답글 삭제
                             </ModalHeader>
                             <ModalBody>
                                 <div style={{textAlign:'center'}}>
-                                {acuusedText}
+                                {reModalText}
                                 </div>
                             </ModalBody>
                             <ModalFooter>
-                                <Button onClick={handleAccusedModalOffAndClose}>{modalButtonText}</Button>
-                                <Button onClick={handleAccusedModalOn} style={{display:modalButton}}>신고</Button>
+                                <Button onClick={handleReModalOffAndClose}>{reModalButtonText}</Button>
+                                <Button onClick={()=>handleReModalOn(reply.replyNo)} style={{display:reModalButton}}>삭제</Button>
                             </ModalFooter>
                           </Modal>
-                        </span>
-                        <span>
-                        <button
-                            className='BoardDetail-boardlist-meetball-btn'
-                            type='button'
-                            onClick={handleShow}
-                            ><i className="bi bi-three-dots-vertical"></i>
-                            </button>
-                            <Modal show={show} onHide={handleClose}>
-                              <ModalHeader>
-                                  답글 삭제
-                              </ModalHeader>
-                              <ModalBody>
-                                  <div style={{textAlign:'center'}}>
-                                  {modalText}
-                                  </div>
-                              </ModalBody>
-                              <ModalFooter>
-                                  <Button onClick={handleModalOffAndClose}>{modalButtonText}</Button>
-                                  <Button onClick={handleModalOn} style={{display:modalButton}}>삭제</Button>
-                              </ModalFooter>
-                            </Modal>
                         </span>
                         <span>
                           <button
@@ -275,51 +530,123 @@ const BoardDetail = () =>{
                       <div className='BoardDetail-boardlist-title-userinfo'>
                         <span className='BoardDetail-boardlist-title-userinfo-img'><img src="/resources/board/jh.jpg"/></span>
                         <span className='BoardDetail-boardlist-title-userinfo-nikname'>{board?.user.userNick}</span>
-                        <span className='BoardDetail-boardlist-title-userinfo-date'>{board.boardWriteDate}</span>
+                        <span className='BoardDetail-boardlist-title-userinfo-date'>{board.board.boardWriteDate}</span>
                       </div>
                       <div className='BoardDetail-boardlist-title-views-wrapper'>
-                        <span className='BoardDetail-boardlist-title-views'>조회{board.boardViews}</span>
+                        <span className='BoardDetail-boardlist-title-views'>조회{board.board.boardViews}</span>
                         <span className='BoardDetail-boardlist-title-views'>추천{board.userViewCount}</span>
                         <span className='BoardDetail-boardlist-title-views'>답글{board.replyCount}</span>
                       </div>
                     </div>
                   </div>
                   <div>
-                  {board.bimgList.map(image => (
-                    <div className='BoardDetail-userImg-views-container'>
-                   
-                        <div className='BoardDetail-userImg-views-li' key={image.boardImgLevel}>
-                          {image.boardImgModName
+                  {img&&
+                  !(path.includes('share'))
+                  ?
+                  (
+                    img.map(img => (
+                    <div key={img.boardImgNo} className='BoardDetail-userImg-views-container'>
+                        <div className='BoardDetail-userImg-views-li' key={img.boardImgLevel}>
+                          {img.boardImgModName
                             ?(<img
-                            src={`http://localhost:8083/dasony${image.boardImgPath}${image.boardImgModName}`}
-                            alt={`썸네일 ${image.boardImgLevel}`}
+                            src={`http://localhost:8083/dasony${img.boardImgPath}${img.boardImgModName}`}
+                            alt={`썸네일 ${img.boardImgLevel}`}
                             className="board-img"/>) 
                             : ('')}
                         </div>
-                     
                     </div>
-                     ))}
+                     ))
+                     )
+                    :
+                    (<>
+                    <div className="share-img-box">
+                    {img?.map(img=>(
+                      
+                      <img key={img?.boardImgNo} src={`http://localhost:8083/dasony${img?.boardImgPath}${img?.boardImgModName}`}
+                       style={{width:'150px'}}/>
+                    ))}
+                      
+                    </div>
+                    </>)}
+                    
                   </div>
                   <div className='BoardDetail-boardlist-content-wrapper'>
-                    {(board.boardCate.boardCateNo!=1103?
+                    {(board.boardCate.boardCateNo!=1103
+                    &&board.boardCate.boardCateNo!=1102
+                    &&board.boardCate.boardCateNo!=3101?
                     (<div className='BoardDetail-boardlist-content'
                     dangerouslySetInnerHTML={{ __html: board.boardContent }}
                     >
                     </div>)
-                    :(
+                    :board.boardCate.boardCateNo==1103?(
                       <>
                       <br/>
                       <div className='vote-content-box'>
-                        <div>{board.boardVs.boardOptionLeft}</div>
+                        <div className='vote-div' id={clickedLeft} onClick={handleClickedLeft}>
+                          {board.boardVs.boardOptionLeft}<br/><br/>
+                          {board.boardVs.choiceLeft}표 
+                        </div>
                         <div style={{textAlign:'center'}}>vs</div>
-                        <div>{board.boardVs.boardOptionRight}</div>
+                        <div className='vote-div' id={clickedRight} onClick={handleClickedRight}>
+                          {board.boardVs.boardOptionRight}<br/><br/>
+                          {board.boardVs.choiceRight}표 
+                        </div>
                       </div>
                       <div className='vote-content-txt'>{board.boardVs.boardContent}</div>
-                      <br/>
-                      </>))}
+                      <br/><br/>
+                      </>)
+                      :board.boardCate.boardCateNo==1102?(
+                        <>
+                        { 
+                        video&&video.map(vi=>(
+                          <div className='BoardDetail-userVideo-views-container' key={vi.videoNo}>
+                            <div className='BoardDetail-userVideo-views-li'>
+                              
+                              <div className='video-box'> 
+                                <video id="vid" controls className="board-video" autoPlay loop>
+                                    <source src={`http://localhost:8083/dasony${vi.videoPath}${vi.videoModName}`} type="video/mp4" />
+                                </video>
+                                <div className='video-content'>
+                                  <div className='video-user-box'>
+                                    <div className='video-user-thumb'>
+                                      <img src={`http://localhost:8083/dasony/resources/images/board/99140.png`}/>
+                                    </div> 
+                                    <div>{board.user.userNick}<br/></div>
+                                  </div>
+                                  {board.board.boardContent}
+                                  sdfasdfasfsadfsadfasdffsfasdfsa
+                                  sdfasdfasfsadfsadfasdfasdfasdf
+                                  asdfasdfsdfasdfdddddddddddddddddddddddddddddddddddddd
+                                  asdfasdfsafdasdfasdfsdfasdfdddddddddddddddddddddddddddddddddddddd
+                                  asdfasdfsdfasdfdddddddddddddddddddddddddddddddddddddd
+                                  asdfasdfsdfasdfdddddddddddddddddddddddddddddddddddddd
+                                </div>
+                                </div>
+                            </div>
+                            <br/><br/>
+                            <br/><br/>
+                        </div>
+                        ))}
+                        </>
+                      )
+                      :(
+                        <>
+                        {
+                          share&& share.map(s=>(
+                            <div>
+                              <br/>
+                              <div style={{fontSize:'1.3vw', textAlign:'center'}}>
+                                {s.board.boardContent}
+                              </div>
+                              <br/>
+                            </div>
+                          ))
+                        }
+                        </>
+                      ))}
 
                   </div>
-                <BoardDetailReply editContent={{newReplyText, setNewReplyText}} boardData={boardData} listPath={listPath}/>
+                <BoardDetailReply editContent={{newReplyText, setNewReplyText}} replyList={reply} boardData={boardData} listPath={listPath}/>
                 </div>
                 <div className='BoardDetail-side-container'>
                   <div className='BoardDetail-side-by-side'>

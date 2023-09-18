@@ -109,7 +109,7 @@ const Header = () => {
 
 
                     
-                        <li className="board-li" id="reception" 
+                        <li className="board-li" id="service" 
                             onClick={(event)=>{HandleOpacity(event.target.id);}}
                             style={{fontSize:'1.5vw'}}
                         >
@@ -273,7 +273,7 @@ const Header = () => {
                                                 <li></li>
                                             </ul>
                                         ); break;
-                case 'reception': sideList = (
+                case 'service': sideList = (
                                                 <ul>
                                                     <li></li>
                                                     <li></li>
@@ -281,7 +281,7 @@ const Header = () => {
                                                     <li></li>
                                                     <li></li>
                                                     <li></li>
-                                                    <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/report'>공지</Link></li>
+                                                    <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/service/notice'>공지</Link></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/alert'>알람</Link></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/reception'>문의</Link></li>
                                                     <li></li>
@@ -298,7 +298,7 @@ const Header = () => {
                                                 <li></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/general/daily'>사담</Link></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/info/jmt'>정보공유</Link></li>
-                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/share'>나눔</Link></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/share/list'>나눔</Link></li>
                                                 <li></li>
                                                 <li></li>
                                                 <li></li>

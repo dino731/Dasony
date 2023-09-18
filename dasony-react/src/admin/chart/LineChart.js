@@ -3,12 +3,14 @@ import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { useLayoutEffect, useRef } from "react";
 
-const LineChart = ({paddingRight, data, kind}) => {
+const LineChart = ({paddingRight, data, kind, loading}) => {
     console.log("line : ", data);
     const chartRef = useRef(null);
 
     const name1 = kind[0];
     const name2 = kind[1];
+
+    const {loadStatus, setLoadStatus} = loading;
 
     useLayoutEffect(() => {
     
@@ -161,6 +163,8 @@ const LineChart = ({paddingRight, data, kind}) => {
         chart.appear(1000, 100);
     
         chartRef.current = chart;
+
+        setLoadStatus(false);
 
         return () => {
             root.dispose();

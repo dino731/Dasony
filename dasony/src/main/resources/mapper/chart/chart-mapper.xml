@@ -31,6 +31,12 @@
 		where instr(board_write_date, #{date}) > 0
 	</select>
 	
+	<!-- <select id="selectValueVoteCount" parameterType="string" resultType="int">
+		select count(*) from board_vs
+		where절 수정 필요
+		where instr(board_write_date, #{date}) > 0
+	</select> -->
+	
 	<select id="selectValueDonationCount" parameterType="string" resultType="int">
 		select count(*) from donation
 		where to_char(dona_write_date, 'YYYY-MM-DD') = #{date}

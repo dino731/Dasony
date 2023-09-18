@@ -247,7 +247,7 @@
   width: 90%;
 }
 .replycoment-input{
-  width: 100vh;
+  width: 45vw;
   height: 7vh;
   padding-inline-start: 30px;
   border: none;
@@ -268,4 +268,48 @@
   font-size: 150%;
   word-wrap: break-word;
   overflow: hidden;
+  color: #7A7A7A;
+}
+.vote-div:hover{
+  cursor: pointer;
+  background-color: #CB9DE7;
+  color: #FCFA90;
+  transition-duration: 0.5s;
+  font-weight: 900;
+  letter-spacing: 0.2vw;
+}
+.vote-content-txt{
+  text-align: center;
+  font-size: 120%;
+}
+
+#clicked{
+  background-color: #CB9DE7;
+  color: #FCFA90;
+  transition-duration: 0.5s;
+  font-weight: 900;
+  letter-spacing: 0.2vw;
+}
+
+
+.BoardDetail-boardlist-reply-wrapper{
+  margin-bottom: 10%;
+}
+
+.BoardDetail-boardlist-reply-form-wrapper{
+  height: 10vh;
+}
+.BoardDetail-boardlist-reply-form-container{
+  width: 80%;
+}
+.BoardDetail-boardlist-reply-form-container button{
+  border-radius: 0.5vw;
+  letter-spacing: 0.1vw;
+  font-weight: 100;
+}
+.BoardDetail-boardlist-reply-form-container button:hover{
+  transition-duration: 0.5s;
+}
+.replycoment-form-container{
+  width: 100%;
 }
