@@ -75,27 +75,27 @@ const BoardReComent = () =>{
                       <span className='BoardDetail-boardlist-reply-userinfo-date'>2023.08.29</span>
                   </div>
                   <div className='Board-reply-recoment-control-wrapper'>
-                        <sapn>
-                          <button className='Board-reply-recoment-accused-btn'
-                          onClick={handleAccusedShow}
-                          ><i className="bi bi-cone-striped"></i>
-                          </button>
-                          <Modal show={accusedShow} onHide={handleAccusedClose}>
-                            <ModalHeader>
-                                유저 신고
-                            </ModalHeader>
-                            <ModalBody>
-                                <div style={{textAlign:'center'}}>
-                                {acuusedText}
-                                </div>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button onClick={handleAccusedModalOffAndClose}>{modalButtonText}</Button>
-                                <Button onClick={handleAccusedModalOn} style={{display:modalButton}}>신고</Button>
-                            </ModalFooter>
-                          </Modal>
+                      <sapn>
+                        <button className='Board-reply-recoment-accused-btn'
+                        onClick={handleAccusedShow}
+                        ><i className="bi bi-cone-striped"></i>
+                        </button>
+                        <Modal show={accusedShow} onHide={handleAccusedClose}>
+                          <ModalHeader>
+                              유저 신고
+                          </ModalHeader>
+                          <ModalBody>
+                              <div style={{textAlign:'center'}}>
+                              {acuusedText}
+                              </div>
+                          </ModalBody>
+                          <ModalFooter>
+                              <Button onClick={handleAccusedModalOffAndClose}>{modalButtonText}</Button>
+                              <Button onClick={handleAccusedModalOn} style={{display:modalButton}}>신고</Button>
+                          </ModalFooter>
+                        </Modal>
 
-                        </sapn>
+                      </sapn>
                       <span>
                         <button
                             className='BoardDetail-boardlist-meetball-btn'

@@ -4,8 +4,12 @@ import HeartIcon from "../heart";
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import Loading from "../common/Loading";
 
 const ShopBest = ()=>{
+
+    const [loading, setLoading] = useState(true);
+
     const userRegion = localStorage.getItem("loginUserRegion");
 
     const pathMap = {
@@ -16,14 +20,14 @@ const ShopBest = ()=>{
         }
     
 {/*상품 정보 불러오기 */}
-    {/*상품 정보 설정 */}
-    const [product, setProduct] = useState([]);
-    {/*상품 정보 불러오기 - 서버*/}
-    const handleProductInfo = () => {
-        console.log(product);
-        axios.post("/dasony/api/admin/productInfo", {userRegion:userRegion})
+    {/*베스트 상품 정보 설정 */}
+    const [bestProduct, setBestProduct] = useState([]);
+    {/*베스트 상품 정보 불러오기 - 서버*/}
+    const handleProductBestInfo = () => {
+        console.log(bestProduct);
+        axios.post("/dasony/api/productBestInfo", {userRegion:userRegion})
         .then(res=>{
-            setProduct(res.data.product);
+            setBestProduct(res.data.product);
         })
         .catch(err=>{
             console.log(err);
@@ -31,15 +35,18 @@ const ShopBest = ()=>{
         })
     }
     useEffect(()=>{
-        handleProductInfo();
+        handleProductBestInfo();
+        setLoading(false);
     }, [userRegion])
 
     return(
-        <div className="shopBest-container">
+        <>
+            {loading?<Loading/>:
+            <div className="shopBest-container">
             <div className="shopBest-title">실시간 Best</div>
             <div className="shopBest-box">
                 {
-                    product.map(p=>{
+                    bestProduct&&bestProduct.map(p=>{
                         return(
                             
                             <div className="shopBest-item">
@@ -60,54 +67,9 @@ const ShopBest = ()=>{
                     .splice(0,100)
                     
                 }
-                {/**
-                 * <div className="shopBest-item">
-                    <div className="shopBest-item-img">
-                        <img src="../resources/shop/product/4/004.png"></img>
-                    </div>
-                    <div className='shopBest-item-shop'>심스니 반할 도넛</div>
-                    <div className='shopBest-item-product'>초코 도넛</div>
-                    <div className='shopBest-item-point'>4000 다손{" "}<HeartIcon /></div>
-                </div>
-
-                <div className="shopBest-item">
-                    <div className="shopBest-item-img">
-                        <img src="../resources/shop/product/8/008.png"></img>
-                    </div>
-                    <div className='shopBest-item-shop'>마시리 카페</div>
-                    <div className='shopBest-item-product'>영양 만점 석류 주스</div>
-                    <div className='shopBest-item-point'>5000 다손{" "}<HeartIcon/></div>
-                </div>
-
-                <div className="shopBest-item">
-                    <div className="shopBest-item-img">
-                        <img src="../resources/shop/product/7/002.png"></img>
-                    </div>
-                    <div className='shopBest-item-shop'>룽바오네 마라탕</div>
-                    <div className='shopBest-item-product'>마라탕(모듬)</div>
-                    <div className='shopBest-item-point'>12000 다손{" "}<HeartIcon/></div>
-                </div>
-
-                <div className="shopBest-item">
-                    <div className="shopBest-item-img">
-                        <img src="../resources/shop/product/11/003.png"></img>
-                    </div>
-                    <div className='shopBest-item-shop'>백년 손님 고깃집</div>
-                    <div className='shopBest-item-product'>숙성 갈비(600g)</div>
-                    <div className='shopBest-item-point'>40000 다손{" "}<HeartIcon/></div>
-                </div>
-
-                <div className="shopBest-item">
-                    <div className="shopBest-item-img">
-                        <img src="../resources/shop/product/2/002.png"></img>
-                    </div>
-                    <div className='shopBest-item-shop'>아사기 샐러드</div>
-                    <div className='shopBest-item-product'>딸기 리코타 샐러드</div>
-                    <div className='shopBest-item-point'>13000 다손{" "}<HeartIcon/></div>
-                </div>
-                 */}
             </div>
-        </div>
+        </div>}
+    </>
     );
 }
 export default ShopBest;

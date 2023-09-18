@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="alert">
+
+	
+	<resultMap id="alertResultSet" type="Alert">
+		<id column="ALERT_NO" property="alertNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="ALERT_CONTENT" property="alertContent"/>
+		<result column="ALERT_DATE" property="alertDate"/>
+		<result column="ALERT_CATE" property="alertCate"/>
+		<result column="ALERT_STATUS" property="alertStatus"/>
+		<result column="ALERT_TITLE" property="alertTitle"/>
+	</resultMap>
+	
+	
+	<insert id="insertPointAlert" parameterType="Alert">
+	
+	INSERT INTO ALERT VALUES(
+		SEQ_ANO.NEXTVAL,
+		#{userNo},
+		'게임 성공으로 얻은 포인트는 : ' || TO_CHAR(#{pointAmount}) || '다소니 입니다.',
+		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+		'G',
+		'B',
+		'보물찾기 리워드를 확인하세요~'
+	)
+	
+	</insert>
+	
+	<insert id="insertTicketAlert" parameterType="Alert">
+	
+	INSERT INTO ALERT VALUES(
+		SEQ_ANO.NEXTVAL,
+		#{userNo},
+		'게임 성공으로 얻은 응모권입니다. 이벤트 페이지에서 사용하실 수 있습니다.  ',
+		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+		'G',
+		'B',
+		'보물찾기 리워드 입니다~'
+	)
+	
+	</insert>
+	
+	<select id="getAlertList" resultMap="alertResultSet">
+	
+		SELECT * 
+		FROM ALERT
+		WHERE USER_NO = #{userNo}
+	
+	</select>	
+	
+
+	<insert id="insertShopAlert" parameterType="point">
+		INSERT INTO ALERT VALUES(
+		SEQ_ANO.NEXTVAL,
+		#{userNo},
+		#{pointAmount}||' 다손으로 '||#{pointContent}||'(을/를) 구매',
+		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+		'P',
+		'B',
+		'상점 쿠폰 구매 알림'
+		)
+	</insert>
+	
+	<delete id="deleteMyAlertList" parameterType="int">
+		DELETE FROM ALERT 
+		WHERE USER_NO = #{userNo} AND ALERT_NO = #{alertNo}
+	</delete>
+
+	
+	<insert id="insertReplyAlert" parameterType="reply">
+		INSERT INTO ALERT
+		VALUES (
+			SEQ_ANO.NEXTVAL,
+			(SELECT USER_NO FROM BOARD WHERE BOARD_NO = #{rBoardNo}),
+			(SELECT BOARD_TITLE FROM BOARD WHERE BOARD_NO = #{rBoardNo})||'에 새로운 댓글이 달렸습니다.',
+			TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+			'R',
+			DEFAULT,
+			'댓글 알림'
+		)
+
+	 
+	<insert id="inputAdminAlert" parameterType = "Alert">
+		INSERT INTO ALERT VALUES 
+		(SEQ_ANO.NEXTVAL,
+    (SELECT USER_NO FROM MEMBER WHERE USER_NICKNAME = #{recipient}),
+    #{content},
+    TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+    'A',
+    'B',
+    #{title}
+	)
+
+	</insert>
+
+	
+</mapper>

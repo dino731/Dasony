@@ -165,7 +165,7 @@
 }
 
 .jefftable tbody>tr{
-height: 16vh; 
+height: 12vh; 
 }
 
 .nf-history-header1{
@@ -235,14 +235,22 @@ position: relative;
 margin: 10px;
 }
 
+
 .user-infos input {
 width: 400px;
 height: 35px;
 right: -10;
 }
 
+.user-levelimg{
+  position:sticky;
+  top:70px;
+}
+
 .button-div{
   display: block;
+  position:sticky;
+  top:170px;
 }
 
 .mypage-btn{
@@ -386,7 +394,106 @@ justify-content: center;
 }
 
 
+.mypage-Reception {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
 
+.receptionForm {
+  width: 80%;
+  max-width: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.section1-2 {
+  margin-left: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.btn-secondary {
+  border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
+  width: 200px; 
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.btn-primary {
+  border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
+  width: 200px; 
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.btn-primary:hover {
+  background-color:#FCFA90; 
+  color:#CB9DE7;
+}
+
+.ReceptionLabel{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px; 
+}
+
+.ReceptionText{
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+#contentTextarea{
+  resize: vertical;
+  height: 150px;
+}
+.modalAlert{
+  display:flex;
+  width: 300px;
+  height: 300px;
+  top: 200px;
+  left: 900px;
+  z-index: 0;
+}
+.modal-contentAlert{
+  width: 300px;
+  height: 300px;
+  z-index: 0;
+  background-color: rgba(203, 157, 231, 0.3);
+  z-index: 0;
+}
+.close-modal{
+  color: red;
+}
+.close-modal :hover{
+  cursor: pointer;  
+}
+.alert-content-link:hover {
+  cursor: pointer; /* 마우스를 가져다 댔을 때 포인터 커서로 변경 */
+}
+.gotoshop{
+  border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
+}
+
+.gotoshop :hover{
+  background-color:#FCFA90; 
+  color:#CB9DE7;
+}
+.gotoshop :hover .gotoshop>Link{
+  background-color:#FCFA90; 
+  color:#CB9DE7;
+}
 
 /* 베이지 : #DAD7CD
 초록 : #588157

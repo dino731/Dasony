@@ -85,6 +85,4 @@ public class DonationServiceImpl implements DonationService{
 //	public int selectUserDason(int userNo) throws Exception{
 //		return donationDao.selectUserDason(userNo);
 //	}
-
-
 }

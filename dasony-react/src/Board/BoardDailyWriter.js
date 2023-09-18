@@ -17,9 +17,11 @@ const BoardDailyWriter = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
-  console.log('boardDailyWriter, path ===>', path);
+  // console.log('boardDailyWriter, path ===>', path);
   localStorage.getItem("loginUserNo") // 유저 번호
   localStorage.getItem("loginUserRegion") // 유저 지역
+  localStorage.getItem("loginUserLevel") // 유저 레벨
+  console.log(localStorage.loginUserLevel);
 
   /* 현재 경로 비교연산 밑작업용 ain 0904 */
   const dailyPath = path.includes('daily') ? path : null;
@@ -48,7 +50,7 @@ const BoardDailyWriter = () => {
       setListPath(pathL);
     }
   }, []);
-  console.log('목록이동  listPath ==>', listPath);
+  // console.log('목록이동  listPath ==>', listPath);
 
   // editor에서 값 가져오기
   const [content, setContent] = useState("");
@@ -70,7 +72,7 @@ const BoardDailyWriter = () => {
   //  console.log('보드작성 초기화 전 :',boardCateStateValue, boardCateStateValue.name);
   // console.log('보드작성boardCateState:====', boardCateState);
   // console.log('보드작성boardCateStateValue:====.name', boardCateStateValue.name);
-  console.log('BoardDailyWriter boardPost ===>',boardPost);
+  // console.log('BoardDailyWriter boardPost ===>',boardPost);
 
   const [newBoardPost, setNewBoardPost] = useState({
     // userName : '이아인',
@@ -102,7 +104,7 @@ const BoardDailyWriter = () => {
     setBoardTagArr(boardTagArr.filter((item, i) => item !== boardTagArr[index]));
     setInputContent('');
   }
-  console.log('BoardDailyWriter boardTag ===>',boardTagArr);
+  // console.log('BoardDailyWriter boardTag ===>',boardTagArr);
   /* 태그 입력 끝 */
 
   const handleInputChange  = (e) =>{
@@ -175,8 +177,8 @@ const BoardDailyWriter = () => {
     // 상태를 업데이트
     setImages(newImages);
   };
-  console.log('보드작성 이미지 ==>',images);
-  console.log('보드작성 이미지 showImages ==>',showImages);
+  // console.log('보드작성 이미지 ==>',images);
+  // console.log('보드작성 이미지 showImages ==>',showImages);
   /* 이미지 미리보기 삭제 */
    const handleDeletePreview = (index) => {
      const newImages = [...images];
@@ -187,7 +189,7 @@ const BoardDailyWriter = () => {
      setPreviews(newPreviews);
    };
    /* 이미지 추가 끝 */
-   console.log('확인해야될 값!!!newBoardPost ====>',newBoardPost);
+  //  console.log('확인해야될 값!!!newBoardPost ====>',newBoardPost);
 
   /* Axios 시작 */
 
@@ -260,6 +262,7 @@ const BoardDailyWriter = () => {
         setInputContent('');
         setImages([]);
         setPreviews([]);
+        window.location.href =`/board${listPath}`;
       })
       .catch((error) => {
         console.error('업로드 실패', error);

@@ -18,4 +18,5 @@ public class Alert {
 	private String alertCate;
 	private String alertStatus;
 	private String alertTitle;
+	private int boardNo;
 }

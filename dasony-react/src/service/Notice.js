@@ -25,7 +25,7 @@ const Notice = () => {
                 .then((res) => {
                     const response = res.data;
                     setLoadStatus(false);
-                    // console.log("response : ",response );
+                    console.log("response : ",response );
 
                     if(response.length != 0){
                         setRowBound(rowBound + 1);
@@ -46,7 +46,7 @@ const Notice = () => {
     useEffect(()=>{
         // observer
         // notice/list 경로인 경우에만
-        if(subPath[subPath.length-1]==="notice" && subPath[1]!="admin" ){
+        if(subPath[subPath.length-1]==="notice" && subPath[1]!="admin" && data.length != 0 ){
             // 관찰할 item 요소
             const items = document.querySelectorAll(".notice-content-body .row");
             // console.log(items);
@@ -91,7 +91,9 @@ const Notice = () => {
 
     return(
         <div className="notice-container" ref={scrollTarget} >
-            {loadStatus ? <Loading /> : null}
+            {loadStatus ? <div className="loadingContainer">
+                            <Loading />
+                        </div> : null}
             { subPath[subPath.length-1]=="notice" ? 
                 subPath.length != 3 ?
                     subPath[1]=="admin" ? <ManagerNoticeBoard /> : <Outlet />

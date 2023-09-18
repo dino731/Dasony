@@ -41,7 +41,7 @@ const ShopHeart = ()=>{
             <div className="shopBest-title">userName님의 마음에 든 상품</div>
             <div className="shopBest-box">
             {
-                    product===null?
+                    !product?
                     <span style={{width:'300px',textAlign:'left', fontWeight:900, fontSize:'30px', letterSpacing:'0.2vw'}}>
                         아직 준비중입니다.
                     </span>

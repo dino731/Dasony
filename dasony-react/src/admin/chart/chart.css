@@ -34,13 +34,15 @@ html, body{margin: 0; padding: 0;}
         >li{
             display: inline-block;
             padding: 1% 2%;
-            border: 1px solid #344e41;
+            font-weight: 900;
+            border: 3px solid #cb9de7;
+            color: #cb9de7;
             border-radius: 40px;
             cursor: pointer;
 
             &.selected-chart{
-                background-color: #344e41;
-                color: #DAD7CD;
+                background-color: #cb9de7;
+                color: #fcfa90;
             }
         }
     }
@@ -78,6 +80,13 @@ html, body{margin: 0; padding: 0;}
                 padding-top: 2%;
                 &:last-child{border-right: 0;}
             }
+        }
+    }
+
+    >tfoot{
+        >tr>td{
+            padding-top: 6%;
+            text-align: right;
         }
     }
 }

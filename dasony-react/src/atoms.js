@@ -89,3 +89,42 @@ export const loginUserState = atom({
   key : 'loginUserState',
   default : {},
 })
+//boardVs 정보
+export const boardVsState = atom({
+  key: 'boardVs',
+  default : {
+    userNo : '',
+    boardTitle : '',
+    boardKeyword : '',
+    boardContent:'',
+    boardOptionLeft : '',
+    boardOptionRight: '',
+    boardCateNo : '',
+    boardExpireDate : '',
+    choiceLeft:0,
+    choiceRight:0
+  }
+})
+//boardVs 정보
+export const boardShState = atom({
+  key: 'boardSh',
+  default : {
+    userNo : '',
+    boardTitle : '',
+    boardKeyword : '',
+    boardContent:'',
+    boardWriteDate:''
+  }
+})
+//share 정보
+export const shareState = atom({
+  key: 'share',
+  default : {
+    userNo : '',
+    boardTitle : '',
+    boardKeyword : '',
+    boardContent:'',
+    boardWriteDate:''
+  }
+
+})

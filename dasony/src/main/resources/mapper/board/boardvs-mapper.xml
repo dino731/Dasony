@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardVsMapper">
+
+	<resultMap type="boardVs" id="boardVsMap">
+		<id column="BOARD_NO" property="boardNo" />
+		<result column="USER_NO" property="userNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_TAG" property="boardKeyword"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_OPTION_LEFT" property="boardOptionLeft"/>
+		<result column="BOARD_OPTION_RIGHT" property="boardOptionRight"/>
+		<result column="BOARD_CATE_NO" property="boardCateNo"/>
+		<result column="BOARD_EXPIRE_DATE" property="boardExpireDate"/>
+		<result column="CHOICE_LEFT" property="choiceLeft"/>
+		<result column="CHOICE_RIGHT" property="choiceRight"/>
+	</resultMap>
+	
+	<resultMap type="boardVsVote" id="boardVsVoteMap">
+		<id column="BOARD_NO" property="boardNo" />
+		<result column="USER_NO" property="userNo"/>
+		<result column="VS_OPTION" property="vsOption"/>
+	</resultMap>
+	
+	<insert id="boardVsInsert" parameterType="boardvs">
+		INSERT ALL
+		INTO BOARD
+		VALUES (
+		    SEQ_BNO.nextval,
+		    #{userNo},
+		    #{boardTitle},
+		    TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+		    DEFAULT,
+		    #{boardContent},
+		    'Y',
+		    #{boardCateNo}
+		)
+		INTO BOARD_VS
+		VALUES (
+		    SEQ_BNO.currval,
+		    #{boardOptionLeft},
+		    #{boardOptionRight},
+		    DEFAULT,
+		    DEFAULT,
+		    #{boardExpireDate}
+		)
+		INTO BOARD_KEYWORD
+		VALUES (
+		    #{boardKeyword},
+		    SEQ_BNO.currval
+		)
+		SELECT * FROM DUAL
+		
+	</insert>
+	
+	<update id="optionPlus" parameterType="map">
+    UPDATE BOARD_VS
+    SET
+        CHOICE_LEFT = 
+        <choose>
+                <when test="option == 'left' and pm == 'minus'">
+                    CHOICE_LEFT - 1
+                </when>
+                <when test="option == 'left' and pm == 'plus'">
+                    CHOICE_LEFT + 1
+                </when>
+                <otherwise>
+                    CHOICE_LEFT
+                </otherwise>
+            </choose>,
+        CHOICE_RIGHT = 
+            <choose>
+                <when test="option == 'right' and pm == 'minus'">
+                    CHOICE_RIGHT - 1
+                </when>
+                <when test="option == 'right' and pm == 'plus'">
+                    CHOICE_RIGHT + 1
+                </when>
+                <otherwise>
+                    CHOICE_RIGHT
+                </otherwise>
+            </choose>
+	</update>
+	
+	<update id="vsOption" parameterType="map">
+		MERGE INTO BOARD_VS_VOTE V
+		USING (
+		    SELECT #{boardNo} AS BOARD_NO, #{userNo} AS USER_NO, #{vsOption} AS VS_OPTION FROM DUAL
+		) D
+		ON (V.BOARD_NO = D.BOARD_NO AND V.USER_NO = D.USER_NO)
+		WHEN MATCHED THEN
+		    UPDATE SET V.VS_OPTION = D.VS_OPTION
+		WHEN NOT MATCHED THEN
+		    INSERT (BOARD_NO, USER_NO, VS_OPTION)
+		    VALUES (D.BOARD_NO, D.USER_NO, D.VS_OPTION)
+	</update>
+	
+	<select id="voteList" parameterType = "int" resultMap="boardVsVoteMap">
+		SELECT *
+		FROM BOARD_VS_VOTE
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+
+</mapper>

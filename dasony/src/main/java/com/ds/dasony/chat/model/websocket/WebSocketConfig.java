@@ -21,10 +21,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 		.withSockJS();
 	}
 
-	@Override
-	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.setApplicationDestinationPrefixes("/app"); // 클라이언트에서 메세지 보낼 경로
-		registry.enableSimpleBroker("/sub"); // 서버에서 클라이언트로 메세지 보낼 경로
-	}
-	
+   @Override
+   public void configureMessageBroker(MessageBrokerRegistry registry) {
+      registry.setApplicationDestinationPrefixes("/app"); // 클라이언트에서 메세지 보낼 경로
+      registry.enableSimpleBroker("/sub"); // 서버에서 클라이언트로 메세지 보낼 경로
+   }
+   
 }

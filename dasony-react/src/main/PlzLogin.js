@@ -13,6 +13,21 @@ const TypingTitle = ({initialWord, fontSize, delay}) =>{
     const[count, setCount] = useState(0);
     const completeWord = initialWord;
 
+    /** 첫 로딩시 접속 체크를 위한 fun 호출 (지현 추가) */
+    const checkVisit = () => {
+        axios.get("/dasony/api/visit")
+            .then((res) => {
+                switch(res.data){
+                    case 0 : console.log("이미 방문한 사람"); break;
+                    case 1 : console.log("session 생성완");
+                }
+            })
+    };
+
+    useEffect(()=>{
+        checkVisit();
+    }, []);
+
     useEffect(()=>{
         if(count<completeWord.length){
             const typingInterval = setInterval(()=>{
@@ -64,7 +79,7 @@ const PlzLogin = () => {
             setPwd(pwdVal);
             /*Encrypt */
             setLogin({...login, userPwd:SHA256(event.target.value, secretKey).toString()});
-            console.log(login);
+            //console.log(login);
         }
     }
         /*login 정보 서버에 전달 */
@@ -75,13 +90,26 @@ const PlzLogin = () => {
         /*id, pwd 공백 검사 */
         if(login.userId!=""&& pwd !=""){
             setDisable(false);
-        }
-        
+        } 
     }
+
+{/*경로 설정 용도 */}
+    const loginUserNo = localStorage.getItem("loginUserNo");
+    const loginUserLevel = localStorage.getItem("loginUserLevel");
+
     useEffect(()=>{
-        handleDisable();
-        setUser({});
-    }, [login.userId, pwd])
+        if(loginUserNo){
+            if(loginUserLevel==='Z'){
+                navigate('/admin/main');
+            } else {
+                navigate('/main');
+            }
+            window.location.reload();
+        } else {
+            handleDisable();
+            setUser({});
+        }
+    }, [loginUserNo, loginUserLevel, login.userId, pwd])
 
         /*로그인 정보 전달 */
     const navigate = useNavigate();

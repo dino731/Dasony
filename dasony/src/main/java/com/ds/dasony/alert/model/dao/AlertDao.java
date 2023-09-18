@@ -2,6 +2,7 @@ package com.ds.dasony.alert.model.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class AlertDao {
 		
 		List<Alert> result = session.selectList("alert.getAlertList",userNo);
 		return result;
+	}
+
+
+	public int inputAdminAlert(Map<String, Object> newAlert) {
+		return session.insert("alert.inputAdminAlert", newAlert);
 	}
 
 }

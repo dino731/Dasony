@@ -11,9 +11,9 @@ const MypageMyshopPoint = () => {
 
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
     const loginUserRegion = localStorage.getItem("loginUserRegion");
-
-    $('#rabitimg').css('display', 'none');
+    const [ticket,setTicket] = useState();
     const [point, setPoint] = useState([]);
+
     useEffect(() => {
         axios.post("/dasony/api/getMyPoint", loginUserNo
         ,{headers: {
@@ -27,6 +27,16 @@ const MypageMyshopPoint = () => {
         });
       }, []);
 
+      useEffect(() => {
+        axios.post("/dasony/api/getMyTicket", {
+          userNo : loginUserNo
+        }).then((response) => {
+          setTicket(response.data);
+        }).catch((error) => {
+          console.error("오류남:", error);
+        });
+      }, []);
+
     return (
 
   
@@ -35,7 +45,7 @@ const MypageMyshopPoint = () => {
              <h2>현재 포인트 : {item.totalPoint} 다소니</h2>
           ))}
 
-          <h2> 사용가능한 응모권 갯수 : </h2>
+           <h2> 현재 보유한 응모권 갯수 : {ticket}개 </h2>
 
           <button className='gotoUsedPoint'><Link to='/mypage/Myshop/MyUsedPoint'>포인트 내역 보기</Link></button>
                 

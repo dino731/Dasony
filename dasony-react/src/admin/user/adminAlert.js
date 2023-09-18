@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './adminAlert.css';
+import axios from 'axios';
 
 const AdminAlert = () => {
   const [recipient, setRecipient] = useState('');
@@ -9,11 +10,21 @@ const AdminAlert = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newNotification = { recipient, title, content };
-    setNotifications([...notifications, newNotification]);
+    const newAlert = { recipient, title, content };
+    setNotifications([...notifications, newAlert]);
+    console.log(newAlert);
+    axios.post("/dasony/api/inputAdminAlert", newAlert)
+    .then((response)=>{
+      console.log("알람 보내기 성공");
+    }).catch((error) => {
+      console.error("알람 보내기 오류",error);
+    });
+    
     setRecipient('');
     setTitle('');
     setContent('');
+
+    
   };
 
   return (

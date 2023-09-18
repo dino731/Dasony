@@ -16,7 +16,6 @@ const MypageMydonation = () =>{
       userRegion : loginUserRegion
     }).then((response) => {
       setDonation(response.data.donationList);
-      console.log(donation);
     }).catch((error) => {
       console.error("오류남:", error);
     });

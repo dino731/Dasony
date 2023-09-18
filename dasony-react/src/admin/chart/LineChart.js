@@ -3,9 +3,14 @@ import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { useLayoutEffect, useRef } from "react";
 
-const LineChart = ({paddingRight, data}) => {
-
+const LineChart = ({paddingRight, data, kind, loading}) => {
+    console.log("line : ", data);
     const chartRef = useRef(null);
+
+    const name1 = kind[0];
+    const name2 = kind[1];
+
+    const {loadStatus, setLoadStatus} = loading;
 
     useLayoutEffect(() => {
     
@@ -141,14 +146,14 @@ const LineChart = ({paddingRight, data}) => {
             return series;
         };
 
-        let series1 = createSeries("라인1", "value1", "date");
-        let series2 = createSeries("라인2", "value2", "date");
+        let series1 = createSeries(name1, "rate1", "date");
+        let series2 = createSeries(name2, "rate2", "date");
 
         let legend = chart.children.push( am5.Legend.new(root, {
-                centerX: am5.p50,
-                x: am5.p50,
-                y: am5.percent(110),
-                centerY: am5.percent(110),
+                centerX: am5.percent(100), // am5.p50
+                x: am5.percent(100),
+                y: am5.percent(0),
+                centerY: am5.percent(0),
             })
         );
         legend.data.setAll(chart.series.values);
@@ -159,10 +164,12 @@ const LineChart = ({paddingRight, data}) => {
     
         chartRef.current = chart;
 
+        setLoadStatus(false);
+
         return () => {
             root.dispose();
         };
-    }, []);
+    }, [data]);
 
     useLayoutEffect(() => {
         chartRef.current.set("paddingRight", paddingRight);

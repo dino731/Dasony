@@ -64,7 +64,7 @@ const MypageMyshopLikes = () => {
         </table>
       </div>
     <button className="gotoshop">
-      <Link to='/Shop/main'>상점으로</Link>
+      <Link to='/Shop/main'>상점 가기</Link>
     </button>
   </div>
     

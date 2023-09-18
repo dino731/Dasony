@@ -13,31 +13,10 @@ const Header = () => {
     const navigate = useNavigate();
     const path = location.pathname;
     const [mainList, setMainList] = useState('');
-
- 
-    const [gameStartYN, setGameStartYN] = useState('');
-    useEffect(() => {
-        axios.post("/dasony/api/gameStartYN", { 
-            userNo: loginUserNo 
-        }).then((response) => {
-            setGameStartYN(response.data);
-          })
-          .catch((error) => {
-            console.error("오류남:", error);
-          });
-      }, [loginUserNo]);
-      useEffect(() => {
-        const gameDiv = document.getElementById('game');
-        if (gameStartYN === 'Y') {
-          gameDiv.style.display = 'block';
-        } 
-      }, [gameStartYN]);
-
-
     
     /*경로 설정을 위한 사용자 정보 확인 */
     const [isLogin, setIsLogin] = useState(false);
-    
+
     useEffect(()=>{
         if(localStorage.getItem("userNo")){
             setIsLogin(true);
@@ -45,6 +24,31 @@ const Header = () => {
             setIsLogin(false);
         }
     })
+ 
+    const [gameStartYN, setGameStartYN] = useState('');
+    useEffect(() => {
+        
+        if(loginUserNo){
+            axios.post("/dasony/api/gameStartYN", { 
+                userNo: loginUserNo 
+            }).then((response) => {
+                setGameStartYN(response.data);
+              })
+              .catch((error) => {
+                console.error("오류남:", error);
+              });
+        } else {
+            navigate('/');
+        }
+        
+      }, [loginUserNo]);
+
+      useEffect(() => {
+        const gameDiv = document.getElementById('game');
+        if (gameStartYN === 'Y') {
+          gameDiv.style.display = 'block';
+        } 
+      }, [gameStartYN]);
 
 
     /*관리자 헤더, 사용자 헤더 설정 */
@@ -105,11 +109,11 @@ const Header = () => {
 
 
                     
-                        <li className="board-li" id="reception" 
+                        <li className="board-li" id="service" 
                             onClick={(event)=>{HandleOpacity(event.target.id);}}
                             style={{fontSize:'1.5vw'}}
                         >
-                            <i className="bi bi-exclamation-triangle-fill"></i> 문의/신고
+                            <i className="bi bi-exclamation-triangle-fill"></i> 고객센터
                         </li>
                     
                     
@@ -121,6 +125,7 @@ const Header = () => {
                                 localStorage.removeItem("loginUserLevel"); 
                                 localStorage.removeItem("loginUserRegion"); 
                                 navigate('/');
+                                window.location.reload();
                             }}>
                             <p>
                                 <i className="bi bi-box-arrow-right"></i> 로그아웃
@@ -188,6 +193,7 @@ const Header = () => {
                                 localStorage.removeItem("loginUserLevel"); 
                                 localStorage.removeItem("loginUserRegion"); 
                                 navigate('/');
+                                window.location.reload();
                             }}>
                             <p>
                                 <i className="bi bi-box-arrow-right"></i> 로그아웃
@@ -203,24 +209,27 @@ const Header = () => {
 
     useEffect(()=>{
         HandleMainList();
-
-        axios.post("/dasony/api/gameStartYN", { 
-            userNo: loginUserNo 
-        }).then((response) => {
-            setGameStartYN(response.data);
-          })
-          .catch((error) => {
-            console.error("오류남:", error);
-          });
-
+        if (loginUserNo) {
+            axios.post("/dasony/api/gameStartYN", { 
+                userNo: loginUserNo 
+            }).then((response) => {
+                setGameStartYN(response.data);
+              })
+              .catch((error) => {
+                console.error("오류남:", error);
+              });
+        }
     }, [location, loginUserNo]);
 
     useEffect(() => {
-        const gameDiv = document.getElementById('game');
-        if (gameStartYN === 'Y') {
-          gameDiv.style.display = 'block';
-        } 
-      }, [gameStartYN]);
+        if (loginUserNo) {
+            const gameDiv = document.getElementById('game');
+    
+            // if (gameStartYN === 'Y') {
+                gameDiv.style.display = 'block';
+            // }
+        }
+    }, [gameStartYN]);
 
     /*사이드바 속성 useState */
     const [sideId, setSideId] = useState('');
@@ -264,7 +273,7 @@ const Header = () => {
                                                 <li></li>
                                             </ul>
                                         ); break;
-                case 'reception': sideList = (
+                case 'service': sideList = (
                                                 <ul>
                                                     <li></li>
                                                     <li></li>
@@ -272,10 +281,10 @@ const Header = () => {
                                                     <li></li>
                                                     <li></li>
                                                     <li></li>
-                                                    <li></li>
+                                                    <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/service/notice'>공지</Link></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/alert'>알람</Link></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/reception'>문의</Link></li>
-                                                    <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/report'>신고</Link></li>
+                                                    <li></li>
                                                 </ul>
                                             ); break;
             }
@@ -289,7 +298,7 @@ const Header = () => {
                                                 <li></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/general/daily'>사담</Link></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/info/jmt'>정보공유</Link></li>
-                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/share'>나눔</Link></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/share/list'>나눔</Link></li>
                                                 <li></li>
                                                 <li></li>
                                                 <li></li>

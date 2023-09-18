@@ -83,7 +83,7 @@ const BoardWriterCategory = () =>{
   //  }
 
   const [boardCate, setBoardCate] = useState([]);
-  console.log('boardCate----->',boardCate);
+  // console.log('boardCate----->',boardCate);
   useEffect(() => {
     if (path == dailyOptions) {
       setBoardCate(boardDetailCategory);
