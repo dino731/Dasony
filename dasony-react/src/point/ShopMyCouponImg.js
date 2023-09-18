@@ -1,19 +1,9 @@
 import { useParams } from "react-router-dom";
 import KakaoMsg from "../common/KaKaoMsg";
-import Loading from "../common/Loading";
-import {useState, useEffect} from 'react';
 
 export const ShopMyCouponImg = () =>{
     const {id} = useParams();
     const couponOkey = id;
-
-    const [loading, setLoading] = useState(true);
-    const getPage = async()=>{
-        setLoading(false);
-    };
-    useEffect(()=>{
-        getPage();
-    }, []);
 
     return(
         <>

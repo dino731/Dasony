@@ -96,6 +96,8 @@ import { ShopMyCouponImg } from './point/ShopMyCouponImg';
 
 import {VoteWrite} from './Board/VoteWrite';
 import { AnotherHeader } from './Board/AnotherHeader';
+import { ShareHeader } from './share/ShareHeader';
+import { ShareWriter } from './Board/ShareWriter';
 
 
 
@@ -554,6 +556,13 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <Board/>
                                                                         </motion.div></div></div>}>
+                      <Route path="share/hwriter" element={<motion.div
+                                                              initial = {{opacity:0, y:30}}
+                                                              animate = {{opacity:1, y:0}}
+                                                              end = {{opacity:1, y:0}}
+                                                              transition={{duration : 1}}>
+                                                                <ShareWriter/>
+                                                              </motion.div>}/>
                       <Route path="general/*" element={<motion.div
                                                     initial = {{opacity:0, y:30}}
                                                     animate = {{opacity:1, y:0}}
@@ -734,13 +743,32 @@ function App() {
                                                                                 <BoardEdit/>
                                                                               </motion.div>}/>                                   
                     </Route>
+                    {/*share중첩 시작 */}
                     <Route path="share/*" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <ShareHeader/>
+                                                    </motion.div>}>
+                      <Route path="list" element={<motion.div
                                                     initial = {{opacity:0, y:30}}
                                                     animate = {{opacity:1, y:0}}
                                                     end = {{opacity:1, y:0}}
                                                     transition={{duration : 1}}>
                                                       <Share/>
                                                     </motion.div>}/>
+
+
+                    </Route>{/*share중첩 끝 */}
+                    <Route path="share/list/:boardNo" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <BoardDetail/>
+                                                    </motion.div>}/>
+
                   </Route>
                 </Route>{/*Board 중첩 route 끝 */}
 
