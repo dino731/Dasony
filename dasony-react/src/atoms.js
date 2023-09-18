@@ -126,5 +126,5 @@ export const shareState = atom({
     boardContent:'',
     boardWriteDate:''
   }
-
 })
+

@@ -21,6 +21,7 @@ const AdminDonaDetail = () => {
         })
         .catch(error => console.log(error));
     }
+    
 
     useEffect(() => {
         getAdDonaDetail();
@@ -68,6 +69,8 @@ const AdminDonaDetail = () => {
         .catch(error => console.log(error));
     }
 
+    const achievementPercentage = ((totalDonaAmount / admindonadetail.donaTargetAmount) * 100).toFixed(2); // 기부 달성률
+
     return(
         <div id="addonadetailcontent">
             <div id="addona_tbl">
@@ -95,7 +98,7 @@ const AdminDonaDetail = () => {
                             {donaHistory.map((donation) => (
                             <div key={donation.donaNo}> 
                                 <p>{donation.donaExecuteDate}</p>
-                                <span>{donation.userNo}</span>&nbsp;
+                                <span>{donation.userName}</span>&nbsp;
                                 <span>{donation.donaAmount}다손 기부</span>
                                 <hr/>
                             </div>
@@ -123,7 +126,7 @@ const AdminDonaDetail = () => {
                         모인 금액<br/>
                         <b style={{fontSize : '25px'}}>{totalDonaAmount}</b><span style={{fontSize : '17px'}}>다손</span><br/><br/>
                         달성률<br/>
-                        <b style={{fontSize : '25px'}}>{admindonadetail.donaAchieve}%</b>
+                        <b style={{fontSize: '25px'}}>{achievementPercentage}%</b>
                     </span>
                 </div>
             </div>

@@ -80,6 +80,7 @@
 			DEFAULT,
 			'댓글 알림'
 		)
+	</insert>
 
 	 
 	<insert id="inputAdminAlert" parameterType = "Alert">
@@ -93,6 +94,19 @@
     #{title}
 	)
 
+	</insert>
+	
+	<insert id="insertDonationAlert" parameterType="donation">
+		INSERT INTO ALERT 
+		VALUES (
+			SEQ_ANO.NEXTVAL,
+			#{userNo},
+			'현재' || #{pointAmount} || '다손이 남았습니다',
+			TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+			'D',
+			'B',
+			'기부 알람'
+		)
 	</insert>
 
 	

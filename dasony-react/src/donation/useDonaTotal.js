@@ -6,16 +6,6 @@ function useDonaTotal(donaNo) {
     const [donaHistory, setDonaHistory] = useState([]); // 기부 이력 관련
     const [donationCount, setDonationCount] = useState(0); // 기부 건수 저장
 
-    // const getUserName = async(userNo) => {
-    //   try{
-    //     const response = await axios.post('/api/getUserName', {userNo});
-    //     return response.data;
-    //   }catch (error){
-    //     console.error(error);
-    //     return {};
-    //   }
-    // }
-  
     const getDonaTotal = () => {
       axios.post(`/dasony/detailTotalDona/${donaNo}`)
         .then((response) => {
@@ -36,7 +26,6 @@ function useDonaTotal(donaNo) {
       
       useEffect(() => {
         getDonaTotal();
-        // getUserName();
       }, [donaNo]);
  
   

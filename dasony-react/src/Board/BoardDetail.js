@@ -480,7 +480,7 @@ const handleReModalOffAndClose = () => {
                   <div className='BoardDetail-boardlist-title-wrapper'>
                     <div className='BoardDetail-boardlist-title-flexdiv'>
                       <div className='BoardDetail-boardlist-title-container'>
-                        <span className='BoardDetail-boardlist-title-keyword'>{board?.board.boardCateNo}</span>
+                        <span className='BoardDetail-boardlist-title-keyword'>{board?.boardCate.boardSmallCate}</span>
                         <span className='BoardDetail-boardlist-title'>{board?.board.boardTitle}</span>
                       </div>
                       <div className='BoardDetail-boardlist-userInterface'>
@@ -529,7 +529,7 @@ const handleReModalOffAndClose = () => {
                         <span>
                           <button
                           className='Board-reply-recoment-accused-btn'
-                          onClick={()=>navigate('/board'+listPath+'edit/'+board.boardNo+'/'+board?.boardCate.boardCateNo)}
+                          onClick={()=>navigate('/board'+listPath+'edit/'+board?.board.boardNo+'/'+board?.boardCate.boardCateNo)}
                           >
                             수정
                           </button>
