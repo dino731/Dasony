@@ -383,7 +383,7 @@
    	WHERE REPLY_NO = #{replyNo}
    </update>	
    
-   <select id="weatherList" resultMap="board">
+   <select id="weatherList" resultMap="boardResultSet">
    	SELECT *
    	FROM BOARD
    	WHERE BOARD_CATE_NO = '1104'

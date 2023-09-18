@@ -17,9 +17,10 @@ const Home = () =>{
     /*날씨 리스트 가져오기 - 서버 */
     useEffect(()=>{
         const fetchData = async()=>{
-            await axios.post("/dasony/api/weatherList")
+            await axios.post("/dasony/board/weatherList")
             .then(res=>{
                 setWeatherList(res.data);
+                console.log("웨더 리스트 확인", res.data);
             })
             .catch(err=>{
                 console.log(err);
