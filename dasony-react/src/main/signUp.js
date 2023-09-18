@@ -8,6 +8,7 @@ import axios from 'axios';
 import {SHA256} from 'crypto-js';
 import { useRecoilState } from 'recoil';
 import { loginUserState } from '../atoms';
+import emailjs from '@emailjs/browser';
 
 
 const SignUp = ()=>{
@@ -265,7 +266,7 @@ const SignUp = ()=>{
                     <tr>
                         <th>핸드폰번호</th>
                         <td><input type='text' onChange={handleValidPhone} maxLength={13} value={phone}/></td>
-                        <th style={{textAlign:'left'}}><MainChecking txt='인증하기'/></th>
+                        <th style={{textAlign:'left'}}></th>
                     </tr>
                     <tr>
                         <th>이메일</th>

@@ -11,19 +11,53 @@ import axios from 'axios';
 const BoardDailyList = ()=>{
 
   const[boardData,setBoardData]=useState([]);
-  /* axios 시작 */
-  useEffect(() => {
-    // Axios를 사용하여 서버로 GET 요청을 보냅니다.
+  const [reply, setReply] = useState([]);
+
+
+  /*무한 스크롤 기능 */
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = async () => {
+
+  if (path == listDailyOptions) {
+    setListBoardCate(listDailyCategory);
+    setListPath(pathD);
+   } else if (path == listInterestOptions) {
+    setListBoardCate(boardInterestCategory);
+    setListPath(pathI);
+   } else if (path == listJmtOptions) {
+    setListBoardCate(boardJMTCategory);
+    setListPath(pathJ);
+   } else if (path == listFashionOptions) {
+    setListBoardCate(boardFashionCategory);
+    setListPath(pathF);
+   } else {
+    setListBoardCate(boardLocalCategory);
+    setListPath(pathL);
+   }
+    setLoading(true);
     axios.get(`http://localhost:3000/dasony${path}?userRegion=${localStorage.loginUserRegion}`) // 서버의 API 엔드포인트에 맞게 수정
       .then((response) => {
-        console.log('BoardList 응답 데이터:', response.data);
         setBoardData(response.data);
       })
       .catch((error) => {
         console.error('서버 요청 오류:', error);
       });
-  }, []); // 빈 배열을 두번째 인자로 전달하면 컴포넌트가 마운트될 때 한 번만 실행
+    setLoading(false);
+  }
+
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+    
+    if (scrollTop + clientHeight >= scrollHeight - 100 && !loading) {
+      fetchData(); // 스크롤 이벤트 감지 시 데이터 가져오기
+    }
+  };
+  /* axios 시작 */
   console.log('게시판리스트 boardData ===>',boardData);
+  console.log('replyreplyreply reply ===>',reply);
   /* axios 끝 */
 
   /* 보드 카테고리 atom관련 시작  ain 0904*/
@@ -69,22 +103,14 @@ const BoardDailyList = ()=>{
  const [listBoardCate, setListBoardCate] = useState([]);
 //  console.log('listBoardCate----->',listBoardCate);
  useEffect(() => {
-  if (path == listDailyOptions) {
-   setListBoardCate(listDailyCategory);
-   setListPath(pathD);
-  } else if (path == listInterestOptions) {
-   setListBoardCate(boardInterestCategory);
-   setListPath(pathI);
-  } else if (path == listJmtOptions) {
-   setListBoardCate(boardJMTCategory);
-   setListPath(pathJ);
-  } else if (path == listFashionOptions) {
-   setListBoardCate(boardFashionCategory);
-   setListPath(pathF);
-  } else {
-   setListBoardCate(boardLocalCategory);
-   setListPath(pathL);
-  }
+ 
+  fetchData(); // 초기 데이터 로드
+
+  window.addEventListener('scroll', handleScroll);
+  return () => {
+    window.removeEventListener('scroll', handleScroll);
+  };
+  
 }, []);
   // console.log('게시판리스트 listBoardCate ===>',listBoardCate);
 
@@ -130,8 +156,96 @@ const BoardDailyList = ()=>{
     })
   };
 
+
+  /*  검색 기능 관련 시작 */
+
+  /* 제목 내용 검색 시작*/
+  const [searchKeyword, setSearchKeyword] = useState({
+      userRegion: localStorage.loginUserRegion,
+      boardTag: keyword,
+      boardContent : '',
+      boardTitle : '',
+  });
+  const handleInputChange  = (e) =>{
+    const {name, value} = e.target;
+    let upTagArr = [...keyword, inputContent];
+    const search = {
+      ...searchKeyword,
+      userRegion: localStorage.loginUserRegion,
+      boardTag: upTagArr.join('_'),
+      boardContent : '',
+      [name]: value
+    };
+    setSearchKeyword(search);
+  }
+  console.log('검색 할 값 searchKeyword ====>',searchKeyword)
+
+  /* 제목 내용 검색 끝*/
+
+  /* 키워드 검색 시작*/
+  /* 키워드 검색 끝*/
+
+  const handleSearachKeyword = () => {
+
+    
+    if (!searchKeyword.boardTitle && !searchKeyword.boardTag) {
+      alert("검색할 내용을 입력해주세요.");
+      return;
+    }
+  
+    const formData = new FormData();
+    const boardData = {
+      userRegion: localStorage.loginUserRegion,
+      boardTag: searchKeyword.boardTag,
+      boardTitle: searchKeyword.boardTitle,
+      boardContent : searchKeyword.boardTitle,
+    };
+
+    Object.entries(boardData).forEach((item) => {
+      formData.append(item[0], item[1]);
+    });
+  
+    // formData.append("boardTag", JSON.stringify(newBoardPost.boardTag));
+  
+    // FormData의 key 확인
+    for (let key of formData.keys()) {
+      console.log('FormData의 key 확인', key);
+    }
+  
+    // FormData의 value 확인
+    for (let value of formData.values()) {
+      console.log(' FormData의 value 확인', value);
+    }
+  
+    axios.get(`http://localhost:3000/dasony/board/searchList`, formData, {
+    })
+      .then((response) => {
+        console.log('업로드 성공:', response.data);
+        setBoardData(response.data);
+        setSearchKeyword({
+          userRegion: '',
+          boardTag: '',
+          boardTitle:'',
+          boardContent : '',
+        });
+        setInputContent('');
+        window.location.href =`/board${listPath}`;
+      })
+      .catch((error) => {
+        console.error('업로드 실패', error);
+        alert("업로드에 실패하였습니다.");
+      });
+
+
+
+
+
+  };
+    /*  검색 기능 관련 끝 */
+
   return(
     <>
+
       <div className="BoardList-head-title-wrapper">
         <BoardListHeader path={path}/>
         </div>
@@ -142,7 +256,7 @@ const BoardDailyList = ()=>{
               <div className="row">
                 <div className="col-md-9 boardList-search-input-title-wrapper">
                   <div className="boardList-search-box-title">
-                    <input type="text" className="boardList-search-input-title" placeholder="제목, 내용을 검색해보세요"/>
+                    <input type="text" name="boardTitle" onChange={handleInputChange} className="boardList-search-input-title" placeholder="제목, 내용을 검색해보세요"/>
                       <div className="boardList-search-input-title-img-div">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -153,7 +267,7 @@ const BoardDailyList = ()=>{
                   </div>
                 </div>
                 <div className="col-3 col-md-3">
-                  <button type="submit" className="boardList-search-btn">검색</button>
+                  <button type="submit" className="boardList-search-btn" onClick={handleSearachKeyword}>검색</button>
                 </div>
               </div>
               <div className="row">
@@ -176,7 +290,8 @@ const BoardDailyList = ()=>{
                         placeholder="태그로 검색해보세요"
                         value={inputContent}
                         onKeyDown={enter}
-                        onChange={(e) => setInputContent(e.target.value)}
+                        onChange={(e) => {setInputContent(e.target.value)
+                          handleInputChange(e);}}
                         />
                       
                   </div>
@@ -201,12 +316,13 @@ const BoardDailyList = ()=>{
             </form>
           </div>
         <div className="boardList-list-wrapper">
+          {loading&&<p>Loading...</p>}
           {
             //  {boardData.map((boardItem) => (
             //   <li key={boardItem.id}>
             //     <Link to={`/board/${boardItem.id}`}>{boardItem.title}</Link>
             //   </li>
-            boardData.length > 0 && listBoardCate.length > 0 && boardData.filter((board) => {
+            boardData && boardData.filter((board) => {
               return listBoardCate.some((category) => category.name === board?.boardCate.boardSmallCate);})
             .map( (board, index)=>( 
             <ul key={index} className="boardList-list-ul-wrapper">        
@@ -226,15 +342,24 @@ const BoardDailyList = ()=>{
                           </div>
                         </Link>
                       <div className="boardList-list-img">
-                        <img src={"http://localhost:8083/dasony"+board.boardImg.boardImgPath+board.boardImg.boardImgModName} alt="썸네일" className="board-img"/>
-                      </div>
+                        {
+                          !(board.boardCate.boardSmallCate=='쇼츠')?
+                          <img src={board.boardImg.boardImgModName?
+                            "http://localhost:8083/dasony"+board.boardImg.boardImgPath+board.boardImg.boardImgModName
+                            : "https://i.postimg.cc/rmRJRyvp/dasony-logo.png"} alt="썸네일" className="board-img"/>
+                            
+                            :<video controls className="board-video-thumb" muted autoPlay>
+                              <source 
+                              src={`http://localhost:8083/dasony/resources/images/board/video/${board.boardVideo.videoModName}`} 
+                              type="video/mp4" />
+                            </video>
+                        }
+                        </div>
                   </div>
                 </div>
               </li>
            </ul>
-            ))
-             
-          }
+            ))}
           <ul>
             <li>
               

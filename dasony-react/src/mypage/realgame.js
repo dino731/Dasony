@@ -108,7 +108,7 @@ const Game= ()=>{
         let pikas = [
            
         ];
-        let boxcount = 1;
+        let boxcount = 5;
 
         for (let i = 0; i < map.length; i++) {
             for (let j = 0; j < map[i].length; j++) {
@@ -955,6 +955,7 @@ const Game= ()=>{
                         }
 
                     }
+                map[nowX][nowY]=3;
                 break;
             }   
     

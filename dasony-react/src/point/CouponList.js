@@ -48,7 +48,7 @@ const CouponList = () => {
                         {product
                             .filter(p => p.productNo === coupon.productNo)
                             .map(p => (
-                                <Link key={p.productNo} to={`/shop/coupon/${coupon.couponName}`} state={{ coupon: coupon, product:p }}>
+                                <Link key={p.productNo} to={`/shop/coupon/${coupon.couponOkey}`} state={{ coupon: coupon, product:p }}>
                                     <div className="coupon-item">
                                         <div className="coupon-img">
                                             <img src={p.productImg} alt={p.productName} />

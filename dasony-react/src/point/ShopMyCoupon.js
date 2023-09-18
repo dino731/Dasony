@@ -13,6 +13,7 @@ const ShopMyCoupon = () => {
     const product = location.state.product;
     console.log(coupon, product);
 
+
     return(
         <>
         <div className="shopMyCoupon-container">
@@ -35,8 +36,7 @@ const ShopMyCoupon = () => {
                 </div>
                 <span>유효 기간 {coupon.couponExpireDate}까지</span>
                 <div>
-                    카카오톡으로 공유하기 <i className="bi bi-wechat"/>
-                    <KakaoShare/>
+                    <KakaoShare product={product} coupon={coupon}/>
                 </div>
             </div>
             
