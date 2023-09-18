@@ -64,6 +64,10 @@ public class DonationDao {
 		return session.selectList("donationMapper.DonaDetails", donaNo);
 	}
 
+	public int insertDonaList(DonationList myDona) {
+		return session.insert("insertDonaList", myDona);
+	}
+
 //	public int selectUserDason(int userNo) {
 //	return session.selectOne("donationMapper.selectUserDason", userNo);
 //}

@@ -11,6 +11,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -151,7 +152,7 @@ public class BoardController {
 		return m;
 	}
 
-	@GetMapping(value = {"/general/daily/detail/{boardNo}","/general/interest/detail/{boardNo}","/info/jmt/detail/{boardNo}","/info/fashion/detail/{boardNo}","/info/local/detail/{boardNo}"})	    
+	@GetMapping(value = { "/share/list/{boardNo}", "/general/daily/detail/{boardNo}","/general/interest/detail/{boardNo}","/info/jmt/detail/{boardNo}","/info/fashion/detail/{boardNo}","/info/local/detail/{boardNo}"})	    
 	public Map<String, Object> boardDetail(@PathVariable("boardNo") int boardNo) {
 		Map<String, Object> bDetailListMap = new HashMap(); // 초기화
 				
@@ -310,6 +311,18 @@ public class BoardController {
 		bListMap = boardService.nextBtn(data);
 
 		return bListMap;
+	}
+	
+
+	@PostMapping("/removeReply")
+	public ResponseEntity<String> removeReply(@RequestBody int replyNo){
+		log.info("댓글 번호확인{}",replyNo);
+		int result = boardService.removeReply(replyNo);
+		if(result > 0 ) {
+			return ResponseEntity.ok("댓글을 삭제하였습니다.");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("댓글 삭제를 실패하였습니다.");
+		}
 	}
 	
     @GetMapping("/boardDelete/{boardNo}")

@@ -48,8 +48,6 @@ public class DonationController {
 			
 		Donation donation = donationService.selectDonaDetail(donaNo);
 		
-		
-		
 		return donation;
 	}
 	
@@ -91,6 +89,32 @@ public class DonationController {
 			res.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
 		return res;
+	}
+	
+	@PostMapping("/insertDona")
+	public String insertDonaList(@RequestBody DonationList donaList){
+		 
+		 try {
+//			 long userNo = Long.parseLong(requestBody.get("userNo").toString());
+//			 int donaAmount = (int) requestBody.get("donationAmountInt");
+//			 int donaNo = (int) requestBody.get("donaNo");
+			 
+//			DonationList myDona = new DonationList();
+//			myDona.setUserNo(userNo);
+//			myDona.setDonaAmount(donaAmount);
+//			myDona.setDonaNo(donaNo);
+			 
+			 int result = donationService.insertDonaList(donaList);
+			 
+			 log.info("result = {}", result);
+			 if(result > 0)
+				 return "성공" + result;
+			 else
+				 return "다시 등록";
+		 }catch (Exception e) {
+			 log.error("예외 발생: {}", e.getMessage(), e);
+			    return "예상치 못한 에러가 발생했습니다. 다시 시도해주세요.";
+		}
 	}
 
 }

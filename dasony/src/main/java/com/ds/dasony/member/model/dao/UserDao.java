@@ -121,6 +121,10 @@ public class UserDao {
 		int result = session.delete("alert.deleteMyAlertList", requestBody);
 		return result;
 	}
+	public int modifyNewPwd(Map<String, Object> myInfo) {
+		int result = session.update("memberMapper.modifyNewPwd", myInfo);
+		return result;
+	}
 	
 	
 

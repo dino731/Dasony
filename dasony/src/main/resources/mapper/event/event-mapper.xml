@@ -185,7 +185,7 @@
 	
 	<insert id="sendMsg" parameterType="hashmap" >
 		insert into alert values(seq_ano.nextval, #{target}, #{content}, TO_CHAR(SYSDATE, 'MM-DD HH24:MI'), 'E', 
-		default, '[이벤트 공지]' || '  ' || #{title})
+		default, '[이벤트 공지]' || ' ' || #{title})
 	</insert>
 	
 	<select id="checkEventJoin" parameterType="hashmap" resultType="int">
@@ -235,6 +235,10 @@
 	
 	<select id="memberLoginInfo" parameterType="hashmap" resultMap="joinMap">
 		select user_no, user_name from member where user_no = #{userNo}
+	</select>
+	
+	<select id="selectEndDate" parameterType="hashmap" resultType="java.sql.Date">
+		select event_end_date from event where event_no = #{eventNo}
 	</select>
 	
 	<select id="findLast" parameterType="hashmap" resultType="int" >

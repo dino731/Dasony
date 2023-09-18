@@ -3,13 +3,17 @@ import './AdminDonaList.css';
 import { useNavigate} from 'react-router-dom';
 import { useDonaList } from './AdminDonaListContext';
 import axios from 'axios';
+import useDonaTotal from '../../donation/useDonaTotal';
+
 
 const AdminDonaList = () => {
 
     const navigate = useNavigate();
 
     const [selectedArea, setSelectedArea] = useState('');
-    const [adDonaList, setAdDonaList] = useState([]);
+    const {adDonaList, setAdDonaList} = useDonaList();
+    console.log("adDonaList", adDonaList);
+    // const {totalDonaAmount, donaHistory, donationCount} = useDonaTotal();
 
     const getAdDonaList = () => {
         axios.get("/dasony/admindonalist")
@@ -46,10 +50,10 @@ const AdminDonaList = () => {
             <div id='addonalist'>
                 <select name='areas' id='areas' value={selectedArea} onChange={e => setSelectedArea(e.target.value)}>
                     <option selected>지역 선택</option>
-                    <option value="강남">강남</option>
-                    <option value="관악">관악</option>
-                    <option value="노원">노원</option>
-                    <option value="강동">강동</option>
+                    <option value="강남구">강남구</option>
+                    <option value="관악구">관악구</option>
+                    <option value="노원구">노원구</option>
+                    <option value="강동구">강동구</option>
                 </select><br/> 
                 <div id='createdona'>
                     <button type="button" class="btn btn-warning" onClick={handleCreateDona}>글작성</button>
@@ -66,6 +70,7 @@ const AdminDonaList = () => {
                             <th width="200">모금액</th>
                             <th width="200">목표금액</th>
                             <th width="200">달성률</th>
+                            <th width="200">지역</th>
                         </tr>
                     </thead>
                 </table>
@@ -83,6 +88,7 @@ const AdminDonaList = () => {
                                         <td width="250">{list.donaTotalAmount}다손</td>
                                         <td width="250">{list.donaTargetAmount}다손</td>
                                         <td width="250">{list.donaAchieve}%</td>
+                                        <td width="250">{list.donaSelectArea}</td>
                                     </tr>
                                 ))
                             }

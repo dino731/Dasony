@@ -313,11 +313,11 @@ const MypageInfo = () => {
                         {isEditing && (
                 <th style={{ textAlign: 'left' }}>
                   <MainChecking
-                    txt='아이디 중복 확인'
-                    data={id}
-                    setId={setId}
-                    setCompleteDuplcateId={setCompleteDuplcateId}
-                    setIdValid={setIdValid}
+                    txt='별명 중복 확인'
+                    data={nick}
+                    setId={setNick}
+                    setCompleteDuplcateId={setCompleteDuplcateNick}
+                    setIdValid={setNickValid}
                   />
                 </th>
               )}

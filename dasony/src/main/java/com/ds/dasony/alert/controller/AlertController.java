@@ -50,6 +50,16 @@ public class AlertController {
 	    return alertList;
 	}
 	
+	@PostMapping("/inputAdminAlert")
+	public int inputAdminAlert(
+			@RequestBody Map<String,Object> newAlert
+			) {
+		log.info("newAlert={}",newAlert);
+		int result = alertService.inputAdminAlert(newAlert);
+		
+		return result;
+	}
+	
 	
 	
 	

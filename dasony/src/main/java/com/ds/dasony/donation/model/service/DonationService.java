@@ -28,6 +28,8 @@ public interface DonationService {
 
 	int totalAmount(List<DonationList> donaHistory);
 
+	int insertDonaList(DonationList myDona);
+
 //	int selectUserDason(int userNo) throws Exception;
 
 
