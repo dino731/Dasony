@@ -1,6 +1,7 @@
 package com.ds.dasony.chat.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,13 +72,17 @@ public class ChatDao {
 		return session.selectList("chatMapper.selectUserChatList", userNo);
 	}
 
-	public int addStars(ChatCare care) {
-		return session.insert("chatMapper.addStars", care);
+	public int addStars(Map<String, Object> map) {
+		return session.insert("chatMapper.addStars", map);
 	}
 
-	public List<ChatCare> getStars() {
-		return session.selectList("chatMapper.getStars");
+	public int getStars(Map<String, Object> map) {
+		return session.selectOne("chatMapper.getStars", map);
 	}
+
+//	public int delStar(Map<String, Object> map) {
+//		return session.delete("chatMapper.delStar", map);
+//	}
 	
 	
 }

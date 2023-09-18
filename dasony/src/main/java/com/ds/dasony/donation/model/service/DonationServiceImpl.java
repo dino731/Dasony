@@ -75,6 +75,11 @@ public class DonationServiceImpl implements DonationService{
 		return totalDonaAmount;
 	}
 
+	@Override
+	public int insertDonaList(DonationList myDona) {
+		return donationDao.insertDonaList(myDona);
+	}
+
 	
 //	@Override
 //	public int selectUserDason(int userNo) throws Exception{

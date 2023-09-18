@@ -28,6 +28,7 @@
     <result column="DONA_EXECUTE_DATE" property="donaExecuteDate"/>
     <result column="DONA_NO" property="donaNo"/>
     <result column="DONA_NAME" property="donaName"/>
+    <result column="USER_NAME" property="userName"/>
 </resultMap>
   
   <!-- TO_CHAR(DONA_WRITE_DATE, 'YYYY"-"MM"-"DD"-"') DONA_WRITE_DATE -->
@@ -37,7 +38,8 @@
         DONA_NO,
         DONA_TITLE,
         DONA_NAME,
-        DONA_WRITE_DATE
+        DONA_WRITE_DATE,
+        DONA_SELECT_AREA
      FROM DONATION
      ORDER BY DONA_NO DESC
   </select>
@@ -59,7 +61,8 @@
         DONA_END_DATE,
         DONA_TOTAL_AMOUNT,
         DONA_TARGET_AMOUNT,
-        DONA_ACHIEVE
+        DONA_ACHIEVE,
+        DONA_SELECT_AREA
      FROM DONATION
      ORDER BY DONA_NO DESC
   </select>
@@ -110,17 +113,44 @@
  </delete>
  
   <select id="DonaDetails" resultMap="donationListResultSet" parameterType="int">
-   SELECT
-      *
-   FROM DONATION_LIST
-   WHERE DONA_NO = #{donaNo}
+	SELECT
+	    DL.DONA_EXECUTE_NO,
+	    DL.DONA_AMOUNT,
+	    DL.DONA_EXECUTE_DATE,
+	    DL.DONA_NO,
+	    DL.USER_NO,
+	    M.USER_NAME
+	FROM DONATION_LIST DL
+	JOIN MEMBER M ON DL.USER_NO = M.USER_NO
+	WHERE DL.DONA_NO = #{donaNo}
   </select>
   
  <select id="getMyDonationList" parameterType="int" resultMap="donationListResultSet">
-    SELECT DONA_EXECUTE_DATE,DONA_AMOUNT,DONA_EXECUTE_NO,DONA_NAME
+    SELECT 
+	    DONA_EXECUTE_DATE,
+	    DONA_AMOUNT,
+	    DONA_EXECUTE_NO,
+	    DONA_NAME
     FROM DONATION_LIST
     JOIN DONATION USING (DONA_NO)
     WHERE USER_NO = #{userNo}
  </select>
-  
+ 
+ <insert id="insertDonaList">
+ 	INSERT INTO DONATION_LIST
+	(
+		DONA_EXECUTE_NO,
+		DONA_AMOUNT,
+		DONA_EXECUTE_DATE,
+		USER_NO,
+		DONA_NO
+	) VALUES (
+		SEQ_DLNO.NEXTVAL,
+		#{donaAmount},
+		DEFAULT,
+		#{userNo},
+		#{donaNo}
+	)
+ 	
+ </insert>
 </mapper>

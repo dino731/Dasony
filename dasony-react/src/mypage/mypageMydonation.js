@@ -40,7 +40,7 @@ const MypageMydonation = () =>{
         {donation.map((item, index) => (
               <tr key={index}>
                 <td className="nf-td1">{item.donaExecuteNo}</td>
-                <td className="nf-td3">{item.executeDate}</td>
+                <td className="nf-td3">{item.donaExecuteDate}</td>
                 <td className="nf-td2">{item.donaName}</td>
                 <td className="nf-td1">{item.donaAmount}</td>
               </tr>

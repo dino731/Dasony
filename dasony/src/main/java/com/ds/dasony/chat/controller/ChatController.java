@@ -63,15 +63,17 @@ public class ChatController {
 	        Map<String, Object> newChatData = (Map<String, Object>) requestBody.get("newChat");
 	        
 	        long userNo = Long.parseLong(requestBody.get("userNo").toString());
+	        String userRegion = (String) requestBody.get("userRegion");
 	        String userName = (String) newChatData.get("userName");
 	        
 	        ChatRoom room = new ChatRoom();
 	        
 	        room.setUserNo(userNo);
 	        room.setUserName(userName);
+//	        room.setChatRoomRegion(userRegion);
 	        room.setChatRoomTitle((String) newChatData.get("chatRoomTitle"));
 	        
-	        int chatRoomNo = chatService.openChatRoom(room);
+	        int chatRoomNo = chatService.openChatRoom(room, userRegion);
 	        
 	        log.info("chatRoomNo = {}", chatRoomNo);
 	        
@@ -95,7 +97,8 @@ public class ChatController {
 			@DestinationVariable("chatRoomNo") int chatRoomNo, 
 			ChatMessage chatMessage,
 			SimpMessageHeaderAccessor accessor,
-			@Header ("userNo") long userNo
+			@Header ("userNo") long userNo,
+			@Header ("userName") String userName
 			) {
 		
 		log.info("chatMessage {}" , chatMessage);
@@ -103,7 +106,7 @@ public class ChatController {
 		chatMessage.setUserNo(userNo);
 		log.info("userNo = {}", userNo);
 		chatMessage.setChatRoomNo(chatRoomNo);
-		chatMessage.setUserNo(userNo);
+		chatMessage.setUserName(userName);
 		
 		 int sesult = chatService.insertChatMessage(chatMessage);
 		
@@ -179,66 +182,42 @@ public class ChatController {
 			return ucList;
 	}
 	
-//	@PostMapping("/addStar")
-//	public ResponseEntity<Integer> addStars(@RequestBody Map<String, Object> requestBody) {
-//	    try {
-//	        long userNo = Long.parseLong(requestBody.get("userNo").toString());
-//	        int chatRoomNo = (int) requestBody.get("chatRoomNo");
-//
-//	        ChatCare care = new ChatCare();
-//
-//	        care.setChatRoomNo(chatRoomNo);
-//	        care.setUserNo(userNo);
-//
-//	        int stars = chatService.addStars(care);
-//	        log.info("stars = {}", stars);
-//
-//	        if (stars > 0) {
-//	            return ResponseEntity.ok(stars);
-//	        } else {
-//	            return ResponseEntity.notFound().build();
-//	        }
-//	    } catch (Exception e) {
-//	        log.error("예외 발생: {}", e.getMessage(), e);
-//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(0);
-//	    }
-//	}
-	
 	@PostMapping("/addStar")
-	public Map<String, Object> addStars(@RequestBody Map<String, Object> requestBody) {
-		try {
-			long userNo = Long.parseLong(requestBody.get("userNo").toString());
-	        int chatRoomNo = (int) requestBody.get("chatRoomNo");
-	        
-	        ChatCare care = new ChatCare();
-	        
-	        care.setChatRoomNo(chatRoomNo);
-	        care.setUserNo(userNo);
-	        
-	        int stars = chatService.addStars(care);
-	        
-	        log.info("stars = {}", stars);
-	        
-	        if(stars > 0) {
-	        	Map<String, Object> map = new HashMap<>();
-	        	map.put("chatRoomNo", chatRoomNo);
-	        	map.put("userNo", userNo);
-	        	return map;
-	        }else {
-	        	return Collections.emptyMap();
-	        }
-		} catch (Exception e) {
-			log.error("예외 발생: {}", e.getMessage(), e);
-			 return Collections.emptyMap();
+	public ResponseEntity<String> addStars(@RequestBody Map<String, Object> map) {
+		
+        int result = chatService.addStars(map);
+        
+        log.info("result = {}", result);
+        
+        if(result > 0) {
+        	return ResponseEntity.ok("고정됨");
+        }else {
+        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("실패");
+        }
+	}
+	
+	@PostMapping("/getStar")
+	public boolean getStars(@RequestBody Map<String, Object> map){
+		
+		int result = chatService.getStars(map);
+		
+		if(result > 0) {
+			return true;
+		}else {
+			return false;
 		}
 	}
 	
-	@GetMapping("/getStar")
-	public List<ChatCare> getStars(){
-		
-		List<ChatCare> ccList = chatService.getStars();
-		log.info("ccList = {}", ccList);
-		
-		return ccList;
-	}
+//	@DeleteMapping("/delStar")
+//	public ResponseEntity<String> delStar(@RequestBody Map<String, Object> map){
+//		
+//		int result = chatService.delStar(map);
+//		
+//		if(result > 0) {
+//			return ResponseEntity.ok("고정 해제");
+//		}else {
+//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("실패");
+//		}
+//	}
+	
 }

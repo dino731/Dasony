@@ -1,6 +1,7 @@
 package com.ds.dasony.chat.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ds.dasony.chat.model.vo.ChatCare;
 import com.ds.dasony.chat.model.vo.ChatJoin;
@@ -11,7 +12,7 @@ public interface ChatService {
 
 	List<ChatRoom> selectChatList();
 
-	int openChatRoom(ChatRoom room);
+	int openChatRoom(ChatRoom room, String userRegion);
 
 	int insertChatMessage(ChatMessage chatMessage);
 
@@ -21,8 +22,10 @@ public interface ChatService {
 
 	List<ChatRoom> selectUserChatList(long userNo);
 
-	int addStars(ChatCare care);
+	int addStars(Map<String, Object> map);
 
-	List<ChatCare> getStars();
+	int getStars(Map<String, Object> map);
+
+//	int delStar(Map<String, Object> map);
 
 }

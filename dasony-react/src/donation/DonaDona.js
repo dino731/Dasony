@@ -62,6 +62,8 @@ const DonaDona = () => {
        navigate(`/donadetail/${donaNo}`);
     }
 
+    
+
     const handeldonation = () => {
         if(isAllDonation || (donationAmount !== '' && parseInt(donationAmount) > 0)){ // check버튼을 눌렀거나, 기부 금액 값을 입력했을 때
             alert("기부가 완료되었습니다" );
@@ -82,12 +84,22 @@ const DonaDona = () => {
                     console.log(error);
                 });
 
-            // let idList = localStorage.getItem('id').split(", ");
-            // console.log("donation part ID : " + idList);
-            // localStorage.setItem('id', localStorage.getItem('id') + ", " + donaNo);
-            // console.log(localStorage.getItem("id"));
-            
+            const donationData = {
+                donaAmount : donationAmountInt,
+                donaNo : donaNo,
+                userNo : loginUserNo
+            }
+
+            const postMyDonaList = (donationData) => {
+                axios.post(`/dasony/insertDona`, donationData)
+                    .then((response) => console.log("제발 한 번에 ㅜ : ", response.data))
+                    .catch((error) => console.log(error));
+                }
+
+            postMyDonaList(donationData);
+                
             navigate('/mypage/Mydonation');
+
         }else{
             alert("기부 금액을 입력해주세요");
             return;

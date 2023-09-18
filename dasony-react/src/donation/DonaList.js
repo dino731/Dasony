@@ -9,6 +9,14 @@ const DonaList = () => {
 
     const [donalist, setDonalist] = useState([]);
 
+    const loginUserRegion = localStorage.getItem("loginUserRegion"); // 사용자 지역 받아옴
+    const userRegion = loginUserRegion.split(" "); // 공백 기준으로 나눔
+
+    let userRegionToCompare = "";
+    if(userRegion.length > 0) {
+        userRegionToCompare = userRegion[userRegion.length -1];
+    }
+
     const getDonaList = ()=> {
         axios.get("/dasony/donalist")
         .then((response) => setDonalist(response.data))
@@ -52,14 +60,15 @@ const DonaList = () => {
                     <div id='scrolldona'>
                         <table id='donalisttbody'>
                             <tbody style={{height: '100%'}}>
-                                
                                         {donalist && donalist.length > 0 &&donalist.map((dona) => {
+                                                if(dona.donaSelectArea === userRegionToCompare ){
                                             return( <tr key={dona.donaNo} onClick={() => handeldetail(dona.donaNo)}>
                                                 <td width="100">{dona.donaNo}</td>
                                                 <td width="580">{dona.donaTitle}</td>
                                                 <td width="330">{dona.donaName}</td>
                                                 <td width="240">{dona.donaWriteDate}</td>
                                                 </tr>)
+                                            }
                                         })}
                             </tbody>
                         </table>
