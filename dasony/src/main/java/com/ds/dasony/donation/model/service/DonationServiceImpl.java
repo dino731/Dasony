@@ -17,8 +17,8 @@ import com.ds.dasony.donation.model.vo.DonationList;
 public class DonationServiceImpl implements DonationService{
    
    private final DonationDao donationDao;
-   
-   @Autowired
+
+  @Autowired
    public DonationServiceImpl(DonationDao donationDao) {
       this.donationDao = donationDao;
    }

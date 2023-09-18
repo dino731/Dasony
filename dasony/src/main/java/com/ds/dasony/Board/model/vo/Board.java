@@ -19,4 +19,5 @@ public class Board {
 		private String boardStatus;		//BOARD_STATUS
 		private int boardCateNo;
 		private String boardKeyword;
+
 }

@@ -19,5 +19,6 @@ public class BoardExt extends Board{
 	private int userViewCount;//USER_VIEW_COUNT
 	private int replyCount;//REPLY_COUNT
 	private BoardTag boardTag;
-	private String userRegion;
+	public String userRegion;
+
 }

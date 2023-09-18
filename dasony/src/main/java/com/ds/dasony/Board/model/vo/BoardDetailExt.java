@@ -25,4 +25,5 @@ public class BoardDetailExt extends Board{
 	private Board board;
 
 
+
 }

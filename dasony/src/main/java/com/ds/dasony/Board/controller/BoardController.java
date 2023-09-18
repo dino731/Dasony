@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ds.dasony.Board.model.service.BoardService;
+import com.ds.dasony.Board.model.vo.Board;
 import com.ds.dasony.Board.model.vo.BoardCare;
 import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardExt;
@@ -30,6 +31,7 @@ import com.ds.dasony.Board.model.vo.BoardImg;
 import com.ds.dasony.Board.model.vo.BoardTag;
 import com.ds.dasony.Board.model.vo.BoardVideo;
 import com.ds.dasony.Board.model.vo.BoardWriterForm;
+import com.ds.dasony.Board.model.vo.NestedReply;
 import com.ds.dasony.Board.model.vo.Reply;
 import com.ds.dasony.common.BoardUtils;
 
@@ -134,6 +136,7 @@ public class BoardController {
 			}
 
 	}
+	
 	@GetMapping("/boardViewsCount")
 	public String boardViewsCount(@RequestParam("boardNo") int boardNo) {
 		int count = boardService.insertBordViews(boardNo);	
@@ -147,6 +150,7 @@ public class BoardController {
 		}
 		return m;
 	}
+
 	@GetMapping(value = {"/general/daily/detail/{boardNo}","/general/interest/detail/{boardNo}","/info/jmt/detail/{boardNo}","/info/fashion/detail/{boardNo}","/info/local/detail/{boardNo}"})	    
 	public Map<String, Object> boardDetail(@PathVariable("boardNo") int boardNo) {
 		Map<String, Object> bDetailListMap = new HashMap(); // 초기화
@@ -165,6 +169,7 @@ public class BoardController {
 		return bDetailListMap;
 		
 	}
+
 	@GetMapping(value = {"/general/daily/edit/{boardNo}","/general/interest/edit/{boarNo}","/info/jmt/edit/{boarNo}","/info/fashion/edit/{boarNo}","/info/local/edit/{boarNo}"})	    
 	public BoardWriterForm boardEditList(@PathVariable int boardNo) {
 		BoardWriterForm bEditListMap = null; // 초기화
@@ -173,8 +178,8 @@ public class BoardController {
 		log.info("boardDetail bEditListMap = {}", bEditListMap);
 
 		return bEditListMap;
-		
 	}
+	
 	@PostMapping(value = {"/reply"})	    
 	public String insertReply(HttpServletRequest request, 
 								Reply reply, 
@@ -183,16 +188,15 @@ public class BoardController {
 								) {
 
 		Reply r = Reply.
-				  builder().
-				  replyContent(reply.getReplyContent()).
-				  replyWriteDate(reply.getReplyWriteDate()).
-				  replyStatus("Y").
-				  rBoardNo(boardNo).
-				  rUserNo(userNo).
-				  mainReplyNo(reply.getMainReplyNo()).
-				  replyLevel(reply.getReplyLevel())
-				  .build();
-
+	              builder().
+	              replyContent(reply.getReplyContent()).
+	              replyWriteDate(reply.getReplyWriteDate()).
+	              replyStatus("Y").
+	              rBoardNo(boardNo).
+	              rUserNo(userNo).
+	              mainReplyNo(reply.getMainReplyNo()).
+	              replyLevel(reply.getReplyLevel())
+	              .build();
 				
 		int result = 0;
 		String m = "";
@@ -204,8 +208,9 @@ public class BoardController {
 			log.info("답글 등록 실패 = {}",result);
 			return m = "답글 등록 실패";
 		}
-		
 	}
+
+	
 	@GetMapping("/serchHeart")
 	public String serchHeart(@RequestParam("boardNo") int boardNo, @RequestParam("userNo") int userNo) {
 		BoardCare bc = BoardCare.builder().bCareBoardNo(boardNo).bCareUserNo(userNo).build();
@@ -235,7 +240,6 @@ public class BoardController {
 		}
 		
 	}
-	
 	@DeleteMapping("/deleteHeart")
 	public String deleteHeart(@RequestParam("boardNo") int boardNo, @RequestParam("userNo") int userNo) {
 		
@@ -277,65 +281,66 @@ public class BoardController {
 	      return bListMap;
 	   }
 	
+		
 	@PostMapping("/nextBtn/{boardNo}/{boardMiddleCate}")
-	   public List<BoardExt> nextBtn(@PathVariable("boardMiddleCate")String boardMiddleCate,
-	                              @PathVariable("boardNo") int boardNo
-	                              ){
-	      Map<String, Object> data = new HashMap();
-	      data.put("boardMiddleCate", boardMiddleCate);
-	      data.put("boardNo", boardNo);
-	      Map<String, Object> map = new HashMap();
-	      log.info("nextBtn 값 확인 {}",data);
-	      int resultBoardNo = 0;
-	      List<BoardExt> bListMap = null; // 초기화
-	      
-	      bListMap = boardService.nextBtn(data);
-	      return bListMap;
-	   }
-	   
-	   @PostMapping("/backBtn/{boardNo}/{boardMiddleCate}")
-	   public List<BoardExt> backBtn(@PathVariable("boardMiddleCate")String boardMiddleCate,
-	                              @PathVariable("boardNo") int boardNo){
-	      Map<String, Object> data = new HashMap();
-	      data.put("boardMiddleCate", boardMiddleCate);
-	      data.put("boardNo", boardNo);
-	      log.info("backBtn 값 확인 {}",data);
-	      
-	      List<BoardExt> bListMap = null; // 초기화
-	      bListMap = boardService.nextBtn(data);
+	public List<BoardExt> nextBtn(@PathVariable("boardMiddleCate")String boardMiddleCate,
+										@PathVariable("boardNo") int boardNo
+										){
+		Map<String, Object> data = new HashMap();
+		data.put("boardMiddleCate", boardMiddleCate);
+		data.put("boardNo", boardNo);
+		Map<String, Object> map = new HashMap();
+		log.info("nextBtn 값 확인 {}",data);
+		int resultBoardNo = 0;
+		List<BoardExt> bListMap = null; // 초기화
+		
+		bListMap = boardService.nextBtn(data);
+		return bListMap;
+	}
+	
+	@PostMapping("/backBtn/{boardNo}/{boardMiddleCate}")
+	public List<BoardExt> backBtn(@PathVariable("boardMiddleCate")String boardMiddleCate,
+										@PathVariable("boardNo") int boardNo){
+		Map<String, Object> data = new HashMap();
+		data.put("boardMiddleCate", boardMiddleCate);
+		data.put("boardNo", boardNo);
+		log.info("backBtn 값 확인 {}",data);
+		
+		List<BoardExt> bListMap = null; // 초기화
+		bListMap = boardService.nextBtn(data);
 
-	      return bListMap;
-	   }
-	   
-	   @GetMapping("/boardDelete/{boardNo}")
-	   public String boardDelete(@PathVariable("boardNo")int boardNo) {
-	      String m = "";
-	      int result = 0;
-	      result = boardService.boardDelete(boardNo);
-	      if(result >0) {
-	         log.info("게시글 삭제 성공");
-	         m = "게시글 삭제 성공";
-	      }else {
-	         log.info("게시글 삭제 실패");
-	         m = "게시글 삭제 실패";
-	      }
-	      return m;
-	   }
+		return bListMap;
+	}
+	
+    @GetMapping("/boardDelete/{boardNo}")
+    public String boardDelete(@PathVariable("boardNo")int boardNo) {
+       String m = "";
+       int result = 0;
+       result = boardService.boardDelete(boardNo);
+       if(result >0) {
+          log.info("게시글 삭제 성공");
+          m = "게시글 삭제 성공";
+       }else {
+          log.info("게시글 삭제 실패");
+          m = "게시글 삭제 실패";
+       }
+       return m;
+    }
 	
 	@PostMapping("/boardImg")
-	public ResponseEntity<List<BoardImg>> boardImg(@RequestBody int boardNo){
-		List<BoardImg> img = boardService.boardImg(boardNo);
-		log.info("이미지 리스트{},", img);
-		return ResponseEntity.ok(img);
-	}
-	
-	@PostMapping("/boardVideo")
-	public ResponseEntity<List<BoardVideo>> boardVideo(@RequestBody int boardNo){
-		List<BoardVideo> video = boardService.boardVideo(boardNo);
-		log.info("비디오 리스트{},", video);
-		return ResponseEntity.ok(video);
-	}
-	
+	   public ResponseEntity<List<BoardImg>> boardImg(@RequestBody int boardNo){
+	      List<BoardImg> img = boardService.boardImg(boardNo);
+	      log.info("이미지 리스트{},", img);
+	      return ResponseEntity.ok(img);
+	   }
+	   
+	   @PostMapping("/boardVideo")
+	   public ResponseEntity<List<BoardVideo>> boardVideo(@RequestBody int boardNo){
+	      List<BoardVideo> video = boardService.boardVideo(boardNo);
+	      log.info("비디오 리스트{},", video);
+	      return ResponseEntity.ok(video);
+	   }
+	  
 	
 	
 }

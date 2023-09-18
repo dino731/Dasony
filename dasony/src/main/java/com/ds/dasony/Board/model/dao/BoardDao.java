@@ -17,7 +17,9 @@ import com.ds.dasony.Board.model.vo.BoardImg;
 import com.ds.dasony.Board.model.vo.BoardTag;
 import com.ds.dasony.Board.model.vo.BoardVideo;
 import com.ds.dasony.Board.model.vo.BoardWriterForm;
+import com.ds.dasony.Board.model.vo.NestedReply;
 import com.ds.dasony.Board.model.vo.Reply;
+import com.ds.dasony.alert.model.vo.Alert;
 import com.ds.dasony.member.model.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
@@ -67,33 +69,37 @@ public class BoardDao {
 	public int insertBordViews(int boardNo) {
 		return session.update("board.insertBordViews", boardNo);
 	}
-   public int boardDelete(int boardNo) {
-	      return session.update("board.boardDelete",boardNo);
-	   }
+
+	public int boardDelete(int boardNo) {
+		return session.update("board.boardDelete",boardNo);
+	}
+
 	public List<BoardDetailExt> boardDetail(int BoardNo){
 		log.info("BoardDao boardDetail, BoardNo = {}", BoardNo);
 
-			return session.selectList("board.boardDetail", BoardNo);
+		return session.selectList("board.boardDetail", BoardNo);
 	}
-		
+	
 	public BoardWriterForm boardEdit(int BoardNo){
 		log.info("BoardDao boardDetail, BoardNo = {}", BoardNo);
 		return session.selectOne("board.boardEdit", BoardNo);
 	}
 	
 	public int insertReply(Reply r, int userNo) {
-		 User list = session.selectOne("board.replyGetNick", userNo);
-		 String rUserNick = list.getUserNick();
-		if(list != null) {
-			r.setRUserNick(rUserNick);
-		}
-		int result = 0;
-		result = session.insert("board.insertReply",r);
-		if(result > 0) {
-			log.info("boardDao insertReply 등록 성공 = {}",result);
-		}
-		return result;
-	}
+	       User list = session.selectOne("board.replyGetNick", userNo);
+	       String rUserNick = list.getUserNick();
+	      if(list != null) {
+	         r.setRUserNick(rUserNick);
+	      }
+	      int result = 0;
+	      result = session.insert("board.insertReply",r);
+	      if(result > 0) {
+	         log.info("boardDao insertReply 등록 성공 = {}",result);
+	      }
+	      return result;
+	   }
+	
+
 	public  int serchHeart(BoardCare bc) {
 		return session.selectOne("board.serchHeart",bc);
 	}
@@ -117,10 +123,6 @@ public class BoardDao {
 		return result;
 	}
 
-	public List<Reply> replySelect(int boardNo) {
-		return session.selectList("board.replySelect",boardNo);
-	}
-
 	public List<BoardImg> boardImg(int boardNo) {
 		return session.selectList("board.boardImg",boardNo);
 	}
@@ -129,74 +131,80 @@ public class BoardDao {
 		return session.selectList("board.boardVideo",boardNo);
 	}
 	
-	  // 검색 기능
-	   public List<BoardExt> searchList(String userRegion,String btg,String btt ){
-	      List<BoardExt> searchList = new ArrayList<BoardExt>();
-	      
-	      String[] boardTagArr = btg.split("_");
-	      for(String boardTag : boardTagArr) {
-	          Map<String, Object> params = new HashMap<>();
-	          params.put("userRegion", userRegion);
-	          params.put("boardTag", boardTag);
 
-	          List<BoardExt> tagSearchResults = session.selectList("board.boardTagSearch", params);
-	          searchList.addAll(tagSearchResults);
-	      }
-	         String boardTitle = btt;
-	         String boardContent = btt;
-	         
-	         BoardExt be = new BoardExt();
-	         be.setBoardTitle(boardTitle);
-	         be.setBoardContent(boardContent);
-	         be.setUserRegion(userRegion);
-	         
-	         List<BoardExt> titleSearchResults = session.selectList("board.boardTagSearch",be);
-	         searchList.addAll(titleSearchResults);
-	         
-	         
+	public List<Reply> replySelect(int boardNo) {
+	      return session.selectList("board.replySelect",boardNo);
+	   }
 
-	      return searchList;
-	   }
-	   public List<BoardExt> nextBtn(Map<String, Object> data) {
-	      return session.selectList("board.nextBtn", data);
-	   }
-	   public List<BoardExt> backBtn(Map<String, Object> data) {
-	      return session.selectList("board.backBtn", data);
-	   }
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   // admin
-	   public List<BoardExt> adminBoardList(){
-	      return session.selectList("board.adminBoardList");
-	   }
-	   
-	   public int addMinBoardDelete(int boardNo) {
-	       
-	       return session.update("board.addMinBoardDelete",boardNo);
-	   }
-	   
-	   public Board selectBoardUserNo(int boardNo) {
-	      return session.selectOne("board.addMinBoardDeleteUserNoSelect",boardNo);
-	   }
-	   
-	   public int addMinBoardDeleteAlert(Map<String, Object> map) {
-	      int result = 0;
-	      result = session.insert("board.addMinBoardDeleteAlert",map);
-	      if(result > 0) {
-	         log.info("result 성공 = {}",result);
-	         return result;
-	      }else {
-	         log.info("result 실패 = {}",result);
-	         return result;
-	      }
-	      
-	   }
+     // 검색 기능
+	public List<BoardExt> searchList(String userRegion,String btg,String btt ){
+		List<BoardExt> searchList = new ArrayList<BoardExt>();
+		
+		String[] boardTagArr = btg.split("_");
+		for(String boardTag : boardTagArr) {
+		    Map<String, Object> params = new HashMap<>();
+		    params.put("userRegion", userRegion);
+		    params.put("boardTag", boardTag);
+
+		    List<BoardExt> tagSearchResults = session.selectList("board.boardTagSearch", params);
+		    searchList.addAll(tagSearchResults);
+		}
+			String boardTitle = btt;
+			String boardContent = btt;
+			
+			BoardExt be = new BoardExt();
+			be.setBoardTitle(boardTitle);
+			be.setBoardContent(boardContent);
+			be.setUserRegion(userRegion);
+			
+			List<BoardExt> titleSearchResults = session.selectList("board.boardTagSearch",be);
+			searchList.addAll(titleSearchResults);
+			
+			
+
+		return searchList;
+	}
+	public List<BoardExt> nextBtn(Map<String, Object> data) {
+		return session.selectList("board.nextBtn", data);
+	}
+	public List<BoardExt> backBtn(Map<String, Object> data) {
+		return session.selectList("board.backBtn", data);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	// admin
+	public List<BoardExt> adminBoardList(){
+		return session.selectList("board.adminBoardList");
+	}
+	
+	public int addMinBoardDelete(int boardNo) {
+		 
+		 return session.update("board.addMinBoardDelete",boardNo);
+	}
+	
+	public Board selectBoardUserNo(int boardNo) {
+		return session.selectOne("board.addMinBoardDeleteUserNoSelect",boardNo);
+	}
+	
+	public int addMinBoardDeleteAlert(Map<String, Object> map) {
+		int result = 0;
+		result = session.insert("board.addMinBoardDeleteAlert",map);
+		if(result > 0) {
+			log.info("result 성공 = {}",result);
+			return result;
+		}else {
+			log.info("result 실패 = {}",result);
+			return result;
+		}
+		
+	}
+	
 	
 	
 	

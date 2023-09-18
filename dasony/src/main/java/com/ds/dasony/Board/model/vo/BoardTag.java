@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class BoardTag {
 
 	private String boardTag;	//BOARD_TAG
-	private int boardTagBNo; // USER_NO
+	private int boardTagBNo; // BOARD_NO
 }
