@@ -67,6 +67,18 @@
 		DELETE FROM ALERT 
 		WHERE USER_NO = #{userNo} AND ALERT_NO = #{alertNo}
 	</delete>
+	 
+	<insert id="inputAdminAlert" parameterType = "Alert">
+		INSERT INTO ALERT VALUES 
+		(SEQ_ANO.NEXTVAL,
+    (SELECT USER_NO FROM MEMBER WHERE USER_NICKNAME = #{recipient}),
+    #{content},
+    TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+    'A',
+    'B',
+    #{title}
+	)
+	</insert>
 
 	
 </mapper>

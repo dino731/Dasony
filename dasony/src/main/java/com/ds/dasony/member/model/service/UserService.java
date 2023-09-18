@@ -66,6 +66,8 @@ public interface UserService {
 
 	public int deleteMyAlertList(Map<String, Integer> requestBody);
 
+	public int modifyNewPwd(Map<String, Object> myInfo);
+
 
 
 }
