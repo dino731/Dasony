@@ -1,64 +1,130 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HeartIcon from '../heart';
 import { Button } from 'react-bootstrap';
 import './share.css';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 export const Share = () => {
+    const navigate = useNavigate();
 
-    const text = '난 내가 말야 스물이 되면 요절할 천재일 줄만 알고 난 내가 말야 모든 게 다 간단하다 믿었지 이제는 딸기맛 해열제같은 이상적인 해결책이 필요해 징그러운 일상에 불을 지르고 어디론가~~ 도망칠까~ '
+    const userRegion = localStorage.getItem("loginUserRegion");
+    const boardCateNo = 3101;
+    const [list, setList] = useState(null);
+    const [img, setImg] = useState(null);
+
     const settingText = (text, n) => {
         return text.length>n?text.substring(0, n-1)+'...':text;
     }
 
+    /*무한 스크롤 */
+    const [loading, setLoading] = useState(false);
+
+    const  fetchData =  async ()=>{
+        setLoading(true);
+        await axios.post("/dasony/api/share", {userRegion:userRegion, boardCateNo:boardCateNo})
+        .then(res=>{
+            setList(res.data);
+            console.log(res.data);
+        })
+        .catch(err=>{
+            console.log(err);
+        });
+
+        await axios.post("/dasony/board/boardImg", 0, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then(res=>{
+            setImg(res.data);
+            console.log(res.data);
+          })
+          .catch(err=>{
+            console.log(err);
+          });
+
+          setLoading(false);
+    }
+
+    const handleScroll = () => {
+        const scrollHeight = document.documentElement.scrollHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const clientHeight = document.documentElement.clientHeight;
+        
+        if (scrollTop + clientHeight >= scrollHeight - 100 && !loading) {
+          fetchData(); // 스크롤 이벤트 감지 시 데이터 가져오기
+        }
+      };
+
+    useEffect(()=>{
+       
+        fetchData(); 
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+
+    }, [])
+
+    
+  
     return(
         <div className="share-container">
-            <div>나눔게시판<div><Button className="btn btn-primary">확인</Button></div></div>
+            <div style={{display:'flex', justifyContent:'right'}}>
+            </div>
             <div className="share-content">
-                <div className="share-content-box">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th colSpan={2}>userName{" "} <span>2023-10-13 06:30</span></th>
-                            </tr>
-                            <tr>
-                                <td rowSpan={2}>
-                                    <div className='share-content-img'><img src='/resources/shop/product/1/001.png'/></div>
-                                </td>
-                                <td>
-                                    <div>
-                                        {settingText(text, 100)}
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><div><div><i class="bi bi-chat"/>36</div><div><HeartIcon/></div></div></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div className="share-content-box">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th colSpan={2}>userName{" "} <span>2023-10-13 06:30</span></th>
-                            </tr>
-                            <tr>
-                                <td rowSpan={2}>
-                                    <div className='share-content-img'><img src='/resources/shop/product/1/001.png'/></div>
-                                </td>
-                                <td>
-                                    <div>
-                                        {settingText(text, 100)}
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><div><div><i class="bi bi-chat"/>36</div><div><HeartIcon/></div></div></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                {list&&
+                list.map(share=>{
+                    return(
+                        <Link
+                            to={{
+                                pathname: `/board/share/list/${share.board.boardNo}`
+                            }}
+                            >
+                            <div key={share.board.boardNo} 
+                                    boardNo={share.board.boardNo}
+                                    className="share-content-box">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th colSpan={2}>{share.user.userNick}{" "} <span>{share.board.boardWriteDate}</span></th>
+                                        </tr>
+                                        <tr>
+                                            <td className='left-td' rowSpan={2}>
+                                                {img&&
+                                                img
+                                                .filter(i=>(
+                                                    i.boardNoRef==share.board.boardNo
+                                                    &&
+                                                    i.boardImgLevel == 1
+                                                ))
+                                                .map(i=>(
+                                                    <div key={i.boardImgNo} className='share-content-img'>
+                                                        <img src={`http://localhost:8083/dasony/resources/images/board/${i.boardImgModName}`}/>
+                                                    </div>
+                                                ))}
+                                            </td>
+                                            <td className='right-td'>
+                                                <div>
+                                                    {settingText(share.board.boardContent, 100)}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className='right-td'><div><div><i className="bi bi-chat"/>{share.replyCount}</div><div><HeartIcon/></div></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </Link>
+                    )
+                })}
+                
+                {loading&&<p>Loading...</p>}
+                
             </div>
         </div>
     );

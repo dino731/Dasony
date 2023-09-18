@@ -69,9 +69,11 @@ public class BoardDao {
 	public int insertBordViews(int boardNo) {
 		return session.update("board.insertBordViews", boardNo);
 	}
+
 	public int boardDelete(int boardNo) {
 		return session.update("board.boardDelete",boardNo);
 	}
+
 	public List<BoardDetailExt> boardDetail(int BoardNo){
 		log.info("BoardDao boardDetail, BoardNo = {}", BoardNo);
 
@@ -101,6 +103,7 @@ public class BoardDao {
 	public  int serchHeart(BoardCare bc) {
 		return session.selectOne("board.serchHeart",bc);
 	}
+
 	
 	
 	public int insertHeart(BoardCare bc) {
@@ -119,18 +122,19 @@ public class BoardDao {
 		}
 		return result;
 	}
+
+	public List<BoardImg> boardImg(int boardNo) {
+		return session.selectList("board.boardImg",boardNo);
+	}
+
+	public List<BoardVideo> boardVideo(int boardNo) {
+		return session.selectList("board.boardVideo",boardNo);
+	}
 	
+
 	public List<Reply> replySelect(int boardNo) {
 	      return session.selectList("board.replySelect",boardNo);
 	   }
-
-   public List<BoardImg> boardImg(int boardNo) {
-      return session.selectList("board.boardImg",boardNo);
-   }
-
-   public List<BoardVideo> boardVideo(int boardNo) {
-      return session.selectList("board.boardVideo",boardNo);
-   }
 
      // 검색 기능
 	public List<BoardExt> searchList(String userRegion,String btg,String btt ){
@@ -200,9 +204,6 @@ public class BoardDao {
 		}
 		
 	}
-	
-	
-	
 	
 	
 	

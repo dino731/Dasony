@@ -61,7 +61,7 @@ public class BoardController {
 	
 	@GetMapping(value = {"/general/daily","/general/interest","/info/jmt","/info/fashion","/info/local"})
 	public List<BoardExt> boardDailyList(@RequestParam(name = "userRegion",required = false)String userRegion) {
-
+		
 		List<BoardExt> bListMap = null; // 초기화
 
 		bListMap = boardService.boardDailyList(userRegion); // 게시글 목록 가져오기
@@ -150,25 +150,26 @@ public class BoardController {
 		}
 		return m;
 	}
-	@GetMapping(value = {"/general/daily/detail/{boardNo}","/general/interest/detail/{boardNo}","/info/jmt/detail/{boardNo}","/info/fashion/detail/{boardNo}","/info/local/detail/{boardNo}"})       
-	   public Map<String, Object> boardDetail(@PathVariable("boardNo") int boardNo) {
-	      Map<String, Object> bDetailListMap = new HashMap(); // 초기화
-	            
-	      List<BoardDetailExt> bde = boardService.boardDetail(boardNo); // 게시글 목록 가져오기
-	      log.info("{}",boardNo);
-	      log.info("bde:{}", bde);
-	       // rUserNo 값을 저장할 리스트
-	       List<Reply> rUserNoList = new ArrayList<Reply>();
-	       
-	       rUserNoList = boardService.replySelect(boardNo);
-	       
-	       bDetailListMap.put("boardData", bde);
-	       bDetailListMap.put("replyList", rUserNoList);
-	       log.info("맵 확인.{}",bDetailListMap);
-	      return bDetailListMap;
-	      
-	   }
-	
+
+	@GetMapping(value = {"/general/daily/detail/{boardNo}","/general/interest/detail/{boardNo}","/info/jmt/detail/{boardNo}","/info/fashion/detail/{boardNo}","/info/local/detail/{boardNo}"})	    
+	public Map<String, Object> boardDetail(@PathVariable("boardNo") int boardNo) {
+		Map<String, Object> bDetailListMap = new HashMap(); // 초기화
+				
+		List<BoardDetailExt> bde = boardService.boardDetail(boardNo); // 게시글 목록 가져오기
+		log.info("{}",boardNo);
+		log.info("bde:{}", bde);
+		 // rUserNo 값을 저장할 리스트
+	    List<Reply> rUserNoList = new ArrayList<Reply>();
+	    
+	    rUserNoList = boardService.replySelect(boardNo);
+	    
+	    bDetailListMap.put("boardData", bde);
+	    bDetailListMap.put("replyList", rUserNoList);
+	    log.info("맵 확인.{}",bDetailListMap);
+		return bDetailListMap;
+		
+	}
+
 	@GetMapping(value = {"/general/daily/edit/{boardNo}","/general/interest/edit/{boarNo}","/info/jmt/edit/{boarNo}","/info/fashion/edit/{boarNo}","/info/local/edit/{boarNo}"})	    
 	public BoardWriterForm boardEditList(@PathVariable int boardNo) {
 		BoardWriterForm bEditListMap = null; // 초기화
@@ -196,12 +197,10 @@ public class BoardController {
 	              mainReplyNo(reply.getMainReplyNo()).
 	              replyLevel(reply.getReplyLevel())
 	              .build();
-
 				
 		int result = 0;
 		String m = "";
 		result = boardService.insertReply(r,userNo); // 게시글 목록 가져오기
-		log.info("insertReply r = {}", r);
 		if(result > 0) {
 			log.info("답글 등록 성공 = {}",result);
 			return m = "답글 등록 성공";
@@ -257,32 +256,31 @@ public class BoardController {
 		}
 		
 	}
+	   @GetMapping(value = {"/searchList"})
+	   public List<BoardExt> searchList(HttpServletRequest request, 
+	                            BoardExt boardExt, 
+	                           @RequestParam(name = "userRegion",required = false)String userRegion,
+	                           @RequestParam(name = "boardTag",required = false)String boardTag,
+	                           @RequestParam(name = "boardTitle",required = false)String boardTitle,
+	                           @RequestParam(name = "boardContent",required = false)String boardContent                        
+	                           ) {
+	      // 이거 클라이언트에서 값이 안들어온 null값들어옴 
+	      log.info("userRegion {}",userRegion);
+	      log.info("boardTag {}",boardTag);
+	      log.info("boardTitle {}",boardTitle);
+	      log.info("boardContent {}",boardContent);
+	      log.info("boardExt {}",boardExt);
+	      List<BoardExt> bListMap = null; // 초기화
+
+	      String btg = boardTag;
+	      String btt = boardTitle;
+
+	      bListMap = boardService.searchList(userRegion, btg,btt ); // 게시글 목록 가져오기
+	      log.info("bListMap = {}", bListMap);
+
+	      return bListMap;
+	   }
 	
-
-	@GetMapping(value = {"/searchList"})
-	public List<BoardExt> searchList(HttpServletRequest request, 
-									 BoardExt boardExt, 
-									@RequestParam(name = "userRegion",required = false)String userRegion,
-									@RequestParam(name = "boardTag",required = false)String boardTag,
-									@RequestParam(name = "boardTitle",required = false)String boardTitle,
-									@RequestParam(name = "boardContent",required = false)String boardContent								
-									) {
-		// 이거 클라이언트에서 값이 안들어온 null값들어옴 
-		log.info("userRegion {}",userRegion);
-		log.info("boardTag {}",boardTag);
-		log.info("boardTitle {}",boardTitle);
-		log.info("boardContent {}",boardContent);
-		log.info("boardExt {}",boardExt);
-		List<BoardExt> bListMap = null; // 초기화
-
-		String btg = boardTag;
-		String btt = boardTitle;
-
-		bListMap = boardService.searchList(userRegion, btg,btt ); // 게시글 목록 가져오기
-		log.info("bListMap = {}", bListMap);
-
-		return bListMap;
-	}
 		
 	@PostMapping("/nextBtn/{boardNo}/{boardMiddleCate}")
 	public List<BoardExt> nextBtn(@PathVariable("boardMiddleCate")String boardMiddleCate,
@@ -329,7 +327,6 @@ public class BoardController {
        return m;
     }
 	
-	// 미선님 구현 이미지 비디오 불러오기
 	@PostMapping("/boardImg")
 	   public ResponseEntity<List<BoardImg>> boardImg(@RequestBody int boardNo){
 	      List<BoardImg> img = boardService.boardImg(boardNo);
@@ -343,9 +340,7 @@ public class BoardController {
 	      log.info("비디오 리스트{},", video);
 	      return ResponseEntity.ok(video);
 	   }
-	   
-	
-	
+	  
 	
 	
 }

@@ -202,9 +202,9 @@ const HomeSide = () => {
                                     <td colSpan={5} style={{height:'10vh'}}></td>
                                 </tr>
                                 <tr>
-                                    <th colSpan={5}>
+                                    <td colSpan={5}  style={{fontSize:'1.5vw'}}>
                                         내가 신청한 내역
-                                    </th>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>날짜(기간)</th>
@@ -221,7 +221,7 @@ const HomeSide = () => {
                                         <td>{calendar.calendarName}</td>
                                         <td>{calendar.calendarPlace}</td>
                                         <td>{calendar.calendarSpec}</td>
-                                        <td>{calendar.calendarCate}</td>
+                                        <td>{calendarCateMap[calendar.calendarCate]}</td>
                                     </tr>
                                     );
                                 })}

@@ -235,14 +235,22 @@ position: relative;
 margin: 10px;
 }
 
+
 .user-infos input {
 width: 400px;
 height: 35px;
 right: -10;
 }
 
+.user-levelimg{
+  position:sticky;
+  top:70px;
+}
+
 .button-div{
   display: block;
+  position:sticky;
+  top:170px;
 }
 
 .mypage-btn{

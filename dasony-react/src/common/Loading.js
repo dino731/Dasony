@@ -1,7 +1,7 @@
 import React from 'react';
 import {ColorRing} from "react-loader-spinner";
 
-const LoadingEmoji = () => {
+const Loading = () => {
     return(
         <ColorRing
             visible={true}
@@ -15,4 +15,4 @@ const LoadingEmoji = () => {
     );
 };
 
-export default LoadingEmoji;
+export default Loading;

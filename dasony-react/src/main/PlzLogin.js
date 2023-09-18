@@ -90,13 +90,26 @@ const PlzLogin = () => {
         /*id, pwd 공백 검사 */
         if(login.userId!=""&& pwd !=""){
             setDisable(false);
-        }
-        
+        } 
     }
+
+{/*경로 설정 용도 */}
+    const loginUserNo = localStorage.getItem("loginUserNo");
+    const loginUserLevel = localStorage.getItem("loginUserLevel");
+
     useEffect(()=>{
-        handleDisable();
-        setUser({});
-    }, [login.userId, pwd])
+        if(loginUserNo){
+            if(loginUserLevel==='Z'){
+                navigate('/admin/main');
+            } else {
+                navigate('/main');
+            }
+            window.location.reload();
+        } else {
+            handleDisable();
+            setUser({});
+        }
+    }, [loginUserNo, loginUserLevel, login.userId, pwd])
 
         /*로그인 정보 전달 */
     const navigate = useNavigate();

@@ -12,7 +12,7 @@ const HeartIcon = (props) => {
     const navigate = useNavigate();
 
     const product = props.product;
-    console.log("product 게 있느냐",product);
+    //console.log("product 게 있느냐",product);
 
     const [isFilled, setIsFilled] = useState(false);
 

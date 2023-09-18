@@ -6,8 +6,6 @@ export default function KakaoShare(props) {
     const coupon = props.coupon;
     const product = props.product;
 
-
-    
     let kakao = '';
     let kakaoKey = process.env.REACT_APP_KAKAO_KEY;
 
