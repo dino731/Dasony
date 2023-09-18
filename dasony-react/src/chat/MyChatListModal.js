@@ -2,7 +2,6 @@ import Modal from "react-modal";
 import React, { useState, useEffect } from "react";
 import './MyChatListModal.css';
 import { useNavigate } from 'react-router';
-import { useChatData } from './ChatDataContext';
 import axios from "axios";
 
 const chatlistmodal = {
@@ -20,11 +19,10 @@ const chatlistmodal = {
 
 const MyChstListModal = ({ isOpen, closeModal }) => {
     const navigate = useNavigate();
-    const { chatData } = useChatData();
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
     const [MyChatList, setMyChatList] = useState([]);
     const [isFilled, setIsFilled] = useState([]);
-    
+
     console.log("뭐있냐곻",isFilled); // chatRoomNo : true
 
     const getStarts = (chatList) => {
@@ -90,27 +88,31 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
             userNo: loginUserNo
         };
 
-        axios.post(`/dasony/addStar`, starData)
+        console.log("is checked? :: ", isFilled[index]);
+
+        if(isFilled[index]){
+
+            axios.post(`/dasony/delStar`, starData)
             .then((response) => {
                 console.log(response.data);
-
-                // const updateChatList = MyChatList.map((chat) => {
-                //     if (chat.chatRoomNo === chatRoomNo) {
-                //       chat.isFilled = !chat.isFilled;
-                //       setIsFilled((isFiiled) => ({
-                //         ...isFiiled, [chatRoomNo] : chat.isFiiled,
-                //       }));
-                //     }
-                //     return chat;
-                //   });
-                // setMyChatList(updateChatList);
                 const starStatusList = Object.assign([], isFilled);
-                starStatusList[index] = true;
-                console.log("status list ::", starStatusList);
+                starStatusList[index] = false;
 
                 setIsFilled(starStatusList);
             }).catch((error) => console.log(error));
+
+        }else{
+            axios.post(`/dasony/addStar`, starData)
+            .then((response) => {
+                console.log(response.data);
+                const starStatusList = Object.assign([], isFilled); // 빈 배열에 isFilled의 값을 복사함
+                starStatusList[index] = true;
+                
+                setIsFilled(starStatusList);
+            }).catch((error) => console.log(error));
+        }
     };
+
 
   return (
     <Modal

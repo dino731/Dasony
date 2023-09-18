@@ -80,9 +80,9 @@ public class ChatDao {
 		return session.selectList("chatMapper.getStars", map);
 	}
 
-//	public int delStar(Map<String, Object> map) {
-//		return session.delete("chatMapper.delStar", map);
-//	}
+	public int delStar(Map<String, Object> map) {
+		return session.delete("chatMapper.delStar", map);
+	}
 	
 	
 }

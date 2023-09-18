@@ -87,8 +87,8 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.getStars(map);
 	}
 
-//	@Override
-//	public int delStar(Map<String, Object> map) {
-//		return chatDao.delStar(map);
-//	}
+	@Override
+	public int delStar(Map<String, Object> map) {
+		return chatDao.delStar(map);
+	}
 }

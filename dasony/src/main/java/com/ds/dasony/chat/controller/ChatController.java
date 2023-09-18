@@ -214,16 +214,20 @@ public class ChatController {
 		return result;
 	}
 	
-//	@DeleteMapping("/delStar")
-//	public ResponseEntity<String> delStar(@RequestBody Map<String, Object> map){
-//		
-//		int result = chatService.delStar(map);
-//		
-//		if(result > 0) {
-//			return ResponseEntity.ok("고정 해제");
-//		}else {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("실패");
-//		}
-//	}
-	
+	@PostMapping("/delStar")
+	public ResponseEntity<String> delStar(@RequestBody Map<String, Object> map){
+		
+		
+		log.info("map ={}", map);
+		
+		int result = chatService.delStar(map);
+		
+		log.info("result ={}", result);
+		
+		if(result > 0) {
+			return ResponseEntity.ok("고정 해제");
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("실패");
+		}
+	}
 }

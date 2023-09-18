@@ -73,3 +73,8 @@
   #closeBtn:hover{
     cursor: pointer;
   }
+
+  .bi-star-fill{
+    color: #CB9DE7;
+    border: #CB9DE7;
+  }

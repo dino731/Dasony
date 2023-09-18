@@ -26,6 +26,6 @@ public interface ChatService {
 
 	List<ChatCare> getStars(Map<String, Object> map);
 
-//	int delStar(Map<String, Object> map);
+	int delStar(Map<String, Object> map);
 
 }
