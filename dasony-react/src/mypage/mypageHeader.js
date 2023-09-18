@@ -44,8 +44,6 @@ const MypageHeader = () => {
           
         <Link className='mypage-link' to='/mypage/Info'><button className='mypage-btn'>회원정보</button></Link>
 
-        <Link className='mypage-link' to='/mypage/Myact'><button className='mypage-btn'>내 활동</button></Link>
-
         <Link className='mypage-link' to='/mypage/Myshop'><button className='mypage-btn'>내 상점</button></Link>
         
         <Link className='mypage-link' to='/mypage/Mydonation'><button className='mypage-btn'>내 기부</button></Link>

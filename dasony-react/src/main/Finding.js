@@ -57,6 +57,7 @@ const Finding = ()=>{
         emailjs.sendForm('Dasony','dasonynewPwd', form.current, 'F-MU3Q5TmMwsJT8xo')
       .then((result) => {
         alert("이메일로 새로운 비밀번호를 전송해 드렸습니다!");
+        window.location.reload();
       }, (error) => {
         alert("서버 요청 중 오류가 발생했습니다. 잠시 후 이용해주세요.");
       });
