@@ -83,7 +83,7 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public int getStars(Map<String, Object> map) {
+	public List<ChatCare> getStars(Map<String, Object> map) {
 		return chatDao.getStars(map);
 	}
 

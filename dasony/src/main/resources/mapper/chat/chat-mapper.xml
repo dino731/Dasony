@@ -135,11 +135,11 @@
 		)
 </insert>
 
-<select id="getStars" parameterType="map" resultType="int">
+<select id="getStars" parameterType="map" resultMap="chatCareResultSet">
 	SELECT 
-		COUNT(*) 
+		*
 	FROM CHAT_CARE
-	WHERE USER_NO = #{userNo} AND CHATROOM_NO = #{chatRoomNo}
+	WHERE USER_NO = #{userNo}
 </select>
 
 <!-- <delete id="delStar">

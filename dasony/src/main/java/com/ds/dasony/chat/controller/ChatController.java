@@ -197,15 +197,21 @@ public class ChatController {
 	}
 	
 	@PostMapping("/getStar")
-	public boolean getStars(@RequestBody Map<String, Object> map){
+	public Map<String, Object> getStars(@RequestBody Map<String, Object> map){
+		Map<String, Object> result = new HashMap();
+		// fav list
+		result.put("list", chatService.getStars(map));
 		
-		int result = chatService.getStars(map);
-		
-		if(result > 0) {
-			return true;
+		boolean status;
+		if(result.size() > 0) {
+			status = true;
 		}else {
-			return false;
+			status = false;
 		}
+		// fav list Y/N
+		result.put("status", status);
+		
+		return result;
 	}
 	
 //	@DeleteMapping("/delStar")

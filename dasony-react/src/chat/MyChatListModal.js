@@ -12,7 +12,9 @@ const chatlistmodal = {
     transform: 'translate(-50%, -50%)',
     width: '500px',
     height: '482px',
-    padding: '0'
+    padding: '0',
+    borderRadius: '0.6vw',
+    border : 'none'
   }
 };
 
@@ -22,12 +24,56 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
     const [MyChatList, setMyChatList] = useState([]);
     const [isFilled, setIsFilled] = useState([]);
+    
     console.log("뭐있냐곻",isFilled); // chatRoomNo : true
+
+    const getStarts = (chatList) => {
+        axios.post(`/dasony/getStar`, {userNo: loginUserNo})
+        .then((response) => {
+            const serverStarData  = response.data.list; // {chatRoomNo: 11, userNo: 23090757}, {chatRoomNo: 20, userNo: 23090757}
+            console.log("데이터 가져와 : ", {userNo: loginUserNo});
+            console.log("스크랩한 채팅 ", serverStarData);
+
+
+            console.log("chatList origin ::", chatList);
+            const starStatusList = [];
+            const favChatList = [];
+            chatList.map((chat, i) => { // {chatRoomNo: 34, userNo: 0, chatRoomTitle: '만들어줘'
+
+                for(let index in serverStarData){
+                    const roomNo = serverStarData[index].chatRoomNo; // 찜한 채팅 넘버
+                    console.log("index :: ", index);
+                    console.log(roomNo);
+
+                    favChatList.push(roomNo);
+                }
+
+                if(!favChatList.includes(chat.chatRoomNo)){
+                    starStatusList.push(false);
+                }else{
+                    starStatusList.push(true);
+                }
+
+                setIsFilled(starStatusList);
+                console.log("filled list :: ", starStatusList);
+                console.log("chat coll :: ", chat);
+
+                return chat;
+                });
+        })
+        .catch((error) => console.log(error));
+    };
 
     useEffect(() => {
         axios.post(`/dasony/selectUserChatList`, { userNo: loginUserNo })
-            .then((response) => setMyChatList(response.data))
+            .then((response) => {
+                setMyChatList(response.data); 
+                
+                console.log("======stars load======");
+                getStarts(response.data); 
+            })
             .catch(error => console.log(error));
+
     }, []);
 
     const handelInchat = (chatRoomNo) => {
@@ -38,7 +84,7 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
         }
     };
 
-    const handleStarClick = (chatRoomNo) => {
+    const handleStarClick = (chatRoomNo, index) => {
         const starData = {
             chatRoomNo: chatRoomNo,
             userNo: loginUserNo
@@ -48,38 +94,22 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
             .then((response) => {
                 console.log(response.data);
 
-                const updateChatList = MyChatList.map((chat) => {
-                    if (chat.chatRoomNo === chatRoomNo) {
-                      chat.isFilled = !chat.isFilled;
-                      setIsFilled((isFiiled) => ({
-                        ...isFiiled, [chatRoomNo] : chat.isFiiled,
-                      }));
-                    }
-                    return chat;
-                  });
-                setMyChatList(updateChatList);
+                // const updateChatList = MyChatList.map((chat) => {
+                //     if (chat.chatRoomNo === chatRoomNo) {
+                //       chat.isFilled = !chat.isFilled;
+                //       setIsFilled((isFiiled) => ({
+                //         ...isFiiled, [chatRoomNo] : chat.isFiiled,
+                //       }));
+                //     }
+                //     return chat;
+                //   });
+                // setMyChatList(updateChatList);
+                const starStatusList = Object.assign([], isFilled);
+                starStatusList[index] = true;
+                console.log("status list ::", starStatusList);
 
-                axios.post(`/dasony/getStar`, starData)
-                    .then((response) => {
-                        const serverStarData  = response.data;
-                        console.log("데이터 가져와 : ", starData);
-                        console.log("너는 뭐가있니", serverStarData);
-
-                        const updateChatList = MyChatList.map((chat) => {
-                            if (chat.chatRoomNo === chatRoomNo) {
-                            //   chat.isFilled = serverStarData;
-                            //   setIsFilled(serverStarData);
-                                setIsFilled((isFiiled) => ({
-                                    ...isFiiled, [chatRoomNo] : serverStarData,
-                                  }));
-                            }
-                            return chat;
-                          });
-                        setMyChatList(updateChatList);
-                    })
-                    .catch((error) => console.log(error));
-                })
-                .catch((error) => console.log(error));
+                setIsFilled(starStatusList);
+            }).catch((error) => console.log(error));
     };
 
   return (
@@ -103,15 +133,15 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
         <div id="toggle_body">
           <table id="ttable">
             <tbody style={{ textAlign: 'center', height: '100%' }}>
-              {MyChatList.map((chat) => (
+              {MyChatList.map((chat, index) => (
                 <tr key={chat.chatRoomNo}>
                   <td width="150">{chat.chatRoomNo}</td>
                   <td width="300" onClick={() => handelInchat(chat.chatRoomNo)}>{chat.chatRoomTitle}</td>
                   <td width="200">{chat.userName}</td>
                   <td width="80">
                     <i
-                      className={chat.isFilled ? 'bi bi-star-fill' : 'bi bi-star'}
-                      onClick={() => handleStarClick(chat.chatRoomNo)}
+                        className={isFilled.at(index) ? 'bi bi-star-fill' : 'bi bi-star'}
+                        onClick={() => handleStarClick(chat.chatRoomNo, index)}
                     ></i>
                   </td>
                 </tr>
@@ -119,7 +149,7 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
             </tbody>
           </table>
         </div>
-        <button id="closeBtn" onClick={closeModal}>✖</button>
+        <button id="closeBtn" onClick={closeModal}>x</button>
       </div>
     </Modal>
   );

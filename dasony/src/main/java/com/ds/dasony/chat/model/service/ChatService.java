@@ -24,7 +24,7 @@ public interface ChatService {
 
 	int addStars(Map<String, Object> map);
 
-	int getStars(Map<String, Object> map);
+	List<ChatCare> getStars(Map<String, Object> map);
 
 //	int delStar(Map<String, Object> map);
 

@@ -76,8 +76,8 @@ public class ChatDao {
 		return session.insert("chatMapper.addStars", map);
 	}
 
-	public int getStars(Map<String, Object> map) {
-		return session.selectOne("chatMapper.getStars", map);
+	public List<ChatCare> getStars(Map<String, Object> map) {
+		return session.selectList("chatMapper.getStars", map);
 	}
 
 //	public int delStar(Map<String, Object> map) {
