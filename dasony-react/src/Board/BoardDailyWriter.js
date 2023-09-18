@@ -262,6 +262,7 @@ const BoardDailyWriter = () => {
         setInputContent('');
         setImages([]);
         setPreviews([]);
+        window.location.href =`/board${listPath}`;
       })
       .catch((error) => {
         console.error('업로드 실패', error);

@@ -89,39 +89,47 @@ import AdminBoardDelete from './admin/board/adminBoardDelete';
 import BoardEdit from './Board/BoardEdit';
 import ChartManager from './admin/chart/ChartManager';
 import { Share } from './share/share';
+
+import MypageReception from './mypage/mypageReception';
+
 import { ShopMyCouponImg } from './point/ShopMyCouponImg';
+
+import {VoteWrite} from './Board/VoteWrite';
+import { AnotherHeader } from './Board/AnotherHeader';
+import { ShareHeader } from './share/ShareHeader';
+import { ShareWriter } from './Board/ShareWriter';
+
 
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
 //로그인 확인 - PrivateRoute
-const isLogin = localStorage.getItem("loginUserNo")?true:false;
+export let isLogin = localStorage.getItem("loginUserNo")?true:false;
+console.log("APP확인", isLogin);
   export const PrivateRoute =() =>{
-    return isLogin?<Outlet/> : <Navigate to="/"/>;
+    const location = useLocation();
+    if(isLogin&&!isAdmin){
+      return <Outlet/>;
+    } else if(isLogin&&isAdmin){
+      return <Navigate to="/admin/chart"/>;
+    }else {
+      return <Navigate to="/"/>;
+    }
   }
 
 //관리자 확인 - AdminRoute
-const isAdmin = localStorage.getItem("loginUserLevel")=='Z'?true:false;
-export const AdminRoute = () => {
-  return isAdmin?<Outlet/> : <Navigate to="/"/>;
-}
+  const isAdmin = localStorage.getItem("loginUserLevel")=='Z'?true:false;
+
+  export const AdminRoute = () => {
+    return isAdmin?<Outlet/> : <Navigate to="/"/>;
+  }
 
 function App() {
-  
-  const [loading, setLoading] = useState(true);
-  const getPage = async()=>{
-    setLoading(false);
-  };
-  useEffect(()=>{
-    getPage();
-  }, []);
-
 
   const location = useLocation();
   
   return (
-    //loading ? (<Loading/>) : ''
-    //전체 창 영역
+
     <>
     <ChatDataProvider>
     <DonaDataProvider>
@@ -140,13 +148,28 @@ function App() {
 
                   {/* 로그인 안 된 경우 */}
                   {/* 메인페이지 부분 */}
+              
                   <Route path="/" element={
                                             <div className="main-container">
                                               <PlzLogin/>
+                                              <PrivateRoute/>
                                             </div>
                                           }/>
+                
                   
 
+                  {/* 로그인 된 경우 */}
+                  {/*관리자로 로그인 한 경우 */}
+                <Route element = {<AdminRoute/>}>
+                  <Route path="/admin/chart" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                        initial = {{opacity:0, y:30}}
+                                                                        animate = {{opacity:1, y:0}}
+                                                                        end = {{opacity:1, y:0}}
+                                                                        transition={{duration : 1}}>
+                                                                        <ChartManager/>
+                                                                        </motion.div></div></div>}/>
+                </Route>
                   {/* 로그인 된 경우 */}
                   {/*관리자로 로그인 한 경우 */}
                 <Route element = {<AdminRoute/>}>
@@ -533,6 +556,13 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <Board/>
                                                                         </motion.div></div></div>}>
+                      <Route path="share/hwriter" element={<motion.div
+                                                              initial = {{opacity:0, y:30}}
+                                                              animate = {{opacity:1, y:0}}
+                                                              end = {{opacity:1, y:0}}
+                                                              transition={{duration : 1}}>
+                                                                <ShareWriter/>
+                                                              </motion.div>}/>
                       <Route path="general/*" element={<motion.div
                                                     initial = {{opacity:0, y:30}}
                                                     animate = {{opacity:1, y:0}}
@@ -554,20 +584,29 @@ function App() {
                                                               transition={{duration : 1}}>
                                                                 <BoardDailyWriter/>
                                                               </motion.div>}/>
-                                <Route path="daily/vwriter" element={<motion.div
+                                <Route path="daily/*" element={<motion.div
                                                               initial = {{opacity:0, y:30}}
                                                               animate = {{opacity:1, y:0}}
                                                               end = {{opacity:1, y:0}}
                                                               transition={{duration : 1}}>
-                                                                <BoardVoteUploader/>
+                                                                <AnotherHeader/>
+                                                              </motion.div>}>
+                                  <Route path="vwriter" element={<motion.div
+                                                              initial = {{opacity:0, y:30}}
+                                                              animate = {{opacity:1, y:0}}
+                                                              end = {{opacity:1, y:0}}
+                                                              transition={{duration : 1}}>
+                                                                <VoteWrite/>
                                                               </motion.div>}/>
-                                <Route path="daily/swriter" element={<motion.div
+                                  <Route path="swriter" element={<motion.div
                                                               initial = {{opacity:0, y:30}}
                                                               animate = {{opacity:1, y:0}}
                                                               end = {{opacity:1, y:0}}
                                                               transition={{duration : 1}}>
                                                                 <BoardShortsUploader/>
                                                               </motion.div>}/>
+                                </Route>
+                                
                                 <Route path="daily/detail/:boardNo" element={<motion.div
                                                                               initial = {{opacity:0, y:30}}
                                                                               animate = {{opacity:1, y:0}}
@@ -704,13 +743,32 @@ function App() {
                                                                                 <BoardEdit/>
                                                                               </motion.div>}/>                                   
                     </Route>
+                    {/*share중첩 시작 */}
                     <Route path="share/*" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <ShareHeader/>
+                                                    </motion.div>}>
+                      <Route path="list" element={<motion.div
                                                     initial = {{opacity:0, y:30}}
                                                     animate = {{opacity:1, y:0}}
                                                     end = {{opacity:1, y:0}}
                                                     transition={{duration : 1}}>
                                                       <Share/>
                                                     </motion.div>}/>
+
+
+                    </Route>{/*share중첩 끝 */}
+                    <Route path="share/list/:boardNo" element={<motion.div
+                                                    initial = {{opacity:0, y:30}}
+                                                    animate = {{opacity:1, y:0}}
+                                                    end = {{opacity:1, y:0}}
+                                                    transition={{duration : 1}}>
+                                                      <BoardDetail/>
+                                                    </motion.div>}/>
+
                   </Route>
                 </Route>{/*Board 중첩 route 끝 */}
 
@@ -814,6 +872,8 @@ function App() {
                     {/* notice 중첩 route 시작 */}
                     <Route path="notice" element={<Notice/>}>
                         <Route path="detail/:no" element={<NoticeDetail/>}/>                                                                        
+                    <Route path="mypageReception" element={<MypageReception/>}/>                                                                       
+                    
                     </Route>
                 </Route>
               </Route>

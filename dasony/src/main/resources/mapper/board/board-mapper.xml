@@ -11,7 +11,7 @@
 		<result column="BOARD_VIEWS" property="boardViews"/>
 		<result column="BOARD_CONTENT" property="boardContent"/>
 		<result column="BOARD_STATUS" property="boardStatus"/>	
-
+      	<result column="BOARD_CATE_NO" property="boardCateNo"/>
 	</resultMap>
 	<!-- 카테고리 객체 resultMap -->
 	<resultMap id="boardCateResultSet" type="boardCate">
@@ -39,6 +39,8 @@
 		<result column="VIDEO_ORI_NAME" property="videoOriName"/>
 		<result column="VIDEO_PATH" property="videoPath"/>
 		<result column="VIDEO_UPLOAD_DATE" property="videoUploadDate"/>
+		<result column="BOARD_NO" property="boardNo"/>
+      	<result column="USER_NO" property="userNo"/>
 	</resultMap>
 	
 	<!-- 보드 태그 객체 resultMap -->
@@ -62,21 +64,43 @@
 		<result column="USER_MOD_DATE" property="userModDate"/>
 		<result column="USER_STATUS" property="userStatus"/>
 	</resultMap>
-	<!-- 답글 객체 resultMap -->
-	<resultMap id="replyResultSet" type="reply">
-		<id column="REPLY_NO" property="replyNo"/>
-		<result column="REPLY_CONTENT" property="replyContent"/>
-		<result column="REPLY_STATUS" property="replyStatus"/>
-		<result column="REPLY_WRITE_DATE" property="replyWriteDate"/>
-		<result column="BOARD_NO" property="rBoardNo"/>
-		<result column="USER_NO" property="rUserNo"/>
-		<result column="USER_NICKNAME" property="rUserNick"/>
-	</resultMap>
+   <!-- 답글 객체 resultMap -->
+   <resultMap id="replyResultSet" type="reply">
+      <id column="REPLY_NO" property="replyNo"/>
+      <result column="REPLY_CONTENT" property="replyContent"/>
+      <result column="REPLY_STATUS" property="replyStatus"/>
+      <result column="REPLY_WRITE_DATE" property="replyWriteDate"/>
+      <result column="BOARD_NO" property="rBoardNo"/>
+      <result column="USER_NO" property="rUserNo"/>
+      <result column="USER_NICKNAME" property="rUserNick"/>
+      <result column="MAIN_REPLY_NO" property="mainReplyNo"/>
+      <result column="REPLY_LEVEL" property="replyLevel"/>
+   </resultMap>
 	<!-- 좋아요 기능 객체 resultMap -->
 	<resultMap id="boardCareResultSet" type="boardCare">
 		<id column="BOARD_NO" property="bCareBoardNo"/>
 		<result column="USER_NO" property="bCareUserNo"/>
 	</resultMap>
+	<!-- BoardVs resultMap -->
+   <resultMap type="boardVs" id="boardVsResultSet">
+      <id column="BOARD_NO" property="boardNo" />
+      <result column="USER_NO" property="userNo"/>
+      <result column="BOARD_TITLE" property="boardTitle"/>
+      <result column="BOARD_TAG" property="boardKeyword"/>
+      <result column="BOARD_CONTENT" property="boardContent"/>
+      <result column="BOARD_OPTION_LEFT" property="boardOptionLeft"/>
+      <result column="BOARD_OPTION_RIGHT" property="boardOptionRight"/>
+      <result column="BOARD_CATE_NO" property="boardCateNo"/>
+      <result column="BOARD_EXPIRE_DATE" property="boardExpireDate"/>
+      <result column="CHOICE_LEFT" property="choiceLeft"/>
+      <result column="CHOICE_RIGHT" property="choiceRight"/>
+   </resultMap>
+   <!-- BoardVsVote result Map -->
+   <resultMap type="boardVsVote" id="boardVsVoteResultSet">
+      <id column="BOARD_NO" property="boardNo" />
+      <result column="USER_NO" property="userNo"/>
+      <result column="VS_OPTION" property="vsOption"/>
+   </resultMap>
 	
 	<!-- BoardExt 확장자 resultMap -->
 	<resultMap type="boardExt" id="boardListResultSet">
@@ -128,20 +152,27 @@
    	     <collection property="boardImgLevel" javaType="java.util.List" ofType="java.lang.String">
 	     	 <result property="boardImgLevel" column="BOARD_IMG_LEVEL" />
 	     </collection>    
-	</resultMap>		
-	
-	<select id="boardDailyList" resultMap="boardListResultSet">
-		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, COUNT(R.REPLY_CONTENT) AS REPLY_COUNT
-		FROM BOARD B
-		JOIN MEMBER M ON B.USER_NO = M.USER_NO
-		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
-		JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
-		LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
-		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
-		WHERE M.USER_REGION = #{userRegion}
-		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME
-		ORDER BY B.BOARD_WRITE_DATE DESC
-	</select>
+	</resultMap>	
+		
+	 <select id="boardDailyList" resultMap="boardListResultSet">
+      SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS,B.BOARD_CATE_NO,
+             B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, 
+             C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, 
+             COUNT(R.REPLY_CONTENT) AS REPLY_COUNT, V.VIDEO_MOD_NAME
+      FROM BOARD B
+      JOIN MEMBER M ON B.USER_NO = M.USER_NO
+      JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+      LEFT JOIN BOARD_IMG I ON (B.BOARD_CATE_NO NOT IN (1102, 1103) OR (B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1))
+      LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
+      LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
+      LEFT JOIN BOARD_VIDEO V ON B.BOARD_NO = V.BOARD_NO
+      WHERE M.USER_REGION = #{userRegion}
+      GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_CATE_NO,
+            B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, 
+            C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, V.VIDEO_MOD_NAME
+      ORDER BY B.BOARD_WRITE_DATE DESC
+   </select>
+
 	
 	<insert id="insertBoard" parameterType="boardWriterForm">
 		<selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
@@ -163,60 +194,67 @@
 			VALUES (#{boardTag},#{boardTagBNo})
 	</insert>
 	
-	<resultMap type="boardDetailExt" id="boardDetailListResultSet">
-		<id column="BOARD_NO" property="boardNo"/>
-		<result column="USER_NO" property="userNo"/>
-		<result column="BOARD_TITLE" property="boardTitle"/>
-		<result column="BOARD_WRITE_DATE" property="boardWriteDate"/>
-		<result column="BOARD_VIEWS" property="boardViews"/>
-		<result column="BOARD_CONTENT" property="boardContent"/>
-		<result column="BOARD_STATUS" property="boardStatus"/>	
-					
-		<result column="USER_VIEW_COUNT" property="userViewCount"/>
-		<result column="REPLY_COUNT" property="replyCount"/>
-		
-		<association property="user" resultMap="userMap"/>
-		<association property="boardCate" resultMap="boardCateResultSet"/>
-		<association property="boardVideo" resultMap="boardVideoResultSet"/>
-		<association property="boardTag" resultMap="boardTagResultSet"/>
-		
-		<collection property="bImgList" ofType="boardImg" 
-				    javaType="java.util.List" resultMap="boardImgResultSet"/>
-   		<collection property="replyList" ofType="reply" 
-				    javaType="java.util.List" resultMap="replyResultSet"/>
-	</resultMap>
+   <resultMap type="boardDetailExt" id="boardDetailListResultSet">             
+      <result column="USER_VIEW_COUNT" property="userViewCount"/>
+      <result column="REPLY_COUNT" property="replyCount"/>
+      <association property="board" resultMap="boardResultSet"/>
+      <association property="user" resultMap="userMap"/>
+      <association property="boardCate" resultMap="boardCateResultSet"/>
+      <association property="boardVideo" resultMap="boardVideoResultSet"/>
+      <association property="boardTag" resultMap="boardTagResultSet"/>
+      <association property="boardVs" resultMap="boardVsResultSet"/>
+      
+      <collection property="bImgList" ofType="boardImg" 
+                javaType="java.util.List" resultMap="boardImgResultSet"/>
+   </resultMap>
+	
+	<update id="boardDelete" parameterType="board">
+		UPDATE  BOARD
+		SET BOARD_STATUS = 'N'
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
 	<update id="insertBordViews" parameterType="board">
 		UPDATE  BOARD
 		SET BOARD_VIEWS = BOARD_VIEWS + 1
 		WHERE BOARD_NO = #{boardNo}
 	</update>
 
-	<select id="boardDetail" resultMap="boardDetailListResultSet">
-		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME,
-		        C.BOARD_CATE_NO, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE,I.BOARD_IMG_NO , I.BOARD_IMG_PATH, 
-		        I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_LEVEL, 
-		        (SELECT COUNT(*) FROM BOARD_CARE A WHERE B.BOARD_NO = A.BOARD_NO) AS USER_VIEW_COUNT,   
-		        (SELECT COUNT(*) FROM REPLY R WHERE B.BOARD_NO = R.BOARD_NO AND R.REPLY_STATUS = 'Y') AS REPLY_COUNT,
-		        R.REPLY_NO, R.REPLY_CONTENT, R.REPLY_WRITE_DATE, R.REPLY_STATUS, R.BOARD_NO,R.USER_NO, K.BOARD_TAG, K.BOARD_NO
-		FROM BOARD B
-		JOIN MEMBER M ON B.USER_NO = M.USER_NO
-		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
-		JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO
-		JOIN BOARD_KEYWORD K ON B.BOARD_NO = K.BOARD_NO
-		LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
-		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO AND R.REPLY_STATUS = 'Y'
-		WHERE B.BOARD_NO = #{boardNo}
-		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME,C.BOARD_CATE_NO, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_LEVEL, 
-		         R.REPLY_NO, R.REPLY_CONTENT, R.REPLY_WRITE_DATE, R.REPLY_STATUS, R.BOARD_NO, R.USER_NO, K.BOARD_TAG, K.BOARD_NO , I.BOARD_IMG_NO
-	</select>
-	
-	<select id="replySelect" resultMap="replyResultSet">
-		SELECT R.REPLY_NO,R.REPLY_CONTENT,R.REPLY_STATUS,R.REPLY_WRITE_DATE,R.BOARD_NO,R.USER_NO,R.USER_NICKNAME
-		FROM REPLY R
-		LEFT JOIN MEMBER M ON R.USER_NO = M.USER_NO
-		WHERE R.BOARD_NO = #{boardNo} AND R.REPLY_NO = #{replyNo} AND R.REPLY_CONTENT = #{replyContent} AND R.REPLY_WRITE_DATE = #{replyWriteDate}
-	</select>
-	
+   <select id="boardDetail" resultMap="boardDetailListResultSet">
+      SELECT B.BOARD_NO, B.USER_NO AS BOARD_USER_NO, B.BOARD_TITLE,B.BOARD_WRITE_DATE,B.BOARD_VIEWS,B.BOARD_CONTENT,B.BOARD_STATUS,B.BOARD_CATE_NO,
+        BC.BOARD_CATE_NO, BC.BOARD_BIG_CATE, BC.BOARD_MIDDLE_CATE, BC.BOARD_SMALL_CATE,
+        M.USER_NICKNAME,M.USER_REGION AS BOARD_REGION,
+        BK.BOARD_TAG,
+        BV.VIDEO_MOD_NAME,
+        VS.BOARD_OPTION_LEFT, VS.BOARD_OPTION_RIGHT, VS.CHOICE_LEFT, VS.CHOICE_RIGHT, VS.BOARD_EXPIRE_DATE,
+        (SELECT COUNT(*) FROM BOARD_CARE CA WHERE B.BOARD_NO = CA.BOARD_NO) AS USER_VIEW_COUNT,   
+      (SELECT COUNT(*) FROM REPLY R WHERE B.BOARD_NO = R.BOARD_NO AND R.REPLY_STATUS = 'Y') AS REPLY_COUNT
+      FROM BOARD B
+      LEFT JOIN BOARD_CATE BC ON B.BOARD_CATE_NO = BC.BOARD_CATE_NO
+      LEFT JOIN MEMBER M ON B.USER_NO = M.USER_NO
+      LEFT JOIN BOARD_KEYWORD BK ON B.BOARD_NO = BK.BOARD_NO
+      LEFT JOIN BOARD_VIDEO BV ON B.BOARD_NO = BV.BOARD_NO
+      LEFT JOIN BOARD_VS VS ON B.BOARD_NO = VS.BOARD_NO
+      WHERE B.BOARD_NO = #{boardNo}
+      ORDER BY B.BOARD_NO DESC
+   </select>
+   <select id="boardImg" parameterType="int" resultMap = "boardImgResultSet">
+      SELECT *
+      FROM BOARD_IMG
+      WHERE
+        (#{boardNo} = 0 OR BOARD_NO = #{boardNo})
+   </select>
+   <select id="boardVideo" parameterType="int" resultMap = "boardVideoResultSet">
+      SELECT *
+      FROM BOARD_VIDEO
+      WHERE BOARD_NO=#{boardNo}
+   </select>
+   
+   <select id="replySelect" parameterType="int" resultMap="replyResultSet">
+      SELECT *
+      FROM REPLY
+      WHERE BOARD_NO = #{boardNo}
+   </select>
 	
 	<select id="boardEdit" resultMap="boardWriterFormResultMap">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_WRITE_DATE, B.BOARD_VIEWS, B.BOARD_CONTENT, B.BOARD_STATUS, M.USER_NO, I.BOARD_IMG_NO,T.BOARD_TAG,C.BOARD_CATE_NO,I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_ORI_NAME,I.BOARD_IMG_PATH,I.BOARD_IMG_UPLOAD_DATE,I.BOARD_IMG_LEVEL 
@@ -229,16 +267,7 @@
 		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_WRITE_DATE, B.BOARD_VIEWS, B.BOARD_CONTENT, B.BOARD_STATUS, M.USER_NO, I.BOARD_IMG_NO,T.BOARD_TAG,C.BOARD_CATE_NO,I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_ORI_NAME,I.BOARD_IMG_PATH,I.BOARD_IMG_UPLOAD_DATE,I.BOARD_IMG_LEVEL
 	</select>
 	
-	<!-- 답글 등록을 위한 USERNICK 가져오기와 답글 등록 -->
-	<select id="replyGetNick" resultMap="userMap">
-		SELECT USER_NICKNAME
-		FROM MEMBER 
-		WHERE USER_NO = #{userNo}
-	</select>
-	<insert id="insertReply" parameterType="reply">
-		INSERT INTO REPLY(REPLY_NO,REPLY_CONTENT,REPLY_STATUS,REPLY_WRITE_DATE,BOARD_NO,USER_NO, USER_NICKNAME)
-		VALUES(SEQ_RNO.NEXTVAL, #{replyContent},#{replyStatus},#{replyWriteDate},#{rBoardNo},#{rUserNo},#{rUserNick})
-	</insert>
+
 	
 	<!-- 좋아요 등록 및 삭제 -->
 	<select id="serchHeart" parameterType="boardCare" resultType="int">
@@ -254,6 +283,108 @@
 	    DELETE FROM BOARD_CARE
 	    WHERE BOARD_NO = #{bCareBoardNo} AND USER_NO = #{bCareUserNo}
 	</delete>
+	
+	
+	<!-- 키워드 검색 -->
+	<select id="selectTagList" resultMap="boardListResultSet">
+	SELECT 
+	    B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
+	    M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
+	    I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, COUNT(R.REPLY_CONTENT) AS REPLY_COUNT
+	FROM BOARD B
+	JOIN MEMBER M ON B.USER_NO = M.USER_NO
+	JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+	JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
+	LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
+	LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
+	WHERE 
+	    M.USER_REGION = #{userRegion} 
+	    AND B.BOARD_STATUS = 'Y'
+	    AND B.BOARD_NO IN (
+	        SELECT BOARD_NO
+	        FROM BOARD_KEYWORD
+	        WHERE BOARD_TAG LIKE '%'|| #{boardTag}|| '%'
+	    )
+	GROUP BY 
+	    B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
+	    M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
+	    I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME
+	ORDER BY B.BOARD_WRITE_DATE DESC
+	</select>
+	<!-- 제목 내용 검색 쿼리 -->
+	<select id="selectTitleContentList" resultMap="boardListResultSet">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
+		   		M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
+		    	I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, COUNT(R.REPLY_CONTENT) AS REPLY_COUNT
+		FROM BOARD B
+		JOIN MEMBER M ON B.USER_NO = M.USER_NO
+		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+		JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
+		LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
+		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
+		WHERE 
+		    M.USER_REGION = #{userRegion} 
+		    AND B.BOARD_STATUS = 'Y'
+		    AND B.BOARD_NO IN (
+		        SELECT DISTINCT BOARD_NO
+		        FROM BOARD_KEYWORD
+		        WHERE B.BOARD_TITLE LIKE '%' || #{boardTitle} || '%'
+		        OR B.BOARD_CONTENT LIKE '%' || #{boardContent} || '%'
+		    )
+		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
+		   		 M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
+		    	 I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME
+		ORDER BY B.BOARD_WRITE_DATE DESC	
+	</select>
+	<select id="nextBtn" resultMap="boardResultSet" parameterType="hashmap">
+		SELECT A.*
+		FROM (
+		    SELECT LEAD(B.BOARD_NO, 1) OVER (ORDER BY B.BOARD_NO DESC) AS BOARD_NO
+		    FROM BOARD B
+		    JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+		    WHERE C.BOARD_MIDDLE_CATE = #{boardMiddleCate}
+		)A
+		WHERE A.BOARD_NO <![CDATA[>]]> #{boardNo}
+			  AND ROWNUM = 1
+	</select>
+	
+	<select id="backBtn" resultMap="boardResultSet" parameterType="hashmap">
+		SELECT A.*
+		FROM (
+		    SELECT LAG(B.BOARD_NO, 1) OVER (ORDER BY B.BOARD_NO DESC) AS BOARD_NO
+		    FROM BOARD B
+		    JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+		    WHERE C.BOARD_MIDDLE_CATE = #{boardMiddleCate}
+		)A
+		WHERE A.BOARD_NO <![CDATA[<]]> #{boardNo}
+		AND ROWNUM = 1
+	</select>
+		
+	
+	<!-- 관리자 쿼리 -->
+	<select id="adminBoardList" resultMap="boardListResultSet">
+		SELECT C.BOARD_CATE_NO, C.BOARD_BIG_CATE ,C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, 
+				B.BOARD_TITLE, M.USER_NICKNAME, B.BOARD_WRITE_DATE, B.BOARD_STATUS, B.BOARD_NO
+		FROM BOARD B
+		JOIN MEMBER M ON B.USER_NO = M.USER_NO
+		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+		ORDER BY B.BOARD_WRITE_DATE DESC
+	</select>
+	
+	<update id="addMinBoardDelete" parameterType="board" >
+	    UPDATE BOARD 
+	    SET BOARD_STATUS = 'N'
+	    WHERE BOARD_NO = #{boardNo}
+	</update>
+
+	<select id="addMinBoardDeleteUserNoSelect" resultMap="boardResultSet" parameterType="hashmap" >
+		SELECT USER_NO FROM BOARD WHERE BOARD_NO = #{boardNo}
+	</select>
+	<insert id="addMinBoardDeleteAlert" parameterType="board">
+		INSERT INTO ALERT(ALERT_NO, USER_NO, ALERT_CONTENT, ALERT_DATE, ALERT_CATE, ALERT_STATUS, ALERT_TITLE, BOARD_NO)
+		 VALUES(SEQ_ANO.NEXTVAL,#{userNo},'커뮤니티 규정을 위반하여 게시글이 삭제 되었습니다',TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),'B' , DEFAULT, '게시글 규정 위반', #{boardNo})
+	</insert>
+
 
 
 
