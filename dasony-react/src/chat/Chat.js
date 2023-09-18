@@ -86,7 +86,7 @@ const Chat = () =>{
 
         const changeSendChat = (e) => {
             setSendChat(e.target.value);
-    }
+        }
 
     const handleSendChat = (chat) => { // 보내기 버튼 눌렀을 때
         setSendChat('');

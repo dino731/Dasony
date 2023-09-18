@@ -59,10 +59,10 @@ const AdminDonaEnroll = () => {
                     <input type="text"  defaultValue={title} onChange={e => setTitle(e.target.value)}/>
                     <select name='areas' id='areas'  defaultValue={selectedArea}>
                         <option value="">지역 선택</option>
-                        <option value="강남">강남</option>
-                        <option value="관악">관악</option>
-                        <option value="노원">노원</option>
-                        <option value="강동">강동</option>
+                        <option value="강남구">강남구</option>
+                        <option value="관악구">관악구</option>
+                        <option value="노원구">노원구</option>
+                        <option value="강동구">강동구</option>
                     </select><br/> 
                     <label>모금단체</label><br/> 
                     <input type="text"  defaultValue={crdona} onChange={e => setCrdona(e.target.value)}/><br/>

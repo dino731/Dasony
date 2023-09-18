@@ -13,13 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 @EnableWebSocketMessageBroker
 @Configuration
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-   
-   @Override
-   public void registerStompEndpoints(StompEndpointRegistry registry) {
-      
-      registry.addEndpoint("/chat").setAllowedOriginPatterns("*")
-      .withSockJS();
-   }
+	
+	@Override
+	public void registerStompEndpoints(StompEndpointRegistry registry) {
+		
+		registry.addEndpoint("/chat").setAllowedOriginPatterns("*")
+		.withSockJS();
+	}
 
    @Override
    public void configureMessageBroker(MessageBrokerRegistry registry) {

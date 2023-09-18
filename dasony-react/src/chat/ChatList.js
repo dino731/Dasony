@@ -9,10 +9,11 @@ import { useEffect } from 'react';
  const ChatList  = (props) => {
 
     const {chatData, setChatDate} = useChatData();
-
     const [userName, setUserName] = useState("");
 
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
+    const loginUserRegion = localStorage.getItem("loginUserRegion"); // 사용자 지역 받아옴
+    
 
     const navigate = useNavigate();
 
@@ -74,11 +75,12 @@ import { useEffect } from 'react';
         }else{
 
             const postNewChat = (newChat) => {
-                axios.post("/dasony/openChatRoom", {userNo : loginUserNo, newChat : newChat})
+                axios.post("/dasony/openChatRoom", {userNo : loginUserNo, userRegion : loginUserRegion, newChat : newChat})
                 // {title: , content: }
                 // {no : , chat: {tilte, content}}
                 .then((response) => {
                     const chatData = response.data;
+                    console.log("뭐있졍", chatData);
                     navigate(`/chat/${chatData.chatRoomNo}/${newChat.chatRoomTitle}`, {replace : true});
                 })
                 .catch(error => console.log(error));
@@ -164,17 +166,21 @@ import { useEffect } from 'react';
                             ) : (
                             <table id="tchattable">
                                 <tbody style={{height: '100%'}}>
-                                    {filterChatData.map(chat => (
-                                    <tr key={chat.chatRoomNo}>
-                                        <td width="110">{chat.chatRoomNo}</td>
-                                        <td width="470">{chat.chatRoomTitle}</td>
-                                        <td width="235">{chat.userName}</td>
-                                        <td width="215">{chat.cnt}명</td>
-                                        <td width="150">
-                                        <Link to={`/chat/${chat.chatRoomNo}/${chat.chatRoomTitle}`}><button>참여하기</button></Link>
-                                        </td>
-                                    </tr>
-                                    ))}
+                                    {filterChatData.map((chat) => {
+                                        if(chat.chatRoomRegion === loginUserRegion){
+                                            return(
+                                            <tr key={chat.chatRoomNo}>
+                                                <td width="110">{chat.chatRoomNo}</td>
+                                                <td width="470">{chat.chatRoomTitle}</td>
+                                                <td width="235">{chat.userName}</td>
+                                                <td width="215">{chat.cnt}명</td>
+                                                <td width="150">
+                                                <Link to={`/chat/${chat.chatRoomNo}/${chat.chatRoomTitle}`}><button>참여하기</button></Link>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }
+                                    })}
                                 </tbody>
                             </table> 
                             )}

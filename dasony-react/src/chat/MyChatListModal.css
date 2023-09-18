@@ -11,12 +11,13 @@
     position: absolute;
     bottom: 0vh;
     height: 480px;
-    border: 1px solid black;
+    border: 2px solid #CB9DE7;
+    border-radius: 0.5vw;
 }
 
 #togglechat>table{
     height: 5vh;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #7A7A7A;
     color: #7A7A7A;
     font-weight: 100;
     font-family: 'HakgyoansimWoojuR';
@@ -26,10 +27,12 @@
     height: 5vh; 
     font-family: 'HakgyoansimWoojuR';
     font-size: 14px;
+    font-weight: 300;
+    color: #7A7A7A;
 }
 
 #toggle_body td{
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #7A7A7A;
     vertical-align: middle;
 }
 
@@ -56,14 +59,22 @@
 
 #closeBtn {
     position: absolute;
-    top: 93%;
+    top: 91%;
     right: 15px;
+    box-sizing: border-box;
     border: none;
-    color: rgba(0, 0, 0, 0.7);
-    background-color: transparent;
-    /* font-size: 20px; */
+    color: #CB9DE7;
+    background-color: white;
+    border-radius: 1vw;
+    font-size: 1.5vw;
+    font-family: 'HakgyoansimWoojuR';
   }
 
   #closeBtn:hover{
     cursor: pointer;
+  }
+
+  .bi-star-fill{
+    color: #CB9DE7;
+    border: #CB9DE7;
   }
