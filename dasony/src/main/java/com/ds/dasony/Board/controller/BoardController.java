@@ -358,7 +358,7 @@ public class BoardController {
 	   public ResponseEntity<List<Board>> weatherList(){
 		   List<Board> list = new ArrayList();
 		   list = boardService.weatherList();
-		   
+		   log.info("weatherList{}", list);
 		   if(list != null) {
 			   return ResponseEntity.ok(list);
 		   }
