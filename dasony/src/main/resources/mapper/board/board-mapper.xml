@@ -223,33 +223,36 @@
         BV.VIDEO_MOD_NAME,
         VS.BOARD_OPTION_LEFT, VS.BOARD_OPTION_RIGHT, VS.CHOICE_LEFT, VS.CHOICE_RIGHT, VS.BOARD_EXPIRE_DATE,
         (SELECT COUNT(*) FROM BOARD_CARE CA WHERE B.BOARD_NO = CA.BOARD_NO) AS USER_VIEW_COUNT,   
-      (SELECT COUNT(*) FROM REPLY R WHERE B.BOARD_NO = R.BOARD_NO AND R.REPLY_STATUS = 'Y') AS REPLY_COUNT
-      FROM BOARD B
-      LEFT JOIN BOARD_CATE BC ON B.BOARD_CATE_NO = BC.BOARD_CATE_NO
-      LEFT JOIN MEMBER M ON B.USER_NO = M.USER_NO
-      LEFT JOIN BOARD_KEYWORD BK ON B.BOARD_NO = BK.BOARD_NO
-      LEFT JOIN BOARD_VIDEO BV ON B.BOARD_NO = BV.BOARD_NO
-      LEFT JOIN BOARD_VS VS ON B.BOARD_NO = VS.BOARD_NO
-      WHERE B.BOARD_NO = #{boardNo}
-      ORDER BY B.BOARD_NO DESC
-   </select>
-   <select id="boardImg" parameterType="int" resultMap = "boardImgResultSet">
-      SELECT *
-      FROM BOARD_IMG
-      WHERE
-        (#{boardNo} = 0 OR BOARD_NO = #{boardNo})
-   </select>
-   <select id="boardVideo" parameterType="int" resultMap = "boardVideoResultSet">
-      SELECT *
-      FROM BOARD_VIDEO
-      WHERE BOARD_NO=#{boardNo}
-   </select>
-   
-   <select id="replySelect" parameterType="int" resultMap="replyResultSet">
-      SELECT *
-      FROM REPLY
-      WHERE BOARD_NO = #{boardNo}
-   </select>
+
+		(SELECT COUNT(*) FROM REPLY R WHERE B.BOARD_NO = R.BOARD_NO AND R.REPLY_STATUS = 'Y') AS REPLY_COUNT
+		FROM BOARD B
+		LEFT JOIN BOARD_CATE BC ON B.BOARD_CATE_NO = BC.BOARD_CATE_NO
+		LEFT JOIN MEMBER M ON B.USER_NO = M.USER_NO
+		LEFT JOIN BOARD_KEYWORD BK ON B.BOARD_NO = BK.BOARD_NO
+		LEFT JOIN BOARD_VIDEO BV ON B.BOARD_NO = BV.BOARD_NO
+		LEFT JOIN BOARD_VS VS ON B.BOARD_NO = VS.BOARD_NO
+		WHERE B.BOARD_NO = #{boardNo}
+		ORDER BY B.BOARD_NO DESC
+	</select>
+	<select id="boardImg" parameterType="int" resultMap = "boardImgResultSet">
+		SELECT *
+		FROM BOARD_IMG
+		WHERE
+  		(#{boardNo} = 0 OR BOARD_NO = #{boardNo})
+	</select>
+	<select id="boardVideo" parameterType="int" resultMap = "boardVideoResultSet">
+		SELECT *
+		FROM BOARD_VIDEO
+		WHERE BOARD_NO=#{boardNo}
+	</select>
+	
+	<select id="replySelect" parameterType="int" resultMap="replyResultSet">
+		SELECT *
+		FROM REPLY
+		WHERE BOARD_NO = #{boardNo}
+		AND REPLY_STATUS = 'Y'
+	</select>
+
 	
 	<select id="boardEdit" resultMap="boardWriterFormResultMap">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_WRITE_DATE, B.BOARD_VIEWS, B.BOARD_CONTENT, B.BOARD_STATUS, M.USER_NO, I.BOARD_IMG_NO,T.BOARD_TAG,C.BOARD_CATE_NO,I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_ORI_NAME,I.BOARD_IMG_PATH,I.BOARD_IMG_UPLOAD_DATE,I.BOARD_IMG_LEVEL 
@@ -389,5 +392,23 @@
 	</insert>
 
 
+
+   <update id="boardDelete" parameterType="board">
+      UPDATE  BOARD
+      SET BOARD_STATUS = 'N'
+      WHERE BOARD_NO = #{boardNo}
+   </update>
+   
+   <update id="removeReply" parameterType="int">
+   	UPDATE REPLY
+   	SET REPLY_STATUS = 'N'
+   	WHERE MAIN_REPLY_NO = #{replyNo}
+   </update>
+   
+   <update id="removeMainReply" parameterType="int">
+   	UPDATE REPLY
+   	SET REPLY_STATUS = 'N'
+   	WHERE REPLY_NO = #{replyNo}
+   </update>
 
 </mapper>

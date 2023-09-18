@@ -6,7 +6,10 @@ const BoardHeart = (props) => {
   const { boardNo , isFilled , setIsFilled} = props;
   localStorage.getItem("loginUserNo");
 
-    const handleHeartClick = () => {
+    const handleHeartClick = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      
       setIsFilled(!isFilled);
 
       const formData = new FormData();

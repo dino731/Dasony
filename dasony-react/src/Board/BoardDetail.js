@@ -29,13 +29,14 @@ const BoardDetail = () =>{
   const interestPath = path.includes('interest')? path : null;
   const jmtPath = path.includes('jmt')? path : null;
   const fashionPath = path.includes('fashion')? path : null;
-
+  const sharePath = path.includes('share')? path : null;
 
   const pathD = "/general/daily/";
   const pathI = "/general/interest/";
   const pathJ = "/info/jmt/";
   const pathF = "/info/fashion/";
   const pathL = "/info/local/";
+  const pathS = "/share/list";
 
     /* 경로 이동을 위한 ain 0904 */
   const [listPath, setListPath] = useState([]);
@@ -48,6 +49,8 @@ const BoardDetail = () =>{
       setListPath(pathJ);
     } else if (path == fashionPath) {
       setListPath(pathF);
+    } else if(path == sharePath){
+      setListPath(pathS);
     } else {
       setListPath(pathL);
     }
@@ -162,7 +165,13 @@ const BoardDetail = () =>{
 
     const fetchData = async() => {
       // Axios를 사용하여 서버로 GET 요청을 보냅니다.
-      await axios.get(`http://localhost:3000/dasony/board${listPath}detail/${boardNo}`) // 서버의 API 엔드포인트에 맞게 수정
+      let url = '';
+      if(listPath != pathS){
+        url = `http://localhost:3000/dasony/board${listPath}detail/${boardNo}`
+      } else {
+        url = `http://localhost:3000/dasony/board${listPath}/${boardNo}`
+      }
+      await axios.get(url) // 서버의 API 엔드포인트에 맞게 수정
       .then((response) => {
         console.log('요청 주소:', response.config.url); // 요청 주소 확인
         console.log('BoardList 응답 데이터:', response.data);
@@ -438,7 +447,8 @@ const handleReModalOffAndClose = () => {
 }
 /* 모달 끝 */
 
-   
+
+
   return (
       <>
         <div ref={element} className='BoardDetail-wrapper'>
@@ -512,7 +522,7 @@ const handleReModalOffAndClose = () => {
                             </ModalBody>
                             <ModalFooter>
                                 <Button onClick={handleReModalOffAndClose}>{reModalButtonText}</Button>
-                                <Button onClick={()=>handleReModalOn(reply.replyNo)} style={{display:reModalButton}}>삭제</Button>
+                                <Button style={{display:reModalButton}}>삭제</Button>
                             </ModalFooter>
                           </Modal>
                         </span>
@@ -575,7 +585,7 @@ const handleReModalOffAndClose = () => {
                     &&board.boardCate.boardCateNo!=1102
                     &&board.boardCate.boardCateNo!=3101?
                     (<div className='BoardDetail-boardlist-content'
-                    dangerouslySetInnerHTML={{ __html: board.boardContent }}
+                    dangerouslySetInnerHTML={{ __html: board.board.boardContent }}
                     >
                     </div>)
                     :board.boardCate.boardCateNo==1103?(

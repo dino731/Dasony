@@ -67,6 +67,20 @@
 		DELETE FROM ALERT 
 		WHERE USER_NO = #{userNo} AND ALERT_NO = #{alertNo}
 	</delete>
+
+	
+	<insert id="insertReplyAlert" parameterType="reply">
+		INSERT INTO ALERT
+		VALUES (
+			SEQ_ANO.NEXTVAL,
+			(SELECT USER_NO FROM BOARD WHERE BOARD_NO = #{rBoardNo}),
+			(SELECT BOARD_TITLE FROM BOARD WHERE BOARD_NO = #{rBoardNo})||'에 새로운 댓글이 달렸습니다.',
+			TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+			'R',
+			DEFAULT,
+			'댓글 알림'
+		)
+
 	 
 	<insert id="inputAdminAlert" parameterType = "Alert">
 		INSERT INTO ALERT VALUES 
@@ -78,6 +92,7 @@
     'B',
     #{title}
 	)
+
 	</insert>
 
 	
