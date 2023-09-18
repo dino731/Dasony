@@ -67,11 +67,6 @@ public class BoardServiceImpl implements BoardService {
    }
 	
 	@Override
-	public int boardDelete(int boardNo) {
-		return boardDao.boardDelete(boardNo);
-	}
-	
-	@Override
 	public int insertBordViews(int boardNo) {
 		return boardDao.insertBordViews(boardNo);
 	}
@@ -137,69 +132,14 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.backBtn(data);
 	}
 
-	
-	
-	
-	
-	// admin
-	
 	@Override
-	public List<BoardExt> adminBoardList() {
-		return boardDao.adminBoardList();
+	public int removeReply(int replyNo) {
+		return boardDao.removeReply(replyNo);
 	}
 	@Override
-	public int addMinBoardDelete(int boardNo) {
-		int result = 0;
-		Board b = Board.builder().boardNo(boardNo).build();
-	 	
-		result = boardDao.addMinBoardDelete(boardNo);
-		if(result >0) {
-			b = boardDao.selectBoardUserNo(boardNo);
-		}
-		if(b != null) {
-			Map<String, Object> map = new HashMap();
-		 	map.put("boardNo", boardNo);
-		 	map.put("userNo", b.getUserNo());
-		 	
-		 	result += boardDao.addMinBoardDeleteAlert(map);
-		}
-		return result;
-	 	
-	 	
-	}
-
-
-	@Override
-	public List<Reply> replySelect(int boardNo) {
-		return boardDao.replySelect(boardNo);
-	}
-
-	@Override
-	public List<BoardImg> boardImg(int boardNo) {
-		return boardDao.boardImg(boardNo);
-	}
-
-	@Override
-	public List<BoardVideo> boardVideo(int boardNo) {
-		return boardDao.boardVideo(boardNo);
-	}
-	   @Override
-	   public List<BoardExt> searchList(String userRegion,String btg,String btt ){
-	      return boardDao.searchList(userRegion, btg, btt );
-	   }
-	   @Override
-	   public List<BoardExt> nextBtn(Map<String, Object> data) {
-	      return boardDao.nextBtn(data);
-	   }
-	   @Override
-	   public List<BoardExt> backBtn(Map<String, Object> data) {
-	      return boardDao.backBtn(data);
-	   }
-		@Override
-		public int removeReply(int replyNo) {
-			return boardDao.removeReply(replyNo);
-		}
-	   
+	public List<Board> weatherList() {
+		return boardDao.weatherList();
+	}  
 	   
 	   
 	   
@@ -229,6 +169,8 @@ public class BoardServiceImpl implements BoardService {
 	       
 	       
 	   }
+
+
 
 
 

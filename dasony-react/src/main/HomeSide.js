@@ -164,7 +164,7 @@ const HomeSide = () => {
             <Calendar 
                         onChange={setDate}
                         selectRange={false}/>
-            <Button className='calendar-detail-btn' onClick={handleOpen}>일정 확인</Button>
+            <Button id='calendar-detail-btn' onClick={handleOpen}>일정 확인</Button>
             <div className="main-chat-icon-container"><ChatIcon/></div>
             <div className="main-chat-list-container"><MyChstListModal/></div> {/*이 부분 추가*/}
             <div className="calendar-detail-container" style={{display:show}} >

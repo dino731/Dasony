@@ -180,7 +180,9 @@ public class BoardDao {
 	public List<BoardExt> backBtn(Map<String, Object> data) {
 		return session.selectList("board.backBtn", data);
 	}
-	
+	public List<Board> weatherList() {
+		return session.selectList("board.weatherList");
+	}
 	
 	
 	
@@ -214,7 +216,8 @@ public class BoardDao {
 		}
 		
 	}
-	
+
+
 
 	
 	
