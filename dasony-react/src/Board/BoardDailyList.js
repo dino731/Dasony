@@ -172,7 +172,7 @@ const BoardDailyList = ()=>{
     const search = {
       ...searchKeyword,
       userRegion: localStorage.loginUserRegion,
-      boardTag: upTagArr.join('_'),
+      boardTag: upTagArr,
       boardContent : '',
       [name]: value
     };
@@ -185,6 +185,13 @@ const BoardDailyList = ()=>{
   /* 키워드 검색 시작*/
   /* 키워드 검색 끝*/
 
+  const [searchData, setSearchData] = useState({
+    userRegion: '',
+    boardTitle: '',
+    boardContent : '',
+  });
+  const [tagArr, setTagArr] = useState([]);
+
   const handleSearachKeyword = () => {
 
     
@@ -193,48 +200,15 @@ const BoardDailyList = ()=>{
       return;
     }
   
-    const formData = new FormData();
-    const boardData = {
+    const searchKey = {
       userRegion: localStorage.loginUserRegion,
       boardTag: searchKeyword.boardTag,
       boardTitle: searchKeyword.boardTitle,
       boardContent : searchKeyword.boardTitle,
     };
+    setTagArr = [searchKeyword.boardTag];
 
-    Object.entries(boardData).forEach((item) => {
-      formData.append(item[0], item[1]);
-    });
-  
-    // formData.append("boardTag", JSON.stringify(newBoardPost.boardTag));
-  
-    // FormData의 key 확인
-    for (let key of formData.keys()) {
-      console.log('FormData의 key 확인', key);
-    }
-  
-    // FormData의 value 확인
-    for (let value of formData.values()) {
-      console.log(' FormData의 value 확인', value);
-    }
-  
-    axios.get(`http://localhost:3000/dasony/board/searchList`, formData, {
-    })
-      .then((response) => {
-        console.log('업로드 성공:', response.data);
-        setBoardData(response.data);
-        setSearchKeyword({
-          userRegion: '',
-          boardTag: '',
-          boardTitle:'',
-          boardContent : '',
-        });
-        setInputContent('');
-        window.location.href =`/board${listPath}`;
-      })
-      .catch((error) => {
-        console.error('업로드 실패', error);
-        alert("업로드에 실패하였습니다.");
-      });
+    console.log('',);
 
 
 
