@@ -128,7 +128,10 @@ public class BoardServiceImpl implements BoardService {
 	   public List<BoardExt> backBtn(Map<String, Object> data) {
 	      return boardDao.backBtn(data);
 	   }
-
+		@Override
+		public int removeReply(int replyNo) {
+			return boardDao.removeReply(replyNo);
+		}
 	   
 	   
 	   
@@ -159,6 +162,8 @@ public class BoardServiceImpl implements BoardService {
 	       
 	       
 	   }
+
+
 
 
 

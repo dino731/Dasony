@@ -247,6 +247,7 @@
 		SELECT *
 		FROM REPLY
 		WHERE BOARD_NO = #{boardNo}
+		AND REPLY_STATUS = 'Y'
 	</select>
 	
 	
@@ -392,6 +393,18 @@
       UPDATE  BOARD
       SET BOARD_STATUS = 'N'
       WHERE BOARD_NO = #{boardNo}
+   </update>
+   
+   <update id="removeReply" parameterType="int">
+   	UPDATE REPLY
+   	SET REPLY_STATUS = 'N'
+   	WHERE MAIN_REPLY_NO = #{replyNo}
+   </update>
+   
+   <update id="removeMainReply" parameterType="int">
+   	UPDATE REPLY
+   	SET REPLY_STATUS = 'N'
+   	WHERE REPLY_NO = #{replyNo}
    </update>
 
 </mapper>

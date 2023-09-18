@@ -30,6 +30,7 @@ public interface BoardService {
     public List<BoardExt> searchList(String userRegion,String btg,String btt);
     public List<BoardExt> nextBtn(Map<String, Object> data);
     public List<BoardExt> backBtn(Map<String, Object> data);
+    public int removeReply(int replyNo);
     
     
     // admin

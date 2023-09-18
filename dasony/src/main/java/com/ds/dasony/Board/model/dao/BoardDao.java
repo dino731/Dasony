@@ -89,10 +89,11 @@ public class BoardDao {
 		}
 		int result = 0;
 		result = session.insert("board.insertReply",r);
-		if(result > 0) {
-			log.info("boardDao insertReply 등록 성공 = {}",result);
+		int result2 = session.insert("alert.insertReplyAlert",r);
+		if(result > 0 && result2 > 0) {
+			log.info("boardDao insertReply 등록 성공 = {}",result+result2);
 		}
-		return result;
+		return result+result2;
 	}
 	public  int serchHeart(BoardCare bc) {
 		return session.selectOne("board.serchHeart",bc);
@@ -197,6 +198,12 @@ public class BoardDao {
 	      }
 	      
 	   }
+
+	public int removeReply(int replyNo) {
+		int result1 = session.update("board.removeReply", replyNo);
+		int result2 = session.update("board.removeMainReply", replyNo);
+		return result2==0?0:(result1+result2);
+	}
 	
 	
 	
