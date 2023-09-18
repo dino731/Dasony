@@ -31,10 +31,10 @@ public interface BoardService {
     public List<BoardExt> nextBtn(Map<String, Object> data);
     public List<BoardExt> backBtn(Map<String, Object> data);
     public int removeReply(int replyNo);
-    
-    
+
     // admin
-   public List<BoardExt> adminBoardList();
-   public int addMinBoardDelete(int boardNo);
+	public List<BoardExt> adminBoardList();
+	public int addMinBoardDelete(int boardNo);
+
 
 }

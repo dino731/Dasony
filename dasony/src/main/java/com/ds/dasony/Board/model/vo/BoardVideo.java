@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor // 모든 생성자...
-@NoArgsConstructor 	// 생성자 없어도 쓸수있게 자동 생성
+@NoArgsConstructor    // 생성자 없어도 쓸수있게 자동 생성
 @Data
 public class BoardVideo {
 	private int videoNo;

@@ -123,19 +123,19 @@ public class MisunFileUpload {
 				index++;
 			}
 
-			return list;
-	}
-	
-	
-	private static String extractExt(String originName) {
-		int cutPoint = originName.lastIndexOf(".");
-		return originName.substring(cutPoint + 1);
-	}
-	
-	private static String getChangeName(String originName) {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-		String changeName = simpleDateFormat.format(new Date()) + ((int)(Math.random() * 50)+1) + "." +  extractExt(originName);
-		return changeName;
-	}
+         return list;
+   }
+   
+   
+   private static String extractExt(String originName) {
+      int cutPoint = originName.lastIndexOf(".");
+      return originName.substring(cutPoint + 1);
+   }
+   
+   private static String getChangeName(String originName) {
+      SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+      String changeName = simpleDateFormat.format(new Date()) + ((int)(Math.random() * 50)+1) + "." +  extractExt(originName);
+      return changeName;
+   }
 
 }

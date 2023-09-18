@@ -101,6 +101,7 @@
 		<result column="USER_NO" property="userNo"/>
 		<result column="VS_OPTION" property="vsOption"/>
 	</resultMap>
+
 	
 	<!-- BoardExt 확장자 resultMap -->
 	<resultMap type="boardExt" id="boardListResultSet">
@@ -207,6 +208,7 @@
 		<collection property="bImgList" ofType="boardImg" 
 				    javaType="java.util.List" resultMap="boardImgResultSet"/>
 	</resultMap>
+
 	<update id="insertBordViews" parameterType="board">
 		UPDATE  BOARD
 		SET BOARD_VIEWS = BOARD_VIEWS + 1
@@ -221,6 +223,7 @@
         BV.VIDEO_MOD_NAME,
         VS.BOARD_OPTION_LEFT, VS.BOARD_OPTION_RIGHT, VS.CHOICE_LEFT, VS.CHOICE_RIGHT, VS.BOARD_EXPIRE_DATE,
         (SELECT COUNT(*) FROM BOARD_CARE CA WHERE B.BOARD_NO = CA.BOARD_NO) AS USER_VIEW_COUNT,   
+
 		(SELECT COUNT(*) FROM REPLY R WHERE B.BOARD_NO = R.BOARD_NO AND R.REPLY_STATUS = 'Y') AS REPLY_COUNT
 		FROM BOARD B
 		LEFT JOIN BOARD_CATE BC ON B.BOARD_CATE_NO = BC.BOARD_CATE_NO
@@ -249,7 +252,7 @@
 		WHERE BOARD_NO = #{boardNo}
 		AND REPLY_STATUS = 'Y'
 	</select>
-	
+
 	
 	<select id="boardEdit" resultMap="boardWriterFormResultMap">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_WRITE_DATE, B.BOARD_VIEWS, B.BOARD_CONTENT, B.BOARD_STATUS, M.USER_NO, I.BOARD_IMG_NO,T.BOARD_TAG,C.BOARD_CATE_NO,I.BOARD_IMG_MOD_NAME,I.BOARD_IMG_ORI_NAME,I.BOARD_IMG_PATH,I.BOARD_IMG_UPLOAD_DATE,I.BOARD_IMG_LEVEL 
@@ -288,106 +291,107 @@
 	    WHERE BOARD_NO = #{bCareBoardNo} AND USER_NO = #{bCareUserNo}
 	</delete>
 	
+	<!-- 키워드 검색 -->
+	<select id="selectTagList" resultMap="boardListResultSet">
+	SELECT 
+	    B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
+	    M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
+	    I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, COUNT(R.REPLY_CONTENT) AS REPLY_COUNT
+	FROM BOARD B
+	JOIN MEMBER M ON B.USER_NO = M.USER_NO
+	JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+	JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
+	LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
+	LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
+	WHERE 
+	    M.USER_REGION = #{userRegion} 
+	    AND B.BOARD_STATUS = 'Y'
+	    AND B.BOARD_NO IN (
+	        SELECT BOARD_NO
+	        FROM BOARD_KEYWORD
+	        WHERE BOARD_TAG LIKE '%'|| #{boardTag}|| '%'
+	    )
+	GROUP BY 
+	    B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
+	    M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
+	    I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME
+	ORDER BY B.BOARD_WRITE_DATE DESC
+	</select>
+	<!-- 제목 내용 검색 쿼리 -->
+	<select id="selectTitleContentList" resultMap="boardListResultSet">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
+		   		M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
+		    	I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, COUNT(R.REPLY_CONTENT) AS REPLY_COUNT
+		FROM BOARD B
+		JOIN MEMBER M ON B.USER_NO = M.USER_NO
+		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+		JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
+		LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
+		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
+		WHERE 
+		    M.USER_REGION = #{userRegion} 
+		    AND B.BOARD_STATUS = 'Y'
+		    AND B.BOARD_NO IN (
+		        SELECT DISTINCT BOARD_NO
+		        FROM BOARD_KEYWORD
+		        WHERE B.BOARD_TITLE LIKE '%' || #{boardTitle} || '%'
+		        OR B.BOARD_CONTENT LIKE '%' || #{boardContent} || '%'
+		    )
+		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
+		   		 M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
+		    	 I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME
+		ORDER BY B.BOARD_WRITE_DATE DESC	
+	</select>
+	<select id="nextBtn" resultMap="boardResultSet" parameterType="hashmap">
+		SELECT A.*
+		FROM (
+		    SELECT LEAD(B.BOARD_NO, 1) OVER (ORDER BY B.BOARD_NO DESC) AS BOARD_NO
+		    FROM BOARD B
+		    JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+		    WHERE C.BOARD_MIDDLE_CATE = #{boardMiddleCate}
+		)A
+		WHERE A.BOARD_NO <![CDATA[>]]> #{boardNo}
+			  AND ROWNUM = 1
+	</select>
 	
-	   <!-- 키워드 검색 -->
-   <select id="selectTagList" resultMap="boardListResultSet">
-   SELECT 
-       B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
-       M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
-       I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, COUNT(R.REPLY_CONTENT) AS REPLY_COUNT
-   FROM BOARD B
-   JOIN MEMBER M ON B.USER_NO = M.USER_NO
-   JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
-   JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
-   LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
-   LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
-   WHERE 
-       M.USER_REGION = #{userRegion} 
-       AND B.BOARD_STATUS = 'Y'
-       AND B.BOARD_NO IN (
-           SELECT BOARD_NO
-           FROM BOARD_KEYWORD
-           WHERE BOARD_TAG LIKE '%'|| #{boardTag}|| '%'
-       )
-   GROUP BY 
-       B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
-       M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
-       I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME
-   ORDER BY B.BOARD_WRITE_DATE DESC
-   </select>
-   <!-- 제목 내용 검색 쿼리 -->
-   <select id="selectTitleContentList" resultMap="boardListResultSet">
-      SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
-               M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
-             I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, COUNT(R.REPLY_CONTENT) AS REPLY_COUNT
-      FROM BOARD B
-      JOIN MEMBER M ON B.USER_NO = M.USER_NO
-      JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
-      JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
-      LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
-      LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
-      WHERE 
-          M.USER_REGION = #{userRegion} 
-          AND B.BOARD_STATUS = 'Y'
-          AND B.BOARD_NO IN (
-              SELECT DISTINCT BOARD_NO
-              FROM BOARD_KEYWORD
-              WHERE B.BOARD_TITLE LIKE '%' || #{boardTitle} || '%'
-              OR B.BOARD_CONTENT LIKE '%' || #{boardContent} || '%'
-          )
-      GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_WRITE_DATE, 
-                M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, 
-              I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME
-      ORDER BY B.BOARD_WRITE_DATE DESC   
-   </select>
-   <select id="nextBtn" resultMap="boardResultSet" parameterType="hashmap">
-      SELECT A.*
-      FROM (
-          SELECT LEAD(B.BOARD_NO, 1) OVER (ORDER BY B.BOARD_NO DESC) AS BOARD_NO
-          FROM BOARD B
-          JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
-          WHERE C.BOARD_MIDDLE_CATE = #{boardMiddleCate}
-      )A
-      WHERE A.BOARD_NO <![CDATA[>]]> #{boardNo}
-           AND ROWNUM = 1
-   </select>
-   
-   <select id="backBtn" resultMap="boardResultSet" parameterType="hashmap">
-      SELECT A.*
-      FROM (
-          SELECT LAG(B.BOARD_NO, 1) OVER (ORDER BY B.BOARD_NO DESC) AS BOARD_NO
-          FROM BOARD B
-          JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
-          WHERE C.BOARD_MIDDLE_CATE = #{boardMiddleCate}
-      )A
-      WHERE A.BOARD_NO <![CDATA[<]]> #{boardNo}
-      AND ROWNUM = 1
-   </select>
-      
-   
-   <!-- 관리자 쿼리 -->
-   <select id="adminBoardList" resultMap="boardListResultSet">
-      SELECT C.BOARD_CATE_NO, C.BOARD_BIG_CATE ,C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, 
-            B.BOARD_TITLE, M.USER_NICKNAME, B.BOARD_WRITE_DATE, B.BOARD_STATUS, B.BOARD_NO
-      FROM BOARD B
-      JOIN MEMBER M ON B.USER_NO = M.USER_NO
-      JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
-      ORDER BY B.BOARD_WRITE_DATE DESC
-   </select>
-   
-   <update id="addMinBoardDelete" parameterType="board" >
-       UPDATE BOARD 
-       SET BOARD_STATUS = 'N'
-       WHERE BOARD_NO = #{boardNo}
-   </update>
+	<select id="backBtn" resultMap="boardResultSet" parameterType="hashmap">
+		SELECT A.*
+		FROM (
+		    SELECT LAG(B.BOARD_NO, 1) OVER (ORDER BY B.BOARD_NO DESC) AS BOARD_NO
+		    FROM BOARD B
+		    JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+		    WHERE C.BOARD_MIDDLE_CATE = #{boardMiddleCate}
+		)A
+		WHERE A.BOARD_NO <![CDATA[<]]> #{boardNo}
+		AND ROWNUM = 1
+	</select>
+		
+	
+	<!-- 관리자 쿼리 -->
+	<select id="adminBoardList" resultMap="boardListResultSet">
+		SELECT C.BOARD_CATE_NO, C.BOARD_BIG_CATE ,C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, 
+				B.BOARD_TITLE, M.USER_NICKNAME, B.BOARD_WRITE_DATE, B.BOARD_STATUS, B.BOARD_NO
+		FROM BOARD B
+		JOIN MEMBER M ON B.USER_NO = M.USER_NO
+		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
+		ORDER BY B.BOARD_WRITE_DATE DESC
+	</select>
+	
+	<update id="addMinBoardDelete" parameterType="board" >
+	    UPDATE BOARD 
+	    SET BOARD_STATUS = 'N'
+	    WHERE BOARD_NO = #{boardNo}
+	</update>
 
-   <select id="addMinBoardDeleteUserNoSelect" resultMap="boardResultSet" parameterType="hashmap" >
-      SELECT USER_NO FROM BOARD WHERE BOARD_NO = #{boardNo}
-   </select>
-   <insert id="addMinBoardDeleteAlert" parameterType="board">
-      INSERT INTO ALERT(ALERT_NO, USER_NO, ALERT_CONTENT, ALERT_DATE, ALERT_CATE, ALERT_STATUS, ALERT_TITLE, BOARD_NO)
-       VALUES(SEQ_ANO.NEXTVAL,#{userNo},'커뮤니티 규정을 위반하여 게시글이 삭제 되었습니다',TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),'B' , DEFAULT, '게시글 규정 위반', #{boardNo})
-   </insert>
+	<select id="addMinBoardDeleteUserNoSelect" resultMap="boardResultSet" parameterType="hashmap" >
+		SELECT USER_NO FROM BOARD WHERE BOARD_NO = #{boardNo}
+	</select>
+	<insert id="addMinBoardDeleteAlert" parameterType="board">
+		INSERT INTO ALERT(ALERT_NO, USER_NO, ALERT_CONTENT, ALERT_DATE, ALERT_CATE, ALERT_STATUS, ALERT_TITLE, BOARD_NO)
+		 VALUES(SEQ_ANO.NEXTVAL,#{userNo},'커뮤니티 규정을 위반하여 게시글이 삭제 되었습니다',TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),'B' , DEFAULT, '게시글 규정 위반', #{boardNo})
+	</insert>
+
+
 
    <update id="boardDelete" parameterType="board">
       UPDATE  BOARD

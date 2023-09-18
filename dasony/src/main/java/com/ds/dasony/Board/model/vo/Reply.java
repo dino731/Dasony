@@ -20,3 +20,4 @@ public class Reply {
 	private int mainReplyNo;		//MAIN_REPLY_NO
 	private String replyLevel;			//REPLY_LEVEL
 }
+

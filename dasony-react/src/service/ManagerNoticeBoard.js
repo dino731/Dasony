@@ -85,7 +85,9 @@ const ManagerNoticeBoard = () => {
 
     return(
         <>
-            {loadStatus ? <Loading /> : null}
+            {loadStatus ? <div className="loadingContainer">
+                            <Loading />
+                        </div> : null}
             <table className="table" style={{"tableLayout":"fixed"}}>
             <thead>
                 <tr>
