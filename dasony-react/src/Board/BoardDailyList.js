@@ -11,19 +11,53 @@ import axios from 'axios';
 const BoardDailyList = ()=>{
 
   const[boardData,setBoardData]=useState([]);
-  /* axios 시작 */
-  useEffect(() => {
-    // Axios를 사용하여 서버로 GET 요청을 보냅니다.
+  const [reply, setReply] = useState([]);
+
+
+  /*무한 스크롤 기능 */
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = async () => {
+
+  if (path == listDailyOptions) {
+    setListBoardCate(listDailyCategory);
+    setListPath(pathD);
+   } else if (path == listInterestOptions) {
+    setListBoardCate(boardInterestCategory);
+    setListPath(pathI);
+   } else if (path == listJmtOptions) {
+    setListBoardCate(boardJMTCategory);
+    setListPath(pathJ);
+   } else if (path == listFashionOptions) {
+    setListBoardCate(boardFashionCategory);
+    setListPath(pathF);
+   } else {
+    setListBoardCate(boardLocalCategory);
+    setListPath(pathL);
+   }
+    setLoading(true);
     axios.get(`http://localhost:3000/dasony${path}?userRegion=${localStorage.loginUserRegion}`) // 서버의 API 엔드포인트에 맞게 수정
       .then((response) => {
-        console.log('BoardList 응답 데이터:', response.data);
         setBoardData(response.data);
       })
       .catch((error) => {
         console.error('서버 요청 오류:', error);
       });
-  }, []); // 빈 배열을 두번째 인자로 전달하면 컴포넌트가 마운트될 때 한 번만 실행
+    setLoading(false);
+  }
+
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+    
+    if (scrollTop + clientHeight >= scrollHeight - 100 && !loading) {
+      fetchData(); // 스크롤 이벤트 감지 시 데이터 가져오기
+    }
+  };
+  /* axios 시작 */
   console.log('게시판리스트 boardData ===>',boardData);
+  console.log('replyreplyreply reply ===>',reply);
   /* axios 끝 */
 
   /* 보드 카테고리 atom관련 시작  ain 0904*/
@@ -69,22 +103,14 @@ const BoardDailyList = ()=>{
  const [listBoardCate, setListBoardCate] = useState([]);
 //  console.log('listBoardCate----->',listBoardCate);
  useEffect(() => {
-  if (path == listDailyOptions) {
-   setListBoardCate(listDailyCategory);
-   setListPath(pathD);
-  } else if (path == listInterestOptions) {
-   setListBoardCate(boardInterestCategory);
-   setListPath(pathI);
-  } else if (path == listJmtOptions) {
-   setListBoardCate(boardJMTCategory);
-   setListPath(pathJ);
-  } else if (path == listFashionOptions) {
-   setListBoardCate(boardFashionCategory);
-   setListPath(pathF);
-  } else {
-   setListBoardCate(boardLocalCategory);
-   setListPath(pathL);
-  }
+ 
+  fetchData(); // 초기 데이터 로드
+
+  window.addEventListener('scroll', handleScroll);
+  return () => {
+    window.removeEventListener('scroll', handleScroll);
+  };
+  
 }, []);
   // console.log('게시판리스트 listBoardCate ===>',listBoardCate);
 
@@ -132,6 +158,7 @@ const BoardDailyList = ()=>{
 
   return(
     <>
+
       <div className="BoardList-head-title-wrapper">
         <BoardListHeader path={path}/>
         </div>
@@ -201,12 +228,13 @@ const BoardDailyList = ()=>{
             </form>
           </div>
         <div className="boardList-list-wrapper">
+          {loading&&<p>Loading...</p>}
           {
             //  {boardData.map((boardItem) => (
             //   <li key={boardItem.id}>
             //     <Link to={`/board/${boardItem.id}`}>{boardItem.title}</Link>
             //   </li>
-            boardData.length > 0 && listBoardCate.length > 0 && boardData.filter((board) => {
+            boardData && boardData.filter((board) => {
               return listBoardCate.some((category) => category.name === board?.boardCate.boardSmallCate);})
             .map( (board, index)=>( 
             <ul key={index} className="boardList-list-ul-wrapper">        
@@ -226,10 +254,19 @@ const BoardDailyList = ()=>{
                           </div>
                         </Link>
                       <div className="boardList-list-img">
-                        <img src={board.boardImg.boardImgModName?
-                                  "http://localhost:8083/dasony"+board.boardImg.boardImgPath+board.boardImg.boardImgModName
-                                  : "https://i.postimg.cc/rmRJRyvp/dasony-logo.png"} alt="썸네일" className="board-img"/>
-                      </div>
+                        {
+                          !(board.boardCate.boardSmallCate=='쇼츠')?
+                          <img src={board.boardImg.boardImgModName?
+                            "http://localhost:8083/dasony"+board.boardImg.boardImgPath+board.boardImg.boardImgModName
+                            : "https://i.postimg.cc/rmRJRyvp/dasony-logo.png"} alt="썸네일" className="board-img"/>
+                            
+                            :<video controls className="board-video-thumb" muted autoPlay>
+                              <source 
+                              src={`http://localhost:8083/dasony/resources/images/board/video/${board.boardVideo.videoModName}`} 
+                              type="video/mp4" />
+                            </video>
+                        }
+                        </div>
                   </div>
                 </div>
               </li>

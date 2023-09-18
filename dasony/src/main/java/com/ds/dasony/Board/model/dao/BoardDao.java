@@ -1,16 +1,21 @@
 package com.ds.dasony.Board.model.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ds.dasony.Board.model.vo.Board;
 import com.ds.dasony.Board.model.vo.BoardCare;
 import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardExt;
 import com.ds.dasony.Board.model.vo.BoardImg;
 import com.ds.dasony.Board.model.vo.BoardTag;
+import com.ds.dasony.Board.model.vo.BoardVideo;
 import com.ds.dasony.Board.model.vo.BoardWriterForm;
 import com.ds.dasony.Board.model.vo.Reply;
 import com.ds.dasony.member.model.vo.User;
@@ -62,6 +67,9 @@ public class BoardDao {
 	public int insertBordViews(int boardNo) {
 		return session.update("board.insertBordViews", boardNo);
 	}
+   public int boardDelete(int boardNo) {
+	      return session.update("board.boardDelete",boardNo);
+	   }
 	public List<BoardDetailExt> boardDetail(int BoardNo){
 		log.info("BoardDao boardDetail, BoardNo = {}", BoardNo);
 
@@ -89,6 +97,7 @@ public class BoardDao {
 	public  int serchHeart(BoardCare bc) {
 		return session.selectOne("board.serchHeart",bc);
 	}
+
 	
 	
 	public int insertHeart(BoardCare bc) {
@@ -107,8 +116,87 @@ public class BoardDao {
 		}
 		return result;
 	}
+
+	public List<Reply> replySelect(int boardNo) {
+		return session.selectList("board.replySelect",boardNo);
+	}
+
+	public List<BoardImg> boardImg(int boardNo) {
+		return session.selectList("board.boardImg",boardNo);
+	}
+
+	public List<BoardVideo> boardVideo(int boardNo) {
+		return session.selectList("board.boardVideo",boardNo);
+	}
 	
-	
+	  // 검색 기능
+	   public List<BoardExt> searchList(String userRegion,String btg,String btt ){
+	      List<BoardExt> searchList = new ArrayList<BoardExt>();
+	      
+	      String[] boardTagArr = btg.split("_");
+	      for(String boardTag : boardTagArr) {
+	          Map<String, Object> params = new HashMap<>();
+	          params.put("userRegion", userRegion);
+	          params.put("boardTag", boardTag);
+
+	          List<BoardExt> tagSearchResults = session.selectList("board.boardTagSearch", params);
+	          searchList.addAll(tagSearchResults);
+	      }
+	         String boardTitle = btt;
+	         String boardContent = btt;
+	         
+	         BoardExt be = new BoardExt();
+	         be.setBoardTitle(boardTitle);
+	         be.setBoardContent(boardContent);
+	         be.setUserRegion(userRegion);
+	         
+	         List<BoardExt> titleSearchResults = session.selectList("board.boardTagSearch",be);
+	         searchList.addAll(titleSearchResults);
+	         
+	         
+
+	      return searchList;
+	   }
+	   public List<BoardExt> nextBtn(Map<String, Object> data) {
+	      return session.selectList("board.nextBtn", data);
+	   }
+	   public List<BoardExt> backBtn(Map<String, Object> data) {
+	      return session.selectList("board.backBtn", data);
+	   }
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   // admin
+	   public List<BoardExt> adminBoardList(){
+	      return session.selectList("board.adminBoardList");
+	   }
+	   
+	   public int addMinBoardDelete(int boardNo) {
+	       
+	       return session.update("board.addMinBoardDelete",boardNo);
+	   }
+	   
+	   public Board selectBoardUserNo(int boardNo) {
+	      return session.selectOne("board.addMinBoardDeleteUserNoSelect",boardNo);
+	   }
+	   
+	   public int addMinBoardDeleteAlert(Map<String, Object> map) {
+	      int result = 0;
+	      result = session.insert("board.addMinBoardDeleteAlert",map);
+	      if(result > 0) {
+	         log.info("result 성공 = {}",result);
+	         return result;
+	      }else {
+	         log.info("result 실패 = {}",result);
+	         return result;
+	      }
+	      
+	   }
 	
 	
 	

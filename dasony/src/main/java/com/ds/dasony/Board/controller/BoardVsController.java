@@ -1,5 +1,7 @@
 package com.ds.dasony.Board.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ds.dasony.Board.model.service.BoardVsService;
 import com.ds.dasony.Board.model.vo.BoardVs;
+import com.ds.dasony.Board.model.vo.BoardVsVote;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,5 +41,33 @@ public class BoardVsController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("다시 시도해주세요.");
 		}
 	}
+	
+	@PostMapping("/optionPm")
+	public ResponseEntity<String> optionPm(@RequestBody Map<String, String>map){
+		log.info("map값 확인,{}", map);
+		
+		int result = boardVsService.optionPm(map);
+		
+		if(result > 0) {
+			return ResponseEntity.ok("투표 완료");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("투표 실패");
+		}
+	}
+	
+	@PostMapping("/vsOption")
+	public void vsOption(@RequestBody Map<String, String>map){
+		int result = boardVsService.vsOption(map);
+		
+	}
+	
+	@PostMapping("/voteList")
+	public ResponseEntity<List> voteList (@RequestBody int boardNo){
+		List<BoardVsVote> voteList = new ArrayList();
+		voteList = boardVsService.voteList(boardNo);
+		log.error("voteList={},", voteList);
+		return ResponseEntity.ok(voteList);
+	}
+	
 
 }

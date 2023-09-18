@@ -298,7 +298,7 @@ const Header = () => {
                                                 <li></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/general/daily'>사담</Link></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/info/jmt'>정보공유</Link></li>
-                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/share'>나눔</Link></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/board/share/list'>나눔</Link></li>
                                                 <li></li>
                                                 <li></li>
                                                 <li></li>

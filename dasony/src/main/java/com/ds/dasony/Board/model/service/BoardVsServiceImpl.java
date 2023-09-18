@@ -1,5 +1,6 @@
 package com.ds.dasony.Board.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ds.dasony.Board.model.dao.BoardVsDao;
 import com.ds.dasony.Board.model.vo.BoardVs;
+import com.ds.dasony.Board.model.vo.BoardVsVote;
 
 @Service
 public class BoardVsServiceImpl implements BoardVsService {
@@ -23,6 +25,18 @@ public class BoardVsServiceImpl implements BoardVsService {
 	@Override
 	public int boardInsert(Map<String, Object> map) {
 		return boardVsDao.boardInsert(map);
+	}
+	@Override
+	public int optionPm(Map<String, String> map) {
+		return boardVsDao.optionPm(map);
+	}
+	@Override
+	public int vsOption(Map<String, String> map) {
+		return boardVsDao.vsOption(map);
+	}
+	@Override
+	public List<BoardVsVote> voteList(int boardNo) {
+		return boardVsDao.voteList(boardNo);
 	}
 	
 	

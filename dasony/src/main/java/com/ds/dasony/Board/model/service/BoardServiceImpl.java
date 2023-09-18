@@ -1,17 +1,21 @@
 package com.ds.dasony.Board.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ds.dasony.Board.model.dao.BoardDao;
+import com.ds.dasony.Board.model.vo.Board;
 import com.ds.dasony.Board.model.vo.BoardCare;
 import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardExt;
 import com.ds.dasony.Board.model.vo.BoardImg;
 import com.ds.dasony.Board.model.vo.BoardTag;
+import com.ds.dasony.Board.model.vo.BoardVideo;
 import com.ds.dasony.Board.model.vo.BoardWriterForm;
 import com.ds.dasony.Board.model.vo.Reply;
 
@@ -57,6 +61,10 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return result;
 	}
+   @Override
+   public int boardDelete(int boardNo) {
+      return boardDao.boardDelete(boardNo);
+   }
 	
 	@Override
 	public int insertBordViews(int boardNo) {
@@ -66,11 +74,6 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDetailExt> boardDetail(int boardNo){
 		return boardDao.boardDetail(boardNo);
 	}
-//	@Override
-//	public List<Reply> replySelect(List<Reply> rUserNoList){
-//		return boardDao.replySelect(rUserNoList);
-//	}
-	
 	
 	@Override
 	public BoardWriterForm boardEdit (int BoardNo){
@@ -98,6 +101,64 @@ public class BoardServiceImpl implements BoardService {
 		int result = boardDao.deleteHeart(bc);
 		return result;
 	}
+
+	@Override
+	public List<Reply> replySelect(int boardNo) {
+		return boardDao.replySelect(boardNo);
+	}
+
+	@Override
+	public List<BoardImg> boardImg(int boardNo) {
+		return boardDao.boardImg(boardNo);
+	}
+
+	@Override
+	public List<BoardVideo> boardVideo(int boardNo) {
+		return boardDao.boardVideo(boardNo);
+	}
+	   @Override
+	   public List<BoardExt> searchList(String userRegion,String btg,String btt ){
+	      return boardDao.searchList(userRegion, btg, btt );
+	   }
+	   @Override
+	   public List<BoardExt> nextBtn(Map<String, Object> data) {
+	      return boardDao.nextBtn(data);
+	   }
+	   @Override
+	   public List<BoardExt> backBtn(Map<String, Object> data) {
+	      return boardDao.backBtn(data);
+	   }
+
+	   
+	   
+	   
+	   
+	   // admin
+	   
+	   @Override
+	   public List<BoardExt> adminBoardList() {
+	      return boardDao.adminBoardList();
+	   }
+	   @Override
+	   public int addMinBoardDelete(int boardNo) {
+	      int result = 0;
+	      Board b = Board.builder().boardNo(boardNo).build();
+	       
+	      result = boardDao.addMinBoardDelete(boardNo);
+	      if(result >0) {
+	         b = boardDao.selectBoardUserNo(boardNo);
+	      }
+	      if(b != null) {
+	         Map<String, Object> map = new HashMap();
+	          map.put("boardNo", boardNo);
+	          map.put("userNo", b.getUserNo());
+	          
+	          result += boardDao.addMinBoardDeleteAlert(map);
+	      }
+	      return result;
+	       
+	       
+	   }
 
 
 

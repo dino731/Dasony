@@ -17,5 +17,6 @@ public class Board {
 		private int boardViews;			//BOARD_VIEWS
 		private String boardContent;	//BOARD_CONTENT
 		private String boardStatus;		//BOARD_STATUS
-
+		private int boardCateNo;
+		private String boardKeyword;
 }

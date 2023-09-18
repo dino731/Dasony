@@ -17,4 +17,6 @@ public class Reply {
 	private int rBoardNo;			//BOARD_NO
 	private int rUserNo;			//USER_NO
 	private String rUserNick; 		//USER_NICKNAME
+	private int mainReplyNo;		//MAIN_REPLY_NO
+	private String replyLevel;			//REPLY_LEVEL
 }

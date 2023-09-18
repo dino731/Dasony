@@ -32,6 +32,7 @@ export const VoteWrite = ()=>{
     axios.post('/dasony/api/boardVsInsert', boardVs)
           .then(res=>{
             alert(res.data);
+            setBoardVs(null);
             navigate('/board/general/daily');
           })
           .catch(err=>{
@@ -66,25 +67,25 @@ return (
 
               <div>
                 <input id='boardOptionLeft' 
-                      onChange={handleBoardVs} value={boardVs.boardOptionLeft}
+                      onChange={handleBoardVs} value={boardVs?.boardOptionLeft}
                       placeholder='옵션1 값을 입력하세요'/>
               </div>
               <div>vs</div>
               <div>
                 <input id='boardOptionRight' 
-                      onChange={handleBoardVs} value={boardVs.boardOptionRight}
+                      onChange={handleBoardVs} value={boardVs?.boardOptionRight}
                       placeholder='옵션2 값을 입력하세요'/>
               </div>
 
           </div>
           <div>
               <textarea rows="4" cols="100"
-                       id="boardContent" value={boardVs.boardContent} onChange={handleBoardVs} />
+                       id="boardContent" value={boardVs?.boardContent} onChange={handleBoardVs} />
           </div>
           <div className='vote-Content-Time' style={{margin:'5vh'}}>
               <span>종료 시간</span>
               <input id='boardExpireDate' onChange={handleBoardVs} 
-                      type='datetime-local' value={boardVs.boardExpireDate}/>
+                      type='datetime-local' value={boardVs?.boardExpireDate}/>
           </div>
           <div className='vote-button-box'>
             <button className='vote-button-box-cncl' onClick={handleBoardVsCancle}>취소</button>

@@ -14,7 +14,7 @@ public class BoardVs {
 	private int boardNo;
 	private long userNo;
     private String boardTitle;
-    private String boardTag;
+    private String boardKeyword;
     private String boardContent;
     private String boardOptionLeft;
     private String boardOptionRight;
