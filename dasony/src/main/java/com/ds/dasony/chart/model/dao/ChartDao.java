@@ -26,7 +26,11 @@ public class ChartDao {
 	}
 
 	public int selectValueBoardCount(String date) {
-		return session.selectOne("chart.selectValueBoardCount", date);
+		// 일반 게시글
+		int count = session.selectOne("chart.selectValueBoardCount", date);
+		// 투표글
+		/* count += (int)session.selectOne("chart.selectValueVoteCount", date); */
+		return count;
 	}
 
 	public int selectValueDonationCount(String date) {

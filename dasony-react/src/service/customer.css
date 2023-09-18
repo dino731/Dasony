@@ -12,7 +12,6 @@ html, body{margin: 0; padding: 0;}
     cursor: default;
 }
 
-
 /* 공지사항 게시판 Start */
 .notice-container{
     /* width: 60%;  */
@@ -20,7 +19,7 @@ html, body{margin: 0; padding: 0;}
     text-align: center;
     overflow-y: scroll;
     /* background-color: rgb(202, 247, 247); */
-    height: 100vh;
+    /* height: 100vh; */
     font-size: 1.2em;
 
     .goToReception{

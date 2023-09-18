@@ -26,6 +26,7 @@
 				</when>
 			</choose>
 		</if>
+		order by notice_no desc
 	</select>
 	
 	<select id="selectNotice" parameterType="int" resultMap="noticeResultSet">

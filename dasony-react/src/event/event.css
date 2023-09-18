@@ -6,9 +6,9 @@ html, body{margin: 0; padding: 0;}
     padding: 5% 5% 0 5%;
     text-align: center;
     overflow-y: scroll;
-    height: 100vh;
+    /* height: 100vh; */
 
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 ::-webkit-scrollbar { /* 스크롤바 투명 */
@@ -25,6 +25,22 @@ html, body{margin: 0; padding: 0;}
     cursor: default;
 }
 
+/* loading container */
+.loadingContainer{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    /* 딱 컨텐츠 영역에만 생김 */
+    /* background-color:rgba(0,0,0,0.4);  */
+    z-index:100;
+    text-align:center;
+}
+
 /* 이벤트 리스트 게시판 Start */
 div>.event-status-list{
     padding: 0;
@@ -37,23 +53,26 @@ div>.event-status-list{
     >li{
         display: inline-block;
         padding: 1% 2%;
-        border: 1px solid #344e41;
+        font-weight: 900;
+        border: 3px solid #cb9de7; /* #344e41 */
+        color: #cb9de7;
         border-radius: 40px;
         cursor: pointer;
+
+        /* 현재 선택한 이벤트 유형 */
+        &.selected-event-status{
+            background-color: #cb9de7; /* #344e41 */
+            color: #fcfa90; /* #DAD7CD */
+        
+        }
     }
-}
-
-/* 현재 선택한 이벤트 유형 */
-.selected-event-status{
-    background-color: #344e41;
-    color: #DAD7CD;
-
 }
 
 .event-content-part>.event-list{
     display: flex;
     flex-wrap: wrap;
     gap: 2vh 2vw;
+    padding-bottom: 6%;
 
     >.event-list-item{
         display: inline-block;
@@ -73,7 +92,7 @@ div>.event-status-list{
                 text-align: left;
 
                 padding: 0% 3% 5% 6%;
-                background: linear-gradient(to top, rgba(0, 0, 0, 0.4) 40%, transparent);
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 30%, transparent);
                 color: white;
                 font-weight: 600;
                 font-size: 1.5em;
@@ -688,11 +707,12 @@ div>.event-status-list{
                         padding-left: 2%;
                     }
                 }
-                >input{
+                >textarea{
                     width: 94%;
                     min-height: 30vh;
                     border-radius: 10px;
                     padding: 2%;
+                    resize: none;
                 }
             }
         }
