@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Loading from '../common/Loading';
 // import LoginCheck09 from '../../public/resources/event/login-003.png';
 
 const EventBoard = () => {
@@ -14,6 +15,9 @@ const EventBoard = () => {
     // 화면에 출력할 data
     const [data, setData] = useState([]);
     const [eventStatus, setEventStatus] = useState("진행");
+
+    // data loading
+    const [loadStatus, setLoadStatus] = useState(false);
 
     const changeEventChoice = (e, target) => {
         const eventTarget = e.target;
@@ -59,6 +63,8 @@ const EventBoard = () => {
 
     // data load
     const loadData = () => { 
+        setLoadStatus(true);
+
         let eventStatus = document.querySelector(".selected-event-status span").innerText;
         
         const url = encodeURI(`http://localhost:3000/dasony/event/loadList?status=${eventStatus}`);
@@ -72,6 +78,8 @@ const EventBoard = () => {
                 
                 hoverList = new Array(res.data.length).fill("none");
                 setHoverStatus(hoverList);
+
+                setLoadStatus(false);
             });
     }
 
@@ -119,6 +127,10 @@ const EventBoard = () => {
 
     return(
         <>
+            {loadStatus ? <div className="loadingContainer">
+                            <Loading />
+                        </div> : null}
+            
             <div className="event-status-part dragging">
                 <ul className="event-status-list">
                     <li className="selected-event-status" ref={(el) => item.current[0] = el}> 
@@ -129,7 +141,7 @@ const EventBoard = () => {
                     </li>
                     <li  ref={(el) => item.current[1] = el}>
                         <div className="event-status">
-                            <i className="bi bi-calendar-x" style={{"display": "none"}}></i>
+                            <i className="bi bi-calendar-x" style={{"display": "none"}}></i>&nbsp;
                             <span>종료된 이벤트</span>
                         </div>
                     </li>
@@ -147,8 +159,6 @@ const EventBoard = () => {
                                     <Link to={ele.pageLink? "/event/detail/"+ele.pageLink.slice(0, -3) : "/event/detail/" + ele.no}>
                                         <div className="event-item-wrapper event-load-page"
                                         style={{"backgroundImage": `url(${ele.thumbnail.includes('http') ? ele.thumbnail : 'http://localhost:3000/dasony/resources/images/event/' + ele.thumbnail})`}}>
-                                            {/* "url({ele.thumbnail.includes('http') ? ele.thumbnail : 'http://localhost:3000/dasony/event/' + ele.thumbnail}" 
-                                                 + ")"}}> */}
                                             <div className="event-item-title-part">
                                                 <div className="event-item-title">{ele.title}</div>
                                             </div>
@@ -162,95 +172,10 @@ const EventBoard = () => {
                                 </div>
                     })}
 
-                    {/* <div className="event-list-item">
-                        <Link to="/event/detail/1">
-                            <div className="event-item-wrapper event-load-page"
-                            style={{"backgroundImage" : "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb0niU5_-nJcGruRTitqp6LWLeP5Av8LnPWcJ4eUz8avZ9zpXb)"}}>
-                                <div className="event-item-title-part">
-                                    <div className="event-item-title">오펜하이머 티켓 증정 이벤트!</div>
-                                </div>
-                                <div className="event-item-deadline">D-5</div>
-                            </div>
-                        </Link>
-                        {hoverStatus[0] === "hover"?<div className="event-item-effect" onClick={()=>moveToEventDetail(1)}>
-                                                      <div className="event-close">조회</div>
-                                                    </div> : null}
-                    </div>
-                    <div className="event-list-item">
-                        <Link to="https://page.kakao.com/event/6740582111a14fcf6b4c9913a4c22f73">
-                            <div className="event-item-wrapper event-load-page">
-                                <div className="event-item-title-part">
-                                    <div className="event-item-title">출.석.이벤트입니다 많은 참여!!</div>
-                                </div>
-                                <div className="event-item-deadline">D-1</div>
-                            </div>
-                        </Link>
-                        {hoverStatus[1] === "hover"?<div className="event-item-effect" onClick={()=>moveToEventDetail(1)}>
-                                                      <div className="event-close">조회</div>
-                                                    </div> : null}
-                    </div>
-                    <div className="event-list-item">
-                        <Link to="/event/detail/1">
-                            <div className="event-item-wrapper event-load-page"
-                            style={{backgroundImage: "url('./resources/event/login-003.png')"}}>
-                                <div className="event-item-title-part">
-                                    <div className="event-item-title">9월 출석 이벤트 참여하고 선물받자</div>
-                                </div>
-                                <div className="event-item-deadline">D-1</div>
-                            </div>
-                        </Link>
-                        {hoverStatus[2] === "hover"?<div className="event-item-effect" onClick={()=>moveToEventDetail(1)}>
-                                                      <div className="event-close">조회</div>
-                                                    </div> : null}
-                    </div>
-                    <div className="event-list-item event-close-list-item">
-                        <Link to="/event/detail/1">
-                            <div className="event-item-wrapper event-load-page">
-                                <div className="event-item-title-part">
-                                    <div className="event-item-title">출.석.이벤트입니다 많은 참여!!</div>
-                                </div>
-                            </div>
-                        </Link>
-                        {hoverStatus[3] === "hover"?<div className="event-item-effect" onClick={()=>moveToEventDetail(1)}>
-                                                      <div className="event-close">조회</div>
-                                                    </div> : null}
-                    </div>
-                    <div className="event-list-item">
-                        <Link to="/event/detail/1">
-                            <div className="event-item-wrapper event-load-page">
-                                <div className="event-item-title-part">
-                                    <div className="event-item-title">출.석.이벤트입니다 많은 참여!!</div>
-                                </div>
-                                <div className="event-item-deadline">D-1</div>
-                            </div>
-                        </Link>
-                        {hoverStatus[4] === "hover"?<div className="event-item-effect" onClick={()=>moveToEventDetail(1)}>
-                                                      <div className="event-close">조회</div>
-                                                    </div> : null}
-                    </div> */}
                 </div>
             </div>
         </>
     );
 };
-
-
-
-// image 컴포넌트
-// function EventImage({data}){
-//     const imgStyle = {
-//         backgroundImage: `url('https://dn-img-page.kakao.com/download/resource?kid=bpAeKz/hAd4wW3xd8/k9x3hD2NoVju7YY2QpONE1&filename=th3)' no-repeat`,
-//         backgroundSize: "cover"
-//     };
-
-//     return(
-//         <div className="event-item-wrapper event-load-page" style={imgStyle}>
-//             <div className="event-item-title-part">
-//                 <div className="event-item-title">{data.title}</div>
-//             </div>
-//             <div className="event-item-deadline">{dDayCount(data.endDate)}</div>
-//         </div>
-//     );
-// }
 
 export default EventBoard;
