@@ -3,6 +3,7 @@ package com.ds.dasony.Board.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ds.dasony.Board.model.vo.Board;
 import com.ds.dasony.Board.model.vo.BoardCare;
 import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardExt;
@@ -31,6 +32,7 @@ public interface BoardService {
     public List<BoardExt> nextBtn(Map<String, Object> data);
     public List<BoardExt> backBtn(Map<String, Object> data);
     public int removeReply(int replyNo);
+    public List<Board> weatherList();
 
     // admin
 	public List<BoardExt> adminBoardList();
