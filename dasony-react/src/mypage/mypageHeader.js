@@ -21,7 +21,7 @@ const MypageHeader = () => {
     }).catch((error) => {
       console.error("오류남: 레벨", error);
     });
-  }, []);
+  }, [exp]);
 
   useEffect ( ()=>{
     console.log(exp);

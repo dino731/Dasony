@@ -89,5 +89,9 @@ public class DonationServiceImpl implements DonationService{
 //	public int amountUpdate(Donation donation) {
 //		return donationDao.amountUpdate(donation);
 //	}
+	@Override
+	public int donaInsertExp(DonationList donaList) {
+		return donationDao.donaInsertExp(donaList);
+	}
 
 }

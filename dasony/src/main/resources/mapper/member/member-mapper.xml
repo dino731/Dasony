@@ -164,4 +164,16 @@
 		WHERE USER_NAME = #{userName} AND USER_EMAIL = #{userEmail}
 	</update>
 	
+	<update id="donaInsertExp" parameterType="donationList">
+		UPDATE MEMBER
+    		SET USER_EXP = USER_EXP + 5 + #{donaAmount} / 100
+   	 	WHERE USER_NO = #{userNo}
+	</update>
+	
+	<update id="insertBoardExp" parameterType="boardWriterForm">
+		UPDATE MEMBER
+    		SET USER_EXP = USER_EXP + 20
+   	 	WHERE USER_NO = #{userNo}
+	</update>
+	
 </mapper>

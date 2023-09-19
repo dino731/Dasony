@@ -191,6 +191,16 @@ public class BoardServiceImpl implements BoardService {
       }
 
 
+	
+	@Override
+	public int insertBoardExp(BoardWriterForm boardWriterForm) {
+		
+		return boardDao.insertBoardExp(boardWriterForm);
+		
+	}
+
+
+
 
 
 }

@@ -75,5 +75,9 @@ public class DonationDao {
 //	public int amountUpdate(Donation donation) {
 //		return session.update("donationMapper.amountUpdate", donation);
 //	}
+	
+	public int donaInsertExp(DonationList donaList) {
+		return session.update("memberMapper.donaInsertExp",donaList);
+	}
 
 }
