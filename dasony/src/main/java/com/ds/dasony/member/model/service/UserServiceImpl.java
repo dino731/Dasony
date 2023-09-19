@@ -141,6 +141,10 @@ public class UserServiceImpl implements UserService{
 	public int modifyNewPwd(Map<String, Object> myInfo) {
 		return userDao.modifyNewPwd(myInfo);
 	}
+	@Override
+	public int alertAfterClick(Map<String,Object> alertNo) {
+		return userDao.alertAfterClick(alertNo);
+	}
 	
 
 

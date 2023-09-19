@@ -45,10 +45,9 @@ const Header = () => {
 
       useEffect(() => {
         const gameDiv = document.getElementById('game');
-        if (gameStartYN === 'Y') {
+        if (gameStartYN == 'Y') {
           gameDiv.style.display = 'block';
         } 
-        console.log(gameStartYN);
       }, [gameStartYN]);
 
 
@@ -222,15 +221,7 @@ const Header = () => {
         }
     }, [location, loginUserNo]);
 
-    useEffect(() => {
-        if (loginUserNo) {
-            const gameDiv = document.getElementById('game');
     
-            // if (gameStartYN === 'Y') {
-                gameDiv.style.display = 'block';
-            // }
-        }
-    }, [gameStartYN]);
 
     /*사이드바 속성 useState */
     const [sideId, setSideId] = useState('');

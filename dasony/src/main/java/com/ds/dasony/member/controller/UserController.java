@@ -314,6 +314,14 @@ public class UserController {
 		return result;
 	}
 	
+	@PostMapping("alertAfterClick")
+	public int alertAfterClick(
+			@RequestBody Map<String,Object> alertNo ) {
+		int result = userService.alertAfterClick(alertNo);
+		log.info("alertNo={}",alertNo);
+		return result;
+	}
+	
 	
 	
 
