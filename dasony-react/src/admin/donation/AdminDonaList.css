@@ -3,10 +3,8 @@
     align-items: center;
     position: relative;
     text-align: center;
-    /* margin: 5%; */
     border-collapse: collapse;
-    /* width: 60%; */
-    margin-top: 9%;
+    margin-top: 7%;
     margin-bottom: 5%;
     width: 97%;
     margin-left: 1.5%;
@@ -37,7 +35,6 @@
 
 #addonalist{
     height: 617px;
-    /* border-bottom: 1px solid black; */
     height: 630px;
     font-family: 'HakgyoansimWoojuR';
 }
@@ -57,7 +54,6 @@
     max-height: 575px; /*오픈채팅 리스트 높이 조절*/
     overflow: auto;
     word-wrap: break-word;
-    /* height: 100%; */
 }
 
 #listhead, #listbody{
@@ -83,9 +79,4 @@
     outline: none;
 }
 
-/* input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
--webkit-appearance: none;
-margin: 0;
-} */
 
