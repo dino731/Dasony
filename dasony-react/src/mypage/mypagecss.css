@@ -431,11 +431,15 @@ justify-content: center;
   margin-right: 20px;
 }
 
+
 .btn-primaryjeff {
   border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
   width: 200px; 
   margin-top: 20px;
   margin-left: 20px;
+
+}
+
 }
 .changeLocationButton{
    border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; border-radius:0.5vw;

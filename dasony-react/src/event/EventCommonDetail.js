@@ -1,5 +1,5 @@
 import { useEffect, useRef, useLayoutEffect, useState } from "react";
-import { useNavigate  } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import axios from "axios";
 
 /** 이벤트 상세조회 게시판 */
@@ -169,13 +169,14 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
                                                         <i className="bi bi-hand-index"></i>
                                                     </p>
                                                     
-                                                    <button onClick={()=>{navigate(eventInfo.detailLink)}}>click!</button>
+                                                    {/* <button onClick={()=>{navigate(eventInfo.detailLink)}}>click!</button> */}
+                                                    <Link to={eventInfo.detailLink}><button>click!</button></Link>
                                                 </div> : null}
                     
                 </div>
                 {eventInfo.endDate != null && moreEndDate(eventInfo.endDate)? <div className="event-join-btn-part">
-                                                                                    <div className="event-join-btn" ref={checkBtn} style={{border: "2px solid #BF926B"}} onClick={joinEvent}>
-                                                                                        <strong style={{ color: "cba597"}}>응모</strong>
+                                                                                    <div className="event-join-btn" ref={checkBtn} onClick={joinEvent}>
+                                                                                        <strong>응모</strong>
                                                                                     </div>
                                                                                </div> : null}
                 

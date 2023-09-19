@@ -648,8 +648,8 @@ export default ({editStatus}) => {
                   </div>
                 </div>
             </div>
-            <button type="submit" className="btn" onClick={uploadForm}>{editStatus}</button>
-            {1===1 && editStatus == '등록' ? <button type="submit" className="btn" onClick={resetForm}>초기화</button> : <button type="submit" className="btn" onClick={deleteEvent}>삭제</button>}
+            <button type="submit" className="btn btn-outline-primary" onClick={uploadForm}>{editStatus}</button>
+            {1===1 && editStatus == '등록' ? <button type="submit" className="btn btn-outline-danger" onClick={resetForm}>초기화</button> : <button type="submit" className="btn btn-outline-danger" onClick={deleteEvent}>삭제</button>}
         </div>
     );
 }

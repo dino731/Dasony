@@ -80,9 +80,14 @@ public class DonationServiceImpl implements DonationService{
 		return donationDao.insertDonaList(myDona);
 	}
 
-	
+	@Override
+	public void insertDonationAlert(DonationList donaList) {
+		donationDao.insertDonationAlert(donaList);
+	}
+
 //	@Override
-//	public int selectUserDason(int userNo) throws Exception{
-//		return donationDao.selectUserDason(userNo);
+//	public int amountUpdate(Donation donation) {
+//		return donationDao.amountUpdate(donation);
 //	}
+
 }
