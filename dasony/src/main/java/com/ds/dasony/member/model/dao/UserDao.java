@@ -126,6 +126,9 @@ public class UserDao {
 		int result = session.update("memberMapper.modifyNewPwd", myInfo);
 		return result;
 	}
+	public int alertAfterClick(Map<String,Object> alertNo) {
+		return session.update("alert.alertAfterClick",alertNo);
+	}
 	
 	
 	

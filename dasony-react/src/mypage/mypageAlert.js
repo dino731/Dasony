@@ -26,11 +26,25 @@ const MypageAlert = () => {
     });
   }, [alert]);
 
+  const afterClick = (alertNo) =>{
+    console.log(alertNo);
+    axios.post("/dasony/api/alertAfterClick",{
+    alertNo : alertNo
+    }
+    ).then((response)=>{
+      console.log("성공");
+      console.log(alertNo);
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
+
   const handleDelete = (alertNo) => {
     axios.post("/dasony/api/deleteMyAlertList",{
       userNo: loginUserNo ,
       alertNo : alertNo
     }).then((response) => {
+      console.log(alert.alertStatus);
     }).catch((error) => {
       console.error("삭제오류남:", error);
     });
@@ -71,11 +85,14 @@ const MypageAlert = () => {
                 <td className="nf-td3">{item.alertDate}</td>
                 <td className="nf-td2">
                  <span className="alert-content-link"
-                    onClick={() => handleAlertContentClick(item.alertContent)}>
+                    onClick={() => {
+                      handleAlertContentClick(item.alertContent);
+                      afterClick(item.alertNo);
+                    }}>
                     {item.alertTitle}
                   </span>
                 </td>
-                <td className="nf-td1">
+                <td className="nf-td1" >
                 {item.alertCate === 'G' && <span>게임</span>}
                 {item.alertCate === 'T' && <span>응모권</span>}
                 {item.alertCate === 'P' && <span>포인트 사용</span>}

@@ -15,7 +15,7 @@ const AdminAlert = () => {
     console.log(newAlert);
     axios.post("/dasony/api/inputAdminAlert", newAlert)
     .then((response)=>{
-      console.log("알람 보내기 성공");
+      alert("알람 전송 성공");
     }).catch((error) => {
       console.error("알람 보내기 오류",error);
     });
