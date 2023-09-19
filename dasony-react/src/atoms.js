@@ -102,7 +102,8 @@ export const boardVsState = atom({
     boardCateNo : '',
     boardExpireDate : '',
     choiceLeft:0,
-    choiceRight:0
+    choiceRight:0,
+    boardWriteDate:''
   }
 })
 //boardVs 정보
@@ -126,5 +127,25 @@ export const shareState = atom({
     boardContent:'',
     boardWriteDate:''
   }
+})
+//bestList 정보
+export const bestListState = atom({
+  key: 'bestList',
+  default : []
+})
+//shortsList 정보
+export const shortsListState = atom({
+  key: 'shortsList',
+  default : []
+})
+//vsList 정보
+export const vsListState = atom({
+  key: 'vsList',
+  default : []
+})
+//localList 정보
+export const localListState = atom({
+  key: 'localList',
+  default : []
 })
 

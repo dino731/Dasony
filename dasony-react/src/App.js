@@ -98,6 +98,8 @@ import {VoteWrite} from './Board/VoteWrite';
 import { AnotherHeader } from './Board/AnotherHeader';
 import { ShareHeader } from './share/ShareHeader';
 import { ShareWriter } from './Board/ShareWriter';
+import { VoteEdit } from './Board/VoteEdit';
+import { ShortsEdit } from './Board/ShortsEdit';
 
 
 
@@ -614,13 +616,58 @@ function App() {
                                                                               transition={{duration : 1}}>
                                                                                 <BoardDetail/>
                                                                               </motion.div>}/>
+                                <Route path="daily/vs/detail/:boardNo" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardDetail/>
+                                                                              </motion.div>}/>
+                                <Route path="daily/shorts/detail/:boardNo" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardDetail/>
+                                                                              </motion.div>}/>
                                 <Route path="daily/edit/:boardNo/:boardCateNo" element={<motion.div
                                                                               initial = {{opacity:0, y:30}}
                                                                               animate = {{opacity:1, y:0}}
                                                                               end = {{opacity:1, y:0}}
                                                                               transition={{duration : 1}}>
                                                                                 <BoardEdit/>
-                                                                              </motion.div>}/>                 
+                                                                              </motion.div>}/>
+                                <Route path="daily/vs/edit/*" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <AnotherHeader/>
+                                                                              </motion.div>}>
+                                  <Route path=":boardNo" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <VoteEdit/>
+                                                                              </motion.div>}/>
+                                </Route>
+                                                                              
+                                <Route path="daily/shorts/edit/*" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <AnotherHeader/>
+                                                                              </motion.div>}>
+                                  <Route path=":boardNo" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <ShortsEdit/>
+                                                                              </motion.div>}/>                           
+                                </Route>                   
                           <Route path="interest/" element={<motion.div
                                                           initial = {{opacity:0, y:30}}
                                                           animate = {{opacity:1, y:0}}

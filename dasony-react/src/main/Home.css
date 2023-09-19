@@ -26,6 +26,7 @@
 .home-content{
     width: 100%;
     margin-bottom: 4vh;
+    font-size: 10%;
 }
 
 
@@ -69,6 +70,7 @@
 }
 .weather-board-info>div{
     margin: auto;
+    font-size: 80%;
 }
 .weather-board-info>div:first-child{
     border: 2px solid #CB9DE7;
@@ -76,10 +78,9 @@
     position: relative;
     overflow: hidden;
     width: 70%;
-    margin-top:10%;
-    margin-bottom: 5%;
+    margin-top: 5%;
 
 }
 .weather-board-info>div>img{
-    width: 100%;
+    width: 80%;
 }

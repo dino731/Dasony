@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams, useHistory} from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {boardVsState} from '../atoms';
 import './VoteWrite.css';
 import axios from 'axios';
 
 
-export const VoteWrite = ()=>{
+export const VoteEdit = ()=>{
+
+  const {boardNo} = useParams();
+  const boardno = parseInt(boardNo);
+
+  /*vs 정보 불러오기 - 서버 */
+  useEffect(()=>{
+    const fetchData = async() => {
+      await axios.post('/dasony/api/vsUpdate', {boardNo:boardNo})
+      .then(res=>{
+        setBoardVs(res.data);
+      })
+    }
+    fetchData();
+  },[])
 
 {/*보드 VS 정보 설정 - atom */}
   const [boardVs, setBoardVs] = useRecoilState(boardVsState);
@@ -27,27 +41,33 @@ export const VoteWrite = ()=>{
   const handleBoardVs = (e) =>{
     
     let {id, value} = e.target;
-
     if(id == 'boardExpireDate'){
       value = new Date(value).toISOString().toString().slice(0, 16);
     }
       setBoardVs(prev=>({
         ...prev,
+        boardNo : boardno,
         [id]:value,
         boardWriteDate: getCurrentDateTime()
       }));
   }
+  console.log("asdfsadfsadff",boardVs);
 
   /**boardVs 정보 db 저장 - 서버 * */
-  const handleBoardVsSub = () => {
-    axios.post('/dasony/api/boardVsInsert', boardVs)
+  const handleBoardVsUpdateSub = () => {
+    axios.post('/dasony/api/vsUpdateSub', boardVs,{
+      headers: {
+        "Content-Type": "application/json", 
+      }
+    })
           .then(res=>{
             alert(res.data);
             setBoardVs(null);
-            navigate('/board/general/daily');
+            navigate(-1);
           })
           .catch(err=>{
             console.log(err);
+            alert(err);
           })
   }
 
@@ -55,7 +75,7 @@ export const VoteWrite = ()=>{
   const navigate = useNavigate();
   const handleBoardVsCancle = () => {
     alert('취소되었습니다.');
-    navigate('/board/general/daily');
+    navigate(-1);
   }
 
 
@@ -71,7 +91,7 @@ export const VoteWrite = ()=>{
 return (
   <>
       <div className="Vote">
-      
+
         <div className='Vote-Content-container'>
 
           <div className='vote-content-box'>
@@ -100,7 +120,7 @@ return (
           </div>
           <div className='vote-button-box'>
             <button className='vote-button-box-cncl' onClick={handleBoardVsCancle}>취소</button>
-            <button className='vote-button-box-sub' onClick={handleBoardVsSub}>등록</button>
+            <button className='vote-button-box-sub' onClick={handleBoardVsUpdateSub}>등록</button>
           </div>
 
         </div>

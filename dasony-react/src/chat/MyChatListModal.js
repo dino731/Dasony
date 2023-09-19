@@ -23,25 +23,25 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
     const [MyChatList, setMyChatList] = useState([]);
     const [isFilled, setIsFilled] = useState([]);
 
-    console.log("뭐있냐곻",isFilled); // chatRoomNo : true
+    //console.log("뭐있냐곻",isFilled); // chatRoomNo : true
 
     const getStarts = (chatList) => {
         axios.post(`/dasony/getStar`, {userNo: loginUserNo})
         .then((response) => {
             const serverStarData  = response.data.list; // {chatRoomNo: 11, userNo: 23090757}, {chatRoomNo: 20, userNo: 23090757}
-            console.log("데이터 가져와 : ", {userNo: loginUserNo});
-            console.log("스크랩한 채팅 ", serverStarData);
+            //console.log("데이터 가져와 : ", {userNo: loginUserNo});
+            //console.log("스크랩한 채팅 ", serverStarData);
 
 
-            console.log("chatList origin ::", chatList);
+            //console.log("chatList origin ::", chatList);
             const starStatusList = [];
             const favChatList = [];
             chatList.map((chat, i) => { // {chatRoomNo: 34, userNo: 0, chatRoomTitle: '만들어줘'
 
                 for(let index in serverStarData){
                     const roomNo = serverStarData[index].chatRoomNo; // 찜한 채팅 넘버
-                    console.log("index :: ", index);
-                    console.log(roomNo);
+                    //console.log("index :: ", index);
+                    //console.log(roomNo);
 
                     favChatList.push(roomNo);
                 }
@@ -53,8 +53,8 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
                 }
 
                 setIsFilled(starStatusList);
-                console.log("filled list :: ", starStatusList);
-                console.log("chat coll :: ", chat);
+                //console.log("filled list :: ", starStatusList);
+                //console.log("chat coll :: ", chat);
 
                 return chat;
                 });
@@ -88,7 +88,7 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
             userNo: loginUserNo
         };
 
-        console.log("is checked? :: ", isFilled[index]);
+        //console.log("is checked? :: ", isFilled[index]);
 
         if(isFilled[index]){
 

@@ -457,7 +457,9 @@ const handleReModalOffAndClose = () => {
               <div key={board.boardNo} className='BoardDetail-side-wrapper'>   
                 <div className='BoardDetail-main-wrapper'>
                   <div className="BoardDetail-head-list">
-                      <span className="BoardDetail-head-list-text">일반 게시판</span>
+                      <span className="BoardDetail-head-list-text">
+                        일반 게시판
+                      </span>
                       <span className='BoardDetail-head-btn-wrapper'>
                         <button
                           type="button" 
@@ -529,7 +531,17 @@ const handleReModalOffAndClose = () => {
                         <span>
                           <button
                           className='Board-reply-recoment-accused-btn'
-                          onClick={()=>navigate('/board'+listPath+'edit/'+board?.board.boardNo+'/'+board?.boardCate.boardCateNo)}
+                          onClick={()=>navigate(
+                            path.includes('vs')
+                            ?
+                            '/board/general/daily/vs/edit/'+board?.board.boardNo
+                            :path.includes('shorts')
+                            ?
+                            '/board/general/daily/shorts/edit/'+board?.board.boardNo
+                            :
+                            '/board'+listPath+'edit/'+board?.board.boardNo+'/'+board?.boardCate.boardCateNo
+                            
+                            )}
                           >
                             수정
                           </button>

@@ -24,15 +24,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ds.dasony.Board.model.service.BoardService;
-import com.ds.dasony.Board.model.vo.Board;
+import com.ds.dasony.Board.model.vo.BoardBest;
 import com.ds.dasony.Board.model.vo.BoardCare;
 import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardExt;
 import com.ds.dasony.Board.model.vo.BoardImg;
+import com.ds.dasony.Board.model.vo.BoardShorts;
 import com.ds.dasony.Board.model.vo.BoardTag;
 import com.ds.dasony.Board.model.vo.BoardVideo;
+import com.ds.dasony.Board.model.vo.BoardVsList;
+import com.ds.dasony.Board.model.vo.BoardWeather;
 import com.ds.dasony.Board.model.vo.BoardWriterForm;
-import com.ds.dasony.Board.model.vo.NestedReply;
 import com.ds.dasony.Board.model.vo.Reply;
 import com.ds.dasony.common.BoardUtils;
 
@@ -355,14 +357,59 @@ public class BoardController {
 	   }
 	  
 	   @PostMapping("/weatherList")
-	   public ResponseEntity<List<Board>> weatherList(){
-		   List<Board> list = new ArrayList();
+	   public ResponseEntity<List<BoardWeather>> weatherList(){
+		   List<BoardWeather> list = new ArrayList();
 		   list = boardService.weatherList();
 		   log.info("weatherList{}", list);
 		   if(list != null) {
 			   return ResponseEntity.ok(list);
+		   } else {
+			   return null;
 		   }
-		   return null;
+	   }
+	   @PostMapping("/bestList")
+	   public ResponseEntity<List<BoardBest>> bestList(){
+		   List<BoardBest> list = new ArrayList();
+		   list = boardService.bestList();
+		   log.info("bestList{}", list);
+		   if(list != null) {
+			   return ResponseEntity.ok(list);
+		   } else {
+			   return null;
+		   }
+	   }
+	   @PostMapping("/shortsList")
+	   public ResponseEntity<List<BoardShorts>> shortsList(){
+		   List<BoardShorts> list = new ArrayList();
+		   list = boardService.shortsList();
+		   log.info("shortsList{}", list);
+		   if(list != null) {
+			   return ResponseEntity.ok(list);
+		   } else {
+			   return null;
+		   }
+	   }
+	   @PostMapping("/vsList")
+	   public ResponseEntity<List<BoardVsList>> vsList(){
+		   List<BoardVsList> list = new ArrayList();
+		   list = boardService.vsList();
+		   log.info("vsList{}", list);
+		   if(list != null) {
+			   return ResponseEntity.ok(list);
+		   } else {
+			   return null;
+		   }
+	   }
+	   @PostMapping("/localList")
+	   public ResponseEntity<List<BoardBest>> localList(){
+		   List<BoardBest> list = new ArrayList();
+		   list = boardService.localList();
+		   log.info("localList{}", list);
+		   if(list != null) {
+			   return ResponseEntity.ok(list);
+		   } else {
+			   return null;
+		   }
 	   }
 	
 	
