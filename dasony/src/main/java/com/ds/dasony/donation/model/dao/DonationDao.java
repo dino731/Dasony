@@ -65,12 +65,15 @@ public class DonationDao {
 	}
 
 	public int insertDonaList(DonationList myDona) {
-		return session.insert("insertDonaList", myDona);
+		return session.insert("donationMapper.insertDonaList", myDona);
 	}
 
-//	public int selectUserDason(int userNo) {
-//	return session.selectOne("donationMapper.selectUserDason", userNo);
-//}
+	public void insertDonationAlert(DonationList donaList) {
+		session.insert("alert.insertDonationAlert", donaList);
+	}
 
+//	public int amountUpdate(Donation donation) {
+//		return session.update("donationMapper.amountUpdate", donation);
+//	}
 
 }

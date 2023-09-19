@@ -125,7 +125,7 @@
 		
 	</select>
 
-<update id="modifyMyInfo" parameterType="user">
+	<update id="modifyMyInfo" parameterType="user">
 		UPDATE MEMBER
 		SET
 			USER_ID = #{userId},

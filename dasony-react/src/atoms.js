@@ -128,6 +128,7 @@ export const shareState = atom({
     boardWriteDate:''
   }
 })
+
 //bestList 정보
 export const bestListState = atom({
   key: 'bestList',
@@ -148,4 +149,5 @@ export const localListState = atom({
   key: 'localList',
   default : []
 })
+
 

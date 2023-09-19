@@ -3,6 +3,8 @@ import './mypagecss.css';
 import { useEffect, useState, useTransition } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import { Modal,ModalBody, ModalHeader } from 'react-bootstrap';
+
 
 
 // import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
@@ -29,7 +31,6 @@ const MypageAlert = () => {
       userNo: loginUserNo ,
       alertNo : alertNo
     }).then((response) => {
-      console.log("삭제 성공");
     }).catch((error) => {
       console.error("삭제오류남:", error);
     });
@@ -37,12 +38,14 @@ const MypageAlert = () => {
 
   const handleAlertContentClick = (content) => {
     setSelectedAlertContent(content);
+    setShow(true);
   }
 
   // 추가: 모달 창 닫기
   const closeModal = () => {
     setSelectedAlertContent(null);
   }
+  const[show, setShow] = useState(false);
 
     
     return(
@@ -88,12 +91,15 @@ const MypageAlert = () => {
       </table>
       </div>
       {selectedAlertContent && (
-        <div className="modalAlert">
+        <Modal className="modalAlert" show={show} onHide={setShow}>
           <div className="modal-contentAlert">
-            <span className="close-modal" onClick={closeModal}>&times;</span>
-            {selectedAlertContent}
+          <ModalHeader>알림 <button  onClick={closeModal} style={{ fontSize: "45px" }} className="close-modal">&times;
+          </button></ModalHeader>
+          <ModalBody>
+            <b>{selectedAlertContent}</b>
+          </ModalBody>
           </div>
-        </div>
+        </Modal>
       )}
     </div>
     
