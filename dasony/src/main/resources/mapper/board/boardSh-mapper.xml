@@ -23,6 +23,16 @@
 		<result column="USER_NO" property="userNo"/>	
 	</resultMap>
 	
+	<resultMap id="shortsUpdateMap" type="shortsUpdate">
+		<id column="BOARD_NO" property="boardNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_WRITE_DATE" property="boardWriteDate"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_TAG" property="boardKeyword"/>
+		<result column="VIDEO_MOD_NAME" property="videoModName"/>
+		<result column="VIDEO_PATH" property="videoPath"/>
+	</resultMap>
+	
 	<insert id="addBoardSh" parameterType="board">
 		INSERT ALL
 		INTO BOARD
@@ -77,5 +87,36 @@
 	        )
 	    </foreach>
 	</update>
+	
+	<select id="shortsUpdate" parameterType="int" resultMap="shortsUpdateMap">
+		SELECT *
+		FROM BOARD B
+		LEFT JOIN BOARD_VIDEO V ON B.BOARD_NO = V.BOARD_NO
+		LEFT JOIN MEMBER M ON B.USER_NO = M.USER_NO
+		LEFT JOIN BOARD_KEYWORD K ON B.BOARD_NO = K.BOARD_NO
+		WHERE B.BOARD_NO = #{boardNo}
+	</select>
+	
+	
+	<update id="shBoardUpdateSub" parameterType="Board">
+		UPDATE BOARD
+		SET 
+			BOARD_TITLE = #{boardTitle},
+			BOARD_CONTENT = #{boardContent},
+			BOARD_WRITE_DATE = #{boardWriteDate}
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<update id="shTagUpdateSub" parameterType="Board">
+		UPDATE BOARD_KEYWORD
+		SET
+			BOARD_TAG = #{boardKeyword}
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<delete id="videoDelete" parameterType="Board">
+		DELETE BOARD_VIDEO
+		WHERE BOARD_NO = #{boardNo}
+	</delete>
 
 </mapper>

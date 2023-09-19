@@ -53,7 +53,7 @@ export const VoteEdit = ()=>{
   }
   console.log("asdfsadfsadff",boardVs);
 
-  /**boardVs 정보 db 저장 - 서버 * */
+  /**boardVs 정보 db 업데이트 - 서버 * */
   const handleBoardVsUpdateSub = () => {
     axios.post('/dasony/api/vsUpdateSub', boardVs,{
       headers: {
