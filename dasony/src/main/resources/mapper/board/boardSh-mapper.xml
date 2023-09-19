@@ -10,7 +10,7 @@
 		<result column="BOARD_VIEWS" property="boardViews"/>
 		<result column="BOARD_CONTENT" property="boardContent"/>
 		<result column="BOARD_STATUS" property="boardStatus"/>	
-		<result column="BOARD_TAG" property="boardKeyWord"/>
+		<result column="BOARD_TAG" property="boardKeyword"/>
 	</resultMap>
 	
 	<resultMap id="boardVideoMap" type="BoardVideo">
