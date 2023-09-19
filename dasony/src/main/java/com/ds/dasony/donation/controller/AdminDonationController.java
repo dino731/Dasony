@@ -1,6 +1,5 @@
 package com.ds.dasony.donation.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,12 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ds.dasony.donation.model.service.DonationService;
 import com.ds.dasony.donation.model.vo.Donation;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,8 +33,6 @@ public class AdminDonationController {
 	public List<Donation> selectAdminDonaList(){
 		List<Donation> adDonaList = donationService.selectAdminDonaList();
 		
-//		log.info("adDonaList = {}", adDonaList);
-		
 		return adDonaList;
 	}
 	
@@ -53,28 +48,8 @@ public class AdminDonationController {
 		return adDonation;
 	}
 	
-//	@PostMapping("/admindonaenroll")
-//	public String insertDona(
-//			Donation donation,
-//			@RequestParam String selectedArea
-//			) {
-//		
-//		donation.setDonaExecuteDate(selectedArea);
-//		
-//		String insertDonation = donationService.insertDona(donation);
-//		
-//		return insertDonation;
-//	}
-//	
 	@PostMapping("/admindonaenroll")
     public String insertDona(@RequestBody Donation donation) {
-		
-//		selectedArea = "강남";
-//		log.info("params: " + selectedArea);
-		
-//		log.info("donation: " + donation);
-		
-//		donation.setDonaExecuteDate(selectedArea);
 		
 		try {
     	   int result = donationService.insertDona(donation);
@@ -125,4 +100,29 @@ public class AdminDonationController {
         	return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 	}
+	
+//	@PostMapping("/adminAmountUpdate")
+//	public String amountUpdate (@RequestBody Map<String, Object> map){
+//		
+//		try {
+//			
+//		int donaTotalAmount = Integer.parseInt((String) map.get("totalDonaAmount"));
+//		int donaNo = Integer.parseInt((String) map.get("donaNo"));
+//		 
+//		 Donation donation = new Donation();
+//		 donation.setDonaTotalAmount(donaTotalAmount);
+//		 donation.setDonaNo(donaNo);
+//		 
+//			log.info("donation ={}", donation);
+//			int result = donationService.amountUpdate(donation);
+//			
+//			log.info("result 값 = {}", result);
+//			
+//			if(result > 0) return "성공";
+//			else return "다시";
+//		}catch (Exception e) {
+//			 log.error("예외 발생: {}", e.getMessage(), e);
+//			    return "예상치 못한 에러가 발생했습니다. 다시 시도해주세요.";
+//		}
+//	}
 }

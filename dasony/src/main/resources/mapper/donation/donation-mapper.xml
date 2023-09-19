@@ -151,6 +151,12 @@
 		#{userNo},
 		#{donaNo}
 	)
- 	
  </insert>
+ 
+<!--  <update id="amountUpdate" parameterType="Donation">
+ 	UPDATE DONATION SET
+ 		DONA_TOTAL_AMOUNT = #{donaTotalAmount}
+ 		WHERE DONA_NO = #{donaNo}
+ </update> -->
+ 
 </mapper>

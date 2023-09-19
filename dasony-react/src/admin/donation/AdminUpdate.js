@@ -1,6 +1,5 @@
 import './AdminDonaEnroll.css';
 import { useParams, useNavigate} from 'react-router-dom';
-import { useDonaList } from './AdminDonaListContext';
 import { useState, useEffect} from 'react';
 import axios from 'axios';
 
@@ -39,10 +38,10 @@ const AdminUpdate = () => {
                     <input type="text" defaultValue={admindonadetail.donaTitle} onChange={(e) => setUpdatedData({...updatedData , donaTitle: e.target.value })}/>
                     <select name='areas' id='areas' value={admindonadetail.donaSelectArea}>
                         <option value="">지역 선택</option>
-                        <option value="강남">강남</option>
-                        <option value="관악">관악</option>
-                        <option value="노원">노원</option>
-                        <option value="강동">강동</option>
+                        <option value="강남구">강남</option>
+                        <option value="관악구">관악</option>
+                        <option value="노원구">노원</option>
+                        <option value="강동구">강동</option>
                     </select><br/> 
                     <label>모금단체</label><br/> 
                     <input type="text" defaultValue={admindonadetail.donaName} onChange={(e) => setUpdatedData({...updatedData ,donaName : e.target.value})}/><br/> 
