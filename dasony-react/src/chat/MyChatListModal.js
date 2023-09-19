@@ -28,6 +28,7 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
     const [normalChatList, setNormalList] = useState([]);
     const [isFilled, setIsFilled] = useState([]);
 
+
     // console.log("뭐있냐곻",isFilled); // chatRoomNo : true
     // console.log("chatList", MyChatList);
 
@@ -35,11 +36,13 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
         axios.post(`/dasony/getStar`, {userNo: loginUserNo})
         .then((response) => {
             const serverStarData  = response.data.list; // {chatRoomNo: 11, userNo: 23090757}, {chatRoomNo: 20, userNo: 23090757}
-            // console.log("데이터 가져와 : ", {userNo: loginUserNo});
-            // console.log("스크랩한 채팅 ", serverStarData);
+
+            //console.log("데이터 가져와 : ", {userNo: loginUserNo});
+            //console.log("스크랩한 채팅 ", serverStarData);
 
 
-            // console.log("chatList origin ::", chatList);
+            //console.log("chatList origin ::", chatList);
+
             const starStatusList = [];
             const favChatList = [];
             // 체크한 채팅 / 일반 채팅 분리용 리스트
@@ -49,8 +52,10 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
 
                 for(let index in serverStarData){
                     const roomNo = serverStarData[index].chatRoomNo; // 찜한 채팅 넘버
+
                     // console.log("index :: ", index);
                     // console.log(roomNo);
+
 
                     favChatList.push(roomNo);
                 }
@@ -64,8 +69,10 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
                 }
 
                 setIsFilled(starStatusList);
+
                 // console.log("filled list :: ", starStatusList);
                 // console.log("chat coll :: ", chat);
+
 
                 return chat;
                 });
@@ -105,7 +112,7 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
             userNo: loginUserNo
         };
 
-        console.log("is checked? :: ", isFilled[index]);
+        //console.log("is checked? :: ", isFilled[index]);
 
         if(status != "normal"){ // isFilled[index]
 

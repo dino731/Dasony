@@ -1,139 +1,244 @@
 import Carousel from 'react-bootstrap/Carousel';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './MainBestCarousel.css';
+import { useRecoilState } from 'recoil';
+import { bestListState, shortsListState, vsListState, localListState } from '../atoms';
+import axios from 'axios';
+
 const MainBestCarousel = () =>{
+
+    
+    const userNo = localStorage.getItem("loginUserNo");
+    const userRegion = localStorage.getItem("loginUserRegion");
 
     const [index, setIndex] = useState(0);
 
+    const [bestList, setBestList] = useRecoilState(bestListState);
+
+    console.log("bestList확인 - 전달?:", bestList);
     const handleSelect = (selectedIndex) => {
         setIndex(selectedIndex);
     };
 
+    useEffect(()=>{
+        const fetchData = async()=>{
+            
+            await axios.post("/dasony/board/bestList")
+            .then(res=>{
+                setBestList(res.data);
+                console.log("베스트 리스트 확인", res.data);
+            })
+            .catch(err=>{
+                console.log(err);
+            });
+            
+        }
+
+        fetchData();
+    },[])
+
     return(
         <Carousel activeIndex={index} onSelect={handleSelect}>
-                    <Carousel.Item>
-                        <div className='home-best-carousel'>
-                            <div className='home-best-box'>
-                                <div>
-                                    <img src='../resources/common-img/dasony-logo.png'/>
-                                </div>
-                                <div>작성자명<br/>글제목</div>
-                            </div>
-                            <div className='home-best-box'>
-                                <div>
-                                    <img src='../resources/common-img/dasony-logo.png'/>
-                                </div>
-                                <div>작성자명<br/>글제목</div>
-                            </div>
-                            <div className='home-best-box'>
-                                <div>
-                                    <img src='../resources/common-img/dasony-logo.png'/>
-                                </div>
-                                <div>작성자명<br/>글제목</div>
-                            </div>
+            <Carousel.Item>
+                <div className='home-best-carousel'>
+            {
+                bestList&&bestList.filter(best=>(
+                    best.user.userRegion == userRegion
+                )).slice(0,3).map(best=>(
+                    <div key={best.board.boardNo} className='home-best-box'>
+                        <div style={{height:'9vw', width:'9vw',overflow:'hidden'}}>
+                            {
+                                best.boardVideo.videoModName&&best.boardImg.boardImgModName
+                                ?
+                                <>
+                                    <img src={`http://localhost:8083/dasony${best.boardImg.boardImgPath}/${best.boardImg.boardImgModName}`}/>
+                                </> 
+                                :!best.boardVideo.videoModName&&best.boardImg.boardImgModName
+                                ?
+                                <>
+                                    <img src={`http://localhost:8083/dasony${best.boardImg.boardImgPath}/${best.boardImg.boardImgModName}`}/>
+                                </>
+                                :best.boardVideo.videoModName&&!best.boardImg.boardImgModName
+                                ?
+                                <>
+                                    <video id="vid" controls className="board-video" autoPlay loop>
+                                        <source src={`http://localhost:8083/dasony${best.boardVideo.videoPath}${best.boardVideo.videoModName}`} type="video/mp4" />
+                                    </video>
+                                </>
+                                :
+                                <>
+                                    <img src='https://i.ibb.co/dPfbwqB/dasony-logo.png'/>
+                                </>
+                            }
                         </div>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <div className='home-best-carousel'>
-                            <div className='home-best-box'>
-                                <div>
-                                    <img src='../resources/common-img/dasony-logo.png'/>
-                                </div>
-                                <div>작성자명<br/>글제목</div>
-                            </div>
-                            <div className='home-best-box'>
-                                <div>
-                                    <img src='../resources/common-img/dasony-logo.png'/>
-                                </div>
-                                <div>작성자명<br/>글제목</div>
-                            </div>
-                            <div className='home-best-box'>
-                                <div>
-                                    <img src='../resources/common-img/dasony-logo.png'/>
-                                </div>
-                                <div>작성자명<br/>글제목</div>
-                            </div>
+                        <div style={{fontSize:'100%'}}>{best.user.userNick}<br/>{best.board.boardTitle}</div>
+                    </div>
+                ))
+            }
+            </div>
+            </Carousel.Item>
+            <Carousel.Item>
+            <div className='home-best-carousel'>
+
+            {
+                bestList&&bestList?.filter(best=>(
+                    best.user.userRegion == userRegion
+                )).slice(3,6).map(best=>(
+                    <div className='home-best-box'>
+                        
+                        <div style={{height:'9vw', width:'9vw',overflow:'hidden'}}>
+                            {
+                                best.boardVideo.videoModName&&best.boardImg.boardImgModName
+                                ?
+                                <>
+                                    <img src={`http://localhost:8083/dasony${best.boardImg.boardImgPath}/${best.boardImg.boardImgModName}`}/>
+                                </> 
+                                :!best.boardVideo.videoModName&&best.boardImg.boardImgModName
+                                ?
+                                <>
+                                    <img src={`http://localhost:8083/dasony${best.boardImg.boardImgPath}/${best.boardImg.boardImgModName}`}/>
+                                </>
+                                :best.boardVideo.videoModName&&!best.boardImg.boardImgModName
+                                ?
+                                <>
+                                    <video id="vid" controls className="board-video" autoPlay loop muted>
+                                        <source src={`http://localhost:8083/dasony${best.boardVideo.videoPath}${best.boardVideo.videoModName}`} type="video/mp4" />
+                                    </video>
+                                </>
+                                :
+                                <>
+                                    <img src='https://i.ibb.co/dPfbwqB/dasony-logo.png'/>
+                                </>
+                            }
                         </div>
-                    </Carousel.Item>
+                        <div>{best.user.userNick}<br/>{best.board.boardTitle}</div>
+                    </div>
+                ))
+            }
+                </div>
+            </Carousel.Item>
         </Carousel>
     );
 }
 
 const MainLocalCarousel = () =>{
 
+    const userNo = localStorage.getItem("loginUserNo");
+    const userRegion = localStorage.getItem("loginUserRegion");
+
     const [index, setIndex] = useState(0);
+
+    const [localList, setLocalList] = useRecoilState(localListState);
 
     const handleSelect = (selectedIndex) => {
         setIndex(selectedIndex);
     };
 
+    useEffect(()=>{
+        const fetchData = async()=>{
+            
+            await axios.post("/dasony/board/localList")
+            .then(res=>{
+                setLocalList(res.data);
+                console.log("localList 확인", res.data);
+            })
+            .catch(err=>{
+                console.log(err);
+            });
+            
+        }
+
+        fetchData();
+    },[])
+
+
     return(
         <Carousel activeIndex={index} onSelect={handleSelect}>
                     <Carousel.Item>
                         <div className='local-carousel'>
-                            <div className='local-box'>
-                                <div className='local-box-img'>
-                                    <img src='./resources/shop/product/3/001.png'/>
-                                </div>
-                                <div>
-                                    <span>작성자명</span><br/>
-                                    <span>글 제목</span>
-                                </div>
+                            {
+                                localList?.filter(local=>(
+                                    local.user.userRegion == userRegion
+                                ))
+                                .slice(0,3)
+                                .map(local=>(
+                                    <div className='local-box'>
+                                        <div className='local-box-img'>
+                                            {
+                                                local.boardVideo.videoModName&&local.boardImg.boardImgModName
+                                                ?
+                                                <>
+                                                    <img src={`http://localhost:8083/dasony${local.boardImg.boardImgPath}/${local.boardImg.boardImgModName}`}/>
+                                                </> 
+                                                :!local.boardVideo.videoModName&&local.boardImg.boardImgModName
+                                                ?
+                                                <>
+                                                    <img src={`http://localhost:8083/dasony${local.boardImg.boardImgPath}/${local.boardImg.boardImgModName}`}/>
+                                                </>
+                                                :local.boardVideo.videoModName&&!local.boardImg.boardImgModName
+                                                ?
+                                                <>
+                                                    <video id="vid" controls className="board-video" autoPlay loop>
+                                                        <source src={`http://localhost:8083/dasony${local.boardVideo.videoPath}${local.boardVideo.videoModName}`} type="video/mp4" />
+                                                    </video>
+                                                </>
+                                                :
+                                                <>
+                                                    <img src='https://i.ibb.co/dPfbwqB/dasony-logo.png'/>
+                                                </>
+                                            }
+                                        </div>
+                                        <div className='local-box-text'>
+                                            {local.user.userNick}<br/><br/>
+                                            {local.board.boardTitle}
+                                        </div >
+                                    </div>
+                                ))
+                            }
                             </div>
-
-                            <div className='local-box'>
-                                <div className='local-box-img'>
-                                    <img src='./resources/shop/product/3/001.png'/>
-                                </div>
-                                <div>
-                                    <span>작성자명</span><br/>
-                                    <span>글 제목</span>
-                                </div>
-                            </div>
-
-                            <div className='local-box'>
-                                <div className='local-box-img'>
-                                    <img src='./resources/shop/product/3/001.png'/>
-                                </div>
-                                <div>
-                                    <span>작성자명</span><br/>
-                                    <span>글 제목</span>
-                                </div>
-                            </div>
-                        </div>
                     </Carousel.Item>
                     <Carousel.Item>
                         <div className='local-carousel'>
-                            <div className='local-box'>
-                                <div className='local-box-img'>
-                                    <img src='./resources/shop/product/3/001.png'/>
-                                </div>
-                                <div>
-                                    <span>작성자명</span><br/>
-                                    <span>글 제목</span>
-                                </div>
+                            {
+                                localList?.filter(local=>(
+                                    local.user.userRegion == userRegion
+                                ))
+                                .slice(3,6)
+                                .map(local=>(
+                                    <div className='local-box'>
+                                        <div className='local-box-img'>
+                                            {
+                                                local.boardVideo.videoModName&&local.boardImg.boardImgModName
+                                                ?
+                                                <>
+                                                    <img src={`http://localhost:8083/dasony${local.boardImg.boardImgPath}/${local.boardImg.boardImgModName}`}/>
+                                                </> 
+                                                :!local.boardVideo.videoModName&&local.boardImg.boardImgModName
+                                                ?
+                                                <>
+                                                    <img src={`http://localhost:8083/dasony${local.boardImg.boardImgPath}/${local.boardImg.boardImgModName}`}/>
+                                                </>
+                                                :local.boardVideo.videoModName&&!local.boardImg.boardImgModName
+                                                ?
+                                                <>
+                                                    <video id="vid" controls className="board-video" autoPlay loop>
+                                                        <source src={`http://localhost:8083/dasony${local.boardVideo.videoPath}${local.boardVideo.videoModName}`} type="video/mp4" />
+                                                    </video>
+                                                </>
+                                                :
+                                                <>
+                                                    <img src='https://i.ibb.co/dPfbwqB/dasony-logo.png'/>
+                                                </>
+                                            }
+                                        </div>
+                                        <div className='local-box-text'>
+                                            {local.user.userNick}<br/>
+                                            {local.board.boardTitle}
+                                        </div >
+                                    </div>
+                                ))
+                            }
                             </div>
-
-                            <div className='local-box'>
-                                <div className='local-box-img'>
-                                    <img src='./resources/shop/product/3/001.png'/>
-                                </div>
-                                <div>
-                                    <span>작성자명</span><br/>
-                                    <span>글 제목</span>
-                                </div>
-                            </div>
-
-                            <div className='local-box'>
-                                <div className='local-box-img'>
-                                    <img src='./resources/shop/product/3/001.png'/>
-                                </div>
-                                <div>
-                                    <span>작성자명</span><br/>
-                                    <span>글 제목</span>
-                                </div>
-                            </div>
-                        </div>
                     </Carousel.Item>
         </Carousel>
     );
@@ -141,9 +246,17 @@ const MainLocalCarousel = () =>{
 
 const MainShortsCarousel = () => {
 
+    
+    const userNo = localStorage.getItem("loginUserNo");
+    const userRegion = localStorage.getItem("loginUserRegion");
+
+
+    const [shortsList, setShortsList] = useRecoilState(shortsListState);
+    const [index, setIndex] = useState(0);
+
     const [left, setLeft] = useState(0);
     const handleLeft = () => {
-        if(-40*5<left && left< -29*5){
+        if(-40*(index)<left && left< -29*(index)){
             setLeft(0);
         } else {
             setLeft(left-33);
@@ -157,79 +270,52 @@ const MainShortsCarousel = () => {
         }
     }
 
+
+
+    useEffect(()=>{
+        const fetchData = async()=>{
+            
+            await axios.post("/dasony/board/shortsList")
+            .then(res=>{
+                setShortsList(res.data);
+                setIndex(shortsList.length);
+                console.log("베스트 리스트 확인", res.data);
+            })
+            .catch(err=>{
+                console.log(err);
+            });
+            
+        }
+
+        fetchData();
+    },[])
+
+
     return(
         <div className='mainShorts-container'>
             <span className='carousel-btn-left' onClick={handleRight}>
-                {"<"}
+                    {"<"}
             </span>
-            <div className='mainShorts-box' style={{left:left+'%'}}>
-                <div>
-                    <img src='./resources/shop/product/4/001.png'/>
-                </div>
-                <div>
-                    <div>작성자명</div>
-                </div>
-            </div>
-
-            <div className='mainShorts-box' style={{left:left+'%'}}>
-                <div>
-                    <img src='./resources/shop/product/4/002.png'/>
-                </div>
-                <div>
-                    <div>작성자명</div>
-                </div>
-            </div>
-
-            <div className='mainShorts-box'  style={{left:left+'%'}}>
-                <div>
-                    <img src='./resources/shop/product/4/003.png'/>
-                </div>
-                <div>
-                    <div>작성자명</div>
-                </div>
-            </div>
-
-            <div className='mainShorts-box'  style={{left:left+'%'}}>
-                <div>
-                    <img src='./resources/shop/product/4/004.png'/>
-                </div>
-                <div>
-                    <div>작성자명</div>
-                </div>
-            </div>
-
-            <div className='mainShorts-box'  style={{left:left+'%'}}>
-                <div>
-                    <img src='./resources/shop/product/4/005.png'/>
-                </div>
-                <div>
-                    <div>작성자명</div>
-                </div>
-            </div>
-            <div className='mainShorts-box'  style={{left:left+'%'}}>
-                <div>
-                    <img src='./resources/shop/product/4/006.png'/>
-                </div>
-                <div>
-                    <div>작성자명</div>
-                </div>
-            </div>
-            <div className='mainShorts-box'  style={{left:left+'%'}}>
-                <div>
-                    <img src='./resources/shop/product/4/007.png'/>
-                </div>
-                <div>
-                    <div>작성자명</div>
-                </div>
-            </div>
-            <div className='mainShorts-box'  style={{left:left+'%'}}>
-                <div>
-                    <img src='./resources/shop/product/4/001.png'/>
-                </div>
-                <div>
-                    <div>작성자명</div>
-                </div>
-            </div>
+            {shortsList?.filter(shorts=>(
+                    shorts.user.userRegion == userRegion
+                )).slice(0, 6).map(shorts=>{
+                return(
+                    <div key={shorts.board.boardNo} className='mainShorts-box' style={{left:left+'%'}}>
+                        <div>
+                        <video id="vid" controls className="board-video" autoPlay loop muted>
+                            <source src={`http://localhost:8083/dasony${shorts.boardVideo.videoPath}${shorts.boardVideo.videoModName}`} type="video/mp4" />
+                        </video>
+                        </div>
+                        <div>
+                            <div>
+                                {shorts.user.userNick}
+                                <br/>
+                                {shorts.board.boardTitle}
+                            </div>
+                        </div>
+                    </div>
+                )
+            })}
             <span className='carousel-btn-right' onClick={handleLeft}>
                 {">"}
             </span>
@@ -240,7 +326,16 @@ const MainShortsCarousel = () => {
 
 const MainVsCarousel = () => {
 
+    
+    const userNo = localStorage.getItem("loginUserNo");
+    const userRegion = localStorage.getItem("loginUserRegion");
+
+
+    const [vsList, setVsList] = useRecoilState(vsListState);
+    const [index, setIndex] = useState(0);
     const [left, setLeft] = useState(0);
+
+    
     const handleLeft = () => {
         let changedLeft = 0;
         if(-18*6<left&& left<=-18*5){
@@ -265,87 +360,47 @@ const MainVsCarousel = () => {
         }
     }
 
+    useEffect(()=>{
+        const fetchData = async()=>{
+            
+            await axios.post("/dasony/board/vsList")
+            .then(res=>{
+                setVsList(res.data);
+                setIndex(vsList.length);
+                console.log("vsList확인", res.data);
+            })
+            .catch(err=>{
+                console.log(err);
+            });
+            
+        }
+
+        fetchData();
+    },[])
+
     return(
         <div className='mainVs-container'>
             <span className='vs-carousel-btn-left' onClick={handleRight}>
                 {"<"}
             </span>
-            <div className='mainVs-box' style={{left:(left+'vw')}}>
-                <div>
-                   치킨 
-                </div>
-                VS
-                <div>
-                    피자
-                </div>
-            </div>
-
-            <div className='mainVs-box' style={{left:(left+'vw')}}>
-                <div>
-                    불고기
-                </div>
-                VS
-                <div>
-                    제육
-                </div>
-            </div>
-
-            <div className='mainVs-box' style={{left:(left+'vw')}}>
-                <div>
-                    돼지 갈비
-                </div>
-                VS
-                <div>
-                    고추장 갈비
-                </div>
-            </div>
-
-            <div className='mainVs-box' style={{left:(left+'vw')}}>
-                <div>
-                
-                </div>
-                VS
-                <div>
-                    
-                </div>
-            </div>
-
-            <div className='mainVs-box' style={{left:(left+'vw')}}>
-                <div>
-                    
-                </div>
-                VS
-                <div>
-                    
-                </div>
-            </div>
-            <div className='mainVs-box' style={{left:(left+'vw')}}>
-                <div>
-                    
-                </div>
-                VS
-                <div>
-                    
-                </div>
-            </div>
-            <div className='mainVs-box' style={{left:(left+'vw')}}>
-                <div>
-                    
-                </div>
-                VS
-                <div>
-                    
-                </div>
-            </div>
-            <div className='mainVs-box' style={{left:(left+'vw')}}>
-                <div>
-                    
-                </div>
-                VS
-                <div>
-                    
-                </div>
-            </div>
+            {vsList?.filter(vs=>(
+                    vs.user.userRegion == userRegion
+                )).slice(0, 6).map(vs=>{
+                return(
+                    <div key={vs.boardVs.boardNo} className='mainVs-box' style={{left:(left+'vw')}}>
+                        <span>{vs.boardVs.boardTitle}</span><br/>
+                        <div>
+                            <div>
+                                {vs.boardVs.boardOptionLeft} 
+                            </div>
+                            <div>VS</div>
+                            <div>
+                                {vs.boardVs.boardOptionRight} 
+                            </div>
+                        </div>
+                    </div>
+                )
+            })}
             <span className='vs-carousel-btn-right' onClick={handleLeft}>
                 {">"}
             </span>

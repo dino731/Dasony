@@ -6,6 +6,7 @@
     width: 100%;
     height: 50px;
     border-bottom: 1px solid gray;
+    color: #7A7A7A
 }
 .another-header-cate *{
     font-size: x-large;

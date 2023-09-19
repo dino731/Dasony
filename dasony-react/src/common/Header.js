@@ -61,7 +61,7 @@ const Header = () => {
                 <ul>
                     <li></li>
                     <Link to='/admin/chart' style={{textDecoration:'none'}}>
-                    <li className="logo-li"><img src='/resources/common-img/dasony-logo.png'/></li>
+                    <li className="logo-li"><img src='https://i.ibb.co/dPfbwqB/dasony-logo.png'/></li>
                     </Link>
 
                     <li></li>
@@ -142,7 +142,7 @@ const Header = () => {
                     <ul>
                         <li></li>
                         <Link to='/main' style={{textDecoration:'none'}}>
-                        <li className="logo-li"><img src='/resources/common-img/dasony-logo.png'/></li>
+                        <li className="logo-li"><img src='https://i.ibb.co/dPfbwqB/dasony-logo.png'/></li>
                         </Link>
                         <li></li>
                         <Link to='/main' style={{textDecoration:'none'}}>

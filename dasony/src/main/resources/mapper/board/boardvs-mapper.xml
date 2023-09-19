@@ -22,6 +22,8 @@
 		<result column="VS_OPTION" property="vsOption"/>
 	</resultMap>
 	
+
+	
 	<insert id="boardVsInsert" parameterType="boardvs">
 		INSERT ALL
 		INTO BOARD
@@ -29,7 +31,7 @@
 		    SEQ_BNO.nextval,
 		    #{userNo},
 		    #{boardTitle},
-		    TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+		    #{boardWriteDate},
 		    DEFAULT,
 		    #{boardContent},
 		    'Y',
@@ -100,5 +102,38 @@
 		FROM BOARD_VS_VOTE
 		WHERE BOARD_NO = #{boardNo}
 	</select>
+	
+	<select id="vsUpdate" parameterType="int" resultMap="boardVsMap">
+		SELECT *
+		FROM BOARD_VS V
+		LEFT JOIN BOARD B ON V.BOARD_NO = B.BOARD_NO
+		LEFT JOIN BOARD_KEYWORD K ON V.BOARD_NO = K.BOARD_NO
+		WHERE V.BOARD_NO = #{boardNo}
+	</select>
+	
+	<update id="vsUpdateSub" parameterType="BoardVs">
+		UPDATE BOARD_VS
+		SET 
+			BOARD_OPTION_RIGHT = #{boardOptionRight},
+			BOARD_OPTION_LEFT = #{boardOptionLeft},
+			BOARD_EXPIRE_DATE = #{boardExpireDate}
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<update id="vsBoardUpdateSub" parameterType="BoardVs">
+		UPDATE BOARD
+		SET 
+			BOARD_TITLE = #{boardTitle},
+			BOARD_CONTENT = #{boardContent},
+			BOARD_WRITE_DATE = #{boardWriteDate}
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<update id="vsTagUpdateSub" parameterType="BoardVs">
+		UPDATE BOARD_KEYWORD
+		SET
+			BOARD_TAG = #{boardKeyword}
+		WHERE BOARD_NO = #{boardNo}
+	</update>
 
 </mapper>
