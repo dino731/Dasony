@@ -16,15 +16,12 @@ const MypageHeader = () => {
       userNo: loginUserNo
     }).then((response) => {         
         setExp(response.data.myInfo[0].userExp);
-        
-        
     }).catch((error) => {
       console.error("오류남: 레벨", error);
     });
   }, [exp]);
 
   useEffect ( ()=>{
-    console.log(exp);
         let remainder = 0;
         if(exp >= 500){
           remainder = 100;
@@ -51,7 +48,6 @@ const MypageHeader = () => {
           setLevelName("지역 지존");
           setLevelImg("/resources/common-img/levelgod.jpg");
         }
-        console.log(levelImg);
   });
 
   const bStyle = {
@@ -75,7 +71,7 @@ const MypageHeader = () => {
           <div><b style={{color : 'green'}}>{levelName}</b></div>
           <div className="exp-bar" style={{display: 'flex', border: '1px solid black', margin : '5px', maxWidth:'100px'}}>
             <div className='bbb' style={bStyle}>
-              EXP
+              <b>EXP</b>
             </div>
     
               </div>

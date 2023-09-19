@@ -48,7 +48,6 @@
     font-family: 'HakgyoansimWoojuR';
     margin-bottom: 1%;
     font-size: 17px;
-    /* margin-left: -19%; */
     margin-right: 1%;
 }
 
@@ -96,9 +95,6 @@
     color: #7A7A7A;
 }
 
-.othertalk>b:hover{
-    cursor: pointer;
-}
 
 #sendchat{
     width:100%;
@@ -159,4 +155,8 @@ label{
 
 #chooseFile{
     display: none;
+}
+
+.othertalk b{
+    margin-bottom: 2%;
 }

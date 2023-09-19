@@ -24,5 +24,13 @@ public class GameServiceImpl implements GameService{
 	public String gameStartYN(int userNo) {
 		return gameDao.gameStartYN(userNo);
 	}
+	@Override
+	public String gameSet(int userNo) {
+		return gameDao.gameSet(userNo);
+	}
+	@Override
+	public int letStartGame(int userNo) {
+		return gameDao.letStartGame(userNo);
+	}
 	
 }

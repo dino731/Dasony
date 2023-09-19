@@ -69,6 +69,8 @@ public interface UserService {
 
 	public int modifyNewPwd(Map<String, Object> myInfo);
 
+	public int alertAfterClick(Map<String,Object>alertNo);
+
 	
 
 

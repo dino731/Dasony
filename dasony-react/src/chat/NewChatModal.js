@@ -48,7 +48,7 @@ const customStyles = {
             />
             <br/>
             <button id="createchat" onClick={handleCreateChatRoom}>생성하기</button>
-            <button id="modalCloseBtn" onClick={closeModal}>✖</button>
+            <button id="modalCloseBtn" onClick={closeModal}>x</button>
         </Modal>
     )
   }

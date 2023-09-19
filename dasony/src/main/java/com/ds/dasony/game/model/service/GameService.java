@@ -12,4 +12,8 @@ public interface GameService {
 
 	public String gameStartYN(int userNo);
 
+	public String gameSet(int userNo);
+
+	public int letStartGame(int userNo);
+
 }

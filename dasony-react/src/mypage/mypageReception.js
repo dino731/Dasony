@@ -42,7 +42,7 @@ const MypageReception = () => {
   </form>
 
         <div className="section1-2" align="center">
-          <button className="btn btn-secondary" onClick={goback}>뒤로 가기</button>
+          <button className="btn btn-secondaryjeff" onClick={goback}>뒤로 가기</button>
           <button className="btn btn-primaryjeff" id="receptionButton" onClick={sendEmail}>문의 하기</button>
         </div>
       </div>

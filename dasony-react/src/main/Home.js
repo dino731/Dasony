@@ -48,8 +48,10 @@ const Home = () =>{
                                     </div>
                                 </td>
                                 <td>
+
                                 
                                 {weatherList && weatherList.length > 0 && weatherList[0].board &&weatherList.filter(weather=>(
+
                                         weather.user.userRegion == userRegion
                                     )).slice(0, 3).map(weather=>{
                                         return(

@@ -164,7 +164,7 @@
 		update event set event_deleted = 'Y' where event_no = #{no}
 	</update>
 	
-	<select id="selectMsgTarget" parameterType="string" resultType="int">
+	<select id="selectMsgTarget" parameterType="hashmap" resultType="int">
 		SELECT user_no FROM event_join
 			LEFT JOIN (
 			    SELECT event_join_no, 'win' as win_yn FROM event_join
@@ -172,15 +172,16 @@
 			        SELECT event_join_no 
 			        FROM event_winner )) a
 			ON event_join.event_join_no = a.event_join_no
-			where
+			where event_no = #{no}
 			<choose>
 				<when test="msgRange.equals('전체')">
-					1=1
+					and 1=1
 				</when>
 				<otherwise>
-					win_yn='win'
+					and win_yn='win'
 				</otherwise>
 			</choose>
+		group by user_no
 	</select>
 	
 	<insert id="sendMsg" parameterType="hashmap" >
