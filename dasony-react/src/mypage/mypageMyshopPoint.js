@@ -20,7 +20,6 @@ const MypageMyshopPoint = () => {
             "Content-Type": "application/json", 
           },
         }).then((response) => {
-            console.log(response.data.point);
             setPoint(response.data.point);
         }).catch((error) => {
           console.error("오류남:", error);

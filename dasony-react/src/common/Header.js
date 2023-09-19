@@ -48,6 +48,7 @@ const Header = () => {
         if (gameStartYN === 'Y') {
           gameDiv.style.display = 'block';
         } 
+        console.log(gameStartYN);
       }, [gameStartYN]);
 
 
