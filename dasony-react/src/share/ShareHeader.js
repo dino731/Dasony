@@ -95,7 +95,7 @@ export const ShareHeader = () =>{
               </div>
               <div className="col-1 col-md-1">
                 <button type="button" className="boardList-search-reset-btn" onClick={handleReset}>
-                  <img src="/resources/common-img/boardImg/초기화아이콘.png" className="boardList-search-reset-btn-icon" />
+                  <img src="/resources/board/ricon.png" className="boardList-search-reset-btn-icon" />
                     <a style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="주기 아이콘">주기 아이콘  제작자: redempticon - Flaticon</a>
                 </button>
               </div>

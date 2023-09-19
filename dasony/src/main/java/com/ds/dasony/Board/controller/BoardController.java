@@ -412,7 +412,7 @@ public class BoardController {
 	   public ResponseEntity<List<BoardBest>> localList(){
 		   List<BoardBest> list = new ArrayList();
 		   list = boardService.localList();
-		   log.info("localList{}", list);
+		   log.info("localList{}", list.get(0).getBoard().getBoardCateNo());
 		   if(list != null) {
 			   return ResponseEntity.ok(list);
 		   } else {

@@ -59,6 +59,7 @@
 	</resultMap>
 	
 	<resultMap id="shareList" type="share">
+		<id column = "BOARD_NO" property="boardNo"/>
 		<result column="REPLY_COUNT" property="replyCount"/>
 		<result column="USER_VIEW_COUNT" property="userViewCount"/>
 		<association property="user" resultMap="userMap"/>
@@ -71,7 +72,7 @@
 	
 	
 	<select id="shareList" parameterType="map" resultMap="shareList">
-		SELECT B.*,M.*,C.*,T.*,
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_WRITE_DATE, M.USER_NO, M.USER_NICKNAME,C.*,T.*,
 		(SELECT COUNT(*) FROM REPLY P WHERE B.BOARD_NO = P.BOARD_NO AND P.REPLY_STATUS = 'Y') AS REPLY_COUNT,
 		(SELECT COUNT(*) FROM BOARD_CARE R WHERE B.BOARD_NO = R.BOARD_NO) AS USER_VIEW_COUNT
 		FROM BOARD B

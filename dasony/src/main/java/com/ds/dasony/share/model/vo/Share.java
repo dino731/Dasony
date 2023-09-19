@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Share {
+	private int boardNo;
 	private Board board;
 	private BoardCate boardCate;
 	private BoardImg boardImg;
