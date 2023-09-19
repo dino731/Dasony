@@ -66,6 +66,7 @@ const EventBoard = () => {
         setLoadStatus(true);
 
         let eventStatus = document.querySelector(".selected-event-status span").innerText;
+        // console.log("선택한 메뉴 : ", eventStatus);
         
         const url = encodeURI(`http://localhost:3000/dasony/event/loadList?status=${eventStatus}`);
 
@@ -73,11 +74,13 @@ const EventBoard = () => {
         axios.get(url).then((res)=>{
                 console.log(res.data);
                 // console.log(res.data[0].pageLink);
+                hoverList = new Array(res.data.length).fill("none");
+                console.log("hover list size :: ", hoverList.length);
+                setHoverStatus(hoverList);
                 setData(res.data);
+
                 if(status) setStatus(false);
                 
-                hoverList = new Array(res.data.length).fill("none");
-                setHoverStatus(hoverList);
 
                 setLoadStatus(false);
             });
@@ -99,7 +102,7 @@ const EventBoard = () => {
 
     useEffect(()=>{
         loadData();
-    }, [status, eventStatus]);
+    }, [eventStatus]);
     
     useEffect(()=>{
         /** 이벤트 유형 선택 효과 부여 및 제거 */
@@ -112,6 +115,7 @@ const EventBoard = () => {
         });
         
         /** 이벤트 아이템에  hover시 조회 유도 화면으로 전환 */
+        console.log("item count :: ", document.querySelectorAll(".event-list-item").length);
         document.querySelectorAll(".event-list-item").forEach((el, index)=>{
             el.addEventListener("mouseover", () => {
                 hoverStatus[index] = "hover";
@@ -123,7 +127,7 @@ const EventBoard = () => {
             });
         });
 
-    },[status]);
+    },[status, eventStatus, hoverStatus]);
 
     return(
         <>
