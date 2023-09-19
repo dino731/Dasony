@@ -85,8 +85,14 @@ public class EventDao {
 		map.put("title", title);
 		
 		String msgRange = (String) map.get("msgRange");
-		List<Integer> targets = session.selectList("event.selectMsgTarget", msgRange);
-//		log.info("list : " + targets.toString());
+		// param map
+		Map<String, Object> param = new HashMap();
+		param.put("no", ((Event)map.get("event")).getNo());
+		param.put("msgRange", msgRange);
+		
+		List<Integer> targets = session.selectList("event.selectMsgTarget", param);
+		log.info("param::{}", param);
+		log.info("list : " + targets.toString());
 		
 		for(int target : targets) {
 			map.put("target", target);

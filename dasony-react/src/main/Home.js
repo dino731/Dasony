@@ -52,7 +52,7 @@ const Home = () =>{
                                 </td>
                                 <td>
                                 {
-                                    weatherList?.filter(weather=>(
+                                    weatherList&&weatherList?.filter(weather=>(
                                         weather.user.userRegion == userRegion
                                     )).slice(0, 3).map(weather=>{
                                         return(
