@@ -428,17 +428,17 @@ justify-content: center;
   margin-right: 20px;
 }
 
-.btn-primary {
+/* .btn-primary {
   border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
   width: 200px; 
   margin-top: 20px;
   margin-left: 20px;
-}
+} */
 
-.btn-primary:hover {
+/* .btn-primary:hover {
   background-color:#FCFA90; 
   color:#CB9DE7;
-}
+} */
 
 .ReceptionLabel{
     display: block;
