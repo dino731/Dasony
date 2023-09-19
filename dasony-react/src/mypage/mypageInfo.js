@@ -8,6 +8,7 @@ import {SHA256} from 'crypto-js';
 import { useRecoilState } from 'recoil';
 import { loginUserState } from '../atoms';
 import './mypagecss.css';
+import { Link } from 'react-router-dom';
 
 
 
@@ -284,6 +285,8 @@ const MypageInfo = () => {
     <div className="admin-user-datail-container">
           
                 <h2>회원 정보</h2>
+
+                <div className="changeLocationButton"><Link to={'/MypageChangeLocation'}><b >지역 수정하기</b></Link></div>
             <div className='user-datail-table'>
                  <table>
                
@@ -313,11 +316,11 @@ const MypageInfo = () => {
                         {isEditing && (
                 <th style={{ textAlign: 'left' }}>
                   <MainChecking
-                    txt='아이디 중복 확인'
-                    data={id}
-                    setId={setId}
-                    setCompleteDuplcateId={setCompleteDuplcateId}
-                    setIdValid={setIdValid}
+                    txt='별명 중복 확인'
+                    data={nick}
+                    setId={setNick}
+                    setCompleteDuplcateId={setCompleteDuplcateNick}
+                    setIdValid={setNickValid}
                   />
                 </th>
               )}

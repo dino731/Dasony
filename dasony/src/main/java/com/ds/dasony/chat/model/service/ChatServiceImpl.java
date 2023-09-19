@@ -2,6 +2,7 @@ package com.ds.dasony.chat.model.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,10 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public int openChatRoom(ChatRoom room) {
+	public int openChatRoom(ChatRoom room, String userRegion) {
+		room.setChatRoomRegion(userRegion);
 		int chatRoomNo = chatDao.openChatRoom(room);
+		
 		return chatRoomNo;
 	}
 
@@ -75,12 +78,17 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public int addStars(ChatCare care) {
-		return chatDao.addStars(care);
+	public int addStars(Map<String, Object> map) {
+		return chatDao.addStars(map);
 	}
 
 	@Override
-	public List<ChatCare> getStars() {
-		return chatDao.getStars();
+	public List<ChatCare> getStars(Map<String, Object> map) {
+		return chatDao.getStars(map);
+	}
+
+	@Override
+	public int delStar(Map<String, Object> map) {
+		return chatDao.delStar(map);
 	}
 }

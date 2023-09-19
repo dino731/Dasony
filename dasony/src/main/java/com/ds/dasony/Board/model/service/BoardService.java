@@ -3,6 +3,7 @@ package com.ds.dasony.Board.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ds.dasony.Board.model.vo.Board;
 import com.ds.dasony.Board.model.vo.BoardCare;
 import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardExt;
@@ -25,14 +26,14 @@ public interface BoardService {
 	public int deleteHeart(BoardCare bc);
 	public int serchHeart(BoardCare bc);
 	public List<Reply> replySelect(int boardNo);
-  public List<BoardImg> boardImg(int boardNo);
-  public List<BoardVideo> boardVideo(int boardNo);
-	public List<BoardExt> searchList(String userRegion,String btg,String btt);
-	public List<BoardExt> nextBtn(Map<String, Object> data);
-	public List<BoardExt> backBtn(Map<String, Object> data);
-	
-	
-	
+	public List<BoardImg> boardImg(int boardNo);
+	public List<BoardVideo> boardVideo(int boardNo);
+    public List<BoardExt> searchList(String userRegion,String btg,String btt);
+    public List<BoardExt> nextBtn(Map<String, Object> data);
+    public List<BoardExt> backBtn(Map<String, Object> data);
+    public int removeReply(int replyNo);
+    public List<Board> weatherList();
+
     // admin
 	public List<BoardExt> adminBoardList();
 	public int addMinBoardDelete(int boardNo);

@@ -101,10 +101,15 @@ const BoardDetailReply = (props) =>{
    const [modalButton, setModalButton] = useState('inline-block');
    const [modalButtonText, setModalButtonText] = useState('취소');
  
-   const handleClose = () => setShow(false);
-   const handleShow = () => {
-       handleModalOff();
+   const [buttonId, setButtonId] = useState(null);
+   const handleClose = () => {
+      setShow(false);
+      setButtonId(null);
+  }
+   const handleShow = (id) => {
        setShow(true);
+       console.log("모달창 열 때 아이디가 전달되는지 확인", id);
+       setButtonId(id);
    }
    const handleModalOn = ()=>{
 
@@ -317,6 +322,25 @@ const BoardDetailReply = (props) =>{
       handleReClose();
   }
 
+  /*리댓 삭제 */
+const handleRemoveReply = () => {
+  console.log("삭제단에서 확인",buttonId);
+   axios.post("/dasony/board/removeReply", buttonId, {
+     headers:{
+       "Content-Type": "application/json; charset=utf-8"
+     }
+   })
+   .then(res=>{
+     alert(res.data);
+   })
+   .catch(err=>{
+     console.log(err);
+   })
+  
+   handleClose();
+}
+   
+
   return(
     <>
         <div className='BoardDetail-boardlist-reply-wrapper'>
@@ -376,25 +400,12 @@ const BoardDetailReply = (props) =>{
                     </span>
                     <span>
                       <button
+                          id={reply.replyNo}
                           className='BoardDetail-boardlist-meetball-btn'
                           type='button'
-                          onClick={handleNReShow}
+                          onClick={() => handleShow(reply.replyNo)}
                           ><i className="bi bi-three-dots-vertical"></i>
                       </button>
-                        <Modal show={nReshow} onHide={handleNReClose}>
-                          <ModalHeader>
-                              리답글 삭제
-                          </ModalHeader>
-                          <ModalBody>
-                              <div style={{textAlign:'center'}}>
-                              {nReModalText}
-                              </div>
-                          </ModalBody>
-                          <ModalFooter>
-                              <Button onClick={handleNReModalOffAndClose}>{nReModalButtonText}</Button>
-                              <Button onClick={()=>handleNReModalOn()} style={{display:nReModalButton}}>삭제</Button>
-                          </ModalFooter>
-                        </Modal>
                       </span>
                   </div>
                 </div>
@@ -470,25 +481,12 @@ const BoardDetailReply = (props) =>{
                       </span>
                       <span>
                       <button
+                            id={rep.replyNo}
                             className='BoardDetail-boardlist-meetball-btn'
                             type='button'
-                            onClick={handleShow}
+                            onClick={() => handleShow(rep.replyNo)}
                             ><i className="bi bi-three-dots-vertical"></i>
                         </button>
-                          <Modal show={show} onHide={handleClose}>
-                            <ModalHeader>
-                                댓글 삭제
-                            </ModalHeader>
-                            <ModalBody>
-                                <div style={{textAlign:'center'}}>
-                                {modalText}
-                                </div>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button onClick={handleModalOffAndClose}>{modalButtonText}</Button>
-                                <Button onClick={handleModalOn} style={{display:modalButton}}>삭제</Button>
-                            </ModalFooter>
-                          </Modal>
                       </span>
                   </div>
                 </div>
@@ -541,7 +539,22 @@ const BoardDetailReply = (props) =>{
           </div>
         </div>
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <ModalHeader>
+            대댓글 삭제
+        </ModalHeader>
+        <ModalBody>
+            <div style={{textAlign:'center'}}>
+            대댓글을 삭제하시겠어요?
+            </div>
+        </ModalBody>
+        <ModalFooter>
+            <Button onClick={handleClose}>취소</Button>
+            <Button onClick={handleRemoveReply} style={{display:modalButton}}>삭제</Button>
+        </ModalFooter>
+      </Modal>
     </>
+
   )
 }
 export default BoardDetailReply;

@@ -3,7 +3,8 @@ import './mypagecss.css';
 import { useEffect, useState, useTransition } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import emailjs from '@emailjs/browser';
+import { Modal,ModalBody, ModalHeader } from 'react-bootstrap';
+
 
 
 // import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
@@ -11,11 +12,9 @@ const MypageAlert = () => {
 
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
     const loginUserRegion = localStorage.getItem("loginUserRegion");
-
-
-// import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
-
-  const [alert, setAlert] = useState([]);
+    const [alert, setAlert] = useState([]);
+    const [selectedAlertContent, setSelectedAlertContent] = useState(null); 
+    
 
   useEffect(() => {
     axios.post("/dasony/api/getMyAlertList", {
@@ -38,6 +37,16 @@ const MypageAlert = () => {
     });
   }
 
+  const handleAlertContentClick = (content) => {
+    setSelectedAlertContent(content);
+    setShow(true);
+  }
+
+  // 추가: 모달 창 닫기
+  const closeModal = () => {
+    setSelectedAlertContent(null);
+  }
+  const[show, setShow] = useState(false);
 
     
     return(
@@ -61,12 +70,18 @@ const MypageAlert = () => {
             <tr key={index} className={item.alertStatus === "A" ? "afterClick" : ""}>
                 <td className="nf-td1">{item.alertNo}</td>
                 <td className="nf-td3">{item.alertDate}</td>
-                <td className="nf-td2">{item.alertTitle}</td>
+                <td className="nf-td2">
+                 <span className="alert-content-link"
+                    onClick={() => handleAlertContentClick(item.alertContent)}>
+                    {item.alertTitle}
+                  </span>
+                </td>
                 <td className="nf-td1">
                 {item.alertCate === 'G' && <span>게임</span>}
                 {item.alertCate === 'T' && <span>응모권</span>}
                 {item.alertCate === 'P' && <span>포인트 사용</span>}
                 {item.alertCate === 'D' && <span>기부</span>}
+                {item.alertCate === 'A' && <span>관리자 메세지</span>}
                 </td>
                 <td className="nf-td1">
                 <button className="delete-button" onClick={() => handleDelete(item.alertNo)}>삭제</button>
@@ -76,6 +91,17 @@ const MypageAlert = () => {
         </tbody>
       </table>
       </div>
+      {selectedAlertContent && (
+        <Modal className="modalAlert" show={show} onHide={setShow}>
+          <div className="modal-contentAlert">
+          <ModalHeader>알림 <button  onClick={closeModal} style={{ fontSize: "45px" }} className="close-modal">&times;
+          </button></ModalHeader>
+          <ModalBody>
+            <b>{selectedAlertContent}</b>
+          </ModalBody>
+          </div>
+        </Modal>
+      )}
     </div>
     
 

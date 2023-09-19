@@ -60,6 +60,8 @@ const DonaDetail = () => {
           return () => clearInterval(updateDayDiff);
         }, [donadetail]);
 
+        const achievementPercentage = ((totalDonaAmount / donadetail.donaTargetAmount) * 100).toFixed(2); // 기부 달성률
+
     return(
         <div id="donadetailcontent">
         <div id="dona_tbl">
@@ -87,7 +89,7 @@ const DonaDetail = () => {
                         {donaHistory.map((donation) => (
                             <div key={donation.donaNo}> 
                                 <p>{donation.donaExecuteDate}</p>
-                                <span>{donation.userNo}</span>&nbsp;
+                                <span>{donation.userName}</span>&nbsp;
                                 <span>{donation.donaAmount}다손 기부</span>
                                 <hr/>
                             </div>
@@ -109,7 +111,7 @@ const DonaDetail = () => {
                     모인 금액<br/>
                     <b style={{fontSize : '25px'}}>{totalDonaAmount}</b><span style={{fontSize : '17px'}}>다손</span><br/><br/>
                     달성률<br/>
-                    <b style={{fontSize : '25px'}}>{donadetail.donaAchieve}%</b>
+                    <b style={{fontSize : '25px'}}>{achievementPercentage}%</b>
                 </span>
                 <br/><br/>
                 <button id="mogh" onClick={() => handlemogh(donaNo)}>모금함 기부하기</button>

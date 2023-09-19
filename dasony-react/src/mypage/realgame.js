@@ -2,6 +2,7 @@ import $ from 'jquery';
 import './game.css';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
+import { useEffect,useState } from 'react';
 
 
 
@@ -9,7 +10,15 @@ const Gamestart = () =>{
 
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
     const loginUserRegion = localStorage.getItem("loginUserRegion");
-
+    const [isBlinking, setIsBlinking] = useState(true);
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          setIsBlinking((prevState) => !prevState);
+        }, 10000);
+        return () => {
+          clearInterval(intervalId);
+        };
+      }, []); 
 
 
 const Game= ()=>{
@@ -973,11 +982,12 @@ const Game= ()=>{
 
     
 }
-    return(
-        <div><button onClick={Game}>
-                시작버튼
-            </button></div>
-    )
+return (
+    <div>
+      <img src="/resources/common-img/gameimg/bomul.png" onClick={Game} style={{ width: '50px', height: '50px' }} alt="게임 이미지" />
+    </div>
+  );
+  
 }
 
 

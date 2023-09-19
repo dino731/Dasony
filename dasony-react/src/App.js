@@ -98,6 +98,7 @@ import {VoteWrite} from './Board/VoteWrite';
 import { AnotherHeader } from './Board/AnotherHeader';
 import { ShareHeader } from './share/ShareHeader';
 import { ShareWriter } from './Board/ShareWriter';
+import MypageChangeLocation from './mypage/mypageChangeLocation';
 
 
 
@@ -137,8 +138,8 @@ function App() {
     <AdminDonaListContext>
     <Header/>
 
-    <div id='game'> <img src='/resources/common-img/gameimg/bomul.png' style={{width:'30px' , height : '30px'}}></img>
-      <Gamestart/>
+    <div id='game'> 
+    <Gamestart/>
       </div>
       <div id='gameDiv'></div>
       
@@ -763,6 +764,13 @@ function App() {
 
                     {/*mypage 중첩 route 시작 */}
                   <Route element={<PrivateRoute/>}>
+                        <Route path="/MypageChangeLocation" element={<motion.div
+                                                      initial = {{opacity:0, y:30}}
+                                                      animate = {{opacity:1, y:0}}
+                                                      end = {{opacity:1, y:0}}
+                                                      transition={{duration : 1}}>
+                                                        <MypageChangeLocation/>
+                                                      </motion.div>}/>                                
                     <Route path="/mypage/*" element={<div className=".for-main">
                                                   <div className='for-normal-page'><motion.div
                                                                           initial = {{opacity:0, y:30}}
@@ -777,7 +785,8 @@ function App() {
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <MypageInfo/>
-                                                      </motion.div>}/>
+                                                      </motion.div>}></Route>
+                                                      
                         <Route path="myshop/*" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}

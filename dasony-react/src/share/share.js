@@ -4,10 +4,12 @@ import { Button } from 'react-bootstrap';
 import './share.css';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import BoardHeart from '../Board/BoardHeart';
 
 
 export const Share = () => {
     const navigate = useNavigate();
+    const [isFilled, setIsFilled] = useState(false);
 
     const userRegion = localStorage.getItem("loginUserRegion");
     const boardCateNo = 3101;
@@ -79,13 +81,13 @@ export const Share = () => {
                 {list&&
                 list.map(share=>{
                     return(
-                        <Link
+                        <Link 
+                            key={share.board.boardNo}
                             to={{
                                 pathname: `/board/share/list/${share.board.boardNo}`
                             }}
                             >
                             <div key={share.board.boardNo} 
-                                    boardNo={share.board.boardNo}
                                     className="share-content-box">
                                 <table>
                                     <tbody>
@@ -114,7 +116,7 @@ export const Share = () => {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className='right-td'><div><div><i className="bi bi-chat"/>{share.replyCount}</div><div><HeartIcon/></div></div></td>
+                                            <td className='right-td'><div><div><i className="bi bi-chat"/>{share.replyCount}</div><div><BoardHeart boardNo={share.board.boardNo} isFilled={isFilled} setIsFilled={setIsFilled} /></div></div></td>
                                         </tr>
                                     </tbody>
                                 </table>

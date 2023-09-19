@@ -147,9 +147,11 @@ public class UserController {
 		
 		User user = userService.findingId(subEmail);
 		String userId = user.getUserId();
+		
 //		log.error("{}=","Id는 "+userId+" 입니다.");
 		if(user != null) {
 			map.put("msg", "Id는 "+userId+" 입니다.");
+			map.put("userName", user.getUserName());
 		} else {
 			map.put("err", "Id를 찾지 못했습니다.");
 		}
@@ -229,8 +231,6 @@ public class UserController {
 			){
 		
 		int result = userService.modifyMyInfo(myInfo);
-	    
-		log.info("myInfo={}",myInfo);
 		return result;
 	}
 	
@@ -301,6 +301,16 @@ public class UserController {
 	public int deleteMyAlertList(
 			@RequestBody Map<String, Integer> requestBody ) {
 		int result = userService.deleteMyAlertList(requestBody);
+		return result;
+	}
+	
+	@PostMapping("/modifyNewPwd")
+	public int modifyNewPwd(
+			@RequestBody  Map<String, Object> myInfo
+			){
+		
+		int result = userService.modifyNewPwd(myInfo);
+	    
 		return result;
 	}
 	

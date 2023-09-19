@@ -69,4 +69,45 @@
 	</delete>
 
 	
+	<insert id="insertReplyAlert" parameterType="reply">
+		INSERT INTO ALERT
+		VALUES (
+			SEQ_ANO.NEXTVAL,
+			(SELECT USER_NO FROM BOARD WHERE BOARD_NO = #{rBoardNo}),
+			(SELECT BOARD_TITLE FROM BOARD WHERE BOARD_NO = #{rBoardNo})||'에 새로운 댓글이 달렸습니다.',
+			TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+			'R',
+			DEFAULT,
+			'댓글 알림'
+		)
+	</insert>
+
+	 
+	<insert id="inputAdminAlert" parameterType = "Alert">
+		INSERT INTO ALERT VALUES 
+		(SEQ_ANO.NEXTVAL,
+    (SELECT USER_NO FROM MEMBER WHERE USER_NICKNAME = #{recipient}),
+    #{content},
+    TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+    'A',
+    'B',
+    #{title}
+	)
+
+	</insert>
+	
+	<insert id="insertDonationAlert" parameterType="donation">
+		INSERT INTO ALERT 
+		VALUES (
+			SEQ_ANO.NEXTVAL,
+			#{userNo},
+			'현재' || #{pointAmount} || '다손이 남았습니다',
+			TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+			'D',
+			'B',
+			'기부 알람'
+		)
+	</insert>
+
+	
 </mapper>
