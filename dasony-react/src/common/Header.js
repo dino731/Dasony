@@ -44,6 +44,21 @@ const Header = () => {
       }, [loginUserNo]);
 
       useEffect(() => {
+        axios.post("/dasony/api/gameSet",{
+            userNo : loginUserNo
+        }).then((response)=>{
+            let lastGameData = response.data;
+            let lastGameDate = new Date(lastGameData);
+            const currentTime = new Date();
+            if (currentTime - lastGameDate >= 10000) { // 60000 밀리초 = 1분
+                axios.post("/dasony/api/letStartGame",{
+                    userNo : loginUserNo
+                });
+              }
+        }).catch((error)=>{
+            console.log("오류",error);
+        });
+
         const gameDiv = document.getElementById('game');
         if (gameStartYN == 'Y') {
           gameDiv.style.display = 'block';
@@ -209,16 +224,7 @@ const Header = () => {
 
     useEffect(()=>{
         HandleMainList();
-        if (loginUserNo) {
-            axios.post("/dasony/api/gameStartYN", { 
-                userNo: loginUserNo 
-            }).then((response) => {
-                setGameStartYN(response.data);
-              })
-              .catch((error) => {
-                console.error("오류남:", error);
-              });
-        }
+        
     }, [location, loginUserNo]);
 
     

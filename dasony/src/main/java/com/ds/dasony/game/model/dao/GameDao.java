@@ -29,4 +29,12 @@ public class GameDao {
 		return result;
 	}
 
+	public String gameSet(int userNo) {
+		return session.selectOne("game.gameSet",userNo);
+	}
+
+	public int letStartGame(int userNo) {
+		return session.update("game.letStartGame",userNo);
+	}
+
 }
