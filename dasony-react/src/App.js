@@ -171,18 +171,6 @@ function App() {
                                                                         <ChartManager/>
                                                                         </motion.div></div></div>}/>
                 </Route>
-                  {/* 로그인 된 경우 */}
-                  {/*관리자로 로그인 한 경우 */}
-                <Route element = {<AdminRoute/>}>
-                  <Route path="/admin/chart" element={<div className=".for-main">
-                                                <div className='for-normal-page'><motion.div
-                                                                        initial = {{opacity:0, y:30}}
-                                                                        animate = {{opacity:1, y:0}}
-                                                                        end = {{opacity:1, y:0}}
-                                                                        transition={{duration : 1}}>
-                                                                        <ChartManager/>
-                                                                        </motion.div></div></div>}/>
-                </Route>
 
                 <Route element = {<AdminRoute/>}>
                   <Route path="/admin/shop" element={<div className=".for-main">
@@ -1009,11 +997,11 @@ function App() {
                                                                         <DonaDona/>
                                                                       </motion.div></div></div>}/> 
               </Route>
-              <Route element={<PrivateRoute/>}>
+              {/* <Route element={<PrivateRoute/>}>
                 <Route path='*' element={<div className="main-container">
                                               <PlzLogin/>
                                         </div>}/>  
-              </Route>                                                                                                                                                                           
+              </Route>                                                                                                                                                                            */}
           </Routes>
         </AnimatePresence>
 

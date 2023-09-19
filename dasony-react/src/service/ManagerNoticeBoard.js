@@ -141,7 +141,7 @@ const ManagerNoticeBoard = () => {
                     </ul>
                     <input type="text" id="notice-search-keyword" ref={keywordBtn} maxLength="5" placeholder="검색어입력"
                         onKeyDown={enter}/>
-                    <button className="notice-search-enter btn" onClick={() => {navigate("new")}}>등록하기</button>
+                    <button className="notice-search-enter btn btn-outline-primary" onClick={() => {navigate("new")}}>등록하기</button>
                 </div>
             </div>
         </nav>

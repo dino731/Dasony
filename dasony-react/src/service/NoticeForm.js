@@ -155,7 +155,7 @@ const NoticeForm = () => {
                     <CkEditor className="ck-editor" editContent={{content, setContent}} />
                 </div>
             </div>
-            <button type="submit" ref={submitBtn} className="btn">{btnStatus}</button>
+            <button type="submit" ref={submitBtn} className="btn btn-primary">{btnStatus}</button>
         </form>
     );
 };
