@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class BoardVsList {
+	private int boardNo;
 	private BoardVs boardVs;
 	private int interestCount;
 	private int orderMap;

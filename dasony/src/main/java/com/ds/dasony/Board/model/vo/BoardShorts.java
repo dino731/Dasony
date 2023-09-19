@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class BoardShorts {
-	private Board board;
+	private int boardNo;
 	private int interestCount;
 	private int orderMap;
+	private Board board;
 	private User user;
 	private BoardVideo boardVideo;
 }

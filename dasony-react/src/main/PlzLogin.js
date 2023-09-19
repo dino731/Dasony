@@ -100,7 +100,7 @@ const PlzLogin = () => {
     useEffect(()=>{
         if(loginUserNo){
             if(loginUserLevel==='Z'){
-                navigate('/admin/main');
+                navigate('/admin/chart');
             } else {
                 navigate('/main');
             }
