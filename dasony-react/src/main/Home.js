@@ -30,11 +30,8 @@ const Home = () =>{
             .catch(err=>{
                 console.log(err);
             });
-            const fetchData = async()=>{
             
         }
-        }
-
         fetchData();
     },[])
     return (
@@ -51,8 +48,8 @@ const Home = () =>{
                                     </div>
                                 </td>
                                 <td>
-                                {
-                                    weatherList?.filter(weather=>(
+                                
+                                {weatherList && weatherList.length > 0 && weatherList[0].board &&weatherList.filter(weather=>(
                                         weather.user.userRegion == userRegion
                                     )).slice(0, 3).map(weather=>{
                                         return(

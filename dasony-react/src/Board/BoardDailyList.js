@@ -361,7 +361,7 @@ const BoardDailyList = ()=>{
                             "http://localhost:8083/dasony"+board.boardImg.boardImgPath+board.boardImg.boardImgModName
                             : "https://i.postimg.cc/rmRJRyvp/dasony-logo.png"} alt="썸네일" className="board-img"/>
                             
-                            :<video controls className="board-video-thumb" muted autoPlay>
+                            :<video controls className="board-video-thumb" muted>
                               <source 
                               src={`http://localhost:8083/dasony/resources/images/board/video/${board.boardVideo.videoModName}`} 
                               type="video/mp4" />

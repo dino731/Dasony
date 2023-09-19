@@ -146,8 +146,7 @@ const BoardShorts = () => {
                     <div className='videoplayer-wrapper'>
                       <div className='videoplayer-userinfo'>
                         <span className='videoplayer-userimg-wrapper'>
-                          <img src="/resources/common-img/boardImg/지현님슈퍼슈퍼지능.jpg" alt="썸네일" className='videoplayer-userimg'></img>
-                        </span>
+                          </span>
                          <span>{user&&user.userNick}</span>
                       </div>
                       <div className='videoplayer-userinfo-wrapper'>

@@ -653,7 +653,7 @@ const handleReModalOffAndClose = () => {
                     :
                     (<>
                     <div className="share-img-box">
-                    {img?.map(img=>(
+                    {path.includes('share')&&img?.map(img=>(
                       
                       <img key={img?.boardImgNo} src={`http://localhost:8083/dasony${img?.boardImgPath}${img?.boardImgModName}`}
                        style={{width:'150px'}}/>
@@ -707,12 +707,6 @@ const handleReModalOffAndClose = () => {
                                     <div>{board.user.userNick}<br/></div>
                                   </div>
                                   {board.board.boardContent}
-                                  sdfasdfasfsadfsadfasdffsfasdfsa
-                                  sdfasdfasfsadfsadfasdfasdfasdf
-                                  asdfasdfsdfasdfdddddddddddddddddddddddddddddddddddddd
-                                  asdfasdfsafdasdfasdfsdfasdfdddddddddddddddddddddddddddddddddddddd
-                                  asdfasdfsdfasdfdddddddddddddddddddddddddddddddddddddd
-                                  asdfasdfsdfasdfdddddddddddddddddddddddddddddddddddddd
                                 </div>
                                 </div>
                             </div>
@@ -725,7 +719,9 @@ const handleReModalOffAndClose = () => {
                       :(
                         <>
                         {
-                          share&& share.map(s=>(
+                          share&& share.filter(s=>(
+                            s.boardNo == boardNo
+                          )).map(s=>(
                             <div>
                               <br/>
                               <div style={{fontSize:'1.3vw', textAlign:'center'}}>

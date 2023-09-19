@@ -1011,7 +1011,7 @@ input[type=file]:hover::file-selector-button {
 
 /*boardSh css*/
 .boardSh-content{
-  border: 1px solid red;
+  //border: 1px solid red;
   margin: 3vh 2vw 3vh 2vw;
   text-align: center;
 }
@@ -1022,13 +1022,25 @@ input[type=file]:hover::file-selector-button {
   border-radius: 0.5vw;
   border: 2px solid #7A7A7A;
 }
-
+.boardList-search-btn{
+  border: 2px solid #CB9DE7;
+  border-radius: 0.5vw;
+  background-color: white;
+  color: #CB9DE7;
+  font-size: 130%;
+  font-weight: 900;
+}
+.boardList-search-btn:hover{
+  transition-duration: 0.5s;
+  background-color: #CB9DE7;
+  color: white;
+}
 
 .BoardDetail-userVideo-views-container{
   margin-top: 10vh;
 }
 .BoardDetail-userVideo-views-li{
-  border: 1px solid red;
+  //border: 1px solid red;
   width: 45%;
   margin: auto;
   padding: 0;

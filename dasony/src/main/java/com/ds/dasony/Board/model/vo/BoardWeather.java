@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class BoardWeather {
+	private int boardNo;
 	private Board board;
 	private int interestCount;
 	private int orderMap;

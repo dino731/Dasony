@@ -4,10 +4,14 @@ import './MainBestCarousel.css';
 import { useRecoilState } from 'recoil';
 import { bestListState, shortsListState, vsListState, localListState } from '../atoms';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 const MainBestCarousel = () =>{
 
-    
+    /*글자 수 제한 함수  */
+    const settingText = (text, n) => {
+        return text.length>n?text.substring(0, n-1)+'...':text;
+    }
     const userNo = localStorage.getItem("loginUserNo");
     const userRegion = localStorage.getItem("loginUserRegion");
 
@@ -42,9 +46,23 @@ const MainBestCarousel = () =>{
             <Carousel.Item>
                 <div className='home-best-carousel'>
             {
-                bestList&&bestList.filter(best=>(
+                bestList && bestList.length > 0 && bestList[0].board &&bestList.filter(best=>(
                     best.user.userRegion == userRegion
                 )).slice(0,3).map(best=>(
+                    <Link key={best.board.boardNo}  to={
+                            best.board.boardCateNo == '1103'
+                            ?
+                            '../board/general/daily/vs/detail/'+best.board.boardNo
+                            :
+                            best.board.boardCateNo == '1102'?
+                            '../board/general/daily/shorts/detail/'+best.board.boardNo
+                            :
+                            best.board.boardCateNo == '3101'?
+                            '../board/share/list/'+best.board.boardNo
+                            :
+                            '../board/share/list/'+best.board.boardNo
+                        }>
+                        
                     <div key={best.board.boardNo} className='home-best-box'>
                         <div style={{height:'9vw', width:'9vw',overflow:'hidden'}}>
                             {
@@ -61,7 +79,7 @@ const MainBestCarousel = () =>{
                                 :best.boardVideo.videoModName&&!best.boardImg.boardImgModName
                                 ?
                                 <>
-                                    <video id="vid" controls className="board-video" autoPlay loop>
+                                    <video id="vid" controls className="board-video">
                                         <source src={`http://localhost:8083/dasony${best.boardVideo.videoPath}${best.boardVideo.videoModName}`} type="video/mp4" />
                                     </video>
                                 </>
@@ -71,8 +89,9 @@ const MainBestCarousel = () =>{
                                 </>
                             }
                         </div>
-                        <div style={{fontSize:'100%'}}>{best.user.userNick}<br/>{best.board.boardTitle}</div>
+                        <div style={{fontSize:'100%'}}>{settingText(best.user.userNick,8)}<br/>{settingText(best.board.boardTitle,8)}</div>
                     </div>
+                    </Link>
                 ))
             }
             </div>
@@ -81,11 +100,24 @@ const MainBestCarousel = () =>{
             <div className='home-best-carousel'>
 
             {
-                bestList&&bestList?.filter(best=>(
+                bestList && bestList.length > 0 && bestList[0].board &&bestList.filter(best=>(
                     best.user.userRegion == userRegion
                 )).slice(3,6).map(best=>(
+                    <Link key={best.board.boardNo} to={
+                        best.board.boardCateNo == '1103'
+                        ?
+                        '../board/general/daily/vs/detail/'+best.board.boardNo
+                        :
+                        best.board.boardCateNo == '1102'?
+                        '../board/general/daily/shorts/detail/'+best.board.boardNo
+                        :
+                        best.board.boardCateNo == '3101'?
+                        '../board/share/list/'+best.board.boardNo
+                        :
+                        '../board/share/list/'+best.board.boardNo
+                    }>
+                    
                     <div className='home-best-box'>
-                        
                         <div style={{height:'9vw', width:'9vw',overflow:'hidden'}}>
                             {
                                 best.boardVideo.videoModName&&best.boardImg.boardImgModName
@@ -111,8 +143,9 @@ const MainBestCarousel = () =>{
                                 </>
                             }
                         </div>
-                        <div>{best.user.userNick}<br/>{best.board.boardTitle}</div>
+                        <div style={{fontSize:'100%'}}>{settingText(best.user.userNick,8)}<br/>{settingText(best.board.boardTitle,8)}</div>
                     </div>
+                    </Link>
                 ))
             }
                 </div>
@@ -122,7 +155,10 @@ const MainBestCarousel = () =>{
 }
 
 const MainLocalCarousel = () =>{
-
+/*글자 수 제한 함수  */
+const settingText = (text, n) => {
+    return text.length>n?text.substring(0, n-1)+'...':text;
+}
     const userNo = localStorage.getItem("loginUserNo");
     const userRegion = localStorage.getItem("loginUserRegion");
 
@@ -157,12 +193,38 @@ const MainLocalCarousel = () =>{
                     <Carousel.Item>
                         <div className='local-carousel'>
                             {
-                                localList?.filter(local=>(
+                                localList && localList.length > 0 && localList[0].board &&localList.filter(local=>(
                                     local.user.userRegion == userRegion
                                 ))
                                 .slice(0,3)
                                 .map(local=>(
+                                    <Link key={local.board.boardNo} to={
+                                        local.board.boardCateNo == '1103'
+                                        ?
+                                        '../board/general/daily/vs/detail/'+local.board.boardNo
+                                        :
+                                        local.board.boardCateNo == '1102'
+                                        ?
+                                        '../board/general/daily/shorts/detail/'+local.board.boardNo
+                                        :
+                                        local.board.boardCateNo == '3101'
+                                        ?
+                                        '../board/share/list/'+local.board.boardNo
+                                        :
+                                        local.board.boardCateNo == '2101'||local.board.boardCateNo == '2102'||
+                                        local.board.boardCateNo == '2103'||local.board.boardCateNo == '2104'
+                                        ?
+                                        '../board/info/jmt/detail/'+local.board.boardNo
+                                        :
+                                        local.board.boardCateNo == '2201'||local.board.boardCateNo == '2202'||
+                                        local.board.boardCateNo == '2203'||local.board.boardCateNo == '2204'
+                                        ?
+                                        '../board/info/fashion/detail/'+local.board.boardNo
+                                        :
+                                        '../board/info/local/detail/'+local.board.boardNo
+                                    }>
                                     <div className='local-box'>
+                                        
                                         <div className='local-box-img'>
                                             {
                                                 local.boardVideo.videoModName&&local.boardImg.boardImgModName
@@ -189,10 +251,11 @@ const MainLocalCarousel = () =>{
                                             }
                                         </div>
                                         <div className='local-box-text'>
-                                            {local.user.userNick}<br/><br/>
-                                            {local.board.boardTitle}
+                                            {settingText(local.user.userNick,8)}<br/><br/>
+                                            {settingText(local.board.boardTitle,8)}
                                         </div >
                                     </div>
+                                    </Link>
                                 ))
                             }
                             </div>
@@ -200,11 +263,36 @@ const MainLocalCarousel = () =>{
                     <Carousel.Item>
                         <div className='local-carousel'>
                             {
-                                localList?.filter(local=>(
+                                localList && localList.length > 0 && localList[0].board &&localList.filter(local=>(
                                     local.user.userRegion == userRegion
                                 ))
                                 .slice(3,6)
                                 .map(local=>(
+                                    <Link key={local.board.boardNo} to={
+                                        local.board.boardCateNo == '1103'
+                                        ?
+                                        '../board/general/daily/vs/detail/'+local.board.boardNo
+                                        :
+                                        local.board.boardCateNo == '1102'
+                                        ?
+                                        '../board/general/daily/shorts/detail/'+local.board.boardNo
+                                        :
+                                        local.board.boardCateNo == '3101'
+                                        ?
+                                        '../board/share/list/'+local.board.boardNo
+                                        :
+                                        local.board.boardCateNo == '2101'||local.board.boardCateNo == '2102'||
+                                        local.board.boardCateNo == '2103'||local.board.boardCateNo == '2104'
+                                        ?
+                                        '../board/info/jmt/detail/'+local.board.boardNo
+                                        :
+                                        local.board.boardCateNo == '2201'||local.board.boardCateNo == '2202'||
+                                        local.board.boardCateNo == '2203'||local.board.boardCateNo == '2204'
+                                        ?
+                                        '../board/info/fashion/detail/'+local.board.boardNo
+                                        :
+                                        '../board/info/local/detail/'+local.board.boardNo
+                                    }>
                                     <div className='local-box'>
                                         <div className='local-box-img'>
                                             {
@@ -232,10 +320,11 @@ const MainLocalCarousel = () =>{
                                             }
                                         </div>
                                         <div className='local-box-text'>
-                                            {local.user.userNick}<br/>
-                                            {local.board.boardTitle}
+                                            {settingText(local.user.userNick,8)}<br/><br/>
+                                            {settingText(local.board.boardTitle,8)}
                                         </div >
                                     </div>
+                                    </Link>
                                 ))
                             }
                             </div>
@@ -246,30 +335,43 @@ const MainLocalCarousel = () =>{
 
 const MainShortsCarousel = () => {
 
-    
+    /*글자 수 제한 함수  */
+    const settingText = (text, n) => {
+        return text.length>n?text.substring(0, n-1)+'...':text;
+    }
     const userNo = localStorage.getItem("loginUserNo");
     const userRegion = localStorage.getItem("loginUserRegion");
 
-
+    const navigate = useNavigate();
     const [shortsList, setShortsList] = useRecoilState(shortsListState);
     const [index, setIndex] = useState(0);
 
     const [left, setLeft] = useState(0);
     const handleLeft = () => {
-        if(-40*(index)<left && left< -29*(index)){
+        if(-40<left && left< -30){
             setLeft(0);
         } else {
-            setLeft(left-33);
+            setLeft(left-12.8);
+            console.log(left);
         }
     }
     const handleRight = () => {
-        if(-30<left && left < 30){
+        if(-10<left && left <15 ){
             setLeft(0);
         } else {
-            setLeft(left+33);
+            setLeft(left+12.8);
+            
+            console.log(left);
         }
     }
 
+    const handleNav = (id) => {
+        console.log("id", id);
+        let url = '../board/general/daily/shorts/detail/'+id;
+
+        navigate(url);
+                                        
+    }
 
 
     useEffect(()=>{
@@ -296,21 +398,25 @@ const MainShortsCarousel = () => {
             <span className='carousel-btn-left' onClick={handleRight}>
                     {"<"}
             </span>
-            {shortsList?.filter(shorts=>(
+            
+            {shortsList?.[0]?.board?.boardNo&&shortsList?.filter(shorts=>(
                     shorts.user.userRegion == userRegion
                 )).slice(0, 6).map(shorts=>{
                 return(
-                    <div key={shorts.board.boardNo} className='mainShorts-box' style={{left:left+'%'}}>
+                    <div id={shorts.board.boardNo}
+                         key={shorts.board.boardNo} 
+                         onClick={()=>handleNav(shorts.board.boardNo)}
+                         className='mainShorts-box' style={{left:`${left}vw`}}>
                         <div>
-                        <video id="vid" controls className="board-video" autoPlay loop muted>
+                        <video id="vid" controls className="board-video" muted>
                             <source src={`http://localhost:8083/dasony${shorts.boardVideo.videoPath}${shorts.boardVideo.videoModName}`} type="video/mp4" />
                         </video>
                         </div>
                         <div>
-                            <div>
-                                {shorts.user.userNick}
+                            <div style={{textAlign:'center', fontSize:'120%'}}>
+                                {settingText(shorts.user.userNick, 8)}
                                 <br/>
-                                {shorts.board.boardTitle}
+                                {settingText(shorts.board.boardTitle, 8)}
                             </div>
                         </div>
                     </div>
@@ -326,7 +432,12 @@ const MainShortsCarousel = () => {
 
 const MainVsCarousel = () => {
 
-    
+    const navigate = useNavigate();
+
+    /*글자 수 제한 함수  */
+    const settingText = (text, n) => {
+        return text.length>n?text.substring(0, n-1)+'...':text;
+    }
     const userNo = localStorage.getItem("loginUserNo");
     const userRegion = localStorage.getItem("loginUserRegion");
 
@@ -338,7 +449,7 @@ const MainVsCarousel = () => {
     
     const handleLeft = () => {
         let changedLeft = 0;
-        if(-18*6<left&& left<=-18*5){
+        if(-18*4<left&& left<=-18*3){
             changedLeft = 0;
             setLeft(changedLeft);
         } else {
@@ -359,6 +470,15 @@ const MainVsCarousel = () => {
             console.log(changedLeft);
         }
     }
+
+    const handleNav = (id) => {
+        console.log("id", id);
+        let url = '../board/general/daily/vs/detail/'+id;
+
+        navigate(url);
+                                        
+    }
+    
 
     useEffect(()=>{
         const fetchData = async()=>{
@@ -383,12 +503,15 @@ const MainVsCarousel = () => {
             <span className='vs-carousel-btn-left' onClick={handleRight}>
                 {"<"}
             </span>
-            {vsList?.filter(vs=>(
-                    vs.user.userRegion == userRegion
+            
+            {vsList && vsList.length > 0 && vsList[0].boardVs &&vsList.filter(vs=>(
+                    vs?.user.userRegion == userRegion
                 )).slice(0, 6).map(vs=>{
                 return(
-                    <div key={vs.boardVs.boardNo} className='mainVs-box' style={{left:(left+'vw')}}>
-                        <span>{vs.boardVs.boardTitle}</span><br/>
+                    <div key={vs?.boardVs.boardNo} 
+                        onClick={()=>handleNav(vs.boardVs.boardNo)}
+                        className='mainVs-box' style={{left:(left+'vw')}}>
+                        <span>{settingText(vs.boardVs.boardTitle, 8)}</span><br/>
                         <div>
                             <div>
                                 {vs.boardVs.boardOptionLeft} 
