@@ -80,7 +80,7 @@ const BoardDailyWriter = () => {
     userNo : '',
     boardTitle : '',
     boardWriteDate : getCurrentDateTime(),
-    boardContent : content,
+    boardContent : '',
     boardCateNo :  boardCateStateValue.value,
     boardTag : '',
 
@@ -116,11 +116,11 @@ const BoardDailyWriter = () => {
       userNo: localStorage.loginUserNo,
       boardCateNo: boardCateStateValue.value,
       boardTag: upTagArr.join('_'),
-      boardContent : content,
       [name]: value
     };
     setNewBoardPost(updatedNewBoardPost);
   }
+  console.log('인풋값 확인 newBoardPost',newBoardPost);
 
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
@@ -319,14 +319,15 @@ const BoardDailyWriter = () => {
                 </div> {/* row justify-content-md-center boardDetail-title-container */}    
               </div>{/* boardList-search-title-wrapper */}
               <div>
-                <OpenEditor className="ck-editor" editContent={{content, setContent}}
+              {/* <OpenEditor className="ck-editor" editContent={{content, setContent}}
                 value={newBoardPost.boardContent} 
-                onClick={handleInputChange}/>
-                {/* <textarea
+                onClick={handleInputChange}/> */}
+                <textarea
+                  className='BoardWriteForm board-input-contentarea'
                   name="boardContent" 
                   value={newBoardPost.boardContent} 
                   onChange={handleInputChange}
-                    /> */}
+                    />
               </div> 
               <div className='BoardWriteForm-img-input-wrapper'>
                 <label htmlFor="file">

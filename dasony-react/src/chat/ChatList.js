@@ -49,7 +49,7 @@ import { useEffect } from 'react';
     useEffect(() => {
         getChatList();
         
-    }, [])
+    }, [chatData])
 
 // ----------------------------모달창-----------------------------------
     const [modalIsOpen, setModalIsOpen] = useState(false);

@@ -98,6 +98,8 @@ import {VoteWrite} from './Board/VoteWrite';
 import { AnotherHeader } from './Board/AnotherHeader';
 import { ShareHeader } from './share/ShareHeader';
 import { ShareWriter } from './Board/ShareWriter';
+import { VoteEdit } from './Board/VoteEdit';
+import { ShortsEdit } from './Board/ShortsEdit';
 import MypageChangeLocation from './mypage/mypageChangeLocation';
 
 
@@ -280,7 +282,62 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                             <AdminAlert/>
                                                                         </motion.div></div></div>}/>
-                </Route>                                                     
+                </Route>
+
+                <Route element={<AdminRoute/>}>
+                  <Route path="/admindonalist" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                      initial = {{opacity:0, y:30}}
+                                                                      animate = {{opacity:1, y:0}}
+                                                                      end = {{opacity:1, y:0}}
+                                                                      transition={{duration : 1}}>
+                                                                        <AdminDonaList/>
+                                                                      </motion.div></div></div>}/>
+              </Route>
+
+              <Route element={<AdminRoute/>}>
+                  <Route path="/admindonaenroll" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                      initial = {{opacity:0, y:30}}
+                                                                      animate = {{opacity:1, y:0}}
+                                                                      end = {{opacity:1, y:0}}
+                                                                      transition={{duration : 1}}>
+                                                                        <AdminDonaEnroll/>
+                                                                      </motion.div></div></div>}/> 
+              </Route>
+
+              <Route element={<AdminRoute/>}>
+                  <Route path="/admindonadetail/:donaNo" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                      initial = {{opacity:0, y:30}}
+                                                                      animate = {{opacity:1, y:0}}
+                                                                      end = {{opacity:1, y:0}}
+                                                                      transition={{duration : 1}}>
+                                                                        <AdminDonaDetail/>
+                                                                      </motion.div></div></div>}/>
+              </Route>
+
+              <Route element={<AdminRoute/>}>
+                  <Route path="/admindonadetail/:donaNo" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                      initial = {{opacity:0, y:30}}
+                                                                      animate = {{opacity:1, y:0}}
+                                                                      end = {{opacity:1, y:0}}
+                                                                      transition={{duration : 1}}>
+                                                                        <AdminDonaDetail/>
+                                                                      </motion.div></div></div>}/>
+              </Route>
+
+              <Route element={<AdminRoute/>}>
+                  <Route path="/admindonaupdate/:donaNo" element={<div className=".for-main">
+                                                <div className='for-normal-page'><motion.div
+                                                                      initial = {{opacity:0, y:30}}
+                                                                      animate = {{opacity:1, y:0}}
+                                                                      end = {{opacity:1, y:0}}
+                                                                      transition={{duration : 1}}>
+                                                                        <AdminUpdate/>
+                                                                      </motion.div></div></div>}/>                                                                                                                                                                                                                                                          
+              </Route>                                                     
 
                   {/* 
                     이벤트 관리자 페이지
@@ -348,13 +405,13 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <AdminBoard />
                                                                         </motion.div></div></div>}>
-                      <Route path="delete" element={<motion.div
+                 {/* <Route path="delete" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <AdminBoardDelete/>
-                                                      </motion.div>}/>
+                                                      </motion.div>}/> */}
                       <Route path="new" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
@@ -603,13 +660,58 @@ function App() {
                                                                               transition={{duration : 1}}>
                                                                                 <BoardDetail/>
                                                                               </motion.div>}/>
+                                <Route path="daily/vs/detail/:boardNo" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardDetail/>
+                                                                              </motion.div>}/>
+                                <Route path="daily/shorts/detail/:boardNo" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <BoardDetail/>
+                                                                              </motion.div>}/>
                                 <Route path="daily/edit/:boardNo/:boardCateNo" element={<motion.div
                                                                               initial = {{opacity:0, y:30}}
                                                                               animate = {{opacity:1, y:0}}
                                                                               end = {{opacity:1, y:0}}
                                                                               transition={{duration : 1}}>
                                                                                 <BoardEdit/>
-                                                                              </motion.div>}/>                 
+                                                                              </motion.div>}/>
+                                <Route path="daily/vs/edit/*" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <AnotherHeader/>
+                                                                              </motion.div>}>
+                                  <Route path=":boardNo" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <VoteEdit/>
+                                                                              </motion.div>}/>
+                                </Route>
+                                                                              
+                                <Route path="daily/shorts/edit/*" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <AnotherHeader/>
+                                                                              </motion.div>}>
+                                  <Route path=":boardNo" element={<motion.div
+                                                                              initial = {{opacity:0, y:30}}
+                                                                              animate = {{opacity:1, y:0}}
+                                                                              end = {{opacity:1, y:0}}
+                                                                              transition={{duration : 1}}>
+                                                                                <ShortsEdit/>
+                                                                              </motion.div>}/>                           
+                                </Route>                   
                           <Route path="interest/" element={<motion.div
                                                           initial = {{opacity:0, y:30}}
                                                           animate = {{opacity:1, y:0}}
@@ -909,61 +1011,6 @@ function App() {
                                                                         <DonaList/>
                                                                       </motion.div></div></div>}/>
               </Route>     
-
-              <Route element={<PrivateRoute/>}>
-                  <Route path="/admindonalist" element={<div className=".for-main">
-                                                <div className='for-normal-page'><motion.div
-                                                                      initial = {{opacity:0, y:30}}
-                                                                      animate = {{opacity:1, y:0}}
-                                                                      end = {{opacity:1, y:0}}
-                                                                      transition={{duration : 1}}>
-                                                                        <AdminDonaList/>
-                                                                      </motion.div></div></div>}/>
-              </Route>
-
-              <Route element={<PrivateRoute/>}>
-                  <Route path="/admindonaenroll" element={<div className=".for-main">
-                                                <div className='for-normal-page'><motion.div
-                                                                      initial = {{opacity:0, y:30}}
-                                                                      animate = {{opacity:1, y:0}}
-                                                                      end = {{opacity:1, y:0}}
-                                                                      transition={{duration : 1}}>
-                                                                        <AdminDonaEnroll/>
-                                                                      </motion.div></div></div>}/> 
-              </Route>
-
-              <Route element={<PrivateRoute/>}>
-                  <Route path="/admindonadetail/:donaNo" element={<div className=".for-main">
-                                                <div className='for-normal-page'><motion.div
-                                                                      initial = {{opacity:0, y:30}}
-                                                                      animate = {{opacity:1, y:0}}
-                                                                      end = {{opacity:1, y:0}}
-                                                                      transition={{duration : 1}}>
-                                                                        <AdminDonaDetail/>
-                                                                      </motion.div></div></div>}/>
-              </Route>
-
-              <Route element={<PrivateRoute/>}>
-                  <Route path="/admindonadetail/:donaNo" element={<div className=".for-main">
-                                                <div className='for-normal-page'><motion.div
-                                                                      initial = {{opacity:0, y:30}}
-                                                                      animate = {{opacity:1, y:0}}
-                                                                      end = {{opacity:1, y:0}}
-                                                                      transition={{duration : 1}}>
-                                                                        <AdminDonaDetail/>
-                                                                      </motion.div></div></div>}/>
-              </Route>
-
-              <Route element={<PrivateRoute/>}>
-                  <Route path="/admindonaupdate/:donaNo" element={<div className=".for-main">
-                                                <div className='for-normal-page'><motion.div
-                                                                      initial = {{opacity:0, y:30}}
-                                                                      animate = {{opacity:1, y:0}}
-                                                                      end = {{opacity:1, y:0}}
-                                                                      transition={{duration : 1}}>
-                                                                        <AdminUpdate/>
-                                                                      </motion.div></div></div>}/>                                                                                                                                                                                                                                                          
-              </Route>
 
               <Route element={<PrivateRoute/>}>
                    <Route path="/donatotal" element={<div className=".for-main">

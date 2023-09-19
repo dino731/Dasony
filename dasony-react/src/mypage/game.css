@@ -21,8 +21,7 @@
     top: 90vh;
     right: 5%;
     z-index: 55;
-    animation: blink 3s infinite;
-    
+    animation: blink 3s infinite;  
 }
 #game:hover{
     cursor: pointer;

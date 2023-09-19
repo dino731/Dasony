@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ds.dasony.Board.model.vo.Board;
 import com.ds.dasony.donation.model.vo.Donation;
+import com.ds.dasony.donation.model.vo.DonationList;
 import com.ds.dasony.event.model.vo.Event;
 import com.ds.dasony.game.model.vo.Game;
 import com.ds.dasony.member.model.vo.User;
@@ -125,6 +126,7 @@ public class UserDao {
 		int result = session.update("memberMapper.modifyNewPwd", myInfo);
 		return result;
 	}
+	
 	
 	
 

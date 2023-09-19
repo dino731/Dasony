@@ -365,14 +365,15 @@ const BoardEdit = () => {
                 </div> {/* row justify-content-md-center boardDetail-title-container */}    
               </div>{/* boardList-search-title-wrapper */}
               <div>
-                <OpenEditor className="ck-editor" editContent={{content, setContent}}
+                {/* <OpenEditor className="ck-editor" editContent={{content, setContent}}
                 defaultValue={newBoardPost.boardContent} 
-                onClick={handleInputChange}/>
-                {/* <textarea
+                onClick={handleInputChange}/> */}
+                <textarea
+                  className='BoardWriteForm board-input-contentarea'
                   name="boardContent" 
                   value={newBoardPost.boardContent} 
                   onChange={handleInputChange}
-                    /> */}
+                    />
               </div> 
               <div className='BoardWriteForm-img-input-wrapper'>
                 <label htmlFor="file">

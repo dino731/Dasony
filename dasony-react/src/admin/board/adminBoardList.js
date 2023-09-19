@@ -1,6 +1,6 @@
 // import '../../event/event.css';
 import { useRef, useEffect, useState  } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { BoardInterestCategoryState, BoardJMTCategoryState, BoardFashionCategoryState, BoardLocalCategoryState, boardPostState } from '../../atoms';
 import axios from 'axios';
@@ -102,7 +102,8 @@ const AdminBoardList = () =>{
   function selectAll() {
     const checkboxes = document.getElementsByName('ckeck');
     if (!selectAllChecked) {
-      const allBoardNos = adminBList.map((board) => board.boardNo);
+      const allBoardNos = adminBList.filter((board) => {
+        return listBoardCate.some((category) => category.name === board?.boardCate.boardSmallCate);}).map((board) => board.boardNo);
       setSelectedItems(allBoardNos);
     } else {
       setSelectedItems([]);
@@ -170,6 +171,10 @@ const AdminBoardList = () =>{
     
   };
 
+/*   const handleListPath = (board)=> {
+    window.location.href =`http://localhost:3000/dasony/board/${board.boardCate.boardBigCate}/${board.boardCate.boardMiddleCate}/detail/${board.boardNo}`;
+  } */
+
     
 
   return(
@@ -218,11 +223,12 @@ const AdminBoardList = () =>{
                   <th scope="col" width="5%;">
                         <input type='checkbox'
                          value='selectall'
+                         key={adminBList.boardNo}
                          checked={selectAllChecked} // 모두 선택 체크 상태 반영
                          onChange={selectAll} // 모두 선택 체크 상태 변경 핸들러 연결
                         />
                       </th>
-                      <th scope="col" width="7%;">BoardNo</th>
+                      <th scope="col" width="7%;">글번호</th>
                       <th scope="col" width="10%;">게시판</th>
                       <th scope="col" width="25%;">제목</th>
                       <th scope="col" width="15%;">작성자</th>
@@ -246,10 +252,38 @@ const AdminBoardList = () =>{
                           onChange={handleCheckboxChange}
                           />
                         </th>
-                        <td scope="row">{board.boardNo}</td>
-                        <td>{board.boardCate.boardSmallCate}</td>
-                        <td className="text-cut">{board.boardTitle}</td>
-                        <td scope="row">{board.user.userNick}</td>
+                        
+                          <td scope="row">{board.boardNo}</td>
+                          <td><div style={{ 
+                                            border : 'none',
+                                            width: '3vw',
+                                            height : '2vh',
+                                            borderRadius: '15%',
+                                            color: 'white',
+                                            backgroundColor:
+                                            board.boardCate.boardSmallCate === '일상' ? 'lightgray' :
+                                            board.boardCate.boardSmallCate === '맛집' ? 'lightgray' :
+                                            board.boardCate.boardSmallCate === '게임' ? 'lightgray' :
+                                            board.boardCate.boardSmallCate === '캐주얼' ? 'lightgray' :
+                                            board.boardCate.boardSmallCate === '복지' ? 'lightgray' :
+                                            board.boardCate.boardSmallCate === '날씨' ? '#89ba88' :
+                                            board.boardCate.boardSmallCate === '혼밥' ? '#89ba88' :
+                                            board.boardCate.boardSmallCate === '방송' ? '#89ba88' :
+                                            board.boardCate.boardSmallCate === '포멀' ? '#89ba88' :
+                                            board.boardCate.boardSmallCate === '교육' ? '#89ba88' :
+                                            board.boardCate.boardSmallCate === '투표' ? '#CB9DE7' :
+                                            board.boardCate.boardSmallCate === '혼술' ? '#CB9DE7' :
+                                            board.boardCate.boardSmallCate === '취미' ? '#CB9DE7' :
+                                            board.boardCate.boardSmallCate === '스트릿' ? '#CB9DE7' :
+                                            board.boardCate.boardSmallCate === '대여' ? '#CB9DE7' :
+                                            board.boardCate.boardSmallCate === '쇼츠' ? '#84abee' :
+                                            board.boardCate.boardSmallCate === '분위기' ? '#84abee' :
+                                            board.boardCate.boardSmallCate === '기타' ? '#84abee' :
+                                            board.boardCate.boardSmallCate === '걸리시' ? '#84abee' :
+                                            board.boardCate.boardSmallCate === '의료' ? '#84abee' : 'lightgray'}}>{board.boardCate.boardSmallCate}</div></td>
+                          <td className="text-cut" /*  onClick={()=>handleListPath(board)} */>{board.boardTitle}</td>
+                          <td scope="row">{board.user.userNick}</td>
+                      
                         <td scope="row">{board.boardWriteDate}</td>
                         <td scope="row"style={{ border: '1px solid black', 
                                                 borderLeft: 'none',
@@ -257,6 +291,7 @@ const AdminBoardList = () =>{
                                                 color: board.boardStatus === 'Y' ? 'green' : 'red' }}>
                           {board.boardStatus}
                         </td>
+                    
                         {/* <td scope="row"><button>안내</button></td> */}
                         {/* <td scope="row"><button onClick={handleDeleteList} >삭제</button></td> */}
                     </tr>

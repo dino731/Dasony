@@ -30,7 +30,11 @@ public interface DonationService {
 
 	int insertDonaList(DonationList myDona);
 
-//	int selectUserDason(int userNo) throws Exception;
+	void insertDonationAlert(DonationList donaList);
+
+//	int amountUpdate(Donation donation);
+	
+	public int donaInsertExp(DonationList donaList);
 
 
 }

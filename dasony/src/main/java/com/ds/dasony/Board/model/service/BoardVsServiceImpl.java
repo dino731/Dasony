@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ds.dasony.Board.model.dao.BoardVsDao;
+import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardVs;
 import com.ds.dasony.Board.model.vo.BoardVsVote;
 
@@ -37,6 +38,14 @@ public class BoardVsServiceImpl implements BoardVsService {
 	@Override
 	public List<BoardVsVote> voteList(int boardNo) {
 		return boardVsDao.voteList(boardNo);
+	}
+	@Override
+	public BoardVs vsUpdate(int boardNo) {
+		return boardVsDao.vsUpdate(boardNo);
+	}
+	@Override
+	public int vsUpdateSub(BoardVs map) {
+		return boardVsDao.vsUpdateSub(map);
 	}
 	
 	

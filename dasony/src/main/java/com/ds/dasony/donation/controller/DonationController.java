@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ds.dasony.donation.model.service.DonationService;
 import com.ds.dasony.donation.model.vo.Donation;
 import com.ds.dasony.donation.model.vo.DonationList;
+import com.ds.dasony.member.model.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,17 +27,20 @@ import lombok.extern.slf4j.Slf4j;
 public class DonationController {
 	
 	private final DonationService donationService;
+
 	
 	@Autowired
 	public DonationController(DonationService donationService) {
 		this.donationService = donationService;
+
 	}
+	
+	
 	
 	@GetMapping("/donalist")
 	public List<Donation> selectDonaList(HttpServletResponse response){
 		
 		List<Donation> donalist = donationService.selectDonaList();
-//		log.info("donalist = {}", donalist);
 		
 		return donalist;
 	}
@@ -75,8 +79,6 @@ public class DonationController {
 			int totalDonaAmount = donationService.totalAmount(donaHistory);
 		
 			res.put("donaHistory", donaHistory);
-//			res.put("donaNo", donaNo);
-//			res.put("donaHistory", donaHistory);
 			res.put("totalDonaAmount", totalDonaAmount);
 			
 			log.info("donaHistory = {}", donaHistory);
@@ -95,20 +97,15 @@ public class DonationController {
 	public String insertDonaList(@RequestBody DonationList donaList){
 		 
 		 try {
-//			 long userNo = Long.parseLong(requestBody.get("userNo").toString());
-//			 int donaAmount = (int) requestBody.get("donationAmountInt");
-//			 int donaNo = (int) requestBody.get("donaNo");
-			 
-//			DonationList myDona = new DonationList();
-//			myDona.setUserNo(userNo);
-//			myDona.setDonaAmount(donaAmount);
-//			myDona.setDonaNo(donaNo);
 			 
 			 int result = donationService.insertDonaList(donaList);
+			 int result2 = donationService.donaInsertExp(donaList);
 			 
 			 log.info("result = {}", result);
-			 if(result > 0)
-				 return "성공" + result;
+			 if(result > 0) {
+				 donationService.insertDonationAlert(donaList);
+				 return "성공" + result;				 
+			 }
 			 else
 				 return "다시 등록";
 		 }catch (Exception e) {
@@ -116,5 +113,4 @@ public class DonationController {
 			    return "예상치 못한 에러가 발생했습니다. 다시 시도해주세요.";
 		}
 	}
-
 }

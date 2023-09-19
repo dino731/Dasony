@@ -92,7 +92,7 @@ const DonaDona = () => {
 
             const postMyDonaList = (donationData) => {
                 axios.post(`/dasony/insertDona`, donationData)
-                    .then((response) => console.log("제발 한 번에 ㅜ : ", response.data))
+                    .then((response) => console.log(response.data))
                     .catch((error) => console.log(error));
                 }
 
