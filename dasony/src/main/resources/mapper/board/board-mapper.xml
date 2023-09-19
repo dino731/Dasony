@@ -365,7 +365,32 @@
 		WHERE A.BOARD_NO <![CDATA[<]]> #{boardNo}
 		AND ROWNUM = 1
 	</select>
-		
+	<update id="boardDelete" parameterType="board">
+      UPDATE  BOARD
+      SET BOARD_STATUS = 'N'
+      WHERE BOARD_NO = #{boardNo}
+   </update>
+   
+   <update id="removeReply" parameterType="int">
+   	UPDATE REPLY
+   	SET REPLY_STATUS = 'N'
+   	WHERE MAIN_REPLY_NO = #{replyNo}
+   </update>
+   
+   <update id="removeMainReply" parameterType="int">
+   	UPDATE REPLY
+   	SET REPLY_STATUS = 'N'
+   	WHERE REPLY_NO = #{replyNo}
+   </update>	
+   
+   <select id="weatherList" resultMap="boardResultSet">
+   	SELECT *
+   	FROM BOARD
+   	WHERE BOARD_CATE_NO = '1104'
+   </select>
+   
+   
+   
 	
 	<!-- 관리자 쿼리 -->
 	<select id="adminBoardList" resultMap="boardListResultSet">
@@ -393,22 +418,6 @@
 
 
 
-   <update id="boardDelete" parameterType="board">
-      UPDATE  BOARD
-      SET BOARD_STATUS = 'N'
-      WHERE BOARD_NO = #{boardNo}
-   </update>
-   
-   <update id="removeReply" parameterType="int">
-   	UPDATE REPLY
-   	SET REPLY_STATUS = 'N'
-   	WHERE MAIN_REPLY_NO = #{replyNo}
-   </update>
-   
-   <update id="removeMainReply" parameterType="int">
-   	UPDATE REPLY
-   	SET REPLY_STATUS = 'N'
-   	WHERE REPLY_NO = #{replyNo}
-   </update>
+
 
 </mapper>

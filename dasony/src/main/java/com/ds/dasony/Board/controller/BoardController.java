@@ -354,6 +354,16 @@ public class BoardController {
 	      return ResponseEntity.ok(video);
 	   }
 	  
+	   @PostMapping("/weatherList")
+	   public ResponseEntity<List<Board>> weatherList(){
+		   List<Board> list = new ArrayList();
+		   list = boardService.weatherList();
+		   log.info("weatherList{}", list);
+		   if(list != null) {
+			   return ResponseEntity.ok(list);
+		   }
+		   return null;
+	   }
 	
 	
 }

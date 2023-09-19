@@ -167,6 +167,11 @@ public class BoardServiceImpl implements BoardService {
           
       }
 
+	@Override
+	public List<Board> weatherList() {
+		return null;
+	}
+
 
 
 
