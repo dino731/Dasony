@@ -11,10 +11,10 @@ export const AnotherHeader = () => {
     const location = useLocation();
 
     const [boardCateNo, setBoardCateNo] = useState(
-        location.pathname.includes('vwriter')?1103
-        :location.pathname.includes('swriter')?1102
+        location.pathname.includes('vwriter')||location.pathname.includes('vs/edit')?1103
+        :location.pathname.includes('swriter')||location.pathname.includes('shorts/edit')?1102
         :location.pathname.includes('dwriter')?1101
-        :location.pathname.includes('hwriter')?3101
+        :location.pathname.includes('hwriter')||location.pathname.includes('share/edit')?3101
         :0
     );
     const [boardTitle, setBoardTitle] = useState('');
@@ -31,7 +31,7 @@ export const AnotherHeader = () => {
         if(id=='boardKeyword'){
             value = handleTag(value);
         }
-        if(location.pathname.includes('vwriter')){
+        if(location.pathname.includes('vwriter')||location.pathname.includes('vs/edit')){
             setBoardVs(prev=>({
                 ...prev,
                 [id]:value,
@@ -39,7 +39,7 @@ export const AnotherHeader = () => {
                 userNo : userNo
             }));
             console.log(boardVs);
-        } else if(location.pathname.includes('swriter')){
+        } else if(location.pathname.includes('swriter')||location.pathname.includes('shorts/edit')){
             setBoardSh(prev=>({
                 ...prev,
                 [id]:value,
@@ -47,7 +47,7 @@ export const AnotherHeader = () => {
                 userNo : userNo
             }));
             console.log(boardSh);
-        } else if(location.pathname.includes('hwriter')){
+        } else if(location.pathname.includes('hwriter')||location.pathname.includes('share/edit')){
             setShare(prev=>({
                 ...prev,
                 [id]:value,
@@ -94,6 +94,15 @@ export const AnotherHeader = () => {
                         <Link to='/board/general/daily/swriter'>쇼츠 게시글</Link>
                     </>
                 )
+                :location.pathname.includes('vs/edit')
+                ?
+                <span>투표 게시글</span>
+                :location.pathname.includes('shorts/edit')
+                ?
+                <span>쇼츠 게시글</span>
+                :location.pathname.includes("share/edit")
+                ?
+                <span>나눔 게시글</span>
                 :
                 (
                     <>
@@ -109,17 +118,17 @@ export const AnotherHeader = () => {
                 <div className="another-header-title">
                     <input id='boardTitle' placeholder='제목을 입력하세요'
                             onChange={handleBoard} 
-                            value={location.pathname.includes('vwriter')?boardVs?.boardTitle
-                                    :location.pathname.includes('swriter')?boardSh?.boardTitle
-                                    :location.pathname.includes('hwriter')?share?.boardTitle
+                            value={location.pathname.includes('vwriter')||location.pathname.includes('vs/edit')?boardVs?.boardTitle
+                                    :location.pathname.includes('swriter')||location.pathname.includes('shorts/edit')?boardSh?.boardTitle
+                                    :location.pathname.includes('hwriter')||location.pathname.includes('share/edit')?share?.boardTitle
                                     :''}/>
                 </div>
                 <div className="another-header-tag">
                     <input id='boardKeyword' placeholder='태그를 입력하세요'
                             onChange={handleBoard} 
-                            value={location.pathname.includes('vwriter')?boardVs?.boardKeyword
-                                    :location.pathname.includes('swriter')?boardSh?.boardKeyword
-                                    :location.pathname.includes('hwriter')?share?.boardKeyword
+                            value={location.pathname.includes('vwriter')||location.pathname.includes('vs/edit')?boardVs?.boardKeyword
+                                    :location.pathname.includes('swriter')||location.pathname.includes('shorts/edit')?boardSh?.boardKeyword
+                                    :location.pathname.includes('hwriter')||location.pathname.includes('share/edit')?share?.boardKeyword
                                     :''}/>
                 </div>
             </div>

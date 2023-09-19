@@ -21,7 +21,7 @@
 
 }
 .BoardWriteForm-search-box-title{
-  border: 1px solid #588157;
+  border: 1px solid #CB9DE7;
   width: 90%;
   height: 50px;
   border-radius: 4px;
@@ -47,7 +47,7 @@
 
 }
 .BoardWriteForm-search-box-tag {
-  border: 1px solid #588157;
+  border: 1px solid #CB9DE7;
   position: relative;
   width: 90%;
   height: 50px;
@@ -73,6 +73,28 @@
 .BoardWriteForm-search-input-tag-wrapper{
   position: relative;
 }
+.board-input-contentarea{
+  border: 1px solid #CB9DE7;
+  border-radius: 1%;
+  width: 100%;
+  height: 600px;
+  /* resize: none; */
+  overflow-y:scroll;
+}
+
+.board-input-contentarea:focus {
+  outline: none;
+}
+.board-input-contentarea::-webkit-scrollbar {
+  width: 10px;
+}
+.board-input-contentarea::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+}
+.board-input-contentarea::-webkit-scrollbar-track {
+  background-color: grey;
+}
+
 .BoardWriteForm-img-input-wrapper{
   /* border: 1px solid gray; */
   width: 100%;

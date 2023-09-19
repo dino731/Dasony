@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardVs;
 import com.ds.dasony.Board.model.vo.BoardVsVote;
 
@@ -38,6 +39,17 @@ public class BoardVsDao {
 
 	public List<BoardVsVote> voteList(int boardNo) {
 		return session.selectList("boardVsMapper.voteList", boardNo);
+	}
+
+	public BoardVs vsUpdate(int boardNo) {
+		return session.selectOne("boardVsMapper.vsUpdate", boardNo);
+	}
+
+	public int vsUpdateSub(BoardVs map) {
+		int result = session.update("boardVsMapper.vsUpdateSub", map);
+		int result2 = session.update("boardVsMapper.vsBoardUpdateSub", map);
+		int result3 = session.update("boardVsMapper.vsTagUpdateSub", map);
+		return result + result2 + result3;
 	}
 
 }

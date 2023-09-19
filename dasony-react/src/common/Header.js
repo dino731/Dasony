@@ -61,7 +61,7 @@ const Header = () => {
                 <ul>
                     <li></li>
                     <Link to='/admin/chart' style={{textDecoration:'none'}}>
-                    <li className="logo-li"><img src='/resources/common-img/dasony-logo.png'/></li>
+                    <li className="logo-li"><img src='https://i.ibb.co/dPfbwqB/dasony-logo.png'/></li>
                     </Link>
 
                     <li></li>
@@ -142,7 +142,7 @@ const Header = () => {
                     <ul>
                         <li></li>
                         <Link to='/main' style={{textDecoration:'none'}}>
-                        <li className="logo-li"><img src='/resources/common-img/dasony-logo.png'/></li>
+                        <li className="logo-li"><img src='https://i.ibb.co/dPfbwqB/dasony-logo.png'/></li>
                         </Link>
                         <li></li>
                         <Link to='/main' style={{textDecoration:'none'}}>
@@ -253,11 +253,11 @@ const Header = () => {
                                                 <li></li>
                                                 <li></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/board'>사담</Link></li>
-                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/board'>정보공유</Link></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}>나눔</li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/calendar'>달력</Link></li>
                                                 <li></li>
                                                 <li></li>
+                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/board'>{/* 정보공유 */}</Link></li>
                                             </ul>
                                         ); break;
                 case'point' : sideList = (

@@ -13,5 +13,5 @@ public class BoardCare {
 	
 	private int bCareBoardNo; //BOARD_NO
 	private int bCareUserNo; //USER_NO
-
+	private int userViewCount;//USER_VIEW_COUNT
 }
