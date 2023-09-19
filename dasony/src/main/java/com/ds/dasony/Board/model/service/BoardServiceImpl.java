@@ -171,6 +171,13 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> weatherList() {
 		return null;
 	}
+	
+	@Override
+	public int insertBoardExp(BoardWriterForm boardWriterForm) {
+		
+		return boardDao.insertBoardExp(boardWriterForm);
+		
+	}
 
 
 

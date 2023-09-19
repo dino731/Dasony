@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ds.dasony.Board.model.vo.Board;
 import com.ds.dasony.donation.model.vo.Donation;
+import com.ds.dasony.donation.model.vo.DonationList;
 import com.ds.dasony.event.model.vo.Event;
 import com.ds.dasony.game.model.vo.Game;
 import com.ds.dasony.member.model.dao.UserDao;
@@ -140,6 +141,7 @@ public class UserServiceImpl implements UserService{
 	public int modifyNewPwd(Map<String, Object> myInfo) {
 		return userDao.modifyNewPwd(myInfo);
 	}
+	
 
 
 }

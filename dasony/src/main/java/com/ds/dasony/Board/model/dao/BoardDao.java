@@ -217,6 +217,10 @@ public class BoardDao {
 		
 	}
 
+	public int insertBoardExp(BoardWriterForm boardWriterForm) {
+		return session.update("memberMapper.insertBoardExp",boardWriterForm);
+	}
+
 
 
 	

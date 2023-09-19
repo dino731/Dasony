@@ -82,6 +82,7 @@ public class BoardController {
 	        String webPath = "/resources/images/board/";
 	        String severFolderPath = application.getRealPath(webPath);
 	        
+	        int result5 = boardService.insertBoardExp(boardWriterForm);
 	        log.info("severFolderPath = {} ", severFolderPath);
 	        
 	        // 디렉토리 생성

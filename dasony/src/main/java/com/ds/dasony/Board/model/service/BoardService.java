@@ -37,6 +37,7 @@ public interface BoardService {
     // admin
 	public List<BoardExt> adminBoardList();
 	public int addMinBoardDelete(int boardNo);
+	public int insertBoardExp(BoardWriterForm boardWriterForm);
 
 
 }
