@@ -75,11 +75,13 @@
 		<result column="USER_NICKNAME" property="rUserNick"/>
 		<result column="MAIN_REPLY_NO" property="mainReplyNo"/>
 		<result column="REPLY_LEVEL" property="replyLevel"/>
+		<result column="REPLY_COUNT" property="replyCount"/>
 	</resultMap>
 	<!-- 좋아요 기능 객체 resultMap -->
 	<resultMap id="boardCareResultSet" type="boardCare">
 		<id column="BOARD_NO" property="bCareBoardNo"/>
 		<result column="USER_NO" property="bCareUserNo"/>
+		<result column="USER_VIEW_COUNT" property="userViewCount"/>
 	</resultMap>
 	<!-- BoardVs resultMap -->
 	<resultMap type="boardVs" id="boardVsResultSet">
@@ -115,9 +117,12 @@
 		
 		<association property="user" resultMap="userMap"/>
 		<association property="boardCate" resultMap="boardCateResultSet"/>
+		<association property="boardCare" resultMap="boardCareResultSet"/>
 		<association property="boardImg" resultMap="boardImgResultSet"/>
 		<association property="boardVideo" resultMap="boardVideoResultSet"/>
 		<association property="boardTag" resultMap="boardTagResultSet"/>
+		<association property="reply" resultMap="replyResultSet"/>
+
 	</resultMap>
 	
 	<resultMap id="boardWriterFormResultMap" type="BoardWriterForm">
@@ -191,20 +196,23 @@
 	
 	<select id="boardDailyList" resultMap="boardListResultSet">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS,B.BOARD_CATE_NO,
-				 B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, 
-				 C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, 
-				 COUNT(R.REPLY_CONTENT) AS REPLY_COUNT, V.VIDEO_MOD_NAME
+				 B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, M.USER_EXP,M.USER_LEVEL,
+				 C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, 
+				 C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, (SELECT COUNT(*) FROM BOARD_CARE CA WHERE B.BOARD_NO = CA.BOARD_NO) AS USER_VIEW_COUNT, 
+				 (SELECT COUNT(*) FROM REPLY R WHERE B.BOARD_NO = R.BOARD_NO AND R.REPLY_STATUS = 'Y') AS REPLY_COUNT, V.VIDEO_MOD_NAME ,T.BOARD_TAG
 		FROM BOARD B
 		JOIN MEMBER M ON B.USER_NO = M.USER_NO
 		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
-		LEFT JOIN BOARD_IMG I ON (B.BOARD_CATE_NO NOT IN (1102, 1103) OR (B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1))
+		JOIN BOARD_KEYWORD T ON B.BOARD_NO = T.BOARD_NO
+		LEFT JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
 		LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
 		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
 		LEFT JOIN BOARD_VIDEO V ON B.BOARD_NO = V.BOARD_NO
 		WHERE M.USER_REGION = #{userRegion}
+			  AND B.BOARD_STATUS = 'Y'
 		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_CATE_NO,
-				B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, 
-				C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, V.VIDEO_MOD_NAME
+				B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, M.USER_EXP, M.USER_LEVEL, C.BOARD_MIDDLE_CATE, 
+				C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, V.VIDEO_MOD_NAME , T.BOARD_TAG
 		ORDER BY B.BOARD_WRITE_DATE DESC
 	</select>
 	
@@ -252,7 +260,7 @@
 	<select id="boardDetail" resultMap="boardDetailListResultSet">
 		SELECT B.BOARD_NO, B.USER_NO AS BOARD_USER_NO, B.BOARD_TITLE,B.BOARD_WRITE_DATE,B.BOARD_VIEWS,B.BOARD_CONTENT,B.BOARD_STATUS,B.BOARD_CATE_NO,
         BC.BOARD_CATE_NO, BC.BOARD_BIG_CATE, BC.BOARD_MIDDLE_CATE, BC.BOARD_SMALL_CATE,
-        M.USER_NICKNAME,M.USER_REGION AS BOARD_REGION,
+        M.USER_NICKNAME,M.USER_REGION AS BOARD_REGION, M.USER_EXP, M.USER_LEVEL,
         BK.BOARD_TAG,
         BV.VIDEO_MOD_NAME,
         VS.BOARD_OPTION_LEFT, VS.BOARD_OPTION_RIGHT, VS.CHOICE_LEFT, VS.CHOICE_RIGHT, VS.BOARD_EXPIRE_DATE,
@@ -379,7 +387,7 @@
 	<select id="nextBtn" resultMap="boardResultSet" parameterType="hashmap">
 		SELECT A.*
 		FROM (
-		    SELECT LEAD(B.BOARD_NO, 1) OVER (ORDER BY B.BOARD_NO DESC) AS BOARD_NO
+		    SELECT LEAD(B.BOARD_NO, 1) OVER (ORDER BY B.BOARD_NO ASC) AS BOARD_NO
 		    FROM BOARD B
 		    JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
 		    WHERE C.BOARD_MIDDLE_CATE = #{boardMiddleCate}

@@ -161,6 +161,7 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardBest> localList() {
 		return boardDao.localList();
 	}
+
       
       // admin
       
@@ -188,17 +189,6 @@ public class BoardServiceImpl implements BoardService {
           
           
       }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

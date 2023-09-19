@@ -405,13 +405,13 @@ function App() {
                                                                         transition={{duration : 1}}>
                                                                           <AdminBoard />
                                                                         </motion.div></div></div>}>
-                      <Route path="delete" element={<motion.div
+                 {/* <Route path="delete" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}
                                                       end = {{opacity:1, y:0}}
                                                       transition={{duration : 1}}>
                                                         <AdminBoardDelete/>
-                                                      </motion.div>}/>
+                                                      </motion.div>}/> */}
                       <Route path="new" element={<motion.div
                                                       initial = {{opacity:0, y:30}}
                                                       animate = {{opacity:1, y:0}}

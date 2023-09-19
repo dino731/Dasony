@@ -292,6 +292,11 @@ public class BoardController {
 		Map<String, Object> data = new HashMap();
 		data.put("boardMiddleCate", boardMiddleCate);
 		data.put("boardNo", boardNo);
+		
+		log.info("boardMiddleCate {}",boardMiddleCate);
+		log.info("boardNo {}",boardNo);
+	
+		
 		Map<String, Object> map = new HashMap();
 		log.info("nextBtn 값 확인 {}",data);
 		int resultBoardNo = 0;
@@ -303,14 +308,16 @@ public class BoardController {
 	
 	@PostMapping("/backBtn/{boardNo}/{boardMiddleCate}")
 	public List<BoardExt> backBtn(@PathVariable("boardMiddleCate")String boardMiddleCate,
-										@PathVariable("boardNo") int boardNo){
+										@PathVariable("boardNo") int boardNo
+										){
 		Map<String, Object> data = new HashMap();
 		data.put("boardMiddleCate", boardMiddleCate);
 		data.put("boardNo", boardNo);
+		
 		log.info("backBtn 값 확인 {}",data);
 		
 		List<BoardExt> bListMap = null; // 초기화
-		bListMap = boardService.nextBtn(data);
+		bListMap = boardService.backBtn(data);
 
 		return bListMap;
 	}
