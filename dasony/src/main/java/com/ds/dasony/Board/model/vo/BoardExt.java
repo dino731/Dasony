@@ -16,9 +16,11 @@ public class BoardExt extends Board{
 	private BoardVideo boardVideo;
 	private BoardImg boardImg;
 	private BoardCate boardCate;
-	private int userViewCount;//USER_VIEW_COUNT
-	private int replyCount;//REPLY_COUNT
+	private BoardCare boardCare;
+//	private int userViewCount;//USER_VIEW_COUNT
+	//private int replyCount;//REPLY_COUNT
 	private BoardTag boardTag;
-	public String userRegion;
+	private Reply reply;
+	private String userRegion;
 
 }

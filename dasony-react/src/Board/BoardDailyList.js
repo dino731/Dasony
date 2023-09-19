@@ -186,36 +186,38 @@ const BoardDailyList = ()=>{
   /* 키워드 검색 끝*/
 
   const [searchData, setSearchData] = useState({
-    userRegion: '',
     boardTitle: '',
     boardContent : '',
   });
-  const [tagArr, setTagArr] = useState([]);
-
-  const handleSearachKeyword = () => {
-
-    
+  const handleSearachKeyword = (e) => {
+    e.preventDefault();
     if (!searchKeyword.boardTitle && !searchKeyword.boardTag) {
       alert("검색할 내용을 입력해주세요.");
       return;
     }
-  
     const searchKey = {
-      userRegion: localStorage.loginUserRegion,
-      boardTag: searchKeyword.boardTag,
       boardTitle: searchKeyword.boardTitle,
       boardContent : searchKeyword.boardTitle,
     };
-    setTagArr = [searchKeyword.boardTag];
-
-    console.log('',);
-
-
-
-
+    setSearchData(searchKey);
+    // console.log('검색 버튼 클릭 searchData',searchData);
+    // console.log('검색 버튼 클릭 searchKey',searchKey);
 
   };
-    /*  검색 기능 관련 끝 */
+  // console.log('왜 안돼냐 searchData',searchData);
+
+  function isTitleMatch(board) {
+    return !searchData.boardTitle || board.boardTitle.includes(searchData.boardTitle);
+  }
+  
+  function isContentMatch(board) {
+    return !searchData.boardContent || board.boardContent.includes(searchData.boardContent);
+  }
+  
+  function isTagMatch(board) {
+    // const searchTags = board?.boardTag.boardTag.split('_');
+    return !keyword || keyword.length === 0 || keyword.some((tag) => board?.boardTag.boardTag.includes(tag));
+  }
 
   return(
     <>
@@ -241,7 +243,7 @@ const BoardDailyList = ()=>{
                   </div>
                 </div>
                 <div className="col-3 col-md-3">
-                  <button type="submit" className="boardList-search-btn" onClick={handleSearachKeyword}>검색</button>
+                  <button type="button" className="boardList-search-btn" onClick={handleSearachKeyword}>검색</button>
                 </div>
               </div>
               <div className="row">
@@ -296,23 +298,50 @@ const BoardDailyList = ()=>{
             //   <li key={boardItem.id}>
             //     <Link to={`/board/${boardItem.id}`}>{boardItem.title}</Link>
             //   </li>
-            boardData && boardData.filter((board) => {
-              return listBoardCate.some((category) => category.name === board?.boardCate.boardSmallCate);})
-            .map( (board, index)=>( 
+            boardData && boardData.filter((board) => 
+              listBoardCate.some((category) => category.name === board?.boardCate.boardSmallCate))
+              .filter((board) => isTitleMatch(board) || isContentMatch(board) || isTagMatch(board))
+              .map((board, index) => (
             <ul key={index} className="boardList-list-ul-wrapper">        
               <li className="boardList-list-li">
                 <div className="boardList-list-wrapper">
                   <div className="boardList-list-container">
                         <Link to={'/board'+listPath+'detail/'+board.boardNo} onClick={()=>handleLinkClick(board.boardNo)} style={{textDecoration:'none'}}>
                           <div className="boardList-list-content-container">
-                              <div className="boardList-list-keyword">{board.boardCate.boardSmallCate}</div>
+                              <div className="boardList-list-keyword" style={{ 
+                                            border : 'none',
+                                            width: '3vw',
+                                            height : '2vh',
+                                            borderRadius: '15%',
+                                            color: 'white',
+                                            backgroundColor:
+                                            board.boardCate.boardSmallCate === '일상' ? 'lightgray' :
+                                            board.boardCate.boardSmallCate === '맛집' ? 'lightgray' :
+                                            board.boardCate.boardSmallCate === '게임' ? 'lightgray' :
+                                            board.boardCate.boardSmallCate === '캐주얼' ? 'lightgray' :
+                                            board.boardCate.boardSmallCate === '복지' ? 'lightgray' :
+                                            board.boardCate.boardSmallCate === '날씨' ? '#89ba88' :
+                                            board.boardCate.boardSmallCate === '혼밥' ? '#89ba88' :
+                                            board.boardCate.boardSmallCate === '방송' ? '#89ba88' :
+                                            board.boardCate.boardSmallCate === '포멀' ? '#89ba88' :
+                                            board.boardCate.boardSmallCate === '교육' ? '#89ba88' :
+                                            board.boardCate.boardSmallCate === '투표' ? '#CB9DE7' :
+                                            board.boardCate.boardSmallCate === '혼술' ? '#CB9DE7' :
+                                            board.boardCate.boardSmallCate === '취미' ? '#CB9DE7' :
+                                            board.boardCate.boardSmallCate === '스트릿' ? '#CB9DE7' :
+                                            board.boardCate.boardSmallCate === '대여' ? '#CB9DE7' :
+                                            board.boardCate.boardSmallCate === '쇼츠' ? '#84abee' :
+                                            board.boardCate.boardSmallCate === '분위기' ? '#84abee' :
+                                            board.boardCate.boardSmallCate === '기타' ? '#84abee' :
+                                            board.boardCate.boardSmallCate === '걸리시' ? '#84abee' :
+                                            board.boardCate.boardSmallCate === '의료' ? '#84abee' : 'lightgray'}}>{board.boardCate.boardSmallCate}</div>
                               <div className="boardList-list-content-title">{board.boardTitle}</div>
                               <div className="boardList-list-content"dangerouslySetInnerHTML={{ __html: board.boardContent }}></div>
                               <div className="boardList-list-content-info"><span>{board.user.userNick}</span><span>{board.boardWriteDate}</span></div>          
                               <div className="boardList-list-content-action">
                                 <span><img src="/resources/board/eicon.png"/>{board.boardViews} <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/-" title="비밀번호 표시 아이콘">비밀번호 표시 아이콘  제작자: exomoon design studio - Flaticon</span></span>
-                                <span><img src="/resources/board/hicon.png"/>{board.userViewCount} <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="심장 아이콘">심장 아이콘  제작자: Noplubery - Flaticon</span></span>
-                                <span><img src="/resources/board/ticon.png"/>{board.replyCount} <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="대화 아이콘">대화 아이콘  제작자: exomoon design studio - Flaticon</span></span></div>
+                                <span><img src="/resources/board/hicon.png"/>{board.boardCare.userViewCount} <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="심장 아이콘">심장 아이콘  제작자: Noplubery - Flaticon</span></span>
+                                <span><img src="/resources/board/ticon.png"/>{board.reply.replyCount} <span style={{ display: 'none' }} href="https://www.flaticon.com/kr/free-icons/" title="대화 아이콘">대화 아이콘  제작자: exomoon design studio - Flaticon</span></span></div>
                           </div>
                         </Link>
                       <div className="boardList-list-img">

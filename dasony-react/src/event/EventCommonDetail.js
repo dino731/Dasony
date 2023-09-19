@@ -28,12 +28,12 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
             const ticketTextWidth = ticketText.current.offsetWidth; // offsetWidth / offsetHeight
             const ticketTextHeight = ticketText.current.offsetHeight;
             
-            const centerX = ticketRect.left / 2.3 + ticketTextWidth/13; // 원래 ticketRect.left/2 + ... 였음
+            const centerX = -(ticketRect.left / 1.5 + ticketTextWidth/13)/2; // 원래 ticketRect.left/2 + ... 였음
             const centerY = - ticketTextHeight * 2.2;
 
             ticketText.current.style.position = "relative";
             ticketText.current.style.left = centerX + "px";
-            ticketText.current.style.top = centerY + "px";
+            // ticketText.current.style.top = centerY + "px";
         }
     };
 

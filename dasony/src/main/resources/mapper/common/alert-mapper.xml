@@ -80,6 +80,7 @@
 			DEFAULT,
 			'댓글 알림'
 		)
+	</insert>
 
 	 
 	<insert id="inputAdminAlert" parameterType = "Alert">

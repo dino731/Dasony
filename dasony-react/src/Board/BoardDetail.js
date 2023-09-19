@@ -375,7 +375,7 @@ const BoardDetail = () =>{
     console.log('boardNoBack =====>',boardNoBack);
     console.log('boardMiddleCate =====>',boardMiddleCate);
 
-    axios.post(`http://localhost:3000/dasony/board/backBtn/${boardNoBack}/${boardMiddleCate}`)
+    axios.post(`http://localhost:3000/dasony/board/backBtn/${boardNo}/${boardMiddleCate}`)
     .then(response => {
       console.log('응답확인',response.data);
       const backBtn = response.data;
@@ -388,6 +388,27 @@ const BoardDetail = () =>{
       console.error('좋아요 정보를 가져오는 중 오류 발생:', error);
     });
   };
+
+/*   function backBtn(){
+    document.getElementById('backBtn').onclick = null
+    const boardMiddleCate = e;
+    const boardNoBack = newReplyText.boardNo;
+    console.log('boardNoBack =====>',boardNoBack);
+    console.log('boardMiddleCate =====>',boardMiddleCate);
+
+    axios.post(`http://localhost:3000/dasony/board/backBtn/${boardNoBack}/${boardMiddleCate}`)
+    .then(response => {
+      console.log('응답확인',response.data);
+      const backBtn = response.data;
+      console.log('반환받은 값 확인 backBtn =====>',backBtn)
+      const backNo = backBtn[0].boardNo;
+      console.log('이게 진짜 반환받은 값 확인 backNo =====>',backNo)
+      navigate("/board" + listPath + "detail/" + backNo);
+    })
+    .catch(error => {
+      console.error('좋아요 정보를 가져오는 중 오류 발생:', error);
+    });
+  } */
 
   const HandleNextBtn = (e) =>{
     const boardMiddleCate = e;
@@ -446,6 +467,47 @@ const handleReModalOffAndClose = () => {
     handleReClose();
 }
 /* 모달 끝 */
+ 
+// 이미지 경로를 생성하는 함수
+  function getUserImage(board) {
+    console.log('board',board);
+    const userResult = board;
+    if (userResult >= 0 && userResult <= 100) {
+      return '/resources/common-img/A.png';
+    } else if (userResult >= 101 && userResult <= 200) {
+      return '/resources/common-img/B.png';
+    } else if (userResult >= 201 && userResult <= 300) {
+      return '/resources/common-img/C.png';
+    } else if (userResult >= 301 && userResult <= 400) {
+      return '/resources/common-img/D.png';
+    } else {
+      return '/resources/common-img/E.png';
+    }
+
+  // const [userImg, setUserImg] = useState('');
+
+  // function getUserImage(userExp) {
+  //   const userMExp = userExp;
+  //   console.log('userMExp', userMPath);
+  //   if (userMExp == 0 && userMExp <= 100) {
+  //     setUserImg('/resources/common-img/A.png');
+  //   } else if (userMExp >= 101 && userMExp <= 200) {
+  //     setUserImg('/resources/common-img/B.png');
+  //   } else if (userMExp >= 201 && userMExp <= 300) {
+  //     setUserImg('/resources/common-img/C.png');
+  //   } else if (userMExp >= 301 && userMExp <= 400) {
+  //     setUserImg('/resources/common-img/D.png');
+  //   } else {
+  //     setUserImg('/resources/common-img/E.png');
+  //   }
+  //   return userImg;
+  // }
+
+
+
+
+
+}
 
 
 
@@ -453,7 +515,8 @@ const handleReModalOffAndClose = () => {
       <>
         <div ref={element} className='BoardDetail-wrapper'>
           {
-            boardData.map((board)=>(
+            boardData
+            .map((board)=>(
               <div key={board.boardNo} className='BoardDetail-side-wrapper'>   
                 <div className='BoardDetail-main-wrapper'>
                   <div className="BoardDetail-head-list">
@@ -466,12 +529,14 @@ const handleReModalOffAndClose = () => {
                         >목록</button>
                         <button
                           type="button" 
-                          className="BoardDetail-boardlist-back-btn board-submit-btn"
+                          id="backBtn"
+                          className="BoardDetail-boardlist-back-btn board-submit-btn board-backBtn"
                           onClick={()=>HandleLBackBtn(board.boardCate?.boardMiddleCate)}
                         >이전글</button>
                         <button
                           type="button" 
-                          className="BoardDetail-boardlist-next-btn board-submit-btn"
+                          id="nextBtn"
+                          className="BoardDetail-boardlist-next-btn board-submit-btn board-nextBtn"
                           onClick={()=>HandleNextBtn(board.boardCate?.boardMiddleCate)}
                         >다음글</button>
                       </span>
@@ -508,23 +573,23 @@ const handleReModalOffAndClose = () => {
                       <button
                             className='BoardDetail-boardlist-meetball-btn'
                             type='button'
-                            onClick={handleReShow}
+                            onClick={handleShow}
                             ><i className="bi bi-three-dots-vertical"></i>
-                        </button>
-                          <Modal show={reshow} onHide={handleReClose}>
-                            <ModalHeader>
-                                답글 삭제
-                            </ModalHeader>
-                            <ModalBody>
-                                <div style={{textAlign:'center'}}>
-                                {reModalText}
-                                </div>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button onClick={handleReModalOffAndClose}>{reModalButtonText}</Button>
-                                <Button style={{display:reModalButton}}>삭제</Button>
-                            </ModalFooter>
-                          </Modal>
+                            </button>
+                            <Modal show={show} onHide={handleClose}>
+                              <ModalHeader>
+                                 게시글 삭제
+                              </ModalHeader>
+                              <ModalBody>
+                                  <div style={{textAlign:'center'}}>
+                                  {modalText}
+                                  </div>
+                              </ModalBody>
+                              <ModalFooter>
+                                  <Button onClick={handleModalOffAndClose}>{modalButtonText}</Button>
+                                  <Button onClick={handleModalOn} style={{display:modalButton}}>삭제</Button>
+                              </ModalFooter>
+                            </Modal>
                         </span>
                         <span>
                           <button
@@ -537,8 +602,14 @@ const handleReModalOffAndClose = () => {
                       </div>
                     </div>
                     <div className='BoardDetail-boardlist-title-userinfo-container'>
+                      
                       <div className='BoardDetail-boardlist-title-userinfo'>
-                        <span className='BoardDetail-boardlist-title-userinfo-img'><img src="/resources/board/jh.jpg"/></span>
+                        
+                        <span className='BoardDetail-boardlist-title-userinfo-img'>
+                          <img 
+                          key={board?.user.userExp}
+                          src={getUserImage(board?.user.userExp)}/>
+                        </span>
                         <span className='BoardDetail-boardlist-title-userinfo-nikname'>{board?.user.userNick}</span>
                         <span className='BoardDetail-boardlist-title-userinfo-date'>{board.board.boardWriteDate}</span>
                       </div>
@@ -549,7 +620,7 @@ const handleReModalOffAndClose = () => {
                       </div>
                     </div>
                   </div>
-                  <div>
+                  <div style={{ margin:'1vh'}}>
                   {img&&
                   !(path.includes('share'))
                   ?
