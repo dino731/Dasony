@@ -31,7 +31,6 @@ const MypageAlert = () => {
       userNo: loginUserNo ,
       alertNo : alertNo
     }).then((response) => {
-      console.log("삭제 성공");
     }).catch((error) => {
       console.error("삭제오류남:", error);
     });

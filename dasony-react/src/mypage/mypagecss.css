@@ -431,7 +431,8 @@ justify-content: center;
   margin-right: 20px;
 }
 
- .btn-primary {
+
+.btn-primaryjeff {
   border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
   width: 200px; 
   margin-top: 20px;
@@ -449,11 +450,10 @@ justify-content: center;
   color:#CB9DE7;
 }
 
-
-/* .btn-primary:hover {
+.btn-primaryjeff:hover {
   background-color:#FCFA90; 
   color:#CB9DE7;
-} */
+}
 
 .ReceptionLabel{
     display: block;
