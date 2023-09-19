@@ -1,17 +1,19 @@
 import './Chat.css';
 import React, { useState, useEffect, useRef} from 'react';
 import { useParams} from 'react-router';
-import { Link, useNavigate } from 'react-router-dom';
-import UserProfile from './UserProfile';
+import { useNavigate } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import axios from 'axios';
+import { useChatData } from './ChatDataContext';
 
 
 const Chat = () =>{
 
     const {chatRoomTitle} = useParams();
     const {chatRoomNo} = useParams();
+    const {chatData} = useChatData();
+    console.log("chatData", chatData);
 
     const navigate = useNavigate();
 
@@ -21,7 +23,6 @@ const Chat = () =>{
     const [chatList, setChatList] = useState([]); // 화면에 표시될 채팅 기록
     const [sendchat, setSendChat] = useState(''); // 입력되는 채팅
     const [userName, setUserName] = useState("");
-    const [chatData, setChatDate] = useState([]);
     const scrollRef = useRef();
 
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
@@ -93,37 +94,7 @@ const Chat = () =>{
         chatMsg(chat);
     }
 
-    // -----------------------파일 업로드--------------------------------
-    const [selectFile, setSelectFile] = useState(null);
-
-    const handleIconClick = () => {
-        const fileInput = document.getElementById('chooseFile');
-        fileInput.click();
-    };
-
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        console.log(file);
-        setSelectFile(file);
-
-        setSendChat(file ? file.name : ''); 
-    };
-
-    // ---------------------------모달창------------------------------------
-    const [profileOpen, setProfileOpen] = useState(false);
-
-    const openModal = (username) => {
-        setUserName(username);
-        setProfileOpen(true);
-    };
-
-    const closeModal = () => {
-        setProfileOpen(false);
-    };
-
     // ---------------------------채팅 입장----------------------------------
-
-    // const [userName, setUserName] = useState(""); -> 모달창에서 선언함
 
     useEffect(() => {
 
@@ -170,6 +141,7 @@ const Chat = () =>{
         .catch(error => console.log(error));
     }
 
+
     return (
     <>
        <div id="chatcontent">
@@ -190,8 +162,7 @@ const Chat = () =>{
                                 </>
                             ) : (
                                 <>
-                                <b onClick={() => openModal(message.userName)}>{message.userName}</b>&nbsp;&nbsp;
-                                {/* <UserProfile isOpen={profileOpen} closeModal={closeModal} username={userName} /> */}
+                                <b>{message.userName}</b>&nbsp;&nbsp;
                                 <p id="chat">{message.chatMsg}</p>&nbsp; 
                                 <span id="chat_date">{message.chatDate}</span>
                                 </>
@@ -201,14 +172,6 @@ const Chat = () =>{
                     </ul>
                     <hr/>
                     <div id="sendchat">
-                        <form encType='multipart/form-data'>
-                            <label>
-                                <i className="bi bi-plus" style={{fontSize: '30px'}}
-                                onClick={handleIconClick}></i>
-                            </label>
-                            <input type='file' id='chooseFile' name='chooseFile' accept='image/*'
-                            onChange={handleFileChange}/>
-                        </form>
                         <textarea 
                         id="inputchat" 
                         rows="3"
