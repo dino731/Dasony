@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ds.dasony.Board.model.dao.BoardShDao;
 import com.ds.dasony.Board.model.vo.Board;
+import com.ds.dasony.Board.model.vo.ShortsUpdate;
 
 @Service
 public class BoardShServiceImpl implements BoardShService{
@@ -31,6 +32,21 @@ public class BoardShServiceImpl implements BoardShService{
 	@Override
 	public int addBoardVedio(List<Map<String, Object>> uploadedFileName) {
 		return boardShDao.addBoardVedio(uploadedFileName);
+	}
+
+	@Override
+	public ShortsUpdate shortsUpdate(int boardNo) {
+		return boardShDao.shortsUpdate(boardNo);
+	}
+
+	@Override
+	public int shUpdateSub(Board board) {
+		return boardShDao.shUpdateSub(board);
+	}
+
+	@Override
+	public int videoDelete(Board board) {
+		return boardShDao.videoDelete(board);
 	}
 
 }

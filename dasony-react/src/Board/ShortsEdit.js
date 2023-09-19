@@ -5,9 +5,11 @@ import Reply from './Reply';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { boardShState } from '../atoms';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const ShortsEdit = () => {
+  const {boardNo} = useParams();
+  const boardno = parseInt(boardNo);
 
   const navigate = useNavigate();
  
@@ -26,8 +28,27 @@ export const ShortsEdit = () => {
   }
 
 
+  /*쇼츠 정보 불러오기 - 서버 */
+  useEffect(()=>{
+    const fetchData = async() => {
+      await axios.post('/dasony/api/shortsUpdate', {boardNo:boardNo})
+      .then(res=>{
+        setBoardSh(res.data);
+      })
+    }
+    fetchData();
+  },[])
+
+
   /*헤더에서 정보 받아오기 -atom, recoil */
   const [boardSh, setBoardSh] = useRecoilState(boardShState);
+
+  /*boardSh 작성 취소 */
+  const handleBoardShCancle = () => {
+    alert('취소되었습니다.');
+    navigate(-1);
+  }
+
   /*날짜 설정 */
   const getCurrentDateTime = () => {
     const today = new Date();
@@ -46,6 +67,7 @@ export const ShortsEdit = () => {
       ...prev,
       [id] : value,
       userNo : userNo,
+      boardNo:boardno,
       boardWriteDate : getCurrentDateTime()
     }));
     console.log(boardSh);
@@ -84,12 +106,12 @@ export const ShortsEdit = () => {
     handleAddVideo();
     form.append("boardSh", new Blob([JSON.stringify(boardSh)], {type: "application/json" }));
     console.log("form boardSh확인", form.get("boardSh"));
-    axios.post('/dasony/api/addBoardSh', form)
+    axios.post('/dasony/api/shUpdateSub', form)
     .then(res=>{
       console.log("res.data", res.data);
       alert(res.data);
       setBoardSh(null);
-      navigate('/board/general/daily');
+      navigate(-1);
       })
     .catch(err=>{
       console.log(err);
@@ -146,7 +168,6 @@ export const ShortsEdit = () => {
                     <div className='videoplayer-wrapper'>
                       <div className='videoplayer-userinfo'>
                         <span className='videoplayer-userimg-wrapper'>
-                          <img src="/resources/common-img/boardImg/지현님슈퍼슈퍼지능.jpg" alt="썸네일" className='videoplayer-userimg'></img>
                         </span>
                          <span>{user&&user.userNick}</span>
                       </div>
@@ -160,8 +181,19 @@ export const ShortsEdit = () => {
                         
                       </div>
                       <div className='videoplayer'>
-                        <span>{shortsFile.video && <video src={shortsFile.url} controls width="300px" height="500px"/>}</span>
-                        <span >{shortsFile.image && <img src={shortsFile.url} />}</span>
+                        {
+                          !shortsFile.video?
+                          <video controls className="board-video-thumb" muted autoPlay>
+                              <source 
+                              src={`http://localhost:8083/dasony/resources/images/board/video/${boardSh?.videoModName}`} 
+                              type="video/mp4" />
+                          </video>
+                          :
+                          <>
+                          <span>{shortsFile.video && <video src={shortsFile.url} controls width="300px" height="500px"/>}</span>
+                          <span >{shortsFile.image && <img src={shortsFile.url} />}</span>
+                          </>
+                        }
                       </div>
                     </div>
                     <div className='videoFileUploader'>
@@ -171,7 +203,8 @@ export const ShortsEdit = () => {
               </div>{/* Vote-Content-container */}
               <div className='BoardShorts-btn board-btn-cntrol-box'>
                 <div className='board-btn-wrapper'>
-                  <button className='board-cancel-btn'>취소 버튼</button>
+                  <button className='board-cancel-btn'
+                        onClick={handleBoardShCancle}>취소 버튼</button>
                 </div>
                 <div className='board-btn-wrapper'>
                   <button className='board-submit-btn'
