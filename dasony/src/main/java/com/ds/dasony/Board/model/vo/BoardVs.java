@@ -19,7 +19,8 @@ public class BoardVs {
     private String boardOptionLeft;
     private String boardOptionRight;
     private int boardCateNo;
-    private LocalDateTime boardExpireDate;
+    private String boardExpireDate;
     private int choiceLeft;
-    private int choiceRight;
+    private int choiceRight;		
+	private String boardWriteDate;
 }

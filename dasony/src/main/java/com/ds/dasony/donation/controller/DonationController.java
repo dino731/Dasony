@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ds.dasony.donation.model.service.DonationService;
 import com.ds.dasony.donation.model.vo.Donation;
 import com.ds.dasony.donation.model.vo.DonationList;
+import com.ds.dasony.member.model.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,11 +27,15 @@ import lombok.extern.slf4j.Slf4j;
 public class DonationController {
 	
 	private final DonationService donationService;
+
 	
 	@Autowired
 	public DonationController(DonationService donationService) {
 		this.donationService = donationService;
+
 	}
+	
+	
 	
 	@GetMapping("/donalist")
 	public List<Donation> selectDonaList(HttpServletResponse response){
@@ -94,6 +99,7 @@ public class DonationController {
 		 try {
 			 
 			 int result = donationService.insertDonaList(donaList);
+			 int result2 = donationService.donaInsertExp(donaList);
 			 
 			 log.info("result = {}", result);
 			 if(result > 0) {

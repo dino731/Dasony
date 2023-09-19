@@ -24,15 +24,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ds.dasony.Board.model.service.BoardService;
-import com.ds.dasony.Board.model.vo.Board;
+import com.ds.dasony.Board.model.vo.BoardBest;
 import com.ds.dasony.Board.model.vo.BoardCare;
 import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardExt;
 import com.ds.dasony.Board.model.vo.BoardImg;
+import com.ds.dasony.Board.model.vo.BoardShorts;
 import com.ds.dasony.Board.model.vo.BoardTag;
 import com.ds.dasony.Board.model.vo.BoardVideo;
+import com.ds.dasony.Board.model.vo.BoardVsList;
+import com.ds.dasony.Board.model.vo.BoardWeather;
 import com.ds.dasony.Board.model.vo.BoardWriterForm;
-import com.ds.dasony.Board.model.vo.NestedReply;
 import com.ds.dasony.Board.model.vo.Reply;
 import com.ds.dasony.common.BoardUtils;
 
@@ -82,6 +84,7 @@ public class BoardController {
 	        String webPath = "/resources/images/board/";
 	        String severFolderPath = application.getRealPath(webPath);
 	        
+	        int result5 = boardService.insertBoardExp(boardWriterForm);
 	        log.info("severFolderPath = {} ", severFolderPath);
 	        
 	        // 디렉토리 생성
@@ -290,6 +293,11 @@ public class BoardController {
 		Map<String, Object> data = new HashMap();
 		data.put("boardMiddleCate", boardMiddleCate);
 		data.put("boardNo", boardNo);
+		
+		log.info("boardMiddleCate {}",boardMiddleCate);
+		log.info("boardNo {}",boardNo);
+	
+		
 		Map<String, Object> map = new HashMap();
 		log.info("nextBtn 값 확인 {}",data);
 		int resultBoardNo = 0;
@@ -301,14 +309,16 @@ public class BoardController {
 	
 	@PostMapping("/backBtn/{boardNo}/{boardMiddleCate}")
 	public List<BoardExt> backBtn(@PathVariable("boardMiddleCate")String boardMiddleCate,
-										@PathVariable("boardNo") int boardNo){
+										@PathVariable("boardNo") int boardNo
+										){
 		Map<String, Object> data = new HashMap();
 		data.put("boardMiddleCate", boardMiddleCate);
 		data.put("boardNo", boardNo);
+		
 		log.info("backBtn 값 확인 {}",data);
 		
 		List<BoardExt> bListMap = null; // 초기화
-		bListMap = boardService.nextBtn(data);
+		bListMap = boardService.backBtn(data);
 
 		return bListMap;
 	}
@@ -355,14 +365,59 @@ public class BoardController {
 	   }
 	  
 	   @PostMapping("/weatherList")
-	   public ResponseEntity<List<Board>> weatherList(){
-		   List<Board> list = new ArrayList();
+	   public ResponseEntity<List<BoardWeather>> weatherList(){
+		   List<BoardWeather> list = new ArrayList();
 		   list = boardService.weatherList();
 		   log.info("weatherList{}", list);
 		   if(list != null) {
 			   return ResponseEntity.ok(list);
+		   } else {
+			   return null;
 		   }
-		   return null;
+	   }
+	   @PostMapping("/bestList")
+	   public ResponseEntity<List<BoardBest>> bestList(){
+		   List<BoardBest> list = new ArrayList();
+		   list = boardService.bestList();
+		   log.info("bestList{}", list);
+		   if(list != null) {
+			   return ResponseEntity.ok(list);
+		   } else {
+			   return null;
+		   }
+	   }
+	   @PostMapping("/shortsList")
+	   public ResponseEntity<List<BoardShorts>> shortsList(){
+		   List<BoardShorts> list = new ArrayList();
+		   list = boardService.shortsList();
+		   log.info("shortsList{}", list);
+		   if(list != null) {
+			   return ResponseEntity.ok(list);
+		   } else {
+			   return null;
+		   }
+	   }
+	   @PostMapping("/vsList")
+	   public ResponseEntity<List<BoardVsList>> vsList(){
+		   List<BoardVsList> list = new ArrayList();
+		   list = boardService.vsList();
+		   log.info("vsList{}", list);
+		   if(list != null) {
+			   return ResponseEntity.ok(list);
+		   } else {
+			   return null;
+		   }
+	   }
+	   @PostMapping("/localList")
+	   public ResponseEntity<List<BoardBest>> localList(){
+		   List<BoardBest> list = new ArrayList();
+		   list = boardService.localList();
+		   log.info("localList{}", list);
+		   if(list != null) {
+			   return ResponseEntity.ok(list);
+		   } else {
+			   return null;
+		   }
 	   }
 	
 	

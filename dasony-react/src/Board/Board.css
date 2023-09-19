@@ -19,11 +19,17 @@
     height: 3vh;
   }
   .BoardList-head-title-btn{
-    width: 100px;
-    height: 30px;
+    width: 5vw;
+    height: 3vh;
     font-family: 'HakgyoansimWoojuR';
-    border: none;
     margin-left: 43px;
+    border: 2.7px solid #CB9DE7;
+    background-color:white;
+    font-weight: 500;
+    border-radius:0.2vw;
+  }
+  .BoardList-head-title-btn:hover{
+    background-color:#CB9DE7; 
   }
   /* BoardListHeader css 끝*/
 
@@ -275,13 +281,6 @@ overflow: hidden;
     width: 8vw;
     height: 3vh;
   }
-  .BoardList-head-title-btn{
-    width: 100px;
-    height: 30px;
-    font-family: 'HakgyoansimWoojuR';
-    border: none;
-    margin-left: 43px;
-  }
   /* BoardListHeader css 끝*/
 
 .boardList-search-title-wrapper{
@@ -454,6 +453,9 @@ font-weight: 200;
 font-size: 15px;
 color: gray;
 font-family: 'HakgyoansimWoojuR';
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
 
 }
 .boardList-list-content-info{

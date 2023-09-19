@@ -33,6 +33,8 @@ public interface DonationService {
 	void insertDonationAlert(DonationList donaList);
 
 //	int amountUpdate(Donation donation);
+	
+	public int donaInsertExp(DonationList donaList);
 
 
 }

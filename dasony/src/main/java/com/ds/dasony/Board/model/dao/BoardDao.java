@@ -10,16 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ds.dasony.Board.model.vo.Board;
+import com.ds.dasony.Board.model.vo.BoardBest;
 import com.ds.dasony.Board.model.vo.BoardCare;
 import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardExt;
 import com.ds.dasony.Board.model.vo.BoardImg;
+import com.ds.dasony.Board.model.vo.BoardShorts;
 import com.ds.dasony.Board.model.vo.BoardTag;
 import com.ds.dasony.Board.model.vo.BoardVideo;
+import com.ds.dasony.Board.model.vo.BoardVsList;
+import com.ds.dasony.Board.model.vo.BoardWeather;
 import com.ds.dasony.Board.model.vo.BoardWriterForm;
-import com.ds.dasony.Board.model.vo.NestedReply;
 import com.ds.dasony.Board.model.vo.Reply;
-import com.ds.dasony.alert.model.vo.Alert;
 import com.ds.dasony.member.model.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
@@ -180,11 +182,22 @@ public class BoardDao {
 	public List<BoardExt> backBtn(Map<String, Object> data) {
 		return session.selectList("board.backBtn", data);
 	}
-	public List<Board> weatherList() {
+	public List<BoardWeather> weatherList() {
 		return session.selectList("board.weatherList");
 	}
-	
-	
+	public List<BoardBest> bestList() {
+		return session.selectList("board.bestList");
+	}
+	public List<BoardShorts> shortsList() {
+		return session.selectList("board.shortsList");
+	}
+	public List<BoardVsList> vsList() {
+		return session.selectList("board.vsList");
+	}
+	public List<BoardBest> localList() {
+		return session.selectList("board.localList");
+	}
+
 	
 	
 	
@@ -216,6 +229,14 @@ public class BoardDao {
 		}
 		
 	}
+
+	public int insertBoardExp(BoardWriterForm boardWriterForm) {
+		return session.update("memberMapper.insertBoardExp",boardWriterForm);
+	}
+
+
+
+
 
 
 

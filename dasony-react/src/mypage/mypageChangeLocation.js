@@ -25,7 +25,6 @@ const MypageChangeLocation = () => {
     {/*지역 정보 전달 함수 */}
     const handleLocationSubmit = async() =>{
         await handleLocation();
-        console.log("서브밋때 되는지 확인할 용도:" , location);
         axios.post('/dasony/api/location', {location:location==""?"서울특별시 강남구":location, userNo:loginUserNo})
         .then(res=>{
             alert("지역 변경 완료했습니다.");

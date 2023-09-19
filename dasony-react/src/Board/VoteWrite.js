@@ -13,6 +13,16 @@ export const VoteWrite = ()=>{
   console.log("쓰는데서",boardVs);
 
   /*boardVS 나머지 정보 설정 */
+
+  const getCurrentDateTime = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const hours = String(today.getHours()).padStart(2, '0');
+    const minutes = String(today.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  };
   
   const handleBoardVs = (e) =>{
     
@@ -23,7 +33,8 @@ export const VoteWrite = ()=>{
     }
       setBoardVs(prev=>({
         ...prev,
-        [id]:value
+        [id]:value,
+        boardWriteDate: getCurrentDateTime()
       }));
   }
 
@@ -60,7 +71,7 @@ export const VoteWrite = ()=>{
 return (
   <>
       <div className="Vote">
-
+      
         <div className='Vote-Content-container'>
 
           <div className='vote-content-box'>

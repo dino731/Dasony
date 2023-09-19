@@ -19,5 +19,7 @@ public class Reply {
 	private String rUserNick; 		//USER_NICKNAME
 	private int mainReplyNo;		//MAIN_REPLY_NO
 	private String replyLevel;			//REPLY_LEVEL
+	
+	private int replyCount;//REPLY_COUNT
 }
 

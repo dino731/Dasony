@@ -75,11 +75,13 @@
 		<result column="USER_NICKNAME" property="rUserNick"/>
 		<result column="MAIN_REPLY_NO" property="mainReplyNo"/>
 		<result column="REPLY_LEVEL" property="replyLevel"/>
+		<result column="REPLY_COUNT" property="replyCount"/>
 	</resultMap>
 	<!-- 좋아요 기능 객체 resultMap -->
 	<resultMap id="boardCareResultSet" type="boardCare">
 		<id column="BOARD_NO" property="bCareBoardNo"/>
 		<result column="USER_NO" property="bCareUserNo"/>
+		<result column="USER_VIEW_COUNT" property="userViewCount"/>
 	</resultMap>
 	<!-- BoardVs resultMap -->
 	<resultMap type="boardVs" id="boardVsResultSet">
@@ -115,9 +117,12 @@
 		
 		<association property="user" resultMap="userMap"/>
 		<association property="boardCate" resultMap="boardCateResultSet"/>
+		<association property="boardCare" resultMap="boardCareResultSet"/>
 		<association property="boardImg" resultMap="boardImgResultSet"/>
 		<association property="boardVideo" resultMap="boardVideoResultSet"/>
 		<association property="boardTag" resultMap="boardTagResultSet"/>
+		<association property="reply" resultMap="replyResultSet"/>
+
 	</resultMap>
 	
 	<resultMap id="boardWriterFormResultMap" type="BoardWriterForm">
@@ -153,24 +158,61 @@
    	     <collection property="boardImgLevel" javaType="java.util.List" ofType="java.lang.String">
 	     	 <result property="boardImgLevel" column="BOARD_IMG_LEVEL" />
 	     </collection>    
-	</resultMap>		
+	</resultMap>	
+	
+	<!-- main resultset -->
+	<resultMap id="boardWeatherMap" type="boardWeather">
+	    <result property="interestCount" column="INTEREST_COUNT" />
+	    <result property="orderMap" column="ORDER_MAP" />
+	    <association property="board" resultMap="boardResultSet"/> 
+	    <association property="user" resultMap="userMap"/> 
+	    <association property="boardImg" resultMap="boardImgResultSet"/> 
+	</resultMap>
+	
+	<resultMap id="boardBestMap" type="boardBest">
+		<result property="interestCount" column="INTEREST_COUNT" />
+	    <result property="orderMap" column="ORDER_MAP" />
+	    <association property="board" resultMap="boardResultSet"/> 
+	    <association property="user" resultMap="userMap"/> 
+	    <association property="boardVideo" resultMap="boardVideoResultSet"/>
+	    <association property="boardImg" resultMap="boardImgResultSet"/> 
+	</resultMap>
+	
+	<resultMap id="boardShortsMap" type="boardShorts">
+		<result property="interestCount" column="INTEREST_COUNT" />
+	    <result property="orderMap" column="ORDER_MAP" />
+	    <association property="board" resultMap="boardResultSet"/> 
+	    <association property="user" resultMap="userMap"/> 
+	    <association property="boardVideo" resultMap="boardVideoResultSet"/>
+	</resultMap>	
+	<resultMap id="boardVsListMap" type="boardVsList">
+		<result property="interestCount" column="INTEREST_COUNT" />
+	    <result property="orderMap" column="ORDER_MAP" />
+	    <association property="boardVs" resultMap="boardVsResultSet"/> 
+	    <association property="user" resultMap="userMap"/> 
+	</resultMap>	
+	
+	
 	
 	<select id="boardDailyList" resultMap="boardListResultSet">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS,B.BOARD_CATE_NO,
-				 B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, 
-				 C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, COUNT(DISTINCT A.USER_NO) AS USER_VIEW_COUNT, 
-				 COUNT(R.REPLY_CONTENT) AS REPLY_COUNT, V.VIDEO_MOD_NAME
+				 B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, M.USER_EXP,M.USER_LEVEL,
+				 C.BOARD_MIDDLE_CATE, C.BOARD_SMALL_CATE, 
+				 C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, (SELECT COUNT(*) FROM BOARD_CARE CA WHERE B.BOARD_NO = CA.BOARD_NO) AS USER_VIEW_COUNT, 
+				 (SELECT COUNT(*) FROM REPLY R WHERE B.BOARD_NO = R.BOARD_NO AND R.REPLY_STATUS = 'Y') AS REPLY_COUNT, V.VIDEO_MOD_NAME ,T.BOARD_TAG
 		FROM BOARD B
 		JOIN MEMBER M ON B.USER_NO = M.USER_NO
 		JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
-		LEFT JOIN BOARD_IMG I ON (B.BOARD_CATE_NO NOT IN (1102, 1103) OR (B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1))
+		JOIN BOARD_KEYWORD T ON B.BOARD_NO = T.BOARD_NO
+		LEFT JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL = 1
 		LEFT JOIN BOARD_CARE A ON B.BOARD_NO = A.BOARD_NO
 		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
 		LEFT JOIN BOARD_VIDEO V ON B.BOARD_NO = V.BOARD_NO
 		WHERE M.USER_REGION = #{userRegion}
+			  AND B.BOARD_STATUS = 'Y'
 		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_VIEWS, B.BOARD_CATE_NO,
-				B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, C.BOARD_MIDDLE_CATE, 
-				C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, V.VIDEO_MOD_NAME
+				B.BOARD_WRITE_DATE, M.USER_REGION, M.USER_NICKNAME, M.USER_EXP, M.USER_LEVEL, C.BOARD_MIDDLE_CATE, 
+				C.BOARD_SMALL_CATE, C.BOARD_BIG_CATE, I.BOARD_IMG_PATH, I.BOARD_IMG_MOD_NAME, V.VIDEO_MOD_NAME , T.BOARD_TAG
 		ORDER BY B.BOARD_WRITE_DATE DESC
 	</select>
 	
@@ -218,7 +260,7 @@
 	<select id="boardDetail" resultMap="boardDetailListResultSet">
 		SELECT B.BOARD_NO, B.USER_NO AS BOARD_USER_NO, B.BOARD_TITLE,B.BOARD_WRITE_DATE,B.BOARD_VIEWS,B.BOARD_CONTENT,B.BOARD_STATUS,B.BOARD_CATE_NO,
         BC.BOARD_CATE_NO, BC.BOARD_BIG_CATE, BC.BOARD_MIDDLE_CATE, BC.BOARD_SMALL_CATE,
-        M.USER_NICKNAME,M.USER_REGION AS BOARD_REGION,
+        M.USER_NICKNAME,M.USER_REGION AS BOARD_REGION, M.USER_EXP, M.USER_LEVEL,
         BK.BOARD_TAG,
         BV.VIDEO_MOD_NAME,
         VS.BOARD_OPTION_LEFT, VS.BOARD_OPTION_RIGHT, VS.CHOICE_LEFT, VS.CHOICE_RIGHT, VS.BOARD_EXPIRE_DATE,
@@ -345,7 +387,7 @@
 	<select id="nextBtn" resultMap="boardResultSet" parameterType="hashmap">
 		SELECT A.*
 		FROM (
-		    SELECT LEAD(B.BOARD_NO, 1) OVER (ORDER BY B.BOARD_NO DESC) AS BOARD_NO
+		    SELECT LEAD(B.BOARD_NO, 1) OVER (ORDER BY B.BOARD_NO ASC) AS BOARD_NO
 		    FROM BOARD B
 		    JOIN BOARD_CATE C ON B.BOARD_CATE_NO = C.BOARD_CATE_NO
 		    WHERE C.BOARD_MIDDLE_CATE = #{boardMiddleCate}
@@ -383,12 +425,95 @@
    	WHERE REPLY_NO = #{replyNo}
    </update>	
    
-   <select id="weatherList" resultMap="boardResultSet">
+   <select id="weatherList" resultMap="boardWeatherMap">
+   	<![CDATA[
    	SELECT *
-   	FROM BOARD
-   	WHERE BOARD_CATE_NO = '1104'
+	FROM (
+	    SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NICKNAME, M.USER_REGION, I.BOARD_IMG_MOD_NAME, I.BOARD_IMG_PATH,
+	           (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO) AS INTEREST_COUNT,
+	           (B.BOARD_VIEWS + (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO)) AS ORDER_MAP
+	    FROM BOARD B
+	    LEFT JOIN MEMBER M ON B.USER_NO = M.USER_NO
+	    LEFT JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL='1'
+	    WHERE B.BOARD_CATE_NO = '1104'
+	)
+	WHERE ROWNUM <= 50
+	ORDER BY ORDER_MAP DESC
+	]]>
    </select>
    
+   <select id="bestList" resultMap="boardBestMap">
+   	<![CDATA[
+   	SELECT *
+	FROM (
+	    SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NICKNAME, M.USER_REGION, I.BOARD_IMG_MOD_NAME, I.BOARD_IMG_PATH, V.VIDEO_MOD_NAME, V.VIDEO_PATH,
+	           (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO) AS INTEREST_COUNT,
+	           (B.BOARD_VIEWS + (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO)) AS ORDER_MAP
+	    FROM BOARD B
+	    LEFT JOIN MEMBER M ON B.USER_NO = M.USER_NO
+	    LEFT JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL='1'
+	    LEFT JOIN BOARD_VIDEO V ON B.BOARD_NO = V.BOARD_NO
+	    ORDER BY ORDER_MAP DESC
+	)
+	WHERE ROWNUM <= 50
+	]]>
+   </select>
+   
+   <select id="shortsList" resultMap="boardShortsMap">
+   	<![CDATA[
+   	SELECT *
+	FROM (
+	    SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NICKNAME, M.USER_REGION, I.BOARD_IMG_MOD_NAME, I.BOARD_IMG_PATH, V.VIDEO_MOD_NAME, V.VIDEO_PATH,
+	           (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO) AS INTEREST_COUNT,
+	           (B.BOARD_VIEWS + (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO)) AS ORDER_MAP
+	    FROM BOARD B
+	    LEFT JOIN MEMBER M ON B.USER_NO = M.USER_NO
+	    LEFT JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL='1'
+	    LEFT JOIN BOARD_VIDEO V ON B.BOARD_NO = V.BOARD_NO
+	    WHERE B.BOARD_CATE_NO = '1102'
+	    ORDER BY ORDER_MAP DESC
+	)
+	WHERE ROWNUM <= 50
+	]]>
+   </select>
+   
+    <select id="vsList" resultMap="boardVsListMap">
+   	<![CDATA[
+   	SELECT *
+	FROM (
+	    SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NICKNAME, M.USER_REGION, I.BOARD_IMG_MOD_NAME, I.BOARD_IMG_PATH, V.VIDEO_MOD_NAME, V.VIDEO_PATH,
+	    		VS.BOARD_OPTION_LEFT, VS.BOARD_OPTION_RIGHT,
+	           (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO) AS INTEREST_COUNT,
+	           (B.BOARD_VIEWS + (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO)) AS ORDER_MAP
+	    FROM BOARD B
+	    LEFT JOIN MEMBER M ON B.USER_NO = M.USER_NO
+	    LEFT JOIN BOARD_VS VS ON B.BOARD_NO = VS.BOARD_NO
+	    LEFT JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL='1'
+	    LEFT JOIN BOARD_VIDEO V ON B.BOARD_NO = V.BOARD_NO
+	    WHERE B.BOARD_CATE_NO = '1103'
+	    ORDER BY ORDER_MAP DESC
+	)
+	WHERE ROWNUM <= 50
+	]]>
+   </select>
+   
+   <select id="localList" resultMap="boardBestMap">
+   <![CDATA[
+   	SELECT *
+	FROM (
+	    SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NICKNAME, M.USER_REGION, I.BOARD_IMG_MOD_NAME, I.BOARD_IMG_PATH, V.VIDEO_MOD_NAME, V.VIDEO_PATH,
+	           (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO) AS INTEREST_COUNT,
+	           (B.BOARD_VIEWS + (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO)) AS ORDER_MAP
+	    FROM BOARD B
+	    LEFT JOIN MEMBER M ON B.USER_NO = M.USER_NO
+	    LEFT JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO AND I.BOARD_IMG_LEVEL='1'
+	    LEFT JOIN BOARD_VIDEO V ON B.BOARD_NO = V.BOARD_NO
+        WHERE B.BOARD_CATE_NO IN ('2101', '2102', '2103', '2104' )
+	    ORDER BY ORDER_MAP DESC
+	)
+	WHERE ROWNUM <= 50
+	]]>
+   </select>
    
    
 	
@@ -415,7 +540,7 @@
 		INSERT INTO ALERT(ALERT_NO, USER_NO, ALERT_CONTENT, ALERT_DATE, ALERT_CATE, ALERT_STATUS, ALERT_TITLE, BOARD_NO)
 		 VALUES(SEQ_ANO.NEXTVAL,#{userNo},'커뮤니티 규정을 위반하여 게시글이 삭제 되었습니다',TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),'B' , DEFAULT, '게시글 규정 위반', #{boardNo})
 	</insert>
-
+	
 
 
 
