@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ds.dasony.Board.model.service.BoardVsService;
+import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardVs;
 import com.ds.dasony.Board.model.vo.BoardVsVote;
 
@@ -67,6 +68,24 @@ public class BoardVsController {
 		voteList = boardVsService.voteList(boardNo);
 		log.error("voteList={},", voteList);
 		return ResponseEntity.ok(voteList);
+	}
+	
+	@PostMapping("/vsUpdate")
+	public ResponseEntity<BoardVs> vsUpdate (@RequestBody Map<String, String>map){
+		int boardNo = Integer.parseInt(map.get("boardNo"));
+		BoardVs boardVs = boardVsService.vsUpdate(boardNo);
+		return ResponseEntity.ok(boardVs);
+	}
+
+	@PostMapping("/vsUpdateSub")
+	public ResponseEntity<String> vsUpdateSub (@RequestBody BoardVs boardVs){
+		int result = boardVsService.vsUpdateSub(boardVs);
+		if(result > 0 ) {
+			return ResponseEntity.ok("게시글을 수정하셨습니다.");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("게시글 수정에 실패하였습니다.");
+					
+		}
 	}
 	
 

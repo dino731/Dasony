@@ -67,9 +67,9 @@ const AdminDonaList = () => {
                             <th width="260">모금단체</th>
                             <th width="190">작성일</th>
                             <th width="210">마감일</th>
-                            <th width="200">모금액</th>
+                            {/* <th width="200">모금액</th> */}
                             <th width="200">목표금액</th>
-                            <th width="200">달성률</th>
+                            {/* <th width="200">달성률</th> */}
                             <th width="200">지역</th>
                         </tr>
                     </thead>
@@ -85,9 +85,9 @@ const AdminDonaList = () => {
                                         <td width="350">{list.donaName}</td>
                                         <td width="220">{list.donaWriteDate}</td>
                                         <td width="242">{list.donaEndDate}</td>
-                                        <td width="250">{list.donaTotalAmount}다손</td>
+                                        {/* <td width="250">{list.donaTotalAmount}다손</td> */}
                                         <td width="250">{list.donaTargetAmount}다손</td>
-                                        <td width="250">{list.donaAchieve}%</td>
+                                        {/* <td width="250">{list.donaAchieve}%</td> */}
                                         <td width="250">{list.donaSelectArea}</td>
                                     </tr>
                                 ))

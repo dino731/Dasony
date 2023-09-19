@@ -57,6 +57,7 @@
     border-radius: 0.5vw;
     position: relative;
     overflow: hidden;
+    margin: 0 2vw 0 2vw;
 }
 
 .local-box-img>img{
@@ -64,6 +65,11 @@
 }
 .local-box>div{
     margin: auto;
+}
+.local-box-text{
+    text-align: center;
+    width: 40%;
+    word-wrap: break-word;
 }
 
 
@@ -123,6 +129,7 @@
     margin : 1vw 1vw 0 1vw;
     overflow: hidden;
     height: 25vh;
+    background-color: black;
 }
 .mainShorts-box img{
     width: 100%;
@@ -143,11 +150,8 @@
 }
 .mainVs-box{
     box-sizing: border-box;
-    display: flex;
-    justify-content: space-around;
     height: 18vh;
     margin: auto;
-    line-height: 18vh;
     border: 2px solid #CB9DE7;
     border-radius: 0.5vw;
     margin: 0 0.5vw 0 0.5vw;
@@ -155,17 +159,37 @@
     z-index: -1;
     transition: 0.5s;
     font-size: 1.5vw;
+    text-align: center;
+}
+.mainVs-box>span{
+    font-size: 80%;
 }
 .mainVs-box>div{
+    display: flex;
+    justify-content: space-around;
+    
+}
+.mainVs-box>div>div{
     box-sizing: border-box;
     width: 6vw;
     height: 6vw;
     border: 2px solid #CB9DE7;
     border-radius: 0.5vw;
-    margin: 1.5vw 1vw 1.5vw 1vw;
+    margin: 0vw 1vw 0vw 1vw;
     line-height: 6vw;
     text-align: center;
     font-size: 70%;
+}
+.mainVs-box>div>div:nth-child(2){
+    box-sizing: border-box;
+    width: 2vw;
+    height: 6vw;
+    border: none;
+    line-height: 6vw;
+    text-align: center;
+    font-size: 70%;
+    margin: 0;
+    padding: 0;
 }
 .vs-carousel-btn-left{
     position: absolute;

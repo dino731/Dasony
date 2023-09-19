@@ -306,7 +306,17 @@ const BoardDailyList = ()=>{
               <li className="boardList-list-li">
                 <div className="boardList-list-wrapper">
                   <div className="boardList-list-container">
-                        <Link to={'/board'+listPath+'detail/'+board.boardNo} onClick={()=>handleLinkClick(board.boardNo)} style={{textDecoration:'none'}}>
+                        <Link
+                          to={
+                            board.boardCate.boardCateNo == '1103'
+                            ?
+                            '/board/general/daily/vs/detail/'+board.boardNo
+                            :board.boardCate.boardCateNo == '1102'
+                            ?
+                            '/board/general/daily/shorts/detail/'+board.boardNo
+                            :
+                            '/board'+listPath+'detail/'+board.boardNo
+                            } onClick={()=>handleLinkClick(board.boardNo)} style={{textDecoration:'none'}}>
                           <div className="boardList-list-content-container">
                               <div className="boardList-list-keyword" style={{ 
                                             border : 'none',

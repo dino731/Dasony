@@ -18,15 +18,23 @@ function useDonaTotal(donaNo) {
           const donationCount = donaHistoryData.length;
           setDonationCount(donationCount);
           
-          // console.log(JSON.stringify(donaHistoryData));
-          
         })
         .catch((error) => console.log(error));
       };
+
+      // const updateDonaList = () => {
+      //   axios.post(`/dasony/adminAmountUpdate`, {donaNo, totalDonaAmount})
+      //   .then((response) => console.log("뭐있어",response.data))
+      //   .catch((error) => console.log(error));
+      // }
       
       useEffect(() => {
         getDonaTotal();
       }, [donaNo]);
+
+      // useEffect(() => {
+      //   updateDonaList();
+      // }, [totalDonaAmount]);
  
   
     return {

@@ -244,13 +244,13 @@ right: -10;
 
 .user-levelimg{
   position:sticky;
-  top:70px;
+  top:100px;
 }
 
 .button-div{
   display: block;
   position:sticky;
-  top:170px;
+  top:200px;
 }
 
 .mypage-btn{
@@ -340,8 +340,11 @@ background-color:#CB9DE7; color:#FCFA90;
 .mys{
   display: flex;
   background-color: white;
-  justify-content: space-between;
+  margin-left: 200px;
   margin-bottom: 30px;
+}
+.mys>button{
+  margin-left: 100px;
 }
 
 .my-like-table {
@@ -428,14 +431,26 @@ justify-content: center;
   margin-right: 20px;
 }
 
-.btn-primary {
+
+.btn-primaryjeff {
   border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; font-weight: 900; border-radius:0.5vw;
   width: 200px; 
   margin-top: 20px;
   margin-left: 20px;
+
 }
 
-.btn-primary:hover {
+
+.changeLocationButton{
+   border : 3px solid #CB9DE7; color:#CB9DE7; background-color:white; border-radius:0.5vw;
+  width: 120px;
+  }
+.hangeLocationButton:hover{
+  background-color:#FCFA90; 
+  color:#CB9DE7;
+}
+
+.btn-primaryjeff:hover {
   background-color:#FCFA90; 
   color:#CB9DE7;
 }
@@ -458,27 +473,15 @@ justify-content: center;
   resize: vertical;
   height: 150px;
 }
-.modalAlert{
-  display:flex;
-  width: 300px;
-  height: 300px;
-  top: 200px;
-  left: 900px;
-  z-index: 0;
-}
-.modal-contentAlert{
-  width: 300px;
-  height: 300px;
-  z-index: 0;
-  background-color: rgba(203, 157, 231, 0.3);
-  z-index: 0;
-}
+
 .close-modal{
-  color: red;
+  color: #CB9DE7;
+  border: none;
+  background-color: white;
 }
 .close-modal :hover{
   cursor: pointer;  
-}
+} 
 .alert-content-link:hover {
   cursor: pointer; /* 마우스를 가져다 댔을 때 포인터 커서로 변경 */
 }

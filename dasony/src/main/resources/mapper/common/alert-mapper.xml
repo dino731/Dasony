@@ -19,7 +19,7 @@
 	INSERT INTO ALERT VALUES(
 		SEQ_ANO.NEXTVAL,
 		#{userNo},
-		'게임 성공으로 얻은 포인트는 : ' || TO_CHAR(#{pointAmount}) || '다소니 입니다.',
+		'게임 성공으로 얻은 포인트는 : ' || TO_CHAR(#{pointAmount}) || '다소니입니다.',
 		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
 		'G',
 		'B',
@@ -37,7 +37,7 @@
 		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
 		'G',
 		'B',
-		'보물찾기 리워드 입니다~'
+		'보물찾기 리워드입니다~'
 	)
 	
 	</insert>
@@ -94,6 +94,19 @@
     #{title}
 	)
 
+	</insert>
+	
+	<insert id="insertDonationAlert" parameterType="donationList">
+		INSERT INTO ALERT 
+		VALUES (
+			SEQ_ANO.NEXTVAL,
+			#{userNo},
+			#{donaNo} || '번 기부 글에 ' || #{donaAmount} || '다손을 후원하셨습니다.',
+			TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
+			'D',
+			'B',
+			(SELECT USER_NAME FROM MEMBER WHERE USER_NO = #{userNo}) || '님이 후원하신 기부 내역입니다.'
+		)
 	</insert>
 
 	

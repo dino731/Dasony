@@ -8,17 +8,18 @@ import MypageMyshopPoint from './mypageMyshopPoint';
 
 const MyShopHeader = () => {
     return(
-<div className="mys">
+<div>
     <h2>내 상점</h2>
+<div className="mys">
     
             
            <button className='Link-button'><Link to='Likes'>찜한 목록</Link></button>
            <button className='Link-button'><Link to='Point'>포인트 관리</Link></button>
-           <button className='Link-button'><Link to='Coupon'>쿠폰 관리</Link></button>
+        
 
            
           </div>
-
+          </div>
     );
 }
 export default MyShopHeader;

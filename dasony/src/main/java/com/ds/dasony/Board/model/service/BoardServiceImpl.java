@@ -10,12 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ds.dasony.Board.model.dao.BoardDao;
 import com.ds.dasony.Board.model.vo.Board;
+import com.ds.dasony.Board.model.vo.BoardBest;
 import com.ds.dasony.Board.model.vo.BoardCare;
 import com.ds.dasony.Board.model.vo.BoardDetailExt;
 import com.ds.dasony.Board.model.vo.BoardExt;
 import com.ds.dasony.Board.model.vo.BoardImg;
+import com.ds.dasony.Board.model.vo.BoardShorts;
 import com.ds.dasony.Board.model.vo.BoardTag;
 import com.ds.dasony.Board.model.vo.BoardVideo;
+import com.ds.dasony.Board.model.vo.BoardVsList;
+import com.ds.dasony.Board.model.vo.BoardWeather;
 import com.ds.dasony.Board.model.vo.BoardWriterForm;
 import com.ds.dasony.Board.model.vo.Reply;
 
@@ -136,9 +140,28 @@ public class BoardServiceImpl implements BoardService {
    public int removeReply(int replyNo) {
       return boardDao.removeReply(replyNo);
    }
-      
-      
-      
+   
+	@Override
+	public List<BoardWeather> weatherList() {
+		return boardDao.weatherList();
+	}
+	@Override
+	public List<BoardBest> bestList() {
+		return boardDao.bestList();
+	}
+	@Override
+	public List<BoardShorts> shortsList() {
+		return boardDao.shortsList();
+	}
+	@Override
+	public List<BoardVsList> vsList() {
+		return boardDao.vsList();
+	}
+	@Override
+	public List<BoardBest> localList() {
+		return boardDao.localList();
+	}
+
       
       // admin
       
@@ -166,9 +189,6 @@ public class BoardServiceImpl implements BoardService {
           
           
       }
-
-
-
 
 
 

@@ -1,14 +1,42 @@
 
 
 import './Home.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {MainBestCarousel, MainLocalCarousel, MainShortsCarousel, MainVsCarousel} from "./MainBestCarousel";
 import Weather from './Weather';
+import axios from 'axios';
 
 const Home = () =>{
 
-    console.log("로그인에서 localStorage에 저장된 user정보 확인 -(main사용자)",localStorage.getItem("loginUserNo"));
-    console.log("로그인에서 localStorage에 저장된 user정보 확인 -(main사용자)",localStorage.getItem("loginUserRegion"));
+
+    const userNo = localStorage.getItem("loginUserNo");
+    const userRegion = localStorage.getItem("loginUserRegion");
+
+    /*글자 수 제한 함수  */
+    const settingText = (text, n) => {
+        return text.length>n?text.substring(0, n-1)+'...':text;
+    }
+
+    /*날씨, 베스트 리스트 정보 설정 */
+    const [weatherList, setWeatherList] = useState(null);
+    /*날씨 리스트 가져오기 - 서버 */
+    useEffect(()=>{
+        const fetchData = async()=>{
+            await axios.post("/dasony/board/weatherList",)
+            .then(res=>{
+                setWeatherList(res.data);
+                console.log("웨더 리스트 확인", res.data);
+            })
+            .catch(err=>{
+                console.log(err);
+            });
+            const fetchData = async()=>{
+            
+        }
+        }
+
+        fetchData();
+    },[])
     return (
         <div className="home-container">
             <div className="home-weather">
@@ -23,30 +51,39 @@ const Home = () =>{
                                     </div>
                                 </td>
                                 <td>
-                                    <div className='weather-board-info'>
-                                        <div>
-                                            <img src='./resources/shop/product/2/002.png'></img>
-                                        </div>
-                                        <div>
-                                            글 제목
-                                        </div>
-                                    </div>
-                                    <div className='weather-board-info'>
-                                        <div>
-                                            <img src='./resources/shop/product/2/002.png'></img>
-                                        </div>
-                                        <div>
-                                            글 제목
-                                        </div>
-                                    </div>
-                                    <div className='weather-board-info'>
-                                        <div>
-                                            <img src='./resources/shop/product/2/002.png'></img>
-                                        </div>
-                                        <div>
-                                            글 제목
-                                        </div>
-                                    </div>
+                                {
+                                    weatherList?.filter(weather=>(
+                                        weather.user.userRegion == userRegion
+                                    )).slice(0, 3).map(weather=>{
+                                        return(
+                                            weather.boardImg.boardImgModName
+                                            ?
+                                            <div className='weather-board-info'>
+                                                <div>
+                                                    <img src={`http://localhost:8083/dasony/${weather.boardImg.boardImgPath}/${weather.boardImg.boardImgModName}`}/>
+                                                </div>
+                                                <div style={{fontSize:'70%'}}>
+                                                    {weather.user.userNick}
+                                                </div>
+                                                <div>
+                                                    {settingText(weather.board.boardTitle, 10)}
+                                                </div>
+                                            </div>
+                                            :
+                                            <div className='weather-board-info'>
+                                                <div>
+                                                    <img src='https://i.ibb.co/dPfbwqB/dasony-logo.png'/>
+                                                </div>
+                                                <div style={{fontSize:'70%'}}>
+                                                    {weather.user.userNick}
+                                                </div>
+                                                <div>
+                                                    {settingText(weather.board.boardTitle, 10)}
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
                                 </td>
                             </tr>
                         </thead>
