@@ -32,6 +32,23 @@
 	WHERE USER_NO = #{userNo}
 </select>
 
+<select id="gameSet" parameterType="game" resultType="string">
+		SELECT GAME_EXECUTE_DATE
+		FROM (
+    SELECT GAME_EXECUTE_DATE
+    FROM GAME
+    WHERE USER_NO = #{userNo}
+    ORDER BY GAME_EXECUTE_DATE DESC
+		)
+		WHERE ROWNUM = 1
+</select>
+
+	<update id="letStartGame" parameterType="game">
+		UPDATE MEMBER SET
+			GAME_STATUS = 'Y'
+			WHERE USER_NO = #{userNo}
+	</update>
+
 
 
 

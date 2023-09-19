@@ -55,6 +55,20 @@ public class gameController {
 	    String gameStartYN = gameService.gameStartYN(userNo);
 	    return gameStartYN;
 	}
+	@PostMapping("/gameSet")
+	public String gameSet(@RequestBody Map<String,Integer> requestBody) {
+		
+		int userNo = requestBody.get("userNo");
+		
+		String lastGameDate = gameService.gameSet(userNo);
+		return lastGameDate;
+	}
+	@PostMapping("/letStartGame")
+	public int letStartGame(@RequestBody Map<String,Integer> requestBody) {
+		int userNo = requestBody.get("userNo");
+		int result = gameService.letStartGame(userNo);
+		return result;
+	}
 	
 	
 	

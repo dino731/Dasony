@@ -243,7 +243,7 @@ const MypageInfo = () => {
                 userNick:nick, userAddress:completeAddress, userPhone:phone, userEmail:completeEmail};
                 ;
                 
-                console.log(user);
+                
                 handleCompleteAddress();
                 handleCompleteEmail(); 
                 
@@ -264,7 +264,7 @@ const MypageInfo = () => {
         user = {userNo : loginUserNo, userId:id, userPwd:encPwd, userName:name,
             userNick:nick, userAddress:completeAddress, userPhone:phone, userEmail:completeEmail};
         
-        console.log(user);
+        
         axios.post("/dasony/api/modifyMyInfo", user, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8"

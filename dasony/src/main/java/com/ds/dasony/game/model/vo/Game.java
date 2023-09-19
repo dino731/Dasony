@@ -15,6 +15,6 @@ public class Game {
 	private String gameStatus;
 	private String pointStatus;
 	private String ticketStatus;
-	private long userNo;
+	private int userNo;
 	
 }
