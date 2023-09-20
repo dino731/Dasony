@@ -485,17 +485,15 @@ const handleReModalOffAndClose = () => {
     console.log('board',board);
     const userResult = board;
     if (userResult >= 0 && userResult <= 100) {
-      return '/resources/common-img/levelone.png';
+      return '/resources/common-img/A.png';
     } else if (userResult >= 101 && userResult <= 200) {
-      return '/resources/common-img/leveltwo.png';
+      return '/resources/common-img/B.png';
     } else if (userResult >= 201 && userResult <= 300) {
-      return '/resources/common-img/leveltwo.png';
+      return '/resources/common-img/C.png';
     } else if (userResult >= 301 && userResult <= 400) {
-      return '/resources/common-img/levelfour.png';
-    } else if (userResult >= 401 && userResult <= 500) {
-      return '/resources/common-img/levelfive.png';  
+      return '/resources/common-img/D.png';
     } else {
-      return '/resources/common-img/levelgod.png';
+      return '/resources/common-img/E.png';
     }
 
   // const [userImg, setUserImg] = useState('');
