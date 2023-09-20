@@ -89,7 +89,14 @@ const MainBestCarousel = () =>{
                                 </>
                             }
                         </div>
-                        <div style={{fontSize:'100%'}}>{settingText(best.user.userNick,8)}<br/>{settingText(best.board.boardTitle,8)}</div>
+                        <div style={{fontSize:'100%'}} className='best-text-box'>
+                            <div className='best-user-text'>
+                                {settingText(best.user.userNick,8)}
+                            </div>
+                            <div className='best-title-text'>
+                                {settingText(best.board.boardTitle,8)}
+                            </div>
+                        </div>
                     </div>
                     </Link>
                 ))
@@ -143,7 +150,14 @@ const MainBestCarousel = () =>{
                                 </>
                             }
                         </div>
-                        <div style={{fontSize:'100%'}}>{settingText(best.user.userNick,8)}<br/>{settingText(best.board.boardTitle,8)}</div>
+                            <div style={{fontSize:'100%'}} className='best-text-box'>
+                                <div className='best-user-text'>
+                                    {settingText(best.user.userNick,8)}
+                                </div>
+                                <div className='best-title-text'>
+                                    {settingText(best.board.boardTitle,8)}
+                                </div>
+                            </div>
                     </div>
                     </Link>
                 ))
@@ -251,8 +265,12 @@ const settingText = (text, n) => {
                                             }
                                         </div>
                                         <div className='local-box-text'>
-                                            {settingText(local.user.userNick,8)}<br/><br/>
-                                            {settingText(local.board.boardTitle,8)}
+                                            <div className='local-box-nick-text'>
+                                                {settingText(local.user.userNick,8)}
+                                            </div>
+                                            <div className='local-box-content-text'>   
+                                                {settingText(local.board.boardTitle,14)}
+                                            </div>
                                         </div >
                                     </div>
                                     </Link>
@@ -320,8 +338,12 @@ const settingText = (text, n) => {
                                             }
                                         </div>
                                         <div className='local-box-text'>
-                                            {settingText(local.user.userNick,8)}<br/><br/>
-                                            {settingText(local.board.boardTitle,8)}
+                                            <div className='local-box-nick-text'>
+                                                {settingText(local.user.userNick,8)}
+                                            </div>
+                                            <div className='local-box-content-text'>   
+                                                {settingText(local.board.boardTitle,14)}
+                                            </div>
                                         </div >
                                     </div>
                                     </Link>
@@ -413,10 +435,13 @@ const MainShortsCarousel = () => {
                         </video>
                         </div>
                         <div>
-                            <div style={{textAlign:'center', fontSize:'120%'}}>
-                                {settingText(shorts.user.userNick, 8)}
-                                <br/>
-                                {settingText(shorts.board.boardTitle, 8)}
+                            <div style={{textAlign:'center', fontSize:'1vw', padding:'0.5vw'}}>
+                                <div className='shorts-box-nick-text'>
+                                    {settingText(shorts.user.userNick, 8)}
+                                </div>
+                                <div>
+                                    {settingText(shorts.board.boardTitle, 8)}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -446,7 +471,6 @@ const MainVsCarousel = () => {
     const [index, setIndex] = useState(0);
     const [left, setLeft] = useState(0);
 
-    
     const handleLeft = () => {
         let changedLeft = 0;
         if(-18*4<left&& left<=-18*3){

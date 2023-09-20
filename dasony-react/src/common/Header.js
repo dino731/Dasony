@@ -292,9 +292,9 @@ const Header = () => {
                                                     <li></li>
                                                     <li></li>
                                                     <li></li>
+                                                    <li></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/service/notice'>공지</Link></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/alert'>알람</Link></li>
-                                                    <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/reception'>문의</Link></li>
                                                     <li></li>
                                                 </ul>
                                             ); break;

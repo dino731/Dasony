@@ -76,6 +76,7 @@
 		<result column="MAIN_REPLY_NO" property="mainReplyNo"/>
 		<result column="REPLY_LEVEL" property="replyLevel"/>
 		<result column="REPLY_COUNT" property="replyCount"/>
+		<result column="USER_LEVEL" property = "userLevel"/>
 	</resultMap>
 	<!-- 좋아요 기능 객체 resultMap -->
 	<resultMap id="boardCareResultSet" type="boardCare">
@@ -192,6 +193,8 @@
 		<id column="BOARD_NO" property="boardNo"/>
 		<result property="interestCount" column="INTEREST_COUNT" />
 	    <result property="orderMap" column="ORDER_MAP" />
+	    <result property="choiceLeft" column="CHOICE_LEFT"/>
+	    <result property="choiceRight" column="CHOICE_Right"/>
 	    <association property="boardVs" resultMap="boardVsResultSet"/> 
 	    <association property="user" resultMap="userMap"/> 
 	</resultMap>	
@@ -294,9 +297,10 @@
 	
 	<select id="replySelect" parameterType="int" resultMap="replyResultSet">
 		SELECT *
-		FROM REPLY
+		FROM REPLY R
+		LEFT JOIN MEMBER M ON R.USER_NO = M.USER_NO
 		WHERE BOARD_NO = #{boardNo}
-		AND REPLY_STATUS = 'Y'
+		AND R.REPLY_STATUS = 'Y'
 	</select>
 
 	
@@ -490,7 +494,7 @@
    	SELECT *
 	FROM (
 	    SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NICKNAME, M.USER_REGION,
-	    		VS.BOARD_OPTION_LEFT, VS.BOARD_OPTION_RIGHT,
+	    		VS.BOARD_OPTION_LEFT, VS.BOARD_OPTION_RIGHT, VS.CHOICE_LEFT, VS.CHOICE_RIGHT,
 	           (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO) AS INTEREST_COUNT,M.USER_NO,
 	           (B.BOARD_VIEWS + (SELECT COUNT(*) FROM BOARD_CARE C WHERE B.BOARD_NO = C.BOARD_NO)) AS ORDER_MAP
 	    FROM BOARD B
