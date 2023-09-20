@@ -104,7 +104,6 @@ import { useEffect } from 'react';
 
     const handleSearchEnter = (e) => {
         if(e.key === "Enter"){
-            // handleSearch();
             console.log(e)
         }
     }

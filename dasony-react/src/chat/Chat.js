@@ -14,6 +14,7 @@ const Chat = () =>{
     const {chatRoomNo} = useParams();
     const {chatData} = useChatData();
     console.log("chatData", chatData);
+    console.log("useParam", chatRoomNo);
 
     const navigate = useNavigate();
 
