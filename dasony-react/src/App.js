@@ -141,7 +141,7 @@ function App() {
     <Header/>
 
     <div id='game'> 
-    <h2 className='finding-molang' style={{color : '#CB9DE7'}}>멀랑이의 <br/>보물찾기!</h2>
+
     <Gamestart/>
       </div>
       <div id='gameDiv'></div>
