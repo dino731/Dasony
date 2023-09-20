@@ -5,6 +5,7 @@ import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { loginUserState } from '../atoms';
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 
 const Header = () => {
@@ -16,7 +17,7 @@ const Header = () => {
     
     /*경로 설정을 위한 사용자 정보 확인 */
     const [isLogin, setIsLogin] = useState(false);
-
+    const[lastGameData,setLastGameData] = useState([]);
     useEffect(()=>{
         if(localStorage.getItem("userNo")){
             setIsLogin(true);
@@ -41,20 +42,13 @@ const Header = () => {
             navigate('/');
         }
         
-      }, [loginUserNo]);
+      }, [loginUserNo, gameStartYN,lastGameData]);
 
       useEffect(() => {
         axios.post("/dasony/api/gameSet",{
             userNo : loginUserNo
         }).then((response)=>{
-            let lastGameData = response.data;
-            let lastGameDate = new Date(lastGameData);
-            const currentTime = new Date();
-            if (currentTime - lastGameDate >= 10000) { // 60000 밀리초 = 1분
-                axios.post("/dasony/api/letStartGame",{
-                    userNo : loginUserNo
-                });
-              }
+            setLastGameData(response.data);
         }).catch((error)=>{
             console.log("오류",error);
         });
@@ -63,8 +57,27 @@ const Header = () => {
         if (gameStartYN == 'Y') {
           gameDiv.style.display = 'block';
         } 
-      }, [gameStartYN]);
+      }, [lastGameData, gameStartYN]);
 
+      useEffect(() => {
+        // 10초마다 실행되는 코드
+        const intervalId = setInterval(() => {
+          // 여기에 실행하고자 하는 코드를 작성하세요
+          let lastGameDate = new Date(lastGameData);
+          let currentTime = new Date();
+          if ((currentTime - lastGameDate) >= 10000) {
+            axios.post("/dasony/api/letStartGame", {
+              userNo: loginUserNo
+            });
+          }
+        }, 10000); // 10초마다 실행
+      
+        // 컴포넌트가 언마운트될 때 타이머 정리
+        return () => {
+          clearInterval(intervalId);
+        };
+      }, [lastGameData, loginUserNo]);
+      
 
     /*관리자 헤더, 사용자 헤더 설정 */
     const HandleMainList = async function(location){

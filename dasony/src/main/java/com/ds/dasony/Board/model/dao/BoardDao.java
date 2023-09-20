@@ -88,6 +88,7 @@ public class BoardDao {
 	}
 	
 	public int insertReply(Reply r, int userNo) {
+		int result5 = session.update("memberMapper.insertReplyExp",userNo);
 
 		 User list = session.selectOne("board.replyGetNick", userNo);
 		 String rUserNick = list.getUserNick();

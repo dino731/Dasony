@@ -190,6 +190,7 @@ public class BoardController {
 								@RequestParam("boardNo")int boardNo, 
 								@RequestParam("userNo")int userNo
 								) {
+		
 
 		Reply r = Reply.
 	              builder().
