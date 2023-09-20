@@ -58,7 +58,7 @@ const Home = () =>{
                                         return(
                                             weather.boardImg.boardImgModName
                                             ?
-                                            <div className='weather-board-info'>
+                                            <div key={weather.board.boardNo} className='weather-board-info'>
                                                 <div>
                                                     <img src={`http://localhost:8083/dasony/${weather.boardImg.boardImgPath}/${weather.boardImg.boardImgModName}`}/>
                                                 </div>
