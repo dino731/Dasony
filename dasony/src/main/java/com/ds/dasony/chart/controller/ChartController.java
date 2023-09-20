@@ -23,7 +23,7 @@ public class ChartController {
 
 	@GetMapping("/makeChart")
 	public List<Map<String, Object>> makeChart(@RequestParam String category){
-		log.info("category : " + category);
+//		log.info("category : " + category);
 		
 		if(category.toLowerCase().contains("user")) {
 			return userChart();
@@ -41,7 +41,7 @@ public class ChartController {
 		 * */
 		
 		List<Map<String, Object>> data = chartService.selectChartValue("user");
-		log.info("user chart data : " + data.toString());
+//		log.info("user chart data : " + data.toString());
 		
 		return data;
 	}
@@ -54,7 +54,7 @@ public class ChartController {
 		 * */
 		
 		List<Map<String, Object>> data = chartService.selectChartValue("activity");
-		log.info("activity chart data : " + data.toString());
+//		log.info("activity chart data : " + data.toString());
 		
 		return data;
 	}

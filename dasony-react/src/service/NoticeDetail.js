@@ -11,7 +11,7 @@ const NoticeDetail = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const mainPath = pathname.split('/').slice(0, -2).join("/");
-    console.log(mainPath);
+    // console.log(mainPath);
 
     // no로 데이터 조회 로직 추가할 것 (이전, 이후 글 포함해 총 3개의 글)
     // const list = [0, 1, null];
@@ -33,7 +33,7 @@ const NoticeDetail = () => {
         axios.get("http://localhost:3000/dasony/notice/noticeDetailList/"+no)
             .then(response => {
                 const res = response.data;
-                console.log(res, res[1].content);
+                // console.log(res, res[1].content);
                 setData(res);
             });
 

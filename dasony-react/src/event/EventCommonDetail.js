@@ -1,6 +1,7 @@
 import { useEffect, useRef, useLayoutEffect, useState } from "react";
 import { Link, useNavigate  } from 'react-router-dom';
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 /** 이벤트 상세조회 게시판 */
 const EventDetail = ({no}) => { // EventNo 넘어옴
@@ -45,7 +46,7 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
                 // console.log(res.data);
                 setEventInfo(res.data.event);
                 setRewardInfo(res.data.reward);
-                console.log(res.data.reward);
+                // console.log(res.data.reward);
 
                 // textarea <br> -> enter
                 if(res.data.event.content) textarea.current.value = res.data.event.content.replaceAll("<br>", "\r\n");
@@ -87,18 +88,36 @@ const EventDetail = ({no}) => { // EventNo 넘어옴
         
     };
 
+    // alert
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
     // 이벤트 참여
     const joinEvent = () => {
         const loginUserNo = localStorage.getItem("loginUserNo");
         // const loginUserNo = 23090754;
         const data = {eventNo: no, userNo: loginUserNo};
-        console.log("param : ", data);
+        // console.log("param : ", data);
+        
         axios.post("http://localhost:3000/dasony/event/join", data)
             .then(res => {
                 const result = res.data;
-                console.log("res : ", result);
-                if(result.coin != null) alert(`${result.coin} 다손을 얻었습니다!`);
-                alert(result.msg);
+                // console.log("res : ", result);
+                if(result.coin != null) Toast.fire({ icon: "success", title: `${result.coin} 다손을 얻었습니다!` }); // alert(`${result.coin} 다손을 얻었습니다!`);
+
+                Toast.fire({
+                    icon: "success",
+                    title: result.msg
+                });
             }); 
     };
 

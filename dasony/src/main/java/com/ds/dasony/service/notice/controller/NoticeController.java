@@ -28,14 +28,14 @@ public class NoticeController {
 	@PostMapping("/loadList") 
 	public List<Notice> selectList(@RequestBody Map<String, Object> param){
 		
-		log.info(param.toString());
+//		log.info(param.toString());
 		if(param.isEmpty()) param.put("category", "선택");
 		
 		List<Notice> result = nService.selectList(param);
 		
 //		int maxPage = result.
 		
-		log.info(result.toString());
+//		log.info(result.toString());
 		
 		return result;
 	}

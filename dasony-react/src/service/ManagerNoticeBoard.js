@@ -2,6 +2,7 @@ import {useNavigate} from 'react-router-dom';
 import {useEffect, useRef, useState} from 'react';
 import axios from "axios";
 import Loading from '../common/Loading';
+import Swal from 'sweetalert2';
 
 /** 공지사항 관리 게시판 */
 const ManagerNoticeBoard = () => {
@@ -11,6 +12,19 @@ const ManagerNoticeBoard = () => {
     const [selectedStatus, setSelectedStatus] = useState("선택");
     const [data, setData] = useState([]);
     const [loadStatus, setLoadStatus] = useState(false);
+
+    // alert
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
 
     const loadData = (keyword) => {
         const url = encodeURI('http://localhost:3000/dasony/notice/loadList');
@@ -64,23 +78,54 @@ const ManagerNoticeBoard = () => {
     function updateNotice(action, no, nowIndex){
         if(action === '수정') navigate('edit/' + no);
         else {
-            if(window.confirm("정말 삭제하시겠습니까?")) {
-                axios.get("http://localhost:3000/dasony/notice/delete/"+no)
+            Swal.fire({
+                text: '정말 삭제하시겠습니까?',
+                icon: 'warning',
+                
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6', 
+                cancelButtonColor: '#d33', 
+                confirmButtonText: '확인', 
+                cancelButtonText: '취소',
+                
+                reverseButtons: true, 
+                
+             }).then(result => {
+                if (result.isConfirmed) { 
+                    axios.get("http://localhost:3000/dasony/notice/delete/"+no)
                     .then(res => {
-                        alert(res.data.msg);
+                        Toast.fire({
+                            icon: "success",
+                            title: res.data.msg
+                        });
 
                         if(res.data.result>0){
-                            // const afterData = data;
-                            // afterData.splice(nowIndex, 1);
-                            // setData(afterData);
                             loadData();
                         };
                     })
-            }
+                }
+             });
+
+
+            // if(window.confirm("정말 삭제하시겠습니까?")) {
+            //     axios.get("http://localhost:3000/dasony/notice/delete/"+no)
+            //         .then(res => {
+            //             alert(res.data.msg);
+
+            //             if(res.data.result>0){
+            //                 // const afterData = data;
+            //                 // afterData.splice(nowIndex, 1);
+            //                 // setData(afterData);
+            //                 loadData();
+            //             };
+            //         })
+            // }
 
             // 삭제 처리하는 로직 추가
             // navigate(-2);
         }
+
+        
     }
 
     return(

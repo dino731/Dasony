@@ -21,5 +21,7 @@ public class Reply {
 	private String replyLevel;			//REPLY_LEVEL
 	
 	private int replyCount;//REPLY_COUNT
+	
+	private String userLevel;
 }
 

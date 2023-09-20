@@ -38,7 +38,7 @@ export default () => {
 
     // -> 페이지 경로가 있으면 해당 컴포넌트 호출 / 아니면 공통 양식으로
     if(state==null) {
-        console.log("no : " + no);
+        // console.log("no : " + no);
         return(
             <EventCommonDetail no={no} />
         );
