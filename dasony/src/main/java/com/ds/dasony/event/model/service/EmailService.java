@@ -32,7 +32,6 @@ public class EmailService {
 			message.setText(email.getText(), "utf-8");
 //        message.setTo("leeain317@gmail.com");
 			message.addRecipients(Message.RecipientType.TO, email.getReceiverEmail());
-//			log.info("msg : " + message.toString());
 			sender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
