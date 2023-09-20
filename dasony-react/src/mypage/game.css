@@ -1,4 +1,4 @@
- #gameTable{
+#gameTable{
     border-collapse: collapse;
 }
 #gameTable td{
@@ -14,6 +14,7 @@
   }
 
 #game{
+
     text-align: center;
     width: 150px;
     height: 70px;
