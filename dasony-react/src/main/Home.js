@@ -23,14 +23,15 @@ const Home = () =>{
     useEffect(()=>{
         const fetchData = async()=>{
             await axios.post("/dasony/board/weatherList",)
-            .then(res=>{
+            .then(res=>{ //
                 setWeatherList(res.data);
                 console.log("웨더 리스트 확인", res.data);
             })
             .catch(err=>{
                 console.log(err);
             });
-            
+         //?/?
+         let a  = 0;   
         }
         fetchData();
     },[])
