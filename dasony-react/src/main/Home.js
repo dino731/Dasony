@@ -65,7 +65,7 @@ const Home = () =>{
                                                     {weather.user.userNick}
                                                 </div>
                                                 <div>
-                                                    {settingText(weather.board.boardTitle, 10)}
+                                                    {settingText(weather.board.boardTitle, 20)}
                                                 </div>
                                             </div>
                                             :
@@ -77,7 +77,7 @@ const Home = () =>{
                                                     {weather.user.userNick}
                                                 </div>
                                                 <div>
-                                                    {settingText(weather.board.boardTitle, 10)}
+                                                    {settingText(weather.board.boardTitle, 20)}
                                                 </div>
                                             </div>
                                         )

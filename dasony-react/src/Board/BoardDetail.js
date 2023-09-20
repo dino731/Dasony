@@ -22,7 +22,18 @@ const BoardDetail = () =>{
   const location = useLocation();
   const path = location.pathname;
   // console.log('BoardDetail path ===>',path);
-  localStorage.getItem("loginUserNo") // 유저 번호 
+  localStorage.getItem("loginUserNo") // 유저 번호
+  
+  /*동영상 사진 경로 맵 */
+  const userImgMap = {
+    'A':`/resources/common-img/levelone.png`,
+    'B':`/resources/common-img/leveltwo.png`,
+    'C':`/resources/common-img/levelthree.png`,
+    'D':`/resources/common-img/levelfour.png`,
+    'E':'./resources/common-img/levelfive.png',
+    'Z':`/resources/common-img/levelgod.png`
+  }
+
 
   /* 현재 경로 비교연산 밑작업용 ain 0904 */
   const dailyPath = path.includes('daily') ? path : null;
@@ -177,6 +188,7 @@ const BoardDetail = () =>{
         console.log('BoardList 응답 데이터:', response.data);
         setBoardData(response.data.boardData);
         setReply(response.data.replyList);
+        console.log(response.data.replyList);
         // setReplyText(response.data.replyList);
       })
       .catch((error) => {
@@ -702,7 +714,7 @@ const handleReModalOffAndClose = () => {
                                 <div className='video-content'>
                                   <div className='video-user-box'>
                                     <div className='video-user-thumb'>
-                                      <img src={`http://localhost:8083/dasony/resources/images/board/99140.png`}/>
+                                      <img src={userImgMap[board.user.userLevel]}/>
                                     </div> 
                                     <div>{board.user.userNick}<br/></div>
                                   </div>
