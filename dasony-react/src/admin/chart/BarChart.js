@@ -4,7 +4,7 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { useLayoutEffect, useRef } from "react";
 
 const BarChart = ({paddingRight, data, kind, loading}) => {
-    console.log("Bar : ", data);
+    // console.log("Bar : ", data);
     const chartRef = useRef(null);
 
     const name1 = kind[0];
@@ -61,7 +61,7 @@ const BarChart = ({paddingRight, data, kind, loading}) => {
         columnTemplate.stroke = chart.colors.getIndex(colorNum+1);
 
         colorList[colorNum] = chart.colors.getIndex(colorNum+1);
-        console.log(chart.colors.getIndex(colorNum+1)._value);
+        // console.log(chart.colors.getIndex(colorNum+1)._value);
         // columnTemplate.adapter.add("fill", function(fill, target) {
         //   return chart.colors.getIndex(target.dataItem.index);
         // })

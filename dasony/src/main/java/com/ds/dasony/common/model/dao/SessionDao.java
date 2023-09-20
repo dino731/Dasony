@@ -16,7 +16,7 @@ public class SessionDao {
 	SqlSessionTemplate sqlSession;
 	
 	public int addVisitor(SessionModel session) {
-		log.info("dao session : " + session.toString());
+//		log.info("dao session : " + session.toString());
 		return sqlSession.insert("session.addVisitor", session);
 	}
 

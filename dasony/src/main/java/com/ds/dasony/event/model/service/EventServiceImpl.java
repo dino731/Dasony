@@ -50,8 +50,8 @@ public class EventServiceImpl implements EventService{
 		// 최종 결과값
 		int result = 1;
 		
-		log.info(event.toString());
-		log.info(rewardList.toString());
+//		log.info(event.toString());
+//		log.info(rewardList.toString());
 		
 		result *= eDao.updateEventInfo(event);
 		if(result==0) return result;

@@ -131,7 +131,7 @@ public class EventController {
 		String serviceKind = "";
 		String response = "";
 
-		log.info(eventForm.toString());
+//		log.info(eventForm.toString());
 		
 		try {
 			filePath = fileUpload.uploadFile(eventForm.getThumbFile(), request, "event");
@@ -225,8 +225,8 @@ public class EventController {
 		map.put("event", event);
 		map.put("reward", list);
 		
-		log.info("data : " + event.toString());
-		log.info("data : " + reward.toString());
+//		log.info("data : " + event.toString());
+//		log.info("data : " + reward.toString());
 		
 		// 쿼리 수행 결과값
 		int result = 0;
@@ -262,7 +262,7 @@ public class EventController {
 		}
 		
 		map.put("event", event);
-		log.info("no : " + no + "/map : " + map.toString());
+//		log.info("no : " + no + "/map : " + map.toString());
 		
 		int result = eService.sendMsg(map);
 		
@@ -277,7 +277,7 @@ public class EventController {
 	@Transactional
 	@PostMapping("/join")
 	public Map<String, Object> joinEvent(@RequestBody Map<String, Object> data) { // eventNo, userNo
-		log.info("join의 data : " + data.toString());
+//		log.info("join의 data : " + data.toString());
 		Map<String, Object> msgMap = new HashMap();
 		String coinText = "";
 		String resultText = "";
@@ -300,14 +300,14 @@ public class EventController {
 //		int result = eService.joinEvent(data);
 		eService.joinEvent(data);
 		
-		log.info("data total : " + data.toString());
+//		log.info("data total : " + data.toString());
 		// 프로시저로부터 결과값 가져오기
 		int result = (int) data.get("rows");
 		
 		if(result>0) {
 			
 			data = getCoin((String)data.get("eventNo"), data);
-			log.info("coin after" + data.toString());
+//			log.info("coin after" + data.toString());
 			msgMap.put("coin", data.get("coin"));
 			resultText = "이벤트에 응모해주셔서 감사합니다.";
 			
@@ -334,11 +334,11 @@ public class EventController {
 	 * @return Map<String, Object> : 응답 map
 	 */
 	private Map<String, Object> getCoin(String eventNo, Map<String, Object> map){
-		log.info("eventNo : " + eventNo + "map : " + map.toString());
+//		log.info("eventNo : " + eventNo + "map : " + map.toString());
 		Event event = eService.selectEvent(eventNo);
 		String winPoint = event.getWinTime();
 		String pageLink = event.getPageLink();
-		log.info("event : " + event.toString() + "winP : " + winPoint + "page : " + pageLink);
+//		log.info("event : " + event.toString() + "winP : " + winPoint + "page : " + pageLink);
 		// 랜덤 포인트를 갖는 이벤트인 경우
 		if(!winPoint.equals("일자")) {
 			int result;
@@ -366,16 +366,16 @@ public class EventController {
 				log.info("map : " + map.toString());
 			}
 		}
-		log.info("getCoin : " + map.toString());
+//		log.info("getCoin : " + map.toString());
 		return map;
 	}
 	
 	// 로그인 이벤트인 케이스
 	@PostMapping("/loadLogin")
 	public EventJoin loadLogin(@RequestBody Map<String, Object> data){
-		log.info("param : " + data.toString());
+//		log.info("param : " + data.toString());
 		EventJoin result = eService.loadLogin(data);
-		log.info("login : " + result.toString());
+//		log.info("login : " + result.toString());
 		return result;
 	}
 	
@@ -395,9 +395,9 @@ public class EventController {
 //		}
 		
 		// 2. 출석하기
-		log.info("data : " + data.toString());
+//		log.info("data : " + data.toString());
 		num = eService.checkTdyLogin(data);
-		log.info("num : " + num);
+//		log.info("num : " + num);
 		
 		String text;
 		if(num>0) {

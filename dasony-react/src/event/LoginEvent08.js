@@ -31,7 +31,7 @@ const LoginEvent08 = () => {
 
     useLayoutEffect(()=>{
         const btn = checkBtn.current;
-        console.log(btn);
+        // console.log(btn);
 
         if(btn != null){
             // 오늘자 출석 여부에 따라 커서 스타일 변경

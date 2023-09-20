@@ -36,18 +36,19 @@ public class SessionService {
 		// 접속 이전 사이트 가져오기
 		session.setVisitorRefer(request.getHeader("referer"));
 		
-		log.info("session : " + session.toString());
+//		log.info("session : " + session.toString());
 		
 		if(!(checkVisit(session)>0)) {
 			sessionDao.addVisitor(session);			
-		}else {
-			log.info("이미 방문한 사람");
 		}
+//		else {
+//			log.info("이미 방문한 사람");
+//		}
 	}
 	
 	public int checkVisit(SessionModel session) {
 //		SessionModel session = getSession(request);
-		log.info("check session : " + session.toString());
+//		log.info("check session : " + session.toString());
 		return sessionDao.checkVisit(session);
 	}
 	
