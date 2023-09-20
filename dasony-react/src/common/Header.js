@@ -65,7 +65,7 @@ const Header = () => {
           // 여기에 실행하고자 하는 코드를 작성하세요
           let lastGameDate = new Date(lastGameData);
           let currentTime = new Date();
-          if ((currentTime - lastGameDate) >= 10000) {
+          if ((currentTime - lastGameDate) >= 600000) {
             axios.post("/dasony/api/letStartGame", {
               userNo: loginUserNo
             });
