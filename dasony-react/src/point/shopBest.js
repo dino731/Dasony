@@ -8,7 +8,7 @@ import Loading from "../common/Loading";
 
 const ShopBest = ()=>{
 
-    const [loading, setLoading] = useState(true);
+
 
     const userRegion = localStorage.getItem("loginUserRegion");
 
@@ -18,9 +18,10 @@ const ShopBest = ()=>{
         'O' : 'eatout',
         'C' : 'convenient'
         }
-    
+
+
 {/*상품 정보 불러오기 */}
-    {/*베스트 상품 정보 설정 */}
+{/*베스트 상품 정보 설정 */}
     const [bestProduct, setBestProduct] = useState([]);
     {/*베스트 상품 정보 불러오기 - 서버*/}
     const handleProductBestInfo = () => {
@@ -34,10 +35,39 @@ const ShopBest = ()=>{
             alert("다시 시도해주세요.");
         })
     }
-    useEffect(()=>{
-        handleProductBestInfo();
+    
+{/*무한 스크롤 기능 */}
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+        const scrollHeight = document.documentElement.scrollHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const clientHeight = document.documentElement.clientHeight;
+        
+        if (scrollTop + clientHeight >= scrollHeight - 100 && !loading) {
+            fetchData(); // 스크롤 이벤트 감지 시 데이터 가져오기
+        }
+      };
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        await handleProductBestInfo();
         setLoading(false);
-    }, [userRegion])
+      } catch (error) {
+        console.error(error);
+        alert("다시 시도해주세요.");
+      }
+    };
+  
+    fetchData();
+  
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
     return(
         <>
@@ -49,7 +79,7 @@ const ShopBest = ()=>{
                     bestProduct&&bestProduct.map(p=>{
                         return(
                             
-                            <div className="shopBest-item">
+                            <div key={p.productNo} className="shopBest-item">
                                 <Link
                                     to={`/shop/cate/${pathMap[p.shopCate]}/${p.shopName}/${p.productName}`} 
                                     state= {{ product: p} }

@@ -87,7 +87,13 @@ public class BoardDao {
 		return session.selectOne("board.boardEdit", BoardNo);
 	}
 	
+//	public int updateBoard(BoardWriterForm boardWriterForm , int boardNo) {
+//		boardWriterForm.setBoardNo(boardNo);
+//		return session.update("board.boardUpdate",boardWriterForm);
+//	}
+	
 	public int insertReply(Reply r, int userNo) {
+		int result5 = session.update("memberMapper.insertReplyExp",userNo);
 
 		 User list = session.selectOne("board.replyGetNick", userNo);
 		 String rUserNick = list.getUserNick();

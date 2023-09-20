@@ -3,6 +3,7 @@ import './game.css';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { useEffect,useState } from 'react';
+import Swal from "sweetalert2";
 
 
 
@@ -22,32 +23,38 @@ const Gamestart = () =>{
 
 
 const Game= ()=>{
-    
-
-    alert("질뻑이가 보물상자를 다 먹기전에 질뻑이들을 피해서 먼저 보물상자를 차지하세요!");
-    let random = Math.floor(Math.random() * 1);
+    Swal.fire({
+        title: '보물찾기 게임으로 다손을 얻으세요!',
+        showDenyButton: true,
+        confirmButtonText: '게임 하기!',
+        denyButtonText: `다음에 할게요 ㅜㅜ`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('질뻑이들을 피해서 보물상자를 획득하고 마지막 보물상자를 차지하세요!')
+        
+    let random = Math.floor(Math.random() * 1)
     
     if(random == 0){
         let map=[
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,4,1,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,2,0,0,0,0,4,1,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,1,1,1,0,1,1,1,0,1,0,0,1,0,1,0,1,0,1],
             [1,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1],
-            [1,0,1,0,1,0,1,0,1,0,1,0,0,0,0,1,0,1,0,1],
+            [1,4,1,0,1,0,1,0,1,0,1,0,0,0,0,1,0,1,0,1],
             [1,1,1,0,1,0,1,0,1,0,1,0,1,4,1,1,0,1,4,1],
-            [1,0,0,0,0,0,1,2,1,0,0,0,1,1,0,0,0,1,0,1],
+            [1,0,0,2,0,0,1,2,1,0,0,0,1,1,0,0,0,1,0,1],
             [1,0,1,1,0,1,1,0,1,0,1,0,0,0,0,1,0,1,0,1],
             [1,0,0,1,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1],
             [1,1,0,1,1,1,0,1,1,1,1,0,1,0,1,0,1,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,3,0,1,0,0,1,2,1,0,1],
+            [1,0,0,0,0,0,2,0,0,0,3,0,1,0,0,1,2,1,0,1],
             [1,0,1,1,1,1,0,1,1,1,1,0,1,1,0,1,0,1,0,1],
-            [1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1],
+            [1,4,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1],
             [1,0,1,1,1,1,0,1,1,1,1,0,1,0,1,0,1,1,0,1],
             [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
             [1,0,0,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,0,1],
             [1,1,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,1,0,1,0,1,0,1,0,1,1,1,0,1,1,1,1,0,1],
-            [1,0,0,0,1,4,1,2,1,0,0,0,0,2,0,0,0,4,0,1],
+            [1,4,1,0,1,0,1,0,1,0,1,1,1,0,1,1,1,1,0,1],
+            [1,0,0,0,1,4,1,2,1,4,0,0,0,2,0,0,0,4,0,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ];
 
@@ -117,7 +124,8 @@ const Game= ()=>{
         let pikas = [
            
         ];
-        let boxcount = 5;
+        let boxcount = 9;
+        let totalDason = 0;
 
         for (let i = 0; i < map.length; i++) {
             for (let j = 0; j < map[i].length; j++) {
@@ -137,8 +145,8 @@ const Game= ()=>{
 
                 $("#life").html(life);
         
-                if (life == 2) {
-                    alert("포인트 획득에 실패하였습니다. 님 개못하네요.");
+                if (life == 0) {
+                    Swal.fire("다손 획득에 실패하였습니다. 다음에 또 도전하세요!");
                     const gameData = {
                         gameStatus: "N",
                         pointStatus: "N",
@@ -152,7 +160,7 @@ const Game= ()=>{
                     });
                     
                 }
-
+                
             switch(key){
                 case 38://up
                     map[nowX][nowY]=0;
@@ -163,7 +171,7 @@ const Game= ()=>{
                             let randommove = Math.floor(Math.random()*4);
                             let nowPx = pikas[i].x;
                             let nowPy = pikas[i].y;
-                             
+                           
                                 while(true){
                                 switch(randommove){
                                     case 0:  if(map[nowPx-1][nowPy] != 1){map[nowPx][nowPy] = 0;nowPx--;
@@ -172,7 +180,7 @@ const Game= ()=>{
                                            boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();
                                                 break;  
                                             }
@@ -192,7 +200,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                                 
                                             }
@@ -210,7 +218,7 @@ const Game= ()=>{
                                             boxcount --;
                                            
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                                 
                                             }
@@ -228,7 +236,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                                 
                                             }
@@ -264,21 +272,24 @@ const Game= ()=>{
                     if(map[nowX][nowY]==2&&life!=0){
                         life--;
                         pikas = pikas.filter( pika => !(pika.x == nowX && pika.y == nowY));
-                        alert("질뻑이에게 잡아먹혔습니다! 목숨-1 (현재목숨 :"+life+")");
+                        Swal.fire("질뻑이에게 잡아먹혔습니다! 목숨-1 (현재목숨 :"+life+")");
                     }
                     else if(map[nowX][nowY]==4){
                         let pointorticket= Math.floor(Math.random() * 2);
                         boxcount --;
                         if(tCount>0){
-                            alert("200포인트 획득!");
+                            let plusDason = (Math.floor(Math.random() * 499)+1);
+                            Swal.fire(plusDason+"다손 획득!");
+                            totalDason += plusDason;
                             pCount++;
                         }else{
                             if(pointorticket == 0){
-                                alert("200포인트 획득!");
-                                count++; 
-                                pCount++;
+                                let plusDason = (Math.floor(Math.random() * 499)+1);
+                            Swal.fire(plusDason+"다손 획득!");
+                            totalDason += plusDason;
+                            pCount++;
                             }else{
-                                alert("응모권 당첨! ")
+                                Swal.fire("응모권 당첨! ")
                                 tCount++;
                             }
                         }
@@ -286,7 +297,7 @@ const Game= ()=>{
                         if (boxcount == 0) {
                             
                             if(tCount > 0 && pCount >0){
-                                alert("성공! 획득한 포인트 : "+pCount*200+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                                Swal.fire("성공! 획득한 다손 : "+totalDason+ "다손"+ "응모권 흭득! 마이페이지에서 확인하세요");
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
@@ -308,7 +319,7 @@ const Game= ()=>{
                             });
                             const pointData = {
                                 userNo : loginUserNo,
-                                pointAmount : pCount*200,
+                                pointAmount : totalDason,
                                 pointCate : "G"  
                             };
                             axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -316,7 +327,7 @@ const Game= ()=>{
                                 window.location.reload();
                             })
                             }else if(tCount>0  ){
-                                alert("응모권 흭득! 마이페이지에서 확인하세요");
+                                Swal.fire("응모권 흭득! 마이페이지에서 확인하세요");
                             const ticketData = {
                                 ticketStatus: "Y",
                                 userNo: loginUserNo   
@@ -338,10 +349,10 @@ const Game= ()=>{
                                 window.location.reload();
                             });
                             }else if(pCount >0){
-                                alert("성공! 획득한 총 포인트 : "+pCount*200+ "포인트");
+                                Swal.fire("성공! 획득한 총 다손 : "+totalDason+ "다손");
                                 const pointData = {
                                     userNo : loginUserNo,
-                                    pointAmount : pCount*200,
+                                    pointAmount : totalDason,
                                     pointCate : "G"  
                                 };
                                 axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -386,7 +397,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                             }
                                         }
@@ -402,7 +413,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                             }
                                         }
@@ -418,7 +429,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                             }
                                         }
@@ -434,7 +445,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                             }
                                         }
@@ -467,29 +478,32 @@ const Game= ()=>{
                     else if(map[nowX][nowY]==2&&life!=0){
                         life--;
                         pikas = pikas.filter( pika => !(pika.x == nowX && pika.y == nowY));
-                        alert("질뻑이에게 잡아먹혔습니다! 목숨-1 (현재목숨 :"+life+")");
+                        Swal.fire("질뻑이에게 잡아먹혔습니다! 목숨-1 (현재목숨 :"+life+")");
                         
                     }
                     else if(map[nowX][nowY]==4){
                         let pointorticket= Math.floor(Math.random() * 2);
                         boxcount --;
                         if(tCount>0){
-                            alert("200포인트 획득!");
+                            let plusDason = (Math.floor(Math.random() * 499)+1);
+                            Swal.fire(plusDason+"다손 획득!");
+                            totalDason += plusDason;
                             pCount++;
                         }else{
                         if(pointorticket == 0){
-                            alert("200포인트 획득!");
-                            count++; 
+                            let plusDason = (Math.floor(Math.random() * 499)+1);
+                            Swal.fire(plusDason+"다손 획득!");
+                            totalDason += plusDason;
                             pCount++;
                         }else{
-                            alert("응모권 당첨! 어떤 응모권인지는 마이페이지에서 확인해주세요~")
+                            Swal.fire("응모권 당첨!")
                             tCount++;
                         }
                     }
                         if (boxcount == 0) {
                             
                             if(tCount > 0 && pCount >0){
-                                alert("성공! 획득한 포인트 : "+pCount*200+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                                Swal.fire("성공! 획득한 다손 : "+totalDason+ "다손"+ "응모권 흭득! 마이페이지에서 확인하세요");
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
@@ -511,7 +525,7 @@ const Game= ()=>{
                             });
                             const pointData = {
                                 userNo : loginUserNo,
-                                pointAmount : pCount*200,
+                                pointAmount : totalDason,
                                 pointCate : "G"  
                             };
                             axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -519,7 +533,7 @@ const Game= ()=>{
                                 window.location.reload();
                             })
                             }else if(tCount>0){
-                                alert("응모권 흭득! 마이페이지에서 확인하세요");
+                                Swal.fire("응모권 흭득! 마이페이지에서 확인하세요");
                             const ticketData = {
                                 ticketStatus: "Y",
                                 userNo: loginUserNo   
@@ -541,10 +555,10 @@ const Game= ()=>{
                                 window.location.reload();
                             });
                             }else if(pCount >0){
-                                alert("성공! 획득한 총 포인트 : "+pCount*200+ "포인트");
+                                Swal.fire("성공! 획득한 총 다손 : "+totalDason+ "다손");
                                 const pointData = {
                                     userNo : loginUserNo,
-                                    pointAmount : pCount*200,
+                                    pointAmount : totalDason,
                                     pointCate : "G"  
                                 };
                                 axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -585,7 +599,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();
                                                 break;
                                             }
@@ -602,7 +616,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                             }
                                         }
@@ -618,7 +632,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                             }
                                         }
@@ -634,7 +648,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                             }
                                         }
@@ -666,29 +680,32 @@ const Game= ()=>{
                     else if(map[nowX][nowY]==2&&life!=0){
                         life--;
                         pikas = pikas.filter( pika => !(pika.x == nowX && pika.y == nowY));
-                        alert("질뻑이에게 잡아먹혔습니다! 목숨-1 (현재목숨 :"+life+")");
+                        Swal.fire("질뻑이에게 잡아먹혔습니다! 목숨-1 (현재목숨 :"+life+")");
                         
                     }
                     else if(map[nowX][nowY]==4){
                         let pointorticket= Math.floor(Math.random() * 2);
                         boxcount --;
                         if(tCount>0){
-                            alert("200포인트 획득!");
+                            let plusDason = (Math.floor(Math.random() * 499)+1);
+                            Swal.fire(plusDason+"다손 획득!");
+                            totalDason += plusDason;
                             pCount++;
                         }else{
                         if(pointorticket == 0){
-                            alert("200포인트 획득!");
-                            count++; 
+                            let plusDason = (Math.floor(Math.random() * 499)+1);
+                            Swal.fire(plusDason+"다손 획득!");
+                            totalDason += plusDason;
                             pCount++;
                         }else{
-                            alert("응모권 당첨! 어떤 응모권인지는 마이페이지에서 확인해주세요~")
+                            Swal.fire("응모권 당첨! ")
                             tCount++;
                         }
                     }
                         if (boxcount == 0) {
                             
                             if(tCount > 0 && pCount >0){
-                                alert("성공! 획득한 포인트 : "+pCount*200+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                                Swal.fire("성공! 획득한 다손 : "+totalDason+ "다손"+ "응모권 흭득! 마이페이지에서 확인하세요");
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
@@ -710,7 +727,7 @@ const Game= ()=>{
                             });
                             const pointData = {
                                 userNo : loginUserNo,
-                                pointAmount : pCount*200,
+                                pointAmount : totalDason,
                                 pointCate : "G"  
                             };
                             axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -718,7 +735,7 @@ const Game= ()=>{
                                 window.location.reload();
                             })
                             }else if(tCount>0 ){
-                                alert("응모권 흭득! 마이페이지에서 확인하세요");
+                                Swal.fire("응모권 흭득! 마이페이지에서 확인하세요");
                             const ticketData = {
                                 ticketStatus: "Y",
                                 userNo: loginUserNo   
@@ -740,10 +757,10 @@ const Game= ()=>{
                                 window.location.reload();
                             });
                             }else if(pCount >0){
-                                alert("성공! 획득한 총 포인트 : "+pCount*200+ "포인트");
+                                Swal.fire("성공! 획득한 총 다손 : "+totalDason+ "다손");
                                 const pointData = {
                                     userNo : loginUserNo,
-                                    pointAmount : pCount*200,
+                                    pointAmount : totalDason,
                                     pointCate : "G"  
                                 };
                                 axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -784,7 +801,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                             }
                                         }
@@ -800,7 +817,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                             }
                                         }
@@ -816,7 +833,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                             }
                                         }
@@ -832,7 +849,7 @@ const Game= ()=>{
                                             boxcount --;
                                             
                                             if(boxcount == 0 ){
-                                                alert("질뻑이가 모든 상자를 다먹어치웠습니다!");
+                                                Swal.fire("질뻑이가 마지막 보물상자를 먹어치웠습니다!");
                                                 window.location.reload();break;
                                             }
                                         }
@@ -865,29 +882,32 @@ const Game= ()=>{
                     else if(map[nowX][nowY]==2&&life!=0){
                         life--;
                         pikas = pikas.filter( pika => !(pika.x == nowX && pika.y == nowY));
-                        alert("질뻑이에게 잡아먹혔습니다! 목숨-1 (현재목숨 :"+life+")");
+                        Swal.fire("질뻑이에게 잡아먹혔습니다! 목숨-1 (현재목숨 :"+life+")");
                         
                     }
                     else if(map[nowX][nowY]==4){
                         let pointorticket= Math.floor(Math.random() * 2);
                         boxcount --;
                         if(tCount>0){
-                            alert("200포인트 획득!");
+                            let plusDason = (Math.floor(Math.random() * 499)+1);
+                            Swal.fire(plusDason+"다손 획득!");
+                            totalDason += plusDason;
                             pCount++;
                         }else{
                         if(pointorticket == 0){
-                            alert("200포인트 획득!");
-                            count++; 
+                            let plusDason = (Math.floor(Math.random() * 499)+1);
+                            Swal.fire(plusDason+"다손 획득!");
+                            totalDason += plusDason;
                             pCount++;
                         }else{
-                            alert("응모권 당첨! 어떤 응모권인지는 마이페이지에서 확인해주세요~")
+                            Swal.fire("응모권 당첨!")
                             tCount++;
                         }
                     }
                         if (boxcount == 0) {
                             
                             if(tCount > 0 && pCount >0){
-                                alert("성공! 획득한 포인트 : "+pCount*200+ "포인트"+ "응모권 흭득! 마이페이지에서 확인하세요");
+                                Swal.fire("성공! 획득한 다손 : "+totalDason+ "다손"+ "응모권 흭득! 마이페이지에서 확인하세요");
                             const gameData = {
                                 gameStatus: "Y",
                                 pointStatus: "Y",
@@ -909,7 +929,7 @@ const Game= ()=>{
                             });
                             const pointData = {
                                 userNo : loginUserNo,
-                                pointAmount : pCount*200,
+                                pointAmount : totalDason,
                                 pointCate : "G"  
                             };
                             axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -917,7 +937,7 @@ const Game= ()=>{
                                 window.location.reload();
                             })
                             }else if(tCount>0){
-                                alert("응모권 흭득! 마이페이지에서 확인하세요");
+                                Swal.fire("응모권 흭득! 마이페이지에서 확인하세요");
                             const ticketData = {
                                 ticketStatus: "Y",
                                 userNo: loginUserNo   
@@ -939,10 +959,10 @@ const Game= ()=>{
                                 window.location.reload();
                             });
                             }else if(pCount >0){
-                                alert("성공! 획득한 총 포인트 : "+pCount*200+ "포인트");
+                                Swal.fire("성공! 획득한 총 다손 : "+totalDason+ "다손");
                                 const pointData = {
                                     userNo : loginUserNo,
-                                    pointAmount : pCount*200,
+                                    pointAmount : totalDason,
                                     pointCate : "G"  
                                 };
                                 axios.post("/dasony/api/insertPoint",pointData).then(response=>{
@@ -980,11 +1000,16 @@ const Game= ()=>{
         });
     }
 
+   
+} else if (result.isDenied) {
+    Swal.fire('기회는 열려있습니다!')
     
+  }
+})
 }
 return (
     
-      <img src="/resources/common-img/gameimg/bomul.png" onClick={Game} style={{ width: '50px', height: '50px' }} alt="게임 이미지" />
+      <img src="/resources/common-img/gameimg/bomul.png" onClick={Game} style={{ width: '70px', height: '70px' }} alt="게임 이미지" />
     
   );
   
