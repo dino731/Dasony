@@ -522,6 +522,14 @@
 	)
 	]]>
    </select>
+<!--    <update id="boardUpdate" parameterType="BoardWriterForm">
+   	UPDATE BOARD 
+   	SET BOARD_TITLE = #{boardTitle}
+   		AND BOARD_WRITE_DATE = #{boardWriteDate}
+   		AND BOARD_CONTENT = #{boardContent}
+   		AND BOARD_CATE_NO = #{boardCateNo}
+   	WHERE BOARD_NO = #{boardNo}	
+   </update> -->
    
    
 	

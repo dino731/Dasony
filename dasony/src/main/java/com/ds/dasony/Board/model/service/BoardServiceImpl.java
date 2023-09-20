@@ -85,6 +85,27 @@ public class BoardServiceImpl implements BoardService {
       return boardDao.boardEdit(BoardNo);
    }
    
+//   @Transactional(rollbackFor = {Exception.class})// 어떤종류의 예외가 발생했든 발생했다면 무조건 rollback시키겠다.
+//   @Override
+//   public int updateBoard(BoardWriterForm boardWriterForm, int boardNo){
+//	   int result = boardDao.updateBoard(boardWriterForm ,boardNo);
+//	      bt.setBoardTagBNo(boardNo);
+//	      
+//	      if(result > 0) {
+//	         for(BoardImg b   :   bImg) {
+//	            b.setBoardNoRef(boardNo);
+//	         }
+//	         result = boardDao.insertBoardImg(bImg);
+//	         log.info("BoardService bImg = {}",bImg.toArray() );         
+//	         if(result == 0) {// 이미지 삽입 실패시 강제 예외 발생
+//	            throw new Exception("예외발생");
+//	         }
+//	         result = boardDao.insertBoardKeyword(bt);
+//	         log.info("BoardService bt = {}",bt.toString() );
+//	      }
+//	      return result;
+//   }
+   
    @Override
       public int insertReply(Reply r, int userNo) {   
          int result = boardDao.insertReply(r,userNo);
