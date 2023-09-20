@@ -1,9 +1,11 @@
 .share-container{
     width: 100%;
-    border: 1px solid red;
+    color: #7A7A7A;
+    font-weight: 900;
+}
+.share-container a:hover{
     color: #7A7A7A;
 }
-
 .share-container>div:first-child{
     font-size: 2vw;
     margin-bottom: 5vh;

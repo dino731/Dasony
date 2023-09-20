@@ -5,9 +5,12 @@ import './share.css';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import BoardHeart from '../Board/BoardHeart';
+import Loading from '../common/Loading';
 
 
 export const Share = () => {
+
+    
     const navigate = useNavigate();
     const [isFilled, setIsFilled] = useState(false);
 
@@ -75,6 +78,9 @@ export const Share = () => {
   
     return(
         <div className="share-container">
+            
+            {loading?<Loading/>:
+            <>
             <div style={{display:'flex', justifyContent:'right'}}>
             </div>
             <div className="share-content">
@@ -122,12 +128,15 @@ export const Share = () => {
                                 </table>
                             </div>
                         </Link>
+                        
                     )
                 })}
                 
-                {loading&&<p>Loading...</p>}
                 
             </div>
+            </>
+        }
         </div>
+        
     );
 }

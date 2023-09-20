@@ -82,6 +82,8 @@
 		LEFT JOIN BOARD_KEYWORD T ON B.BOARD_NO = T.BOARD_NO
 		WHERE M.USER_REGION = #{userRegion}
 		AND B.BOARD_CATE_NO = #{boardCateNo}
+		AND B.BOARD_STATUS = 'Y'
+		ORDER BY B.BOARD_NO DESC
 	</select>
 	
 	<insert id="shareAdd" parameterType="board">
