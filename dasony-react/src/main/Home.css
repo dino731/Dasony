@@ -84,8 +84,19 @@
     overflow: hidden;
     width: 70%;
     margin-top: 5%;
+    width: 5vw;
+    height: 5vw;
 
 }
 .weather-board-info>div>img{
     width: 100%;
+}
+
+.userNick-box{
+    width: 60%;
+    background-color: #CB9DE7;
+    border-radius: 0.5vw;
+    color: white;
+    margin: auto;
+    margin-top: 1vh;
 }

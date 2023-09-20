@@ -179,6 +179,7 @@ export const AdminShopDetail = ()=> {
         axios.post('/dasony/api/admin/modProduct', modForm)
         .then(res=>{
             alert(res.data);
+            handleProductInfo();
         })
         .catch(err=>{
             console.log(err);
@@ -212,6 +213,8 @@ export const AdminShopDetail = ()=> {
         handleProductInfo();
         handleCancleOff();
     }
+
+
 
 
     return (

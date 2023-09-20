@@ -35,6 +35,7 @@
 
 .boardList-container{
   border: 1px solid gray;
+  border-bottom: none;
   /* width: 60%;  */
   padding: 0 5%;
   text-align: center;
