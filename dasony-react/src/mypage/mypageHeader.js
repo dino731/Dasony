@@ -31,7 +31,7 @@ const MypageHeader = () => {
         setX(remainder);
         if(exp<100){
           setLevelName("지역 새싹");
-          setLevelImg("/resources/common-img/level1.png");
+          setLevelImg("/resources/common-img/levelone.png");
         }else if(exp>=100 && exp <200){
           setLevelName("지역 루키");
           setLevelImg("/resources/common-img/leveltwo.png");

@@ -8,6 +8,8 @@ import {BoardDetailcategoryState, BoardVotecategoryState, BoardShortscategorySta
   BoardJMTCategoryState, BoardFashionCategoryState, BoardLocalCategoryState } from '../atoms';
 import axios from 'axios';
 
+import Loading from "../common/Loading";
+
 const BoardDailyList = ()=>{
 
   const[boardData,setBoardData]=useState([]);
@@ -292,8 +294,8 @@ const BoardDailyList = ()=>{
             </form>
           </div>
         <div className="boardList-list-wrapper">
-          {loading&&<p>Loading...</p>}
-          {
+          
+        {loading?<Loading/>:
             //  {boardData.map((boardItem) => (
             //   <li key={boardItem.id}>
             //     <Link to={`/board/${boardItem.id}`}>{boardItem.title}</Link>

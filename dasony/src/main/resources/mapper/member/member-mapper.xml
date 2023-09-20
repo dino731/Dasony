@@ -166,13 +166,19 @@
 	
 	<update id="donaInsertExp" parameterType="donationList">
 		UPDATE MEMBER
-    		SET USER_EXP = USER_EXP + 5 + #{donaAmount} / 100
+    		SET USER_EXP = USER_EXP + 15 + #{donaAmount} / 200
    	 	WHERE USER_NO = #{userNo}
 	</update>
 	
 	<update id="insertBoardExp" parameterType="boardWriterForm">
 		UPDATE MEMBER
-    		SET USER_EXP = USER_EXP + 20
+    		SET USER_EXP = USER_EXP + 40
+   	 	WHERE USER_NO = #{userNo}
+	</update>
+	
+	<update id="insertReplyExp" parameterType="int">
+		UPDATE MEMBER
+    		SET USER_EXP = USER_EXP + 25
    	 	WHERE USER_NO = #{userNo}
 	</update>
 	

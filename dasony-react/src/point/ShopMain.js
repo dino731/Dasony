@@ -78,7 +78,7 @@ const ShopMain = ()=>{
                     bestProduct&&bestProduct.map(p=>{
                         return(
                             
-                            <div className="shopBest-item">
+                            <div key={p.productNo} className="shopBest-item">
                                 <Link
                                     to={`/shop/cate/${pathMap[p.shopCate]}/${p.shopName}/${p.productName}`} 
                                     state= {{ product: p} }
