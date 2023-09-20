@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate  } from 'react-router-dom';
+import Swal from "sweetalert2";
 // import Img1 from '../../public/resources/event/login-001.png';
 // import Img2 from '../../public/resources/event/login-002.png';
 
@@ -28,6 +29,19 @@ const LoginEvent09 = ({no}) => {
     const [hoverStatus, setHoverStatus] = useState("none");
     const navigate = useNavigate();
 
+    // alert
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
     // 정보 불러오기
     const loadData = () => {
         const data = {userNo : userNo, eventNo : no};
@@ -49,7 +63,12 @@ const LoginEvent09 = ({no}) => {
         // console.log("tdyCheck : ", tdyCheck);
         // 로그인 했는지 유무 판단
         if(userNo === undefined || userNo.length == 0){
-            alert("로그인을 해주세요.");
+            Toast.fire({
+                icon: "error",
+                title: "로그인을 해주세요."
+            });
+
+            // alert("로그인을 해주세요.");
             return;
         }
         
@@ -65,9 +84,14 @@ const LoginEvent09 = ({no}) => {
                     setCount(count+1);
                     setCheckStatus("checked");
                     setTdyCheck(true);
-                    if(result.coin!=null) alert(`${result.coin} 다손을 얻었습니다!`);
+                    // if(result.coin!=null) Toast.fire({icon: "success", title: `${result.coin} 다손을 얻었습니다!`});
+                        // alert(`${result.coin} 다손을 얻었습니다!`);
                 }
-                alert(result.msg);
+                Toast.fire({
+                    icon: "success",
+                    title: result.msg,
+                    text: result.coin!=null? `${result.coin} 다손을 얻었습니다!` : null
+                });
             });
         }        
     };
