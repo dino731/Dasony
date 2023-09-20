@@ -22,7 +22,18 @@ const BoardDetail = () =>{
   const location = useLocation();
   const path = location.pathname;
   // console.log('BoardDetail path ===>',path);
-  localStorage.getItem("loginUserNo") // 유저 번호 
+  localStorage.getItem("loginUserNo") // 유저 번호
+  
+  /*동영상 사진 경로 맵 */
+  const userImgMap = {
+    'A':`/resources/common-img/levelone.png`,
+    'B':`/resources/common-img/leveltwo.png`,
+    'C':`/resources/common-img/levelthree.png`,
+    'D':`/resources/common-img/levelfour.png`,
+    'E':'./resources/common-img/levelfive.png',
+    'Z':`/resources/common-img/levelgod.png`
+  }
+
 
   /* 현재 경로 비교연산 밑작업용 ain 0904 */
   const dailyPath = path.includes('daily') ? path : null;
@@ -177,6 +188,7 @@ const BoardDetail = () =>{
         console.log('BoardList 응답 데이터:', response.data);
         setBoardData(response.data.boardData);
         setReply(response.data.replyList);
+        console.log(response.data.replyList);
         // setReplyText(response.data.replyList);
       })
       .catch((error) => {
@@ -473,15 +485,17 @@ const handleReModalOffAndClose = () => {
     console.log('board',board);
     const userResult = board;
     if (userResult >= 0 && userResult <= 100) {
-      return '/resources/common-img/A.png';
+      return '/resources/common-img/levelone.png';
     } else if (userResult >= 101 && userResult <= 200) {
-      return '/resources/common-img/B.png';
+      return '/resources/common-img/leveltwo.png';
     } else if (userResult >= 201 && userResult <= 300) {
-      return '/resources/common-img/C.png';
+      return '/resources/common-img/leveltwo.png';
     } else if (userResult >= 301 && userResult <= 400) {
-      return '/resources/common-img/D.png';
+      return '/resources/common-img/levelfour.png';
+    } else if (userResult >= 401 && userResult <= 500) {
+      return '/resources/common-img/levelfive.png';  
     } else {
-      return '/resources/common-img/E.png';
+      return '/resources/common-img/levelgod.png';
     }
 
   // const [userImg, setUserImg] = useState('');
@@ -595,6 +609,7 @@ const handleReModalOffAndClose = () => {
                         </span>
                         <span>
                           <button
+                          style={{display:userNo!=board.user.userNo?'none':'inline'}}
                           className='Board-reply-recoment-accused-btn'
                           onClick={()=>navigate(
                             path.includes('vs')
@@ -702,7 +717,7 @@ const handleReModalOffAndClose = () => {
                                 <div className='video-content'>
                                   <div className='video-user-box'>
                                     <div className='video-user-thumb'>
-                                      <img src={`http://localhost:8083/dasony/resources/images/board/99140.png`}/>
+                                      <img src={userImgMap[board.user.userLevel]}/>
                                     </div> 
                                     <div>{board.user.userNick}<br/></div>
                                   </div>

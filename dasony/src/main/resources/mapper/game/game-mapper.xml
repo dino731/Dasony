@@ -43,10 +43,11 @@
 		WHERE ROWNUM = 1
 </select>
 
-	<update id="letStartGame" parameterType="game">
+	<update id="letStartGame" parameterType="int">
 		UPDATE MEMBER SET
 			GAME_STATUS = 'Y'
 			WHERE USER_NO = #{userNo}
+			AND USER_LEVEL != 'Z'
 	</update>
 
 

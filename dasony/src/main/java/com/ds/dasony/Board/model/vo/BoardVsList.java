@@ -17,4 +17,6 @@ public class BoardVsList {
 	private int interestCount;
 	private int orderMap;
 	private User user;
+	private int choiceLeft;
+	private int choiceRight;
 }

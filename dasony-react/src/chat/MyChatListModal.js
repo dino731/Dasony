@@ -4,19 +4,6 @@ import './MyChatListModal.css';
 import { useNavigate } from 'react-router';
 import axios from "axios";
 
-const chatlistmodal = {
-  content: {
-    top: '65%',
-    left: '75.5%',
-    transform: 'translate(-50%, -50%)',
-    width: '500px',
-    height: '482px',
-    padding: '0',
-    borderRadius: '0.6vw',
-    border : 'none'
-  }
-};
-
 const MyChstListModal = ({ isOpen, closeModal }) => {
     const navigate = useNavigate();
     const loginUserNo = parseInt(localStorage.getItem("loginUserNo"), 10);
@@ -154,7 +141,20 @@ const MyChstListModal = ({ isOpen, closeModal }) => {
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
-      style={chatlistmodal}
+      style={{overlay: {
+        backgroundColor: 'transparent'
+      }, 
+      content: {
+        top: '65%',
+        left: '75.5%',
+        transform: 'translate(-50%, -50%)',
+        width: '500px',
+        height: '482px',
+        padding: '0',
+        borderRadius: '0.6vw',
+        border: "none",
+        background: "transparent"
+      }}}
       contentLabel="MyChatList Modal"
     >
       <div id="togglechat">

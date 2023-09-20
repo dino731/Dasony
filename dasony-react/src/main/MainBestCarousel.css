@@ -7,6 +7,7 @@
 }
 .home-best-carousel>a{
     width: 30%;
+    height: 28vh;
 }
 .home-best-box{
     text-align: center;
@@ -27,19 +28,26 @@
     position: relative;
     overflow: hidden;
     background-color: black;
+    margin-bottom: 1vh;
 }
 .home-best-box>div>img{
     width: 100%;
 }
-.home-best-box>div:last-child{
-    font-size: 65%;
-    display: flex;
-    justify-content: space-around;
-    margin: 2%;
-}
 
 .carousel-indicators{
     visibility: hidden;
+}
+.best-text-box{
+    display: block;
+    text-align: center;
+}
+.best-user-text{
+    width: 40%;
+    background-color: #CB9DE7;
+    border-radius: 0.5vw;
+    color: white;
+    letter-spacing: 0.1vw;
+    margin: auto;
 }
 
 
@@ -55,18 +63,23 @@
     color: #7A7A7A;
 }
 .local-box{
-    width: 90%;
+    width: 12vw;
     height: 12vh;
     border: 2px solid #CB9DE7;
     border-radius: 0.5vw;
     margin: auto;
     display: flex;
-    font-size: 50%;
+    font-size: 80%;
+}
+.local-box:hover{
+    cursor: pointer;
 }
 .local-box>div{
     margin: auto;
 }
 .local-box-img{
+    display: inline-flex;
+    vertical-align: bottom;
     width: 45%;
     height: 80%;
     border: 2px solid #CB9DE7;
@@ -84,6 +97,20 @@
     text-align: center;
     width: 45%;
     word-wrap: break-word;
+}
+.local-box-nick-text{
+    margin: auto;
+    background-color: #CB9DE7;
+    border-radius: 0.5vw;
+    color: white;
+    letter-spacing: 0.1vw;
+    width: 70%;
+
+}
+.local-box-content-text{
+    width: 100%;
+    word-wrap: break-word;
+    height: 3vh;
 }
 
 
@@ -148,9 +175,9 @@
     flex: 0 0 31%;
     position: relative;
     left: 33%;
-    z-index: 90;
+    z-index: 0;
     transition: 0.5s;
-    height: 33vh;
+    height: 35vh;
     width: 12.2vw;
 }
 .mainShorts-box>div:first-child{
@@ -160,6 +187,7 @@
     overflow: hidden;
     height: 25vh;
     background-color: black;
+    font-size: 1vw;
 }
 .mainShorts-box img{
     width: 100%;
@@ -168,6 +196,14 @@
     display: flex;
     justify-content: space-evenly;
     font-size: 80%;
+}
+.shorts-box-nick-text{
+    width: 4vw;
+    margin: auto;
+    border-radius: 0.5vw;
+    color: white;
+    letter-spacing: 0.2vvw;
+    background-color: #CB9DE7;
 }
 
 
@@ -190,7 +226,8 @@
     border-radius: 0.5vw;
     margin: 0 0.5vw 0 0.5vw;
     position: relative;
-    z-index: 1;
+    /* z-index: 1; */
+    z-index: 0;
     transition: 0.5s;
     font-size: 1.5vw;
     text-align: center;
@@ -233,7 +270,7 @@
     text-align: center;
     color: white;
     opacity: 0.5;
-    top: 165vh;
+    top: 170vh;
     left: 25%;
     width: 4%;
     height: 19vh;
@@ -251,7 +288,7 @@
     text-align: center;
     color: white;
     opacity: 0.5;
-    top: 165vh;
+    top: 170vh;
     right: 36.5%;
     width: 4%;
     height: 19vh;
@@ -264,3 +301,5 @@
     transition-duration: 0.5s;
     cursor: pointer;
 }
+
+

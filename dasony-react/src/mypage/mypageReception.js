@@ -17,6 +17,7 @@ const MypageReception = () => {
     
       .then((result) => {
         console.log("이메일 성공");
+        window.location.reload();
       }, (error) => {
         console.log("이메일 실패");
       });

@@ -23,14 +23,15 @@ const Home = () =>{
     useEffect(()=>{
         const fetchData = async()=>{
             await axios.post("/dasony/board/weatherList",)
-            .then(res=>{
+            .then(res=>{ //
                 setWeatherList(res.data);
                 console.log("웨더 리스트 확인", res.data);
             })
             .catch(err=>{
                 console.log(err);
             });
-            
+         //?/?
+         let a  = 0;   
         }
         fetchData();
     },[])
@@ -57,15 +58,15 @@ const Home = () =>{
                                         return(
                                             weather.boardImg.boardImgModName
                                             ?
-                                            <div className='weather-board-info'>
+                                            <div key={weather.board.boardNo} className='weather-board-info'>
                                                 <div>
                                                     <img src={`http://localhost:8083/dasony/${weather.boardImg.boardImgPath}/${weather.boardImg.boardImgModName}`}/>
                                                 </div>
-                                                <div style={{fontSize:'70%'}}>
+                                                <div className='userNick-box' style={{fontSize:'70%'}}>
                                                     {weather.user.userNick}
                                                 </div>
                                                 <div>
-                                                    {settingText(weather.board.boardTitle, 10)}
+                                                    {settingText(weather.board.boardTitle, 20)}
                                                 </div>
                                             </div>
                                             :
@@ -77,7 +78,7 @@ const Home = () =>{
                                                     {weather.user.userNick}
                                                 </div>
                                                 <div>
-                                                    {settingText(weather.board.boardTitle, 10)}
+                                                    {settingText(weather.board.boardTitle, 20)}
                                                 </div>
                                             </div>
                                         )

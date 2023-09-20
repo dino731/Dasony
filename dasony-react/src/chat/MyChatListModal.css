@@ -13,6 +13,7 @@
     height: 480px;
     border: 2px solid #CB9DE7;
     border-radius: 0.5vw;
+    background-color: white;
 }
 
 #togglechat>table{

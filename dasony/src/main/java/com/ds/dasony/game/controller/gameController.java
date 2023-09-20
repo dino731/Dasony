@@ -66,6 +66,9 @@ public class gameController {
 	@PostMapping("/letStartGame")
 	public int letStartGame(@RequestBody Map<String,Integer> requestBody) {
 		int userNo = requestBody.get("userNo");
+
+		log.info("userNo: {}",userNo);
+
 		int result = gameService.letStartGame(userNo);
 		return result;
 	}
