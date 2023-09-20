@@ -61,7 +61,8 @@
 		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
 		'P',
 		'B',
-		'상점 쿠폰 구매 알림'
+		'상점 쿠폰 구매 알림',
+		''
 		)
 	</insert>
 	
@@ -80,7 +81,8 @@
 			TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
 			'R',
 			DEFAULT,
-			'댓글 알림'
+			'댓글 알림',
+			''
 		)
 	</insert>
 
@@ -93,7 +95,8 @@
     TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
     'A',
     'B',
-    #{title}
+    #{title},
+    ''
 	)
 
 	</insert>
@@ -108,6 +111,7 @@
 			'D',
 			'B',
 			(SELECT USER_NAME FROM MEMBER WHERE USER_NO = #{userNo}) || '님이 후원하신 기부 내역입니다.'
+			,''
 		)
 	</insert>
 	
