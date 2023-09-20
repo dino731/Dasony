@@ -607,6 +607,7 @@ const handleReModalOffAndClose = () => {
                         </span>
                         <span>
                           <button
+                          style={{display:userNo!=board.user.userNo?'none':'block'}}
                           className='Board-reply-recoment-accused-btn'
                           onClick={()=>navigate(
                             path.includes('vs')

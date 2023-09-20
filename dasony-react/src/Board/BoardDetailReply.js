@@ -481,7 +481,33 @@ const handleRemoveReply = () => {
               ㅣ<div className='BoardDetail-boardlist-reply-container'>
                   <div className='BoardDetail-boardlist-reply-userinfo-wrapper'>
                       <span className='BoardDetail-boardlist-title-userinfo-img'>
-                        <img src="/resources/board/jh.jpg"/>
+                      <img src={
+                          reply.userLevel == 'A'
+                          ?
+                          `/resources/common-img/levelone.png`
+                          :
+                          reply.userLevel == 'B'
+                          ?
+                          `/resources/common-img/levelone.png`
+                          :
+                          reply.userLevel == 'C'
+                          ?
+                          `/resources/common-img/levelone.png`
+                          :
+                          reply.userLevel == 'D'
+                          ?
+                          `/resources/common-img/levelone.png`
+                          :
+                          reply.userLevel == 'E'
+                          ?
+                          './resources/common-img/levelfive.png'
+                          :
+                          reply.userLevel == 'E'
+                          ?
+                          `/resources/common-img/levelgod.png`
+                          :
+                          `/resources/common-img/levelgod.png`
+                        }/>
                       </span>
                     <span className='BoardDetail-boardlist-reply-userinfo-nikname'>{rep.ruserNick}</span>
                       <span className='BoardDetail-boardlist-reply-userinfo-date'>{rep.replyWriteDate}</span>
@@ -558,6 +584,7 @@ const handleRemoveReply = () => {
             </div>
             <div>
               <button 
+              style={{fontWeight: '100'}}
               id='1'
               type='button'
               className='BoardDetail-boardlist-reply-btn board-submit-btn'

@@ -1872,7 +1872,7 @@ const Game= ()=>{
 }
 return (
     <div onClick={Game}>
-        <h2 style={{color : '#CB9DE7'}}>멀랑이의 보물찾기!</h2>
+     <h2 className='molang-finding' style={{color : '#CB9DE7'}}>멀랑이의<br/>보물찾기!</h2>
       <img src="/resources/common-img/gameimg/gamestart.png"  style={{ width: '100px', height: '100px' }} alt="게임 이미지" />
       </div>
   );
