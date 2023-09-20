@@ -2,6 +2,7 @@ import { useParams, useNavigate, Navigate } from "react-router-dom";
 import CkEditor from "./OpenEditor";
 import {useRef, useEffect, useState} from 'react';
 import axios from "axios";
+import Swal from "sweetalert2";
 
 /** 공지사항 등록폼
 -공지사항 등록하기 위한 경우 : 등록 버튼
@@ -28,6 +29,19 @@ const NoticeForm = () => {
     // editor에서 값 가져오기
     const [content, setContent] = useState("");
 
+    // alert
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
     // 서버로 데이터 전송
     // 내용은 4000byte이나 에러 발생시 내용 길이를 줄여볼 것
     const sendForm = (e) => {
@@ -43,7 +57,11 @@ const NoticeForm = () => {
         axios.post(url, data)
              .then(response => {
                 let result = response.data;
-                alert(result);
+                // alert(result);
+                Toast.fire({
+                    icon: "success",
+                    title: result
+                });
 
                 if(result.includes("성공") || result.includes("수정")) navi(-1);
             }).catch(console.log);

@@ -25,7 +25,7 @@ const Notice = () => {
                 .then((res) => {
                     const response = res.data;
                     setLoadStatus(false);
-                    console.log("response : ",response );
+                    // console.log("response : ",response );
 
                     if(response.length != 0){
                         setRowBound(rowBound + 1);

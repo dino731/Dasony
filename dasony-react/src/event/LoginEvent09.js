@@ -31,10 +31,10 @@ const LoginEvent09 = ({no}) => {
     // 정보 불러오기
     const loadData = () => {
         const data = {userNo : userNo, eventNo : no};
-        console.log("tdyCheck : ", tdyCheck, "eventNo : ", no);
+        // console.log("tdyCheck : ", tdyCheck, "eventNo : ", no);
         axios.post("http://localhost:3000/dasony/event/loadLogin", data)
             .then((res)=>{
-                console.log("data load : ", res.data);
+                // console.log("data load : ", res.data);
                 setUserName(res.data.userName);
                 setCount(res.data.count);
                 setEndDate(res.data.endDate);
@@ -46,7 +46,7 @@ const LoginEvent09 = ({no}) => {
     const checkLogin = (e)=>{
         e. preventDefault();
         // const loginUserNo = (int)localStorage.getItem("loginUserNo");
-        console.log("tdyCheck : ", tdyCheck);
+        // console.log("tdyCheck : ", tdyCheck);
         // 로그인 했는지 유무 판단
         if(userNo === undefined || userNo.length == 0){
             alert("로그인을 해주세요.");
@@ -86,7 +86,7 @@ const LoginEvent09 = ({no}) => {
 
     useEffect(()=>{
         const btn = checkBtn.current;
-        console.log(btn);
+        // console.log(btn);
 
         if(btn != null){
             // 오늘자 출석 여부에 따라 커서 스타일 변경

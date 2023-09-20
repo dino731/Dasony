@@ -74,7 +74,7 @@ public class ChartService {
 			data.put("rate2", rate2);
 			data.put("seriesName", series);
 			
-			log.info("data : " + data);
+//			log.info("data : " + data);
 			list.add(data);
 			
 			beforeDate = beforeDate.plusDays(1);
@@ -102,13 +102,13 @@ public class ChartService {
 			data.put("value1", value1);
 			data.put("value2", value2);
 			
-			log.info("data : " + data);
+//			log.info("data : " + data);
 			list.add(data);
 			
 			beforeDate = beforeDate.plusDays(1);
 		}
 		
-		log.info("calc before list :: " + list.toString());
+//		log.info("calc before list :: " + list.toString());
 		
 		// rate calc -> ((오늘-어제)/어제)
 		for(int i=1; i<list.size(); i++) { // 비율 계산을 위해 추가한 데이터 제외시키기
@@ -127,7 +127,7 @@ public class ChartService {
 		}
 		
 		list.remove(0);
-		log.info("calc after list :: " + list.toString());
+//		log.info("calc after list :: " + list.toString());
 		
 		return list;
 	}

@@ -36,7 +36,7 @@ public class EventScheduler {
 		
 		// 1. 매일 당첨자 추첨일이 당일 + 당첨 발표 방식(일자, 복합)인 이벤트 조회
 		List<Event> eventList = eDao.raffleEvent();
-		log.info("추첨 대상 이벤트 : " + eventList.toString());
+//		log.info("추첨 대상 이벤트 : " + eventList.toString());
 		
 		// test
 //		Map<String, Object> map1 = new HashMap();
@@ -101,29 +101,29 @@ public class EventScheduler {
 							if(!winnerList.contains(preWinner)) {
 								winnerList.add(preWinner);
 								list.add(preWinner);
-								log.info("로그인 list : " + list.toString() + "winner : " + preWinner);
+//								log.info("로그인 list : " + list.toString() + "winner : " + preWinner);
 								continue;
 							}
 							i--;
 						}
-						log.info("로그인 list: " + list.toString());
+//						log.info("로그인 list: " + list.toString());
 						Set<String> copied = clone(list);
-						log.info("copy : " + copied.toString());
+//						log.info("copy : " + copied.toString());
 						winnerMap.put(reward.getRewardNo(), new HashSet<>(list));
 						sendEmailToWinner(e.getNo(), new HashSet<>(list));
 						list.clear();
 					}
-					log.info("로그인 winnerMap : " + winnerMap.toString());
+//					log.info("로그인 winnerMap : " + winnerMap.toString());
 					eDao.addWinner(winnerMap);
 					pointReward(winnerMap);
 				}
 			}else {
 				// 3. 참여자 조회 (참여번호)
 				List<String> participants = eDao.findAllParticipants(e.getNo());
-				log.info("participatnts : " + participants.toString());
+//				log.info("participatnts : " + participants.toString());
 				// 4. 상품 조회 (상품번호, 순위, 개수)
 				List<Reward> rewards = eDao.findAllReward(e.getNo());
-				log.info("rewards : " + rewards.toString());
+//				log.info("rewards : " + rewards.toString());
 				// 5. 상품별 당첨자 추첨
 				Map<Integer, Object> winnerMap = new HashMap();
 				
@@ -131,7 +131,7 @@ public class EventScheduler {
 				ArrayList<String> winnerList = new ArrayList();
 				
 				for(Reward reward : rewards) {
-					log.info("reward : " + reward.toString());
+//					log.info("reward : " + reward.toString());
 					// 당첨 수
 					int amount = reward.getAmount();
 					// 당첨자 리스트
@@ -162,20 +162,20 @@ public class EventScheduler {
 						if(!winnerList.contains(preWinner)) {
 							winnerList.add(preWinner);
 							list.add(preWinner);
-							log.info("list : " + list.toString() + "winner : " + preWinner);
+//							log.info("list : " + list.toString() + "winner : " + preWinner);
 							continue;
 						}
 						i--;
 					}
-					log.info("list: " + list.toString());
+//					log.info("list: " + list.toString());
 					Set<String> copied = clone(list);
-					log.info("copy : " + copied.toString());
+//					log.info("copy : " + copied.toString());
 					winnerMap.put(reward.getRewardNo(), new HashSet<>(list));
 					sendEmailToWinner(e.getNo(), new HashSet<>(list));
 					list.clear();
 				}
 				// 당첨자 추가
-				log.info("winnerMap : " + winnerMap.toString());
+//				log.info("winnerMap : " + winnerMap.toString());
 				eDao.addWinner(winnerMap);
 				pointReward(winnerMap);
 			}

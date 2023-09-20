@@ -72,10 +72,10 @@ const EventBoard = () => {
 
         // 비동기 요청
         axios.get(url).then((res)=>{
-                console.log(res.data);
+                // console.log(res.data);
                 // console.log(res.data[0].pageLink);
                 hoverList = new Array(res.data.length).fill("none");
-                console.log("hover list size :: ", hoverList.length);
+                // console.log("hover list size :: ", hoverList.length);
                 setHoverStatus(hoverList);
                 setData(res.data);
 
@@ -115,7 +115,7 @@ const EventBoard = () => {
         });
         
         /** 이벤트 아이템에  hover시 조회 유도 화면으로 전환 */
-        console.log("item count :: ", document.querySelectorAll(".event-list-item").length);
+        // console.log("item count :: ", document.querySelectorAll(".event-list-item").length);
         document.querySelectorAll(".event-list-item").forEach((el, index)=>{
             el.addEventListener("mouseover", () => {
                 hoverStatus[index] = "hover";

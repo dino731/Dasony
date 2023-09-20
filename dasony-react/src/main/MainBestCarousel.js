@@ -7,6 +7,29 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
 const MainBestCarousel = () =>{
+    const boardCateMap = {
+        1101 : '../board/general/daily/detail/',
+        1102 : '../board/general/daily/shorts/detail/',
+        1103 : '../board/general/daily/vs/detail/',
+        1104 : '../board/general/daily/detail/',
+        1201 : '../board/general/interest/detail/',
+        1202 : '../board/general/interest/detail/',
+        1203 : '../board/general/interest/detail/',
+        1204 : '../board/general/interest/detail/',
+        2101 : '../board/info/jmt/detail/',
+        2102 : '../board/info/jmt/detail/',
+        2103 : '../board/info/jmt/detail/',
+        2104 : '../board/info/jmt/detail/',
+        2201 : '../board/info/fashion/detail/',
+        2202 : '../board/info/fashion/detail/',
+        2203 : '../board/info/fashion/detail/',
+        2204 : '../board/info/fashion/detail/',
+        2301 : '../board/info/local/detail/',
+        2302 : '../board/info/local/detail/',
+        2303 : '../board/info/local/detail/',
+        2304 : '../board/info/local/detail/',
+        3101 : '../board/share/list/detail/'
+    }
 
     /*글자 수 제한 함수  */
     const settingText = (text, n) => {
@@ -49,19 +72,7 @@ const MainBestCarousel = () =>{
                 bestList && bestList.length > 0 && bestList[0].board &&bestList.filter(best=>(
                     best.user.userRegion == userRegion
                 )).slice(0,3).map(best=>(
-                    <Link key={best.board.boardNo}  to={
-                            best.board.boardCateNo == '1103'
-                            ?
-                            '../board/general/daily/vs/detail/'+best.board.boardNo
-                            :
-                            best.board.boardCateNo == '1102'?
-                            '../board/general/daily/shorts/detail/'+best.board.boardNo
-                            :
-                            best.board.boardCateNo == '3101'?
-                            '../board/share/list/'+best.board.boardNo
-                            :
-                            '../board/share/list/'+best.board.boardNo
-                        }>
+                    <Link key={best.board.boardNo}  to={boardCateMap[best.board.boardCateNo]+best.board.boardNo}>
                         
                     <div key={best.board.boardNo} className='home-best-box'>
                         <div style={{height:'9vw', width:'9vw',overflow:'hidden'}}>
@@ -89,7 +100,14 @@ const MainBestCarousel = () =>{
                                 </>
                             }
                         </div>
-                        <div style={{fontSize:'100%'}}>{settingText(best.user.userNick,8)}<br/>{settingText(best.board.boardTitle,8)}</div>
+                        <div style={{fontSize:'100%'}} className='best-text-box'>
+                            <div className='best-user-text'>
+                                {settingText(best.user.userNick,8)}
+                            </div>
+                            <div className='best-title-text'>
+                                {settingText(best.board.boardTitle,8)}
+                            </div>
+                        </div>
                     </div>
                     </Link>
                 ))
@@ -143,7 +161,14 @@ const MainBestCarousel = () =>{
                                 </>
                             }
                         </div>
-                        <div style={{fontSize:'100%'}}>{settingText(best.user.userNick,8)}<br/>{settingText(best.board.boardTitle,8)}</div>
+                            <div style={{fontSize:'100%'}} className='best-text-box'>
+                                <div className='best-user-text'>
+                                    {settingText(best.user.userNick,8)}
+                                </div>
+                                <div className='best-title-text'>
+                                    {settingText(best.board.boardTitle,8)}
+                                </div>
+                            </div>
                     </div>
                     </Link>
                 ))
@@ -155,6 +180,31 @@ const MainBestCarousel = () =>{
 }
 
 const MainLocalCarousel = () =>{
+
+    const boardCateMap = {
+        1101 : '../board/general/daily/detail/',
+        1102 : '../board/general/daily/shorts/detail/',
+        1103 : '../board/general/daily/vs/detail/',
+        1104 : '../board/general/daily/detail/',
+        1201 : '../board/general/interest/detail/',
+        1202 : '../board/general/interest/detail/',
+        1203 : '../board/general/interest/detail/',
+        1204 : '../board/general/interest/detail/',
+        2101 : '../board/info/jmt/detail/',
+        2102 : '../board/info/jmt/detail/',
+        2103 : '../board/info/jmt/detail/',
+        2104 : '../board/info/jmt/detail/',
+        2201 : '../board/info/fashion/detail/',
+        2202 : '../board/info/fashion/detail/',
+        2203 : '../board/info/fashion/detail/',
+        2204 : '../board/info/fashion/detail/',
+        2301 : '../board/info/local/detail/',
+        2302 : '../board/info/local/detail/',
+        2303 : '../board/info/local/detail/',
+        2304 : '../board/info/local/detail/',
+        3101 : '../board/share/list/detail/'
+    }
+
 /*글자 수 제한 함수  */
 const settingText = (text, n) => {
     return text.length>n?text.substring(0, n-1)+'...':text;
@@ -198,31 +248,7 @@ const settingText = (text, n) => {
                                 ))
                                 .slice(0,3)
                                 .map(local=>(
-                                    <Link key={local.board.boardNo} to={
-                                        local.board.boardCateNo == '1103'
-                                        ?
-                                        '../board/general/daily/vs/detail/'+local.board.boardNo
-                                        :
-                                        local.board.boardCateNo == '1102'
-                                        ?
-                                        '../board/general/daily/shorts/detail/'+local.board.boardNo
-                                        :
-                                        local.board.boardCateNo == '3101'
-                                        ?
-                                        '../board/share/list/'+local.board.boardNo
-                                        :
-                                        local.board.boardCateNo == '2101'||local.board.boardCateNo == '2102'||
-                                        local.board.boardCateNo == '2103'||local.board.boardCateNo == '2104'
-                                        ?
-                                        '../board/info/jmt/detail/'+local.board.boardNo
-                                        :
-                                        local.board.boardCateNo == '2201'||local.board.boardCateNo == '2202'||
-                                        local.board.boardCateNo == '2203'||local.board.boardCateNo == '2204'
-                                        ?
-                                        '../board/info/fashion/detail/'+local.board.boardNo
-                                        :
-                                        '../board/info/local/detail/'+local.board.boardNo
-                                    }>
+                                    <Link key={local.board.boardNo} to={boardCateMap[local.board.boardCateNo]+local.board.boardNo}>
                                     <div className='local-box'>
                                         
                                         <div className='local-box-img'>
@@ -251,8 +277,12 @@ const settingText = (text, n) => {
                                             }
                                         </div>
                                         <div className='local-box-text'>
-                                            {settingText(local.user.userNick,8)}<br/><br/>
-                                            {settingText(local.board.boardTitle,8)}
+                                            <div className='local-box-nick-text'>
+                                                {settingText(local.user.userNick,8)}
+                                            </div>
+                                            <div className='local-box-content-text'>   
+                                                {settingText(local.board.boardTitle,14)}
+                                            </div>
                                         </div >
                                     </div>
                                     </Link>
@@ -320,8 +350,12 @@ const settingText = (text, n) => {
                                             }
                                         </div>
                                         <div className='local-box-text'>
-                                            {settingText(local.user.userNick,8)}<br/><br/>
-                                            {settingText(local.board.boardTitle,8)}
+                                            <div className='local-box-nick-text'>
+                                                {settingText(local.user.userNick,8)}
+                                            </div>
+                                            <div className='local-box-content-text'>   
+                                                {settingText(local.board.boardTitle,14)}
+                                            </div>
                                         </div >
                                     </div>
                                     </Link>
@@ -408,15 +442,18 @@ const MainShortsCarousel = () => {
                          onClick={()=>handleNav(shorts.board.boardNo)}
                          className='mainShorts-box' style={{left:`${left}vw`}}>
                         <div>
-                        <video id="vid" controls className="board-video" muted>
+                        <video id="vid" controls className="board-video" muted autoplay>
                             <source src={`http://localhost:8083/dasony${shorts.boardVideo.videoPath}${shorts.boardVideo.videoModName}`} type="video/mp4" />
                         </video>
                         </div>
                         <div>
-                            <div style={{textAlign:'center', fontSize:'120%'}}>
-                                {settingText(shorts.user.userNick, 8)}
-                                <br/>
-                                {settingText(shorts.board.boardTitle, 8)}
+                            <div style={{textAlign:'center', fontSize:'1vw', padding:'0.5vw'}}>
+                                <div className='shorts-box-nick-text'>
+                                    {settingText(shorts.user.userNick, 8)}
+                                </div>
+                                <div>
+                                    {settingText(shorts.board.boardTitle, 8)}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -446,7 +483,6 @@ const MainVsCarousel = () => {
     const [index, setIndex] = useState(0);
     const [left, setLeft] = useState(0);
 
-    
     const handleLeft = () => {
         let changedLeft = 0;
         if(-18*4<left&& left<=-18*3){

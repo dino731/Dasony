@@ -65,12 +65,12 @@ const Header = () => {
           // 여기에 실행하고자 하는 코드를 작성하세요
           let lastGameDate = new Date(lastGameData);
           let currentTime = new Date();
-          if ((currentTime - lastGameDate) >= 10000) {
+          if ((currentTime - lastGameDate) >= 600000) {
             axios.post("/dasony/api/letStartGame", {
               userNo: loginUserNo
             });
           }
-        }, 10000); // 10초마다 실행
+        }, 1000); // 10초마다 실행
       
         // 컴포넌트가 언마운트될 때 타이머 정리
         return () => {
@@ -263,8 +263,8 @@ const Header = () => {
                                                 <li></li>
                                                 <li></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/board'>사담</Link></li>
-                                                <li onClick={(event)=>{HandleOpacity(event.target.id);}}>나눔</li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/calendar'>달력</Link></li>
+                                                <li></li>
                                                 <li></li>
                                                 <li></li>
                                                 <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/board'>{/* 정보공유 */}</Link></li>
@@ -292,9 +292,9 @@ const Header = () => {
                                                     <li></li>
                                                     <li></li>
                                                     <li></li>
+                                                    <li></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/service/notice'>공지</Link></li>
                                                     <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/alert'>알람</Link></li>
-                                                    <li onClick={(event)=>{HandleOpacity(event.target.id);}}><Link to='/admin/reception'>문의</Link></li>
                                                     <li></li>
                                                 </ul>
                                             ); break;

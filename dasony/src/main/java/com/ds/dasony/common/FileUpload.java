@@ -41,7 +41,7 @@ public class FileUpload {
 	        if (!dir.exists()) {
 	            dir.mkdirs();
 	        }
-			log.info(absolutePath + thisPath);
+//			log.info(absolutePath + thisPath);
 			
 			multiFile.transferTo(new File(absolutePath + thisPath + changeName));
 		}

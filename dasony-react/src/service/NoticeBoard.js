@@ -8,7 +8,7 @@ const NoticeBoard = ({context}) => {
     // const {data} = useOutletContext();
     const data = context.data;
     const navigate = useNavigate();
-    console.log("Board : ",data);
+    // console.log("Board : ",data);
     
     return(
         <>

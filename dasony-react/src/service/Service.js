@@ -7,7 +7,7 @@ const Service = () => {
     const { pathname } = useLocation();
     const subPath = pathname.split('/');
 
-    console.log(subPath);
+    // console.log(subPath);
     return(
         <>
             {/* {subPath[2] == "notice" || subPath[3] == "notice" ? <Notice /> : null } */}
