@@ -2,9 +2,23 @@ import './CouponList.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import Loading from "../common/Loading";
 
 const CouponList = () => {
-    const userNo = localStorage.getItem("loginUserNo");
+    const userNo = localStorage.getItem("loginUserNo") || 0;
+
+    //회원 정보 불러오기 
+    const [userName, setUserName] = useState('');
+    const handleUserInfo = () => {
+        axios.post('/dasony/api/userInfo', {userNo: userNo})
+        .then(res=>{
+            setUserName(res.data.user.userName);
+        })
+        .catch(err=> {
+            console.log(err);
+            alert("다시 시도해주세요.");
+        })
+    }
 
     const statusMap = {
         'Y': '사용 완료',
@@ -25,19 +39,42 @@ const CouponList = () => {
                 alert("다시 시도해주세요");
             });
     }
+    
+
+    //무한 스크롤 이벤트 
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (!couponList.length || !product.length) {
-            handleCouponList();
+        const handleScroll = () => {
+            const scrollHeight = document.documentElement.scrollHeight;
+            const scrollTop = document.documentElement.scrollTop;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollTop + clientHeight >= scrollHeight - 100 && !loading) {
+                fetchData(); // 스크롤 이벤트 감지 시 데이터 가져오기
+            }
+        };
+
+        const fetchData = async() => {
+            setLoading(true);
+            await handleUserInfo();
+            await handleCouponList();
+            setLoading(false);
         }
 
-        console.log(couponList);
-        console.log(product);
-    }, [userNo]);
+        fetchData();
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     return (
+        <>        
+         {loading?<Loading/>:
         <div className="coupon-container">
-            <div className="coupon-title">userName님의 쿠폰</div>
+            <div className="coupon-title">{userName}님의 쿠폰</div>
             {couponList.length === 0 ? (
                 <span style={{ width: '300px', textAlign: 'left', fontWeight: 900, fontSize: '30px', letterSpacing: '0.2vw' }}>
                     아직 준비중입니다.
@@ -66,7 +103,9 @@ const CouponList = () => {
                     </div>
                 ))
             )}
-        </div>
+        </div>}
+        </>
+
     );
 }
 
