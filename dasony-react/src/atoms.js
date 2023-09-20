@@ -151,3 +151,16 @@ export const localListState = atom({
 })
 
 
+//board Editting 정보
+export const edittingState = atom({
+  key: 'boardEdit',
+  default : {
+    userNo : '',
+    boardTitle : '',
+    boardKeyword : '',
+    boardContent:'',
+    boardCateNo : '',
+    boardWriteDate:'',
+    boardImgNo:''
+  }
+})

@@ -141,7 +141,7 @@ function App() {
     <Header/>
 
     <div id='game'> 
-    <h2 className='finding-molang' style={{color : '#CB9DE7'}}>멀랑이의 <br/>보물찾기!</h2>
+    <h2 className='molang-finding' style={{color : '#CB9DE7'}}>멀랑이의<br/>보물찾기!</h2>
     <Gamestart/>
       </div>
       <div id='gameDiv'></div>
@@ -769,8 +769,8 @@ function App() {
                                                                               end = {{opacity:1, y:0}}
                                                                               transition={{duration : 1}}>
                                                                                 <BoardDetail/>
-                                                                              </motion.div>}/> 
-                                <Route path="jmt/edit/:boardNo/:boardCateNo" element={<motion.div
+                                                                              </motion.div>}/>  
+                                <Route path="jmt/edit/:boardNo" element={<motion.div
                                                                               initial = {{opacity:0, y:30}}
                                                                               animate = {{opacity:1, y:0}}
                                                                               end = {{opacity:1, y:0}}
