@@ -141,6 +141,7 @@ function App() {
     <Header/>
 
     <div id='game'> 
+    <h2 style={{color : '#CB9DE7'}}>멀랑이의 보물찾기!</h2>
     <Gamestart/>
       </div>
       <div id='gameDiv'></div>
