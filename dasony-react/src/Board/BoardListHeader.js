@@ -43,7 +43,7 @@ const BoardListHeader = (props) => {
         </select>
       </div>
         <div className="col-3 col-md-3">
-          <Link to={selectedPath+'/dwriter'} style={{textDecoration:'none'}}>
+          <Link to={selectedPath+selectedPath.includes('daily/')?'dwriter':'/dwriter'} style={{textDecoration:'none'}}>
             <button className="board-li BoardList-head-title-btn" id="dwriter"                                       
                     // onClick={(event)=>{HandleOpacity(event.target.id);}}
             >글쓰기</button>

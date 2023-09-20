@@ -360,7 +360,7 @@ const handleRemoveReply = () => {
               <div className='BoardDetail-boardlist-reply-container'>
                   <div className='BoardDetail-boardlist-reply-userinfo-wrapper'>
                       <span className='BoardDetail-boardlist-title-userinfo-img'>
-                        <img src="/resources/board/jh.jpg"/>
+                        <img src={"/resources/board/jh.jpg"}/>
                       </span>
                     <span className='BoardDetail-boardlist-reply-userinfo-nikname'>{reply.ruserNick}</span>
                       <span className='BoardDetail-boardlist-reply-userinfo-date'>{reply.replyWriteDate}</span>
