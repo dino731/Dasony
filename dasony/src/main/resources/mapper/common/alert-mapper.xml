@@ -23,7 +23,8 @@
 		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
 		'G',
 		'B',
-		'보물찾기 리워드를 확인하세요~'
+		'보물찾기 리워드를 확인하세요~',
+		''
 	)
 	
 	</insert>
@@ -37,7 +38,8 @@
 		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
 		'G',
 		'B',
-		'보물찾기 리워드입니다~'
+		'보물찾기 리워드입니다~',
+		''
 	)
 	
 	</insert>
@@ -59,7 +61,8 @@
 		TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
 		'P',
 		'B',
-		'상점 쿠폰 구매 알림'
+		'상점 쿠폰 구매 알림',
+		''
 		)
 	</insert>
 	
@@ -79,7 +82,7 @@
 			'R',
 			DEFAULT,
 			'댓글 알림',
-			null
+			''
 		)
 	</insert>
 
@@ -92,7 +95,8 @@
     TO_CHAR(SYSDATE, 'MM-DD HH24:MI'),
     'A',
     'B',
-    #{title}
+    #{title},
+    ''
 	)
 
 	</insert>
@@ -107,6 +111,7 @@
 			'D',
 			'B',
 			(SELECT USER_NAME FROM MEMBER WHERE USER_NO = #{userNo}) || '님이 후원하신 기부 내역입니다.'
+			,''
 		)
 	</insert>
 	
