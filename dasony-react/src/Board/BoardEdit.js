@@ -114,7 +114,7 @@ const BoardEdit = () => {
       // listPath가 비어있을 때는 호출하지 않도록 예외 처리
       return;
     }
-    console.log('boardDetail listPath ==>',ePath);
+    console.log('boardEDit ePath ==>',ePath);
 
     // Axios를 사용하여 서버로 GET 요청을 보냅니다.
     axios.get(`http://localhost:3000/dasony/board${ePath}edit/${boardNo}`) // 서버의 API 엔드포인트에 맞게 수정
@@ -287,7 +287,7 @@ const BoardEdit = () => {
       console.log(' FormData의 value 확인', value);
     }
   
-    axios.post(`http://localhost:3000/dasony${path}`, formData, {
+    axios.post(`http://localhost:3000/dasony/board/edit/${boardNo}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

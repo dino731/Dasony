@@ -174,7 +174,7 @@ public class BoardController {
 		
 	}
 
-	@GetMapping(value = {"/general/daily/edit/{boardNo}","/general/interest/edit/{boarNo}","/info/jmt/edit/{boarNo}","/info/fashion/edit/{boarNo}","/info/local/edit/{boarNo}"})	    
+	@GetMapping(value = {"/general/daily/edit/{boardNo}","/general/interest/edit/{boardNo}","/info/jmt/edit/{boardNo}","/info/fashion/edit/{boardNo}","/info/local/edit/{boardNo}"})	    
 	public BoardWriterForm boardEditList(@PathVariable int boardNo) {
 		BoardWriterForm bEditListMap = null; // 초기화
 
@@ -419,6 +419,74 @@ public class BoardController {
 			   return null;
 		   }
 	   }
+	   @PostMapping("/edit/{boardNo}")
+	   public String updateBoard(
+								   HttpServletRequest request,
+								   BoardWriterForm boardWriterForm,
+								   @PathVariable("boardNo") int boardNo,
+								 @RequestParam("file") List<MultipartFile> boardImgFiles,
+								 @RequestParam("boardWriteDate") String boardWriteDate,
+								 @RequestParam("boardTag")String boardTag
+								) {
+
+		String webPath = "/resources/images/board/";
+		String severFolderPath = application.getRealPath(webPath);
+		
+		log.info("severFolderPath = {} ", severFolderPath);
+		
+		// 디렉토리 생성
+		File dir = new File(severFolderPath);
+		if (!dir.exists()) {
+		dir.mkdirs();
+		}
+		
+		List<BoardImg> bImg = new ArrayList<BoardImg>();
+		BoardTag bt = new BoardTag();
+		bt.setBoardTag(boardTag.replace("\"", ""));
+		
+		int level = 0;
+		for (MultipartFile file : boardImgFiles) {
+		level++;
+		if (file.isEmpty())
+		continue;
+		
+		String boardImgModName = BoardUtils.saveFile(file, severFolderPath);
+		BoardImg bi = BoardImg.
+			  builder().
+			  boardImgModName(boardImgModName).
+			  boardImgOriName(file.getOriginalFilename()).
+			  boardImgLevel(level).
+			  boardImgUploadDate(boardWriterForm.getBoardWriteDate()).
+			  userNoRef(boardWriterForm.getUserNo()).
+			  boardImgStatus("Y").
+			  boardImgPath(webPath).build();
+		bImg.add(bi);
+		
+		log.info("Uploaded file name = {}", file.getOriginalFilename());
+		log.info("boardWriterForm = {}",boardWriterForm);
+		log.info("bImg = {}",bImg);
+		log.info("bt = {}",bt);
+		
+		//log.info("Content type: {}", file.getContentType());
+		//log.info("File size: {}", file.getSize());
+		//log.info("boardWriteDate: {}", boardWriteDate);
+		}
+		int result = 0;
+		String m = "";
+		try {
+//		result = boardService.updateBoard(boardWriterForm,boardNo);
+		} catch (Exception e) {
+		log.error("error = {}", e.getMessage());
+		}
+		if (result > 0) {
+		log.info("게시글 등록 성공",result);
+		return m ="게시글 등록 성공";
+		} else {
+		log.info("게시글 등록 실패",result);
+		return m ="게시글 등록 실패";
+		}
+		
+		}
 	
 	
 }
