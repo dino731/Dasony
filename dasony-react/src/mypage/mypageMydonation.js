@@ -41,7 +41,7 @@ const MypageMydonation = () =>{
                 <td className="nf-td1">{item.donaExecuteNo}</td>
                 <td className="nf-td3">{item.donaExecuteDate}</td>
                 <td className="nf-td2">{item.donaName}</td>
-                <td className="nf-td1">{item.donaAmount}</td>
+                <td className="nf-td1">{item.donaAmount}다손</td>
               </tr>
             ))}
             </tbody>

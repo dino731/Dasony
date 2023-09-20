@@ -65,13 +65,17 @@ const Header = () => {
           // 여기에 실행하고자 하는 코드를 작성하세요
           let lastGameDate = new Date(lastGameData);
           let currentTime = new Date();
+
           console.log("확인옇",loginUserNo);
           if ((currentTime - lastGameDate) >= 60000) {
+          if ((currentTime - lastGameDate) >= 10000) {
             axios.post("/dasony/api/letStartGame", {
               userNo: loginUserNo
             });
           }
-        }, 5000); // 10초마다 실행
+
+        }, 10000); // 10초마다 실행
+
       
         // 컴포넌트가 언마운트될 때 타이머 정리
         return () => {
