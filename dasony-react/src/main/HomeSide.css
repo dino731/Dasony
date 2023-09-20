@@ -8,8 +8,7 @@
     width: 100%;
 }
 .react-calendar { 
-    width: 400px;
-    max-width: 100%;
+    width: 100;
     background-color: #fff;
     color: #7A7A7A;
     border-radius: 0.5vw;
@@ -109,35 +108,13 @@
 
 
 
-   .calendar-detail-btn{
-    width: 20%;
-    height: 5vh;
-    margin-top: 1vh;
-    background-color: white;
-    border: 2px solid #CB9DE7;
-    border-radius: 0.5vw;
-    color: #CB9DE7;
-    font-family: 'HakgyoansimWoojuR';
-    font-size: 1.1vw;
-    font-weight: 900;
-}
-.react-calendar{
-    width: 100%;
-}
-    .calendar-detail-btn:hover{
-        background-color: #CB9DE7;
-        color: #FCFA90;
-        transition: 0.5s;
-        border: 2px solid #CB9DE7;
-
-    }
-    #calendar-detail-btn{
+    .calendar-detail-btn{
         background-color: white;
         border: 3px solid #CB9DE7;
         color: #CB9DE7;
         font-weight: 900;
     }
-    #calendar-detail-btn:hover{
+    .calendar-detail-btn:hover{
         
         background-color: #CB9DE7;
         transition: 0.5s;

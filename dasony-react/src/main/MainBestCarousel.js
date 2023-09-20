@@ -442,7 +442,7 @@ const MainShortsCarousel = () => {
                          onClick={()=>handleNav(shorts.board.boardNo)}
                          className='mainShorts-box' style={{left:`${left}vw`}}>
                         <div>
-                        <video id="vid" controls className="board-video" muted>
+                        <video id="vid" controls className="board-video" muted autoplay>
                             <source src={`http://localhost:8083/dasony${shorts.boardVideo.videoPath}${shorts.boardVideo.videoModName}`} type="video/mp4" />
                         </video>
                         </div>
