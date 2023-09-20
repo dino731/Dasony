@@ -4,7 +4,7 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { useLayoutEffect, useRef } from "react";
 
 const LineChart = ({paddingRight, data, kind, loading}) => {
-    console.log("line : ", data);
+    // console.log("line : ", data);
     const chartRef = useRef(null);
 
     const name1 = kind[0];

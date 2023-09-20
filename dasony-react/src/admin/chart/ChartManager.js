@@ -90,7 +90,7 @@ const ChartManager = () => {
             .then((res)=>{
                 if(selectedPart.includes("User")){
                     for(let i=0;i<res.data.length;i++){
-                        console.log("개별 data : ", res.data[i]);
+                        // console.log("개별 data : ", res.data[i]);
                         if(res.data[i])
                         res.data[i].date = new Date(res.data[i].date).getTime();
                         if(i==res.data.length-1) res.data[i].bullet = true;

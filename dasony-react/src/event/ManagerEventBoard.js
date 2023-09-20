@@ -40,7 +40,7 @@ export default () => {
 
         // 비동기 요청
         axios.get(url).then((res)=>{
-                console.log(res.data);
+                // console.log(res.data);
                 setData(res.data);
                 if(status) setStatus(false);
                 // else setStatus(true); 
@@ -63,7 +63,7 @@ export default () => {
         else{
             // 전송할 내용
             const alertData = {msgRange : modalCate, content: content};
-            console.log("alert : ", alertData);
+            // console.log("alert : ", alertData);
 
             axios.post(`http://localhost:3000/dasony/event/sendMsg/${eventNo}`, alertData)
                 .then((res)=>{
@@ -88,7 +88,7 @@ export default () => {
         target.classList.remove('active');
 
         if(target.classList.contains("modal-select")) { // 모달인 경우
-            console.log(target + " / " + item.textContent);
+            // console.log(target + " / " + item.textContent);
             setModalCate(item.textContent);
         }
 
@@ -130,7 +130,7 @@ export default () => {
         else{
             let diff = Math.abs(end - now);
             diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
-            console.log("날짜차이 : ", diff);
+            // console.log("날짜차이 : ", diff);
             return "D-"+diff;
         }
     }

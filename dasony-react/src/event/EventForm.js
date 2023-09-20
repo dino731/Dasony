@@ -2,7 +2,8 @@ import axios from 'axios';
 import './event.css';
 import { useRef, useEffect, useState  } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import $ from 'jquery';
+// import $ from 'jquery';
+import Swal from 'sweetalert2';
     
 /** 
     이벤트 등록 양식
@@ -24,6 +25,19 @@ export default ({editStatus}) => {
     // const [form, setForm] = useState({
     //     formChoose : "테스트"
     // });
+
+    // alert
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
 
     /** dropbox 선택 이벤트 */
     const handleLabelClick = (e) => {
@@ -147,7 +161,7 @@ export default ({editStatus}) => {
         if(no.length != 0){
             axios.get(`http://localhost:3000/dasony/event/selectEvent?no=${no}`)
                 .then((res)=>{
-                    console.log("data : ", res.data);
+                    // console.log("data : ", res.data);
                     // setData(data);
                     setEventInfo(res.data.event);
                     setRewardInfo(res.data.reward);
@@ -191,9 +205,13 @@ export default ({editStatus}) => {
         
         for(let fill of fillList){
             let target = formData[fill];
-            console.log("target", target);
+            // console.log("target", target);
             if(target === null || target === undefined || target==="" || target.length==0 || target.innerText ==="선택"){
-                alert("필수 항목을 다 채워 주세요.");
+                // alert("필수 항목을 다 채워 주세요.");
+                Swal.fire({
+                    title: '필수 항목을 다 채워 주세요.',
+                    icon: 'warning'
+                });
                 return;
             }
         }
@@ -202,14 +220,19 @@ export default ({editStatus}) => {
         const form = new FormData();
         Object.entries(formData).forEach(item => {
             form.append(item[0], item[1]);
-            console.log("key : ", item[0], "val : ", item[1]);
+            // console.log("key : ", item[0], "val : ", item[1]);
         });
 
         const url = editStatus==="등록" ? "uploadEvent" : `updateEvent/{no}`;
         axios.post("http://localhost:3000/dasony/event/" + url,
                     form)
             .then((res)=>{
-                alert(res.data);
+                // alert(res.data);
+                Toast.fire({
+                    icon: "success",
+                    title: res.data
+                });
+
                 navigate("/admin/event");
             });
     };
@@ -230,15 +253,56 @@ export default ({editStatus}) => {
 
     /** 이벤트 제거 */
     const deleteEvent = () => {
-        if(window.confirm("정말 삭제하시겠습니까?")){
-            axios.get("http://localhost:3000/dasony/event/delete?no="+no)
-            .then((res)=>{
-                if(res.data>0){
-                    alert("해당 이벤트를 삭제하였습니다. 리스트 페이지로 이동합니다.");
-                    navigate("/admin/event");
-                }else{alert("다시 시도해주세요.")}
-            });
-        }
+        Swal.fire({
+            text: '정말 삭제하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true, 
+            confirmButtonColor: '#3085d6', 
+            cancelButtonColor: '#d33', 
+            confirmButtonText: '확인', 
+            cancelButtonText: '취소', 
+            reverseButtons: true, 
+            
+         }).then(result => {
+            if (result.isConfirmed) { 
+                axios.get("http://localhost:3000/dasony/event/delete?no="+no)
+                .then((res)=>{
+                    if(res.data>0){
+                        Toast.fire({
+                            icon: "success",
+                            title: "해당 이벤트를 삭제하였습니다. 리스트 페이지로 이동합니다."
+                        });
+                        navigate("/admin/event");
+                    }else{
+                        Toast.fire({
+                            icon: "warning",
+                            title: "다시 시도해주세요."
+                        });
+                    }
+                });
+            }
+        });
+
+
+        // if(window.confirm("정말 삭제하시겠습니까?")){
+        //     axios.get("http://localhost:3000/dasony/event/delete?no="+no)
+        //     .then((res)=>{
+        //         if(res.data>0){
+        //             Toast.fire({
+        //                 icon: "success",
+        //                 title: "해당 이벤트를 삭제하였습니다. 리스트 페이지로 이동합니다."
+        //             });
+        //             // alert("해당 이벤트를 삭제하였습니다. 리스트 페이지로 이동합니다.");
+        //             navigate("/admin/event");
+        //         }else{
+        //             Toast.fire({
+        //                 icon: "warning",
+        //                 title: "다시 시도해주세요."
+        //             });
+        //             // alert("다시 시도해주세요.")
+        //         }
+        //     });
+        // }
         
     }
 

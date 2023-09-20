@@ -31,13 +31,13 @@ public class EventDao {
 
 	public Event selectEvent(String no) {
 		Event result = session.selectOne("event.selectEvent", no);
-		log.info("event : " + result.toString());
+//		log.info("event : " + result.toString());
 		return result;
 	}
 
 	public List<Reward> selectReward(String no) {
 		List<Reward> result = session.selectList("event.selectReward", no);
-		log.info("reward : " + result.toString());
+//		log.info("reward : " + result.toString());
 		return result;
 	}
 
@@ -91,8 +91,8 @@ public class EventDao {
 		param.put("msgRange", msgRange);
 		
 		List<Integer> targets = session.selectList("event.selectMsgTarget", param);
-		log.info("param::{}", param);
-		log.info("list : " + targets.toString());
+//		log.info("param::{}", param);
+//		log.info("list : " + targets.toString());
 		
 		for(int target : targets) {
 			map.put("target", target);
@@ -103,7 +103,7 @@ public class EventDao {
 	}
 
 	public int checkEventJoin(Map<String, Object> data) {
-		log.info("dao-check : " + data.toString());
+//		log.info("dao-check : " + data.toString());
 		return session.selectOne("event.checkEventJoin", data);
 	}
 
@@ -119,7 +119,7 @@ public class EventDao {
 			result.setCount(session.selectOne("event.findLast", data));
 			result.setTdyCheck("N");
 		}
-		log.info("result : " + result.toString());
+//		log.info("result : " + result.toString());
 		return result;
 	}
 
@@ -160,7 +160,7 @@ public class EventDao {
 				rewardWinner.put("rewardNo", reward);
 				rewardWinner.put("winner", winner);
 				
-				log.info("rewardWinner : " + rewardWinner.toString());
+//				log.info("rewardWinner : " + rewardWinner.toString());
 				result *= session.insert("event.addWinner", rewardWinner);
 			}
 		}

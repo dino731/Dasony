@@ -48,7 +48,7 @@ public class NoticeServiceImpl implements NoticeService {
 		int row = nDao.selectNoticeRownum(no);
 		
 		List<Notice> list = nDao.selectNoticeDetailList(row);
-		log.info("dao list : " + list.toString());
+//		log.info("dao list : " + list.toString());
 		
 		if(list.size() != 3) {
 			for(int i = 0; i<list.size(); i++) {
