@@ -46,8 +46,8 @@ const Game= ()=>{
                         [1,0,1,1,1,0,1,1,1,0,0,0,0,1,0,1,0,1,0,1],
                         [1,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1],
                         [1,0,1,0,1,0,1,0,1,1,1,0,0,1,0,1,0,1,0,1],
-                        [1,1,1,1,1,0,1,0,1,0,1,1,1,2,0,1,0,1,4,1],
-                        [1,0,0,2,0,0,1,2,1,0,0,0,0,1,1,1,0,1,0,1],
+                        [1,1,1,1,1,0,1,0,1,0,1,1,0,0,2,1,0,1,4,1],
+                        [1,0,0,2,0,0,1,2,1,0,0,0,1,1,1,1,0,1,0,1],
                         [1,0,1,1,0,1,1,0,1,0,1,0,0,0,0,1,0,1,0,1],
                         [1,0,0,1,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1],
                         [1,1,0,1,1,1,0,1,1,1,1,0,1,0,1,0,1,0,0,1],
@@ -218,7 +218,7 @@ const Game= ()=>{
                                                     continue;
                                                 }
                                                  break;
-                                                case 3: if(map[nowPx][nowPy+1] != 1 && map[nowPx-1][nowPy+1] != 4){
+                                                case 3: if(map[nowPx][nowPy+1] != 1 && map[nowPx][nowPy+1] != 4){
                                                     map[nowPx][nowPy] = 0;nowPy++;
                                                    
                                                 }
@@ -1872,7 +1872,7 @@ const Game= ()=>{
 }
 return (
     <div onClick={Game}>
-        <h2 style={{color : '#CB9DE7'}}>멀랑이의 보물찾기!</h2>
+     <h2 className='molang-finding' style={{fontFamily: 'HakgyoansimWoojuR', color : '#CB9DE7'}}>멀랑이의<br/>보물찾기</h2>
       <img src="/resources/common-img/gameimg/gamestart.png"  style={{ width: '100px', height: '100px' }} alt="게임 이미지" />
       </div>
   );
