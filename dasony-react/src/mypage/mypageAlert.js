@@ -98,6 +98,8 @@ const MypageAlert = () => {
                 {item.alertCate === 'P' && <span>포인트 사용</span>}
                 {item.alertCate === 'D' && <span>기부</span>}
                 {item.alertCate === 'A' && <span>관리자 메세지</span>}
+                {item.alertCate === 'R' && <span>답글</span>}
+                {item.alertCate === 'E' && <span>이벤트</span>}
                 </td>
                 <td className="nf-td1">
                 <button className="delete-button" onClick={() => handleDelete(item.alertNo)}>삭제</button>
