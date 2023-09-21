@@ -43,7 +43,7 @@ const Header = () => {
         }
         
       }, [loginUserNo, gameStartYN,lastGameData]);
-
+        
       useEffect(() => {
         axios.post("/dasony/api/gameSet",{
             userNo : loginUserNo
@@ -64,12 +64,14 @@ const Header = () => {
         const intervalId = setInterval(() => {
           let lastGameDate = new Date(lastGameData);
           let currentTime = new Date();
+
           if ((currentTime - lastGameDate) >= 300000) {
             axios.post("/dasony/api/letStartGame", {
               userNo: loginUserNo
             });
           }
         }, 300000); 
+
       
         // 컴포넌트가 언마운트될 때 타이머 정리
         return () => {

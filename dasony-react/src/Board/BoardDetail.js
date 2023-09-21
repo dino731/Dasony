@@ -485,16 +485,12 @@ const handleReModalOffAndClose = () => {
     console.log('board',board);
     const userResult = board;
     if (userResult >= 0 && userResult <= 100) {
-      return '/resources/common-img/A.png';
       return '/resources/common-img/levelone.png';
     } else if (userResult >= 101 && userResult <= 200) {
-      return '/resources/common-img/B.png';
       return '/resources/common-img/leveltwo.png';
     } else if (userResult >= 201 && userResult <= 300) {
-      return '/resources/common-img/C.png';
       return '/resources/common-img/leveltwo.png';
     } else if (userResult >= 301 && userResult <= 400) {
-      return '/resources/common-img/D.png';
       return '/resources/common-img/levelfour.png';
     } else if (userResult >= 401 && userResult <= 500) {
       return '/resources/common-img/levelfive.png';  
@@ -613,7 +609,7 @@ const handleReModalOffAndClose = () => {
                         </span>
                         <span>
                           <button
-                          style={{display:userNo!=board.user.userNo?'none':'block'}}
+                          style={{display:userNo!=board.user.userNo?'none':'inline'}}
                           className='Board-reply-recoment-accused-btn'
                           onClick={()=>navigate(
                             path.includes('vs')

@@ -88,7 +88,6 @@ const BoardShorts = () => {
     .then(res=>{
       console.log("res.data", res.data);
       alert(res.data);
-      setBoardSh(null);
       navigate('/board/general/daily');
       })
     .catch(err=>{
@@ -96,7 +95,15 @@ const BoardShorts = () => {
       alert("다시 시도해주세요.");
     })
     
+    setBoardSh({});
+    
 }
+  /*boardSh 작성 취소 */
+  const handleBoardShCancle = () => {
+    alert('취소되었습니다.');
+    setBoardSh({});
+    navigate(-1);
+  }
 
   
   const [shortsFile, setShortsFile] = useState({});
@@ -170,7 +177,8 @@ const BoardShorts = () => {
               </div>{/* Vote-Content-container */}
               <div className='BoardShorts-btn board-btn-cntrol-box'>
                 <div className='board-btn-wrapper'>
-                  <button className='board-cancel-btn'>취소 버튼</button>
+                  <button className='board-cancel-btn'
+                          onClick={handleBoardShCancle}>취소 버튼</button>
                 </div>
                 <div className='board-btn-wrapper'>
                   <button className='board-submit-btn'

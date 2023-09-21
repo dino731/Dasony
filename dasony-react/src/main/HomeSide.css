@@ -8,13 +8,13 @@
     width: 100%;
 }
 .react-calendar { 
-    width: 100;
+    width: 100%;
     background-color: #fff;
     color: #7A7A7A;
     border-radius: 0.5vw;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.125em;
-    font-size: 1.2vw;
+    font-size: 1vw;
     font-family: 'HakgyoansimWoojuR';
     margin-top: 1vw;
     border: 1px solid #7A7A7A;
@@ -113,12 +113,14 @@
         border: 3px solid #CB9DE7;
         color: #CB9DE7;
         font-weight: 900;
+        border-radius: 0.5vw;
     }
     .calendar-detail-btn:hover{
         
         background-color: #CB9DE7;
         transition: 0.5s;
         color: white;
+        border-radius: 0.5vw;
     }
 
    .calendar-detail-container{

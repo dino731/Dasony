@@ -38,7 +38,7 @@ const BoardDailyList = ()=>{
     setListPath(pathL);
    }
     setLoading(true);
-    axios.get(`http://localhost:3000/dasony${path}?userRegion=${localStorage.loginUserRegion}`) // 서버의 API 엔드포인트에 맞게 수정
+    axios.get(`http://localhost:3000/dasony${path}?userRegion=${localStorage.loginUserRegion}`)
       .then((response) => {
         setBoardData(response.data);
       })
@@ -120,10 +120,6 @@ const BoardDailyList = ()=>{
   const [keyword, setKeyword] = useState([]);
   const [inputContent, setInputContent] = useState('');
 
-  /* 키워드 리셋 핸들러 ain 0904 */
-  const handleReset = () => {
-    setKeyword([]);
-  };
 
   /* 키워드 enter사용시 키워드 생성 ain 0904 */
   const enter = (e) =>{
@@ -220,6 +216,17 @@ const BoardDailyList = ()=>{
     // const searchTags = board?.boardTag.boardTag.split('_');
     return !keyword || keyword.length === 0 || keyword.some((tag) => board?.boardTag.boardTag.includes(tag));
   }
+    /* 키워드 리셋 핸들러 ain 0904 */
+    const handleReset = () => {
+      setSearchKeyword({
+        userRegion: localStorage.loginUserRegion,
+        boardTag: '',
+        boardContent : '',
+        boardTitle : '',
+      });
+      setKeyword([]);
+    };
+  
 
   return(
     <>
@@ -234,7 +241,7 @@ const BoardDailyList = ()=>{
               <div className="row">
                 <div className="col-md-9 boardList-search-input-title-wrapper">
                   <div className="boardList-search-box-title">
-                    <input type="text" name="boardTitle" onChange={handleInputChange} className="boardList-search-input-title" placeholder="제목, 내용을 검색해보세요"/>
+                    <input type="text" name="boardTitle" value={searchKeyword.boardTitle} onChange={handleInputChange} className="boardList-search-input-title" placeholder="제목, 내용을 검색해보세요"/>
                       <div className="boardList-search-input-title-img-div">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>

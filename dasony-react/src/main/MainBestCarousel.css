@@ -71,6 +71,9 @@
     display: flex;
     font-size: 80%;
 }
+.local-box:hover{
+    cursor: pointer;
+}
 .local-box>div{
     margin: auto;
 }
@@ -267,7 +270,7 @@
     text-align: center;
     color: white;
     opacity: 0.5;
-    top: 168vh;
+    top: 170vh;
     left: 25%;
     width: 4%;
     height: 19vh;
@@ -285,7 +288,7 @@
     text-align: center;
     color: white;
     opacity: 0.5;
-    top: 168vh;
+    top: 170vh;
     right: 36.5%;
     width: 4%;
     height: 19vh;

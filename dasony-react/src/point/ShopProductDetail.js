@@ -46,9 +46,9 @@ const ShopProductDetail = () => {
                                 }
     const handleModalOffAndClose = () => {
         if(modalButtonText == '확인' && modalButton == 'inline-block' && show){
+            handleClose();
             handleModalOff();
         }
-        handleClose();
     }
 
     {/*userPoint, userName받아오기 */}
@@ -70,7 +70,8 @@ const ShopProductDetail = () => {
         if(userPoint >= product.productAmount){
             axios.post('/dasony/api/couponBuy', {product:product, userNo:userNo})
             .then(res=>{
-                handleModalOn();
+                alert("상품 구매가 완료되었습니다.");
+                handleClose();
             })
             .catch(err=>{
                 alert("다시 시도해주세요");
@@ -119,8 +120,8 @@ const ShopProductDetail = () => {
                                 </div>
                             </ModalBody>
                             <ModalFooter>
-                                <button className={modalClass} onClick={handleModalOffAndClose}>{modalButtonText}</button>
-                                <button className='modalButton-yes' onClick={handleCouponBuy} style={{display:modalButton}}>구매</button>
+                                <button className={modalClass} onClick={handleClose}>{modalButtonText}</button>
+                                <button className='modalButton-yes' onClick={handleModalOn} style={{display:modalButton}}>구매</button>
                             </ModalFooter>
                         </Modal>
                     </div>

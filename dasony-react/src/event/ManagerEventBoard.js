@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
 import axios from 'axios';
 import Loading from '../common/Loading';
+import Swal from "sweetalert2";
 
 /**
      이벤트 등록 양식
@@ -27,6 +28,19 @@ export default () => {
 
     // data loading
     const [loadStatus, setLoadStatus] = useState(false);
+
+    // alert
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
     
     // function for loading data
     function loadData(){ // 매개변수로 page 번호 추가 필요
@@ -58,8 +72,9 @@ export default () => {
     const sendMessage = () => {
         const content = document.querySelector(".message-modal-text").value;
 
-        if(modalCate === "선택") alert("카테고리를 선택해주세요.");
-        else if(content.length == 0) alert("보낼 내용을 입력해주세요.");
+        if(modalCate === "선택") Toast.fire({ icon: "warning", title: "카테고리를 선택해주세요." });  
+        // alert("카테고리를 선택해주세요.");
+        else if(content.length == 0) Toast.fire({ icon: "warning", title: "보낼 내용을 입력해주세요." });
         else{
             // 전송할 내용
             const alertData = {msgRange : modalCate, content: content};
@@ -67,7 +82,11 @@ export default () => {
 
             axios.post(`http://localhost:3000/dasony/event/sendMsg/${eventNo}`, alertData)
                 .then((res)=>{
-                    alert(res.data);
+                    // alert(res.data);
+                    Toast.fire({
+                        icon: "success",
+                        title: res.data
+                    });
                     setEventNo("");
                     setModalCate("선택");
                     document.querySelector(".message-modal-text").value = "";

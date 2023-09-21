@@ -66,6 +66,7 @@ public class gameController {
 	@PostMapping("/letStartGame")
 	public ResponseEntity<Integer> letStartGame(@RequestBody Map<String,Integer> requestBody) {
 		int userNo = requestBody.get("userNo");
+
 		try {
 	        int result = gameService.letStartGame(userNo);
 	        return ResponseEntity.ok(result);
@@ -73,6 +74,7 @@ public class gameController {
 	        e.printStackTrace();
 	        return ResponseEntity.ok(null); 
 	    }
+
 	}
 	
 	

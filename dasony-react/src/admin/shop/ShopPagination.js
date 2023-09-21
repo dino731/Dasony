@@ -88,6 +88,11 @@ export default function AdvancedExample({handleOn, handleModifyOn, handleModifyi
         'C':'편의점'
     };
 
+    const handleCancleChild = (id)=>{
+      handleCancle(id);
+      handleShopList();
+    }
+
   useEffect(() => {
     handleShopList();
     
@@ -96,11 +101,11 @@ export default function AdvancedExample({handleOn, handleModifyOn, handleModifyi
 
 
    {/*상점 삭제 */}
-  const handleCancle = (e) => {
+  const handleCancle = (id) => {
       const result = window.confirm('삭제하시겠습니까?');
       if(result){
           axios.delete('/dasony/api/shopDelete', {
-            params : {shopOkey: e.target.id}
+            params : {shopOkey: id}
           })
           .then(res=>{
               alert(res.data);
@@ -154,7 +159,7 @@ export default function AdvancedExample({handleOn, handleModifyOn, handleModifyi
                                 <td>{categoryMap[shop.shopCate]}</td>
                                 <td>   
                                     <Button style={{width:'70%'}} id={shop.shopOkey} onClick={(e)=>{e.stopPropagation(); handleModifyOn(shop);}} className="btn btn-primary">수정</Button>
-                                    <Button style={{width:'70%'}} id={shop.shopOkey} onClick={(e)=>{e.stopPropagation(); handleCancle(e);}} className='btn btn-danger'>삭제</Button>
+                                    <Button style={{width:'70%'}} id={shop.shopOkey} onClick={(e)=>{e.stopPropagation(); handleCancleChild(e.target.id);}} className='btn btn-danger'>삭제</Button>
                                 </td> 
                             </tr>);
                     })}

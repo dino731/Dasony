@@ -10,8 +10,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 export const ShortsEdit = () => {
   const {boardNo} = useParams();
   const boardno = parseInt(boardNo);
-
+  /*헤더에서 정보 받아오기 -atom, recoil */
+  const [boardSh, setBoardSh] = useRecoilState(boardShState);
   const navigate = useNavigate();
+
  
   /*사용자 정보 */
   const userNo = parseInt(localStorage.getItem('loginUserNo'));
@@ -27,25 +29,16 @@ export const ShortsEdit = () => {
     })
   }
 
-
-  /*쇼츠 정보 불러오기 - 서버 */
-  useEffect(()=>{
-    const fetchData = async() => {
-      await axios.post('/dasony/api/shortsUpdate', {boardNo:boardNo})
-      .then(res=>{
-        setBoardSh(res.data);
-      })
-    }
-    fetchData();
-  },[])
+  console.log(boardSh);
 
 
-  /*헤더에서 정보 받아오기 -atom, recoil */
-  const [boardSh, setBoardSh] = useRecoilState(boardShState);
+
 
   /*boardSh 작성 취소 */
   const handleBoardShCancle = () => {
     alert('취소되었습니다.');
+ 
+    setBoardSh({});
     navigate(-1);
   }
 
@@ -110,17 +103,15 @@ export const ShortsEdit = () => {
     .then(res=>{
       console.log("res.data", res.data);
       alert(res.data);
-      setBoardSh(null);
       navigate(-1);
       })
     .catch(err=>{
       console.log(err);
       alert("다시 시도해주세요.");
     })
-    
+    setBoardSh({});
 }
 
-  
   const [shortsFile, setShortsFile] = useState({});
 
   const imageUpload = e => {
@@ -141,14 +132,19 @@ export const ShortsEdit = () => {
   //   setNewBoardPost({...newBoardPost, [name] : value});
   // };
 
+/*쇼츠 정보 불러오기 - 서버 */
+useEffect(()=>{
+  handleUserInfo();
 
-
-/*페이지 로딩 시 바로 수행되어야 할 함수들 */
-  useEffect(()=>{
-    handleUserInfo();
-  }, [userNo])
-
-
+  const fetchData = async() => {
+    await axios.post('/dasony/api/shortsUpdate', {boardNo:boardNo})
+    .then(res=>{
+      setBoardSh(res.data);
+    })
+  }
+  
+  fetchData();
+},[userNo])
 
   return (
     <>
@@ -182,7 +178,7 @@ export const ShortsEdit = () => {
                       </div>
                       <div className='videoplayer'>
                         {
-                          !shortsFile.video?
+                          !shortsFile?.video && boardSh?.videoModName? 
                           <video controls className="board-video-thumb" muted autoPlay>
                               <source 
                               src={`http://localhost:8083/dasony/resources/images/board/video/${boardSh?.videoModName}`} 

@@ -62,7 +62,7 @@ const Home = () =>{
                                                 <div>
                                                     <img src={`http://localhost:8083/dasony/${weather.boardImg.boardImgPath}/${weather.boardImg.boardImgModName}`}/>
                                                 </div>
-                                                <div style={{fontSize:'70%'}}>
+                                                <div className='userNick-box' style={{fontSize:'70%'}}>
                                                     {weather.user.userNick}
                                                 </div>
                                                 <div>

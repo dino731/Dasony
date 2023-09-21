@@ -81,10 +81,19 @@ function AdvancedExample({handleCalendarAdmit, handleCalendarCancle, keyword}) {
     'P':'공연'
 };
 
+const handleCalendarAdmitChild = (e)=>{
+  handleCalendarAdmit(e);
+  handleCalendar();
+}
+
+const handleCalendarCancleChild = (e)=>{
+  handleCalendarCancle(e);
+  handleCalendar();
+}
+
   useEffect(() => {
     handleCalendar();
     
-      
   }, [currentPage,setCalendarList, calendarLength, keyword]);
 
   return (
@@ -123,8 +132,8 @@ function AdvancedExample({handleCalendarAdmit, handleCalendarCancle, keyword}) {
                                         <td>{calendarMap[calendar.calendarCate]}</td>
                                         <td>{calendar.calendarStatus}</td> 
                                         <td>   
-                                            <Button id={calendar.calendarNo} onClick={handleCalendarAdmit} className="btn btn-primary">Y</Button>
-                                            <Button id={calendar.calendarNo} onClick={handleCalendarCancle} className='btn btn-danger'>N</Button>
+                                            <Button id={calendar.calendarNo} onClick={(e)=>handleCalendarAdmitChild(e.target.id)} className="btn btn-primary">Y</Button>
+                                            <Button id={calendar.calendarNo} onClick={(e)=>handleCalendarCancleChild(e.target.id)} className='btn btn-danger'>N</Button>
                                         </td> 
                                     </tr>);
                         })}
