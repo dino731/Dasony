@@ -31,7 +31,7 @@ const BoardDetail = () =>{
     'C':`/resources/common-img/levelthree.png`,
     'D':`/resources/common-img/levelfour.png`,
     'E':'./resources/common-img/levelfive.png',
-    'Z':`/resources/common-img/levelgod.png`
+    'Z':`/resources/common-img/levelgod.jpg`
   }
 
 
@@ -495,7 +495,7 @@ const handleReModalOffAndClose = () => {
     } else if (userResult >= 401 && userResult <= 500) {
       return '/resources/common-img/levelfive.png';  
     } else {
-      return '/resources/common-img/levelgod.png';
+      return '/resources/common-img/levelgod.jpg';
     }
 
   // const [userImg, setUserImg] = useState('');
