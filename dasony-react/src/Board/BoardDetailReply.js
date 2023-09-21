@@ -383,7 +383,7 @@ const handleRemoveReply = () => {
                           ?
                           './resources/common-img/levelfive.png'
                           :
-                          reply.userLevel == 'E'
+                          reply.userLevel == 'F'
                           ?
                           `/resources/common-img/levelgod.jpg`
                           :
@@ -488,25 +488,25 @@ const handleRemoveReply = () => {
                           :
                           reply.userLevel == 'B'
                           ?
-                          `/resources/common-img/levelone.png`
+                          `/resources/common-img/leveltwo.png`
                           :
                           reply.userLevel == 'C'
                           ?
-                          `/resources/common-img/levelone.png`
+                          `/resources/common-img/levelthree.png`
                           :
                           reply.userLevel == 'D'
                           ?
-                          `/resources/common-img/levelone.png`
+                          `/resources/common-img/levelfour.png`
                           :
                           reply.userLevel == 'E'
                           ?
                           './resources/common-img/levelfive.png'
                           :
-                          reply.userLevel == 'E'
+                          reply.userLevel == 'F'
                           ?
-                          `/resources/common-img/levelgod.png`
+                          `/resources/common-img/levelgod.jpg`
                           :
-                          `/resources/common-img/levelgod.png`
+                          `/resources/common-img/levelgod.jpg`
                         }/>
                       </span>
                     <span className='BoardDetail-boardlist-reply-userinfo-nikname'>{rep.ruserNick}</span>
