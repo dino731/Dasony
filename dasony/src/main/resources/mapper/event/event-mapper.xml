@@ -186,7 +186,7 @@
 	
 	<insert id="sendMsg" parameterType="hashmap" >
 		insert into alert values(seq_ano.nextval, #{target}, #{content}, TO_CHAR(SYSDATE, 'MM-DD HH24:MI'), 'E', 
-		default, '[이벤트 공지]' || ' ' || #{title})
+		default, '[이벤트 공지]' || ' ' || #{title}, null)
 	</insert>
 	
 	<select id="checkEventJoin" parameterType="hashmap" resultType="int">

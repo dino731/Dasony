@@ -298,10 +298,7 @@ const MypageInfo = () => {
                         {isEditing && (<th style={{textAlign:'left'}}><MainChecking txt='아이디 중복 확인' data={id} setId={setId} 
                         setCompleteDuplcateId={setCompleteDuplcateId} setIdValid={setIdValid}/></th>)}
                     </tr>
-                    <tr>
-                        <th>비밀번호</th>
-                        <td><input type='password'value={pwd} maxLength={20} readOnly/></td>
-                    </tr>
+                    
                     <tr>
                         <th>새 비밀번호</th>
                         <td><input type='password' id='pwd1' onChange={handlePwd} onBlur={handlePwdLength}   readOnly={!isEditing}  maxLength={20}/></td>

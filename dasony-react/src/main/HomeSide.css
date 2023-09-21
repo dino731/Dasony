@@ -113,12 +113,14 @@
         border: 3px solid #CB9DE7;
         color: #CB9DE7;
         font-weight: 900;
+        border-radius: 0.5vw;
     }
     .calendar-detail-btn:hover{
         
         background-color: #CB9DE7;
         transition: 0.5s;
         color: white;
+        border-radius: 0.5vw;
     }
 
    .calendar-detail-container{

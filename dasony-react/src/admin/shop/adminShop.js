@@ -44,6 +44,7 @@ const AdminShop = () => {
                 shopAddress: ''
             });
             handleOff();
+            window.location.reload();
         })
         .catch(err=>{
             console.log(err);

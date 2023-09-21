@@ -11,8 +11,8 @@ export const AdminCalendar = () => {
 
 
     {/*달력 리스트 Y 서버 전송 */}
-    const handleCalendarAdmit = (e) => {
-        axios.patch('/dasony/api/calendarAdmit', {calendarNo:e.target.id})
+    const handleCalendarAdmit = (id) => {
+        axios.patch('/dasony/api/calendarAdmit', {calendarNo:id})
         .then(res=>{
             alert(res.data);
         })
@@ -23,8 +23,8 @@ export const AdminCalendar = () => {
     }
 
     {/*달력 리스트 N 서버 전송 */}
-    const handleCalendarCancle = (e)=>{
-        axios.delete(`/dasony/api/calendarCancle/${e.target.id}`)
+    const handleCalendarCancle = (id)=>{
+        axios.delete(`/dasony/api/calendarCancle/${id}`)
         .then(res=>{
             alert(res.data);
         })
@@ -40,6 +40,7 @@ export const AdminCalendar = () => {
         setKeyword(e.target.value);
     }
 
+    
 
     return(
         <div className="admin-user-container">

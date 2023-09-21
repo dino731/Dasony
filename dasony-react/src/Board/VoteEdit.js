@@ -74,6 +74,7 @@ export const VoteEdit = ()=>{
   /*boardVs 작성 취소 */
   const navigate = useNavigate();
   const handleBoardVsCancle = () => {
+    setBoardVs({});
     alert('취소되었습니다.');
     navigate(-1);
   }
