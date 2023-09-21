@@ -72,8 +72,9 @@ const Header = () => {
             axios.post("/dasony/api/letStartGame", {
               userNo: loginUserNo
             });
-          }
-        }
+
+          }}
+
 
         }, 10000); // 10초마다 실행
 

@@ -248,7 +248,10 @@ export default ({editStatus}) => {
         document.querySelectorAll(".formInput").forEach((el)=>{
             el.value = "";
         })
-        document.querySelector(".event-img").remove();
+
+        const img = document.querySelector(".event-img");
+        if(img != null) img.remove();
+        
     };
 
     /** 이벤트 제거 */
