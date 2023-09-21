@@ -64,13 +64,17 @@ public class gameController {
 		return lastGameDate;
 	}
 	@PostMapping("/letStartGame")
-	public int letStartGame(@RequestBody Map<String,Integer> requestBody) {
+	public ResponseEntity<Integer> letStartGame(@RequestBody Map<String,Integer> requestBody) {
 		int userNo = requestBody.get("userNo");
 
-		log.info("userNo: {}",userNo);
+		try {
+	        int result = gameService.letStartGame(userNo);
+	        return ResponseEntity.ok(result);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.ok(null); 
+	    }
 
-		int result = gameService.letStartGame(userNo);
-		return result;
 	}
 	
 	

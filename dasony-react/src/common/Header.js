@@ -60,23 +60,17 @@ const Header = () => {
       }, [lastGameData, gameStartYN]);
 
       useEffect(() => {
-        // 10초마다 실행되는 코드
+
         const intervalId = setInterval(() => {
-          // 여기에 실행하고자 하는 코드를 작성하세요
           let lastGameDate = new Date(lastGameData);
           let currentTime = new Date();
 
-          console.log("확인옇",loginUserNo);
-          if ((currentTime - lastGameDate) >= 60000) {
-          if ((currentTime - lastGameDate) >= 10000) {
+          if ((currentTime - lastGameDate) >= 300000) {
             axios.post("/dasony/api/letStartGame", {
               userNo: loginUserNo
             });
-
-          }}
-
-
-        }, 10000); // 10초마다 실행
+          }
+        }, 300000); 
 
       
         // 컴포넌트가 언마운트될 때 타이머 정리
