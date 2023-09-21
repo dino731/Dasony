@@ -44,10 +44,9 @@
 </select>
 
 	<update id="letStartGame" parameterType="int">
-		UPDATE MEMBER SET
-			GAME_STATUS = 'Y'
-			WHERE USER_NO = #{userNo}
-			AND USER_LEVEL != 'Z'
+		UPDATE MEMBER
+		SET GAME_STATUS = CASE WHEN USER_LEVEL != 'Z' THEN 'Y' ELSE GAME_STATUS END
+		WHERE USER_NO = #{userNo}
 	</update>
 
 
