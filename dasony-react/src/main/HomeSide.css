@@ -202,12 +202,14 @@
     }
     .calendar-detail-box table td:first-child{
         width: 25%;
+        font-size: 80%;
     }
     .calendar-detail-box table td:nth-child(2){
         width: 25%;
     }
     .calendar-detail-box table td:nth-child(3){
         width: 20%;
+        font-size: 80%;
     }
     .calendar-detail-box table td:nth-child(4){
         width: 20%;
@@ -217,13 +219,6 @@
         width: 10%;
     }
 
-
-    .calendar-detail-box table tr>td:first-child{
-        font-size: 80%;
-    }
-    .calendar-detail-box table tr>td:nth-child(3){
-        font-size: 80%;
-    }
 
     .calendar-detail-box>div>div>button{
         box-sizing: border-box;
